@@ -2,47 +2,49 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
-    <meta name="author" content="AdminKit">
-    <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
-    {{--
-    <link rel="preconnect" href="https://fonts.gstatic.com"> --}}
-    <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+	{{--
+	<link rel="preconnect" href="https://fonts.gstatic.com"> --}}
+	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-    <link rel="canonical" href="https://demo-basic.adminkit.io/" />
+	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
-    <title>INI TITLE</title>
+	<title>INI TITLE</title>
 
-    <link href="css/app.css" rel="stylesheet">
-    {{--
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet"> --}}
+	<link href="css/app.css" rel="stylesheet">
+	{{--
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet"> --}}
 </head>
 
 <body>
-    <div class="wrapper">
-        <x-sidebar></x-sidebar>
+	<div class="wrapper">
+		<x-sidebar></x-sidebar>
 
-        <div class="main">
-            <x-navbar></x-navbar>
+		<div class="main">
+			<x-navbar></x-navbar>
 
-            <main class="content">
+			<main class="content">
+				<div class="container-fluid p-0">
+					<h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
+					{{ $slot }}
+				</div>
 
-                {{ $slot }}
+			</main>
 
-            </main>
+			<x-footer></x-footer>
+		</div>
+	</div>
 
-            <x-footer></x-footer>
-        </div>
-    </div>
+	<script src="{{ asset('js/app.js') }}"></script>
 
-    <script src="{{ asset('js/app.js') }}"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
 			var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
 			var gradient = ctx.createLinearGradient(0, 0, 0, 225);
 			gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
@@ -110,9 +112,9 @@
 				}
 			});
 		});
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
+	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
 			// Pie chart
 			new Chart(document.getElementById("chartjs-dashboard-pie"), {
 				type: "pie",
@@ -138,9 +140,9 @@
 				}
 			});
 		});
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
+	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
 			// Bar chart
 			new Chart(document.getElementById("chartjs-dashboard-bar"), {
 				type: "bar",
@@ -182,9 +184,9 @@
 				}
 			});
 		});
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
+	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
 			var markers = [{
 					coords: [31.230391, 121.473701],
 					name: "Shanghai"
@@ -249,9 +251,9 @@
 				map.updateSize();
 			});
 		});
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
+	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
 			var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
 			var defaultDate = date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate();
 			document.getElementById("datetimepicker-dashboard").flatpickr({
@@ -261,7 +263,7 @@
 				defaultDate: defaultDate
 			});
 		});
-    </script>
+	</script>
 
 </body>
 

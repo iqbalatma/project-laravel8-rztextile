@@ -11,7 +11,13 @@
 
             <li class="sidebar-item active">
                 <a class="sidebar-link" href="index.html">
-                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+                    <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('units.index') }}">
+                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Units</span>
                 </a>
             </li>
 

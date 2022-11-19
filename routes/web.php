@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,14 @@ Route::get('/', function () {
 Route::controller(DashboardController::class)
     ->name("dashboard.")
     ->prefix("/dashboard")
+    ->group(function (){
+        Route::get("/", "index")->name("index");
+    });
+
+
+Route::controller(UnitController::class)
+    ->name("units.")
+    ->prefix("/units")
     ->group(function (){
         Route::get("/", "index")->name("index");
     });
