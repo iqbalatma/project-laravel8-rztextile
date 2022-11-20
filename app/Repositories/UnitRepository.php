@@ -21,6 +21,11 @@ class UnitRepository{
   {
     return Unit::where("id", $id)->update($requestedData);
   }
+
+  public function addNewDataUnit(array $requestedData):?object
+  {
+    return Unit::create($requestedData);
+  }
 }
 
 ?>

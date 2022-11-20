@@ -36,4 +36,5 @@ Route::controller(UnitController::class)
         Route::get("/edit/{id}", "edit")->name("edit");
         Route::get("/create", "create")->name("create");
         Route::patch("/{id}", "update")->name("update");
+        Route::post("/", "store")->name("store");
     });

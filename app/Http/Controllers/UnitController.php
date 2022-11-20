@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Units\UnitStoreRequest;
 use App\Http\Requests\Units\UnitUpdateRequest;
 use App\Services\UnitService;
 use Illuminate\Http\RedirectResponse;
@@ -20,9 +21,36 @@ class UnitController extends Controller
         return response()->view("units.index", $service->getAllData());
     }
 
+    /**
+     * Description : use to show form to add new unit
+     * 
+     * @param UnitService $service dependency injection
+     * @return Response
+     */
     public function create(UnitService $service):Response
     {
         return response()->view("units.create", $service->getCreateData());
+    }
+
+
+    /**
+     * Description : use to add new unit
+     * 
+     * @param UnitService $service dependency injection
+     * @param UnitStoreRequest $request dependency injection
+     */
+    public function store(UnitService $service, UnitStoreRequest $request)
+    {
+        $stored = $service->storeNewData($request->validated());
+
+        $redirect = redirect()
+            ->route("units.index");
+            
+        $stored?
+            $redirect->with("success", "Update data unit successfully"):
+            $redirect->with("failed", "Update data unit failed");
+
+        return $redirect;
     }
 
     /**
@@ -47,13 +75,13 @@ class UnitController extends Controller
     public function update(UnitService $service, UnitUpdateRequest $request, int $id):RedirectResponse
     {
         $updated = $service->updateData($id, $request->validated());
-        $return = redirect()
+        $redirect = redirect()
             ->route("units.index");
             
         $updated?
-            $return->with("success", "Update data unit successfully"):
-            $return->with("failed", "Update data unit failed");
+            $redirect->with("success", "Update data unit successfully"):
+            $redirect->with("failed", "Update data unit failed");
 
-        return $return;
+        return $redirect;
     }
 }

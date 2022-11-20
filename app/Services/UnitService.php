@@ -48,9 +48,19 @@ class UnitService{
     ];
   }
 
+  /**
+   * Description : use to update new data by id
+   * 
+   * @return bool status update success or not
+   */
   public function updateData(int $id, array $requestedData):bool
   {
     return (new UnitRepository())->updateDataUnitById($id, $requestedData);
+  }
+
+  public function storeNewData(array $requestedData):object
+  {
+    return (new UnitRepository())->addNewDataUnit($requestedData);
   }
 }
 
