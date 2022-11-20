@@ -4,14 +4,42 @@ namespace App\Services;
 use App\Repositories\UnitRepository;
 
 class UnitService{
-  public function getAllData()
+
+  /**
+   * Description : use to get all data for index controller
+   * 
+   * @return array
+   */
+  public function getAllData():array
   {
     return [
       "title" => "Unit",
-      "cardTitle" => "Unit",
-      "cardDescription" => "Data unit for every rolls",
+      "cardTitle" => "Units",
       "units" => (new UnitRepository())->getAllDataUnitPaginated()
     ];
+  }
+
+  /**
+   * Description : use to get unit by id for edit data
+   * 
+   * @param int $id of unit
+   * @return array for current data that want to update
+   */
+  public function getEditData(int $id):array
+  {
+    $unit = (new UnitRepository())->getDataUnitById($id);
+    return [
+      "title" => "Edit Unit",
+      "pageTitle" => "Edit Unit",
+      "pageTitle" => "Edit Unit",
+      "pageDescription" => "Edit data unit and save the changes to update new data",
+      "unit" => $unit
+    ];
+  }
+
+  public function updateData(int $id, array $requestedData):bool
+  {
+    return (new UnitRepository())->updateDataUnitById($id, $requestedData);
   }
 }
 

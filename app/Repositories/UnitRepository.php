@@ -11,6 +11,16 @@ class UnitRepository{
     return Unit::select($columns)
       ->paginate($perPage);
   }
+
+  public function getDataUnitById(int $id, $columns = ["*"]):?object
+  {
+    return Unit::find($id, $columns);
+  }
+
+  public function updateDataUnitById(int $id, array $requestedData):bool
+  {
+    return Unit::where("id", $id)->update($requestedData);
+  }
 }
 
 ?>

@@ -1,6 +1,8 @@
 window._ = require('lodash');
+import "bootstrap";
 
-import "./../adminkit/src/js/app";
+import "./../sbadmin/src/js/scripts";
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the

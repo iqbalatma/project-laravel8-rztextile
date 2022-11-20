@@ -33,4 +33,6 @@ Route::controller(UnitController::class)
     ->prefix("/units")
     ->group(function (){
         Route::get("/", "index")->name("index");
+        Route::get("/edit/{id}", "edit")->name("edit");
+        Route::patch("/{id}", "update")->name("update");
     });
