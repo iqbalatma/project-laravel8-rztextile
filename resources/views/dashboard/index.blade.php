@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :title="$title">
 
   <div class="row">
     <div class="col-xl-6 col-xxl-5 d-flex">

@@ -15,7 +15,7 @@
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
-	<title>INI TITLE</title>
+	<title>{{ $title }}</title>
 
 	<link href="css/app.css" rel="stylesheet">
 	{{--

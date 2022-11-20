@@ -10,7 +10,7 @@
             </li>
 
             <li class="sidebar-item active">
-                <a class="sidebar-link" href="index.html">
+                <a class="sidebar-link" href="{{ route('dashboard.index') }}">
                     <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
                 </a>
             </li>

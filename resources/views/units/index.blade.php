@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :title="$title">
   <div class="row">
     <div class="card flex-fill w-100">
       <div class="card-header">
@@ -12,6 +12,8 @@
               <th>No</th>
               <th>Name</th>
               <th>Shortname</th>
+              <th>Last Updated Time</th>
+              <th class="text-center">Action</th>
             </thead>
             <tbody>
               @foreach ($units as $key => $unit)
@@ -19,6 +21,17 @@
                 <td>{{ $units->firstItem()+$key }}</td>
                 <td>{{ $unit->name }}</td>
                 <td>{{ $unit->shortname }}</td>
+                <td>{{ $unit->updated_at }}</td>
+                <td class="text-center">
+                  <div class="d-grid gap-2 d-md-block">
+                    <a href="#" class="btn btn-success">
+                      <i data-feather="edit"></i> Edit
+                    </a>
+                    <a href="#" class="btn btn-danger">
+                      <i data-feather="edit"></i> Delete
+                    </a>
+                  </div>
+                </td>
               </tr>
               @endforeach
             </tbody>
