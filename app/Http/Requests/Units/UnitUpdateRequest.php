@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Units;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UnitUpdateRequest extends FormRequest
 {
@@ -25,7 +26,7 @@ class UnitUpdateRequest extends FormRequest
     {
         return [
             "name" => "required|max:32",
-            "shortname" => "required|max:32|unique:units,shortname,$this->id"
+            "shortname" => ["required", Rule::unique("units", "shortname")->ignore($this->id)->whereNull("deleted_at")]
         ];
     }
 }
