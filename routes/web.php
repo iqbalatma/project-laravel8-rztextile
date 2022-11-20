@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,4 +25,17 @@ Route::controller(DashboardController::class)
     ->prefix("/dashboard")
     ->group(function (){
         Route::get("/", "index")->name("index");
+    });
+
+
+Route::controller(UnitController::class)
+    ->name("units.")
+    ->prefix("/units")
+    ->group(function (){
+        Route::get("/", "index")->name("index");
+        Route::get("/edit/{id}", "edit")->name("edit");
+        Route::get("/create", "create")->name("create");
+        Route::patch("/{id}", "update")->name("update");
+        Route::post("/", "store")->name("store");
+        Route::delete("/{id}", "destroy")->name("destroy");
     });

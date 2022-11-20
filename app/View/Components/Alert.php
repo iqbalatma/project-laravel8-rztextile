@@ -4,18 +4,18 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class AppLayout extends Component
+class Alert extends Component
 {
-    public $title;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($title)
+    public function __construct()
     {
-        $this->title = $title;
+        //
     }
+
     /**
      * Get the view / contents that represent the component.
      *
@@ -23,6 +23,6 @@ class AppLayout extends Component
      */
     public function render()
     {
-        return view('components.app-layout');
+        return view('components.alert');
     }
 }
