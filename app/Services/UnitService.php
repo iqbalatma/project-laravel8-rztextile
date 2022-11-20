@@ -67,6 +67,18 @@ class UnitService{
   {
     return (new UnitRepository())->addNewDataUnit($requestedData);
   }
+
+
+  /**
+   * Description : use to delete data by id
+   * 
+   * @param int $id
+   * @return bool status of delete data success or not
+   */
+  public function deleteData(int $id):bool
+  {
+    return (new UnitRepository())->deleteDataUnitById($id);
+  }
 }
 
 ?>

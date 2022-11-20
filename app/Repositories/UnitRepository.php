@@ -26,6 +26,11 @@ class UnitRepository{
   {
     return Unit::create($requestedData);
   }
+
+  public function deleteDataUnitById(int $id):bool
+  {
+    return Unit::destroy($id);
+  }
 }
 
 ?>

@@ -37,4 +37,5 @@ Route::controller(UnitController::class)
         Route::get("/create", "create")->name("create");
         Route::patch("/{id}", "update")->name("update");
         Route::post("/", "store")->name("store");
+        Route::delete("/{id}", "destroy")->name("destroy");
     });

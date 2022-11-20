@@ -28,14 +28,18 @@
               <td>{{ $unit->shortname }}</td>
               <td>{{ $unit->updated_at }}</td>
               <td class="text-center">
-                <div class="d-grid gap-2 d-md-block">
-                  <a href="{{ route('units.edit', $unit->id) }}" class="btn btn-success">
-                    <i data-feather="edit"></i> Edit
-                  </a>
-                  <a href="#" class="btn btn-danger">
-                    <i data-feather="edit"></i> Delete
-                  </a>
-                </div>
+                <form action="{{ route('units.destroy', $unit->id) }}" method="POST">
+                  @csrf
+                  @method("DELETE")
+                  <div class="d-grid gap-2 d-md-block">
+                    <a href="{{ route('units.edit', $unit->id) }}" class="btn btn-success">
+                      <i data-feather="edit"></i> Edit
+                    </a>
+                    <button type="submit" class="btn btn-danger">
+                      <i data-feather="edit"></i> Delete
+                    </button>
+                  </div>
+                </form>
               </td>
             </tr>
             @endforeach

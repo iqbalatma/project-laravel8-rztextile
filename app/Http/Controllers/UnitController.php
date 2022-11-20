@@ -84,4 +84,26 @@ class UnitController extends Controller
 
         return $redirect;
     }
+
+
+    /**
+     * Description : use to delete data unit by id
+     * 
+     * @param UnitService $service dependency injection
+     * @param int $id of unit that want to delete
+     * @return RedirectResponse
+     */
+    public function destroy(UnitService $service, int $id):RedirectResponse
+    {
+        $deleted = $service->deleteData($id);
+
+        $redirect = redirect()
+            ->route("units.index");
+            
+        $deleted?
+            $redirect->with("success", "Delete data unit successfully"):
+            $redirect->with("failed", "Delete data unit failed");
+
+        return $redirect;
+    }
 }
