@@ -30,9 +30,7 @@ class UnitService{
     $unit = (new UnitRepository())->getDataUnitById($id);
     return [
       "title" => "Edit Unit",
-      "pageTitle" => "Edit Unit",
-      "pageTitle" => "Edit Unit",
-      "pageDescription" => "Edit data unit and save the changes to update new data",
+      "cardTitle" => "Edit Unit",
       "unit" => $unit
     ];
   }

@@ -1,18 +1,16 @@
 @if ($message = Session::get('success'))
-<div class="alert alert-success" role="alert">
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-circle-check"></i>
     <strong>{{ $message }}</strong>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true" class="mb-3">&times;</span>
-    </button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
 
 @if ($message = Session::get('failed'))
-<div class="alert alert-danger" role="alert">
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-triangle-exclamation"></i>
     <strong>{{ $message }}</strong>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true" class="mb-3">&times;</span>
-    </button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
 

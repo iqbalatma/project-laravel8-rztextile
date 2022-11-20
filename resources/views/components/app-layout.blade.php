@@ -22,6 +22,7 @@
 					<ol class="breadcrumb mb-4">
 						<li class="breadcrumb-item active">Description</li>
 					</ol>
+					<x-alert></x-alert>
 					{{ $slot }}
 				</div>
 			</main>

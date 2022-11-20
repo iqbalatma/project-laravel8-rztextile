@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Units\UnitUpdateRequest;
 use App\Services\UnitService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
 class UnitController extends Controller
@@ -31,18 +32,24 @@ class UnitController extends Controller
         return response()->view("units.edit", $service->getEditData($id));
     }
 
-    public function update(UnitService $service, UnitUpdateRequest $request, int $id)
+
+    /**
+     * Description : use to update data unit with requested data
+     * 
+     * @param UnitService $service dependency injection
+     * @param UnitUpdateRequest $request dependency injection
+     * @param int $id of unit that want to update
+     */
+    public function update(UnitService $service, UnitUpdateRequest $request, int $id):RedirectResponse
     {
         $updated = $service->updateData($id, $request->validated());
         $return = redirect()
             ->route("units.index");
             
-        if($updated){
-            $return->with("success", "Update data unit successfully");
-        }else{
+        $updated?
+            $return->with("success", "Update data unit successfully"):
             $return->with("failed", "Update data unit failed");
-        }
-        
+
         return $return;
     }
 }
