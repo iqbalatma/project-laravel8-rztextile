@@ -20,6 +20,19 @@ class UnitService{
   }
 
   /**
+   * Description : use to get data for create view
+   * 
+   * @return array
+   */
+  public function getCreateData():array
+  {
+    return [
+      "title" => "Unit",
+      "cardTitle" => "Units",
+    ];
+  }
+
+  /**
    * Description : use to get unit by id for edit data
    * 
    * @param int $id of unit

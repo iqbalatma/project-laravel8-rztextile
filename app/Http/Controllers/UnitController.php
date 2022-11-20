@@ -20,6 +20,10 @@ class UnitController extends Controller
         return response()->view("units.index", $service->getAllData());
     }
 
+    public function create(UnitService $service):Response
+    {
+        return response()->view("units.create", $service->getCreateData());
+    }
 
     /**
      * Description : use to show edit form for unit by id

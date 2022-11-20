@@ -34,5 +34,6 @@ Route::controller(UnitController::class)
     ->group(function (){
         Route::get("/", "index")->name("index");
         Route::get("/edit/{id}", "edit")->name("edit");
+        Route::get("/create", "create")->name("create");
         Route::patch("/{id}", "update")->name("update");
     });

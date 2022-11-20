@@ -5,7 +5,13 @@
       {{ $cardTitle }}
     </div>
     <div class="card-body">
-      <div class="table-responsive">
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a href="{{ route('units.create') }}" type="button" class="btn btn-primary">
+          <i class="fa-solid fa-square-plus"></i>
+          Add New Unit</a>
+      </div>
+
+      <div class="table-responsive mt-4">
         <table class="table align-middle">
           <thead>
             <th>No</th>
