@@ -1,7 +1,7 @@
 <x-app-layout :title="$title">
   <div class="card mb-4">
     <div class="card-header">
-      <i class="fa-solid fa-scale-unbalanced-flip"></i>
+      <i class="fa-solid fa-user-tag"></i>
       {{ $cardTitle }}
     </div>
     <div class="card-body">
