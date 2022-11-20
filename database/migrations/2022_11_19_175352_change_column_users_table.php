@@ -42,5 +42,11 @@ class ChangeColumnUsersTable extends Migration
      */
     public function down()
     {
+        Schema::table('users', function($table) {
+            $table->dropColumn("phone");
+            $table->dropColumn("role_id");
+            $table->dropColumn("id_number");
+            $table->dropColumn("address");
+        });
     }
 }
