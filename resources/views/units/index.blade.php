@@ -2,24 +2,25 @@
   <div class="row">
     <div class="card flex-fill w-100">
       <div class="card-header">
-        <h5 class="card-title mb-0">Browser Usage</h5>
+        <h5 class="card-title mb-0">{{ $cardTitle }}</h5>
+        <small>{{ $cardDescription }}</small>
       </div>
-      <div class="card-body d-flex">
-        <div class="align-self-center w-100">
-          <table class="table mb-0">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead>
+              <th>No</th>
+              <th>Name</th>
+              <th>Shortname</th>
+            </thead>
             <tbody>
+              @foreach ($units as $key => $unit)
               <tr>
-                <td>Chrome</td>
-                <td class="text-end">4306</td>
+                <td>{{ $units->firstItem()+$key }}</td>
+                <td>{{ $unit->name }}</td>
+                <td>{{ $unit->shortname }}</td>
               </tr>
-              <tr>
-                <td>Firefox</td>
-                <td class="text-end">3801</td>
-              </tr>
-              <tr>
-                <td>IE</td>
-                <td class="text-end">1689</td>
-              </tr>
+              @endforeach
             </tbody>
           </table>
         </div>

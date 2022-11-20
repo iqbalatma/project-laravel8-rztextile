@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\UnitService;
 use Illuminate\Http\Response;
 
 class UnitController extends Controller
@@ -11,8 +12,8 @@ class UnitController extends Controller
      * 
      * @return Response for html view
      */
-    public function index():Response
+    public function index(UnitService $service):Response
     {
-        return response()->view("units.index");
+        return response()->view("units.index", $service->getAllData());
     }
 }
