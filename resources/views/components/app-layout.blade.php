@@ -12,6 +12,7 @@
 </head>
 
 <body class="sb-nav-fixed">
+	@include('sweetalert::alert')
 	<x-navbar></x-navbar>
 	<div id="layoutSidenav">
 		<x-sidebar></x-sidebar>
