@@ -47,8 +47,8 @@ class UnitController extends Controller
             ->route("units.index");
             
         $stored?
-            $redirect->with("success", "Update data unit successfully"):
-            $redirect->with("failed", "Update data unit failed");
+            $redirect->with("success", "Add new data unit successfully"):
+            $redirect->with("failed", "Add new data unit failed");
 
         return $redirect;
     }

@@ -58,6 +58,11 @@ class UnitService{
     return (new UnitRepository())->updateDataUnitById($id, $requestedData);
   }
 
+  /**
+   * Description : use to add new data unit
+   * 
+   * @param array $requestedData validated data from form
+   */
   public function storeNewData(array $requestedData):object
   {
     return (new UnitRepository())->addNewDataUnit($requestedData);
