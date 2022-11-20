@@ -15,7 +15,7 @@ class UnitService{
     return [
       "title" => "Unit",
       "cardTitle" => "Units",
-      "units" => (new UnitRepository())->getAllDataUnitPaginated()
+      "units" => (new UnitRepository())->getAllDataUnitPaginated(),
     ];
   }
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,4 +39,11 @@ Route::controller(UnitController::class)
         Route::patch("/{id}", "update")->name("update");
         Route::post("/", "store")->name("store");
         Route::delete("/{id}", "destroy")->name("destroy");
+    });
+
+Route::controller(RoleController::class)
+    ->name("roles.")
+    ->prefix("/roles")
+    ->group(function (){
+        Route::get("/", "index")->name("index");
     });
