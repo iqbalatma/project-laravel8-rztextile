@@ -17,6 +17,11 @@ class RollRepository{
     return Roll::create($requestedData);
   }
 
+  public function getDataRollById(int $id, array $columns = ["*"]):?object
+  {
+    return Roll::find($id, $columns);
+  }
+
 }
 
 ?>

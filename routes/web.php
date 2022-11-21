@@ -69,4 +69,5 @@ Route::controller(RollController::class)
         Route::get("/", "index")->name("index");
         Route::get("/create", "create")->name("create");
         Route::post("/", "store")->name("store");
+        Route::get("/edit/{id}", "edit")->name("edit");
     });

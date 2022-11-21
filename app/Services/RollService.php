@@ -1,7 +1,6 @@
 <?php 
 namespace App\Services;
 
-use App\AppData;
 use App\Repositories\RollRepository;
 use App\Repositories\UnitRepository;
 
@@ -56,7 +55,15 @@ class RollService{
     return (new RollRepository())->addNewDataRoll($requestedData);
   }
 
-
+  public function getEditData(int $id):array
+  {
+    return [
+      "title" => "Roll",
+      "cardTitle" => "Rolls",
+      "units" => (new UnitRepository())->getAllDataUnit(self::ALL_UNIT_SELECT_COLUMN),
+      "roll" => (new RollRepository())->getDataRollById($id)
+    ];
+  }
   
 }
 

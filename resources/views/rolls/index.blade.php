@@ -33,8 +33,8 @@
               <td>{{ $roll->quantity_roll . " rolls" }}</td>
               <td>{{ $roll->quantity_unit . " " . $roll->unit->name??"" }}</td>
               <td>{{ $roll->updated_at??"-" }}</td>
-              {{-- <td class="text-center">
-                <form action="{{ route('rolls.destroy', $roll->id) }}" method="POST">
+              <td class="text-center">
+                {{-- <form action="{{ route('rolls.destroy', $roll->id) }}" method="POST"> --}}
                   @csrf
                   @method("DELETE")
                   <div class="d-grid gap-2 d-md-block">
@@ -45,8 +45,9 @@
                       <i data-feather="edit"></i> Delete
                     </a>
                   </div>
-                </form>
-              </td> --}}
+                  {{--
+                </form> --}}
+              </td>
             </tr>
             @endforeach
           </tbody>

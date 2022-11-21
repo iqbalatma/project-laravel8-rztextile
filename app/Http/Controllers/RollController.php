@@ -34,6 +34,18 @@ class RollController extends Controller
 
 
     /**
+     * Description : use to show form for edit roll
+     * 
+     * @param RollService $service dependency injection
+     * @return Response
+     */
+    public function edit(RollService $service, int $id):Response
+    {
+        return response()->view("rolls.edit", $service->getEditData($id));
+    }
+
+
+    /**
      * Description : use to add new roll data
      * 
      * @param RollService $service dependency injection
