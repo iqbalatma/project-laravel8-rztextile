@@ -7,6 +7,8 @@ class AppData {
 
   public const ROLE_ID_CUSTOMER = 5;
 
+  public const BARCODE_LENGTH = 8;
+
 }
 
 ?>

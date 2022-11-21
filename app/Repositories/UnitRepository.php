@@ -12,6 +12,11 @@ class UnitRepository{
       ->paginate($perPage);
   }
 
+  public function getAllDataUnit(array $columns = ["*"])
+  {
+    return Unit::select($columns)->get();
+  }
+
   public function getDataUnitById(int $id, $columns = ["*"]):?object
   {
     return Unit::find($id, $columns);
