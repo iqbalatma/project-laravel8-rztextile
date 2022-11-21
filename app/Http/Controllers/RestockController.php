@@ -12,7 +12,7 @@ class RestockController extends Controller
     /**
      * Description : use to show form for restock data roll
      * 
-     * @param RestockService $service
+     * @param RestockService $service dependency injection
      * @return Response
      */
     public function create(RestockService $service):Response
@@ -20,6 +20,13 @@ class RestockController extends Controller
         return response()->view("restock.create", $service->getAllData());
     }
 
+    /**
+     * Description : use to add new roll with restock
+     * 
+     * @param RestockService $service dependency injection
+     * @param RestockRequest $request dependency injection
+     * @return RedirectResponse
+     */
     public function store(RestockService $service, RestockRequest $request):RedirectResponse
     {
         $stored = $service->storeNewRestock($request->validated());
