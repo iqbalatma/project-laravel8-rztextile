@@ -6,17 +6,25 @@ use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class QRCodeService{
+  private const QR_CODE_SIZE = 200;
+  private const QR_CODE_FORMAT = "png";
 
-  public function storeNewQRCode($code = "code"):string
+  /**
+   * Description : use to store new qrcode 
+   * 
+   * @param string $code of barcode
+   * @return string
+   */
+  public function storeNewQRCode(string $code = "code"):string
   {
-    $qrcode = QrCode::format("png")
-              ->size(200)->errorCorrection('H')
+    $qrcode = QrCode::format(self::QR_CODE_FORMAT)
+              ->size(self::QR_CODE_SIZE)
+              ->errorCorrection('H')
               ->generate($code);
 
     $path = '/images/qrcode/' . randomString(16) . '.png';
     Storage::disk('local')->put($path, $qrcode); 
     
-
     return basename($path);
   }
 
