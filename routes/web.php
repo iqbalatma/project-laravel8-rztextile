@@ -3,6 +3,7 @@
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RollController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,4 +60,12 @@ Route::controller(CustomerController::class)
         Route::post("/", "store")->name("store");
         Route::patch("/{id}", "update")->name("update");
         Route::delete("/{id}", "destroy")->name("destroy");
+    });
+
+Route::controller(RollController::class)
+    ->name("rolls.")
+    ->prefix("/rolls")
+    ->group(function (){
+        Route::get("/", "index")->name("index");
+        Route::get("/create", "create")->name("create");
     });

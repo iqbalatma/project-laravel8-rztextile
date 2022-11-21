@@ -26,6 +26,12 @@
                     </div>
                     Customers
                 </a>
+                <a class="nav-link" href="{{ route('rolls.index') }}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </div>
+                    Rolls
+                </a>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                     Layouts
