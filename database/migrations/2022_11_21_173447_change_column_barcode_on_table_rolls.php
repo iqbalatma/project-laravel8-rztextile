@@ -15,6 +15,7 @@ class ChangeColumnBarcodeOnTableRolls extends Migration
     {
         Schema::table("rolls", function (Blueprint $table){
             $table->renameColumn("barcode", "qrcode");
+            $table->renameColumn("barcode_image", "qrcode_image");
         });
     }
 
@@ -27,6 +28,7 @@ class ChangeColumnBarcodeOnTableRolls extends Migration
     {
         Schema::table("rolls", function (Blueprint $table){
             $table->renameColumn("qrcode", "barcode");
+            $table->renameColumn("qrcode_image", "barcode_image");
         });
     }
 }

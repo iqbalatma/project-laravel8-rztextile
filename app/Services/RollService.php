@@ -46,20 +46,18 @@ class RollService{
    */
   public function storeNewData(array $requestedData):?object
   {
-    $requestedData["qrcode"] = $this->getGenerateBarcode();
+    $qrService = new QRCodeService();
+    $qrcode = $qrService->getGeneratedQrCode();
+    $qrcodeFileName = $qrService->storeNewQRCode($qrcode);
+
+    $requestedData["qrcode"] = $qrcode;
+    $requestedData["qrcode_image"] = $qrcodeFileName;
+    
     return (new RollRepository())->addNewDataRoll($requestedData);
   }
 
 
-  /**
-   * Description : use to get generated barcode code
-   * 
-   * @return string of generated barcode
-   */
-  private function getGenerateBarcode():string
-  {
-    return randomString(AppData::BARCODE_LENGTH);
-  }
+  
 }
 
 ?>

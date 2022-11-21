@@ -233,7 +233,7 @@ return [
 
         #custom aliases
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     ],
 
 ];
