@@ -6,7 +6,7 @@
     </div>
     <div class="card-body">
       <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-        <a href="{{ route('restock.create') }}" type="button" class="btn btn-danger">
+        <a href="{{ route('roll.transactions.putAway') }}" type="button" class="btn btn-danger">
           <i class="fa-solid fa-square-minus"></i>
           Put Away
         </a>

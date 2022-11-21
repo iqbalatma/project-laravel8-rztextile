@@ -80,6 +80,8 @@ Route::controller(RollTransactionController::class)
     ->prefix("/roll-transactions")
     ->group(function (){
         Route::get("/", "index")->name("index");
+        Route::get("/put-away", "putAway")->name("putAway");
+        Route::post("/put-away", "putAwayTransaction")->name("putAwayTransaction");
     });
 
 Route::controller(RestockController::class)
