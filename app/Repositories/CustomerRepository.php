@@ -19,6 +19,16 @@ class CustomerRepository{
   {
     return User::create($requestedData);
   }
+
+  public function getCustomerById(int $id, array $columns = ["*"])
+  {
+    return User::find($id, $columns);
+  }
+
+  public function updateCustomerById(int $id, array $requestedData):bool
+  {
+    return User::where("id", $id)->update($requestedData);
+  }
 }
 
 ?>

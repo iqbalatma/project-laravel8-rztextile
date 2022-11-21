@@ -31,6 +31,21 @@
               <td>{{ $customer->phone }}</td>
               <td>{{ $customer->address }}</td>
               <td>{{ $customer->updated_at }}</td>
+              <td class="text-center">
+                {{-- <form action="{{ route('units.destroy', $unit->id) }}" method="POST"> --}}
+                  {{-- @csrf --}}
+                  {{-- @method("DELETE") --}}
+                  <div class="d-grid gap-2 d-md-block">
+                    <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-success">
+                      <i data-feather="edit"></i> Edit
+                    </a>
+                    <a class="btn btn-danger btn-delete">
+                      <i data-feather="edit"></i> Delete
+                    </a>
+                  </div>
+                  {{--
+                </form> --}}
+              </td>
             </tr>
             @endforeach
           </tbody>

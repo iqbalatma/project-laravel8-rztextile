@@ -38,11 +38,36 @@ class CustomerService{
     ];
   }
 
-
+  /**
+   * Description : use to add new data 
+   * 
+   * @param array $requestedData
+   */
   public function storeNewData(array $requestedData):?object
   {
     $requestedData["role_id"] = AppData::ROLE_ID_CUSTOMER;
     return (new CustomerRepository())->addNewDataCustomer($requestedData);
+  }
+
+
+  /**
+   * Description : use to get data edit by id
+   * 
+   * @param int $id of customer that want to edit
+   * @return array 
+   */
+  public function getEditData(int $id):array
+  {
+    return [
+      "title" => "Customer",
+      "cardTitle" => "Customers",
+      "customer" => (new CustomerRepository())->getCustomerById($id, self::ALL_CUSTOMER_SELECT_COLUMN)
+    ];
+  }
+
+  public function updateData(int $id, array $requestedData):bool
+  {
+    return (new CustomerRepository())->updateCustomerById($id, $requestedData);
   }
 
   

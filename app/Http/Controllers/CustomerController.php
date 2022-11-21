@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Customers\CustomerStoreRequest;
+use App\Http\Requests\Customers\CustomerUpdateRequest;
 use App\Services\CustomerService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
@@ -33,6 +34,14 @@ class CustomerController extends Controller
         return response()->view("customers.create", $service->getCreateData());
     }
 
+
+    /**
+     * Description : use to update data customer
+     * 
+     * @param CustomerService $service dependency injection
+     * @param CustomerStoreRequest $request dependency injection
+     * @return RedirectResponse
+     */
     public function store(CustomerService $service, CustomerStoreRequest $request):RedirectResponse
     {
         $stored = $service->storeNewData($request->validated());
@@ -43,6 +52,41 @@ class CustomerController extends Controller
         $stored?
             $redirect->with("success", "Add new data customer successfully"):
             $redirect->with("failed", "Add new data customer failed");
+
+        return $redirect;
+    }
+
+
+    /**
+     * Description : use to show form for edit data customer
+     * 
+     * @param CustomerService $service dependency injection
+     * @param int $id of customer that want to edit
+     * @return Response
+     */
+    public function edit(CustomerService $service, int $id):Response
+    {
+        return response()->view("customers.edit", $service->getEditData($id));
+    }
+
+
+    /**
+     * Description : use to update data into new data 
+     * 
+     * @param CustomerService $service dependency injection
+     * 
+     * @return RedirectResponse
+     */
+    public function update(CustomerService $service, CustomerUpdateRequest $request, int $id)
+    {
+        $updated = $service->updateData($id, $request->validated());
+
+        $redirect = redirect()
+            ->route("customers.index");
+            
+        $updated?
+            $redirect->with("success", "Update data customer successfully"):
+            $redirect->with("failed", "Update data customer failed");
 
         return $redirect;
     }

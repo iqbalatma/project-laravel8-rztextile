@@ -55,5 +55,7 @@ Route::controller(CustomerController::class)
     ->group(function (){
         Route::get("/", "index")->name("index");
         Route::get("/create", "create")->name("create");
+        Route::get("/edit/{id}", "edit")->name("edit");
         Route::post("/", "store")->name("store");
+        Route::patch("/{id}", "update")->name("update");
     });
