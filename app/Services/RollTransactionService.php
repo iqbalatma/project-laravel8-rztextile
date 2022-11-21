@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\InvalidActionException;
 use App\Repositories\RollRepository;
 use App\Repositories\RollTransactionRepository;
 use App\Repositories\UnitRepository;
@@ -41,10 +42,15 @@ class RollTransactionService
 
     try {
       DB::beginTransaction();
+      $rollRepository = new RollRepository();
 
-      //!NEED TO CHECK THE QUANTITY FIRST BEFORE ADD NEW QUANTITY
+      $roll = $rollRepository->getDataRollById($requestedData["roll_id"]);
+      
+      if($requestedData["quantity_roll"]>$roll->quantity_roll || $requestedData["quantity_unit"]>$roll->quantity_unit ){
+        throw new InvalidActionException("Roll quantity or quantity unit cannot bigger than stock on warehouse");
+      }
 
-      (new RollRepository())->decreaseQuantityRollAndUnit(
+      $rollRepository->decreaseQuantityRollAndUnit(
         $requestedData["roll_id"],
         $requestedData["quantity_roll"],
         $requestedData["quantity_unit"]
@@ -54,6 +60,7 @@ class RollTransactionService
       DB::commit();
     } catch (Exception $e) {
       DB::rollBack();
+      throw $e;
     }
     return $rollTransaction;
   }

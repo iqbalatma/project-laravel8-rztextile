@@ -25,7 +25,7 @@
             <th>Quantity Unit</th>
             <th>Type</th>
             <th>Admin</th>
-            <th>Last Updated Time</th>
+            <th>Date Time</th>
           </thead>
           <tbody>
             @foreach ($rollTransactions as $key => $transaction)
@@ -45,7 +45,7 @@
                 @endif
               </td>
               <td>{{ $transaction->user->name??"-" }}</td>
-              <td>{{ $transaction->updated_at??"-" }}</td>
+              <td>{{ $transaction->created_at??"-" }}</td>
             </tr>
             @endforeach
           </tbody>
