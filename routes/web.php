@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UnitController;
@@ -46,4 +47,16 @@ Route::controller(RoleController::class)
     ->prefix("/roles")
     ->group(function (){
         Route::get("/", "index")->name("index");
+    });
+
+Route::controller(CustomerController::class)
+    ->name("customers.")
+    ->prefix("/customers")
+    ->group(function (){
+        Route::get("/", "index")->name("index");
+        Route::get("/create", "create")->name("create");
+        Route::get("/edit/{id}", "edit")->name("edit");
+        Route::post("/", "store")->name("store");
+        Route::patch("/{id}", "update")->name("update");
+        Route::delete("/{id}", "destroy")->name("destroy");
     });
