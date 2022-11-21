@@ -1,11 +1,11 @@
 <x-app-layout :title="$title">
   <div class="card mb-4">
     <div class="card-header">
-      <i class="fa-solid fa-scale-unbalanced-flip"></i>
+      <i class="fa-solid fa-boxes-stacked"></i>
       {{ $cardTitle }}
     </div>
     <div class="card-body">
-      <form class="row g-3" method="POST">
+      <form class="row g-3" method="POST" action="{{ route('rolls.store') }}">
         @csrf
         <div class="col-md-12">
           <label for="name" class="form-label">Roll Name</label>

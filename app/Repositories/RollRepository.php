@@ -12,6 +12,11 @@ class RollRepository{
       ->paginate($perPage);
   }
 
+  public function addNewDataRoll(array $requestedData):object
+  {
+    return Roll::create($requestedData);
+  }
+
 }
 
 ?>

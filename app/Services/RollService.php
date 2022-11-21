@@ -1,6 +1,7 @@
 <?php 
 namespace App\Services;
 
+use App\AppData;
 use App\Repositories\RoleRepository;
 use App\Repositories\RollRepository;
 use App\Repositories\UnitRepository;
@@ -22,6 +23,12 @@ class RollService{
     ];
   }
 
+
+  /**
+   * Description : use to get data for create form roll
+   * 
+   * @return array
+   */
   public function getCreateData():array
   {
     return [
@@ -29,6 +36,30 @@ class RollService{
       "cardTitle" => "Rolls",
       "units" => (new UnitRepository())->getAllDataUnit(self::ALL_UNIT_SELECT_COLUMN)
     ];
+  }
+
+
+  /**
+   * Description : use to add new data roll
+   * 
+   * @param array $requestedData
+   * @return object of eloquent
+   */
+  public function storeNewData(array $requestedData):?object
+  {
+    $requestedData["barcode"] = $this->getGenerateBarcode();
+    return (new RollRepository())->addNewDataRoll($requestedData);
+  }
+
+
+  /**
+   * Description : use to get generated barcode code
+   * 
+   * @return string of generated barcode
+   */
+  private function getGenerateBarcode():string
+  {
+    return randomString(AppData::BARCODE_LENGTH);
   }
 }
 
