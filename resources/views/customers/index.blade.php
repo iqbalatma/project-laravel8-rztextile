@@ -32,9 +32,9 @@
               <td>{{ $customer->address }}</td>
               <td>{{ $customer->updated_at }}</td>
               <td class="text-center">
-                {{-- <form action="{{ route('units.destroy', $unit->id) }}" method="POST"> --}}
-                  {{-- @csrf --}}
-                  {{-- @method("DELETE") --}}
+                <form action="{{ route('customers.destroy', $customer->id) }}" method="POST">
+                  @csrf
+                  @method("DELETE")
                   <div class="d-grid gap-2 d-md-block">
                     <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-success">
                       <i data-feather="edit"></i> Edit
@@ -43,8 +43,7 @@
                       <i data-feather="edit"></i> Delete
                     </a>
                   </div>
-                  {{--
-                </form> --}}
+                </form>
               </td>
             </tr>
             @endforeach
@@ -58,7 +57,24 @@
 
   @section("custom-scripts")
   <script>
-
+    $(document).ready(function(){
+      $(".btn-delete").on("click", function(){
+        const form =  $(this).closest("form");
+        Swal.fire({
+          title: 'Are you sure want to delete the unit ?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            form.submit();
+          }
+        })
+      });
+    });
   </script>
   @endsection
 </x-app-layout>

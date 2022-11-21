@@ -70,6 +70,11 @@ class CustomerService{
     return (new CustomerRepository())->updateCustomerById($id, $requestedData);
   }
 
+  public function deleteData(int $id):bool
+  {
+    return (new CustomerRepository())->deleteCustomerById($id);
+  }
+
   
 }
 

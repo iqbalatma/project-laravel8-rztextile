@@ -58,4 +58,5 @@ Route::controller(CustomerController::class)
         Route::get("/edit/{id}", "edit")->name("edit");
         Route::post("/", "store")->name("store");
         Route::patch("/{id}", "update")->name("update");
+        Route::delete("/{id}", "destroy")->name("destroy");
     });

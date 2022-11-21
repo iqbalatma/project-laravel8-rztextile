@@ -29,6 +29,11 @@ class CustomerRepository{
   {
     return User::where("id", $id)->update($requestedData);
   }
+
+  public function deleteCustomerById(int $id):bool
+  {
+    return User::destroy($id);
+  }
 }
 
 ?>

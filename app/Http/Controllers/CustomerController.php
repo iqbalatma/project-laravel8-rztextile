@@ -74,10 +74,11 @@ class CustomerController extends Controller
      * Description : use to update data into new data 
      * 
      * @param CustomerService $service dependency injection
-     * 
+     * @param CustomerUpdateRequest $request dependency injection
+     * @param int $id of customer that want to update
      * @return RedirectResponse
      */
-    public function update(CustomerService $service, CustomerUpdateRequest $request, int $id)
+    public function update(CustomerService $service, CustomerUpdateRequest $request, int $id):RedirectResponse
     {
         $updated = $service->updateData($id, $request->validated());
 
@@ -87,6 +88,28 @@ class CustomerController extends Controller
         $updated?
             $redirect->with("success", "Update data customer successfully"):
             $redirect->with("failed", "Update data customer failed");
+
+        return $redirect;
+    }
+
+
+    /**
+     * Description : use to delete data unit by id
+     * 
+     * @param CustomerService $service dependency injection
+     * @param int $id of unit that want to delete
+     * @return RedirectResponse
+     */
+    public function destroy(CustomerService $service, int $id):RedirectResponse
+    {
+        $deleted = $service->deleteData($id);
+
+        $redirect = redirect()
+            ->route("customers.index");
+            
+        $deleted?
+            $redirect->with("success", "Delete data customer successfully"):
+            $redirect->with("failed", "Delete data customer failed");
 
         return $redirect;
     }
