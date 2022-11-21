@@ -5,6 +5,16 @@
       {{ $cardTitle }}
     </div>
     <div class="card-body">
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a href="{{ route('restock.create') }}" type="button" class="btn btn-danger">
+          <i class="fa-solid fa-square-minus"></i>
+          Put Away
+        </a>
+        <a href="{{ route('restock.create') }}" type="button" class="btn btn-primary">
+          <i class="fa-solid fa-square-plus"></i>
+          Restock
+        </a>
+      </div>
       <div class="table-responsive mt-4">
         <table class="table align-middle">
           <thead>
