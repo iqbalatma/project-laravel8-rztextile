@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UnitController;
@@ -44,6 +45,13 @@ Route::controller(UnitController::class)
 Route::controller(RoleController::class)
     ->name("roles.")
     ->prefix("/roles")
+    ->group(function (){
+        Route::get("/", "index")->name("index");
+    });
+
+Route::controller(CustomerController::class)
+    ->name("customers.")
+    ->prefix("/customers")
     ->group(function (){
         Route::get("/", "index")->name("index");
     });
