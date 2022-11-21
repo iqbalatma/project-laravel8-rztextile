@@ -34,7 +34,7 @@
               <td>{{ $transaction->roll->name??"-" }}</td>
               <td>{{ $transaction->roll->code??"-" }}</td>
               <td>{{ $transaction->quantity_roll??0 }}</td>
-              <td>{{ $transaction->quantity_unit??0 }}</td>
+              <td>{{ ($transaction->quantity_unit??0) . " " . $transaction->roll->unit->name }}</td>
               <td>
                 @if ($transaction->type=="restock")
                 <span class="badge rounded-pill bg-success">{{ $transaction->type }}</span>
@@ -50,6 +50,9 @@
             @endforeach
           </tbody>
         </table>
+
+        {{ $rollTransactions->links() }}
+
       </div>
     </div>
   </div>
