@@ -11,7 +11,7 @@ class RollTransaction extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        "type", "quantity_roll", "quantity_unit", "capital", "profit", "roll_id", "invoice_id"
+        "type", "quantity_roll", "quantity_unit", "capital", "profit", "roll_id", "invoice_id", "user_id"
     ];
 
     public function roll()

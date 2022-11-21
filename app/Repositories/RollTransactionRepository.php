@@ -11,6 +11,11 @@ class RollTransactionRepository{
     return RollTransaction::select($columns)
       ->paginate($perPage);
   }
+
+  public function addNewDataRollTransaction(array $requestedData):?object
+  {
+    return RollTransaction::create($requestedData);
+  }
 }
 
 ?>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RestockController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
 use App\Http\Controllers\RollTransactionController;
@@ -79,4 +80,12 @@ Route::controller(RollTransactionController::class)
     ->prefix("/roll-transactions")
     ->group(function (){
         Route::get("/", "index")->name("index");
+    });
+
+Route::controller(RestockController::class)
+    ->name("restock.")
+    ->prefix("/restock")
+    ->group(function (){
+        Route::get("/create", "create")->name("create");
+        Route::post("/", "store")->name("store");
     });

@@ -18,8 +18,8 @@ class CreateRollTransactionsTable extends Migration
             $table->enum("type",["restock", "sold", "broken"]);
             $table->integer("quantity_roll");
             $table->integer("quantity_unit");
-            $table->float("capital");
-            $table->float("profit");
+            $table->float("capital")->nullable();
+            $table->float("profit")->nullable();
             $table->unsignedBigInteger("roll_id")->nullable();
             $table->unsignedBigInteger("invoice_id")->nullable();
             $table->unsignedBigInteger("user_id")->nullable();
