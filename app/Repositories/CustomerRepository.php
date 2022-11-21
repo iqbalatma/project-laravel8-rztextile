@@ -14,6 +14,11 @@ class CustomerRepository{
       ->paginate($perPage);
   }
 
+
+  public function addNewDataCustomer(array $requestedData):?object
+  {
+    return User::create($requestedData);
+  }
 }
 
 ?>

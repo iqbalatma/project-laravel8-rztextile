@@ -1,8 +1,8 @@
 <?php 
 namespace App\Services;
 
+use App\AppData;
 use App\Repositories\CustomerRepository;
-use App\Repositories\UnitRepository;
 
 class CustomerService{
 
@@ -22,6 +22,27 @@ class CustomerService{
       "cardTitle" => "Customers",
       "customers" => (new CustomerRepository())->getAllDataCustomerPaginated(self::ALL_CUSTOMER_SELECT_COLUMN)
     ];
+  }
+
+
+  /**
+   * Description : use to get data for create form
+   * 
+   * @return array
+   */
+  public function getCreateData():array
+  {
+    return [
+      "title" => "Customer",
+      "cardTitle" => "Customers",
+    ];
+  }
+
+
+  public function storeNewData(array $requestedData):?object
+  {
+    $requestedData["role_id"] = AppData::ROLE_ID_CUSTOMER;
+    return (new CustomerRepository())->addNewDataCustomer($requestedData);
   }
 
   

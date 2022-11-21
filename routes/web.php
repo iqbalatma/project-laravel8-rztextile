@@ -54,4 +54,6 @@ Route::controller(CustomerController::class)
     ->prefix("/customers")
     ->group(function (){
         Route::get("/", "index")->name("index");
+        Route::get("/create", "create")->name("create");
+        Route::post("/", "store")->name("store");
     });
