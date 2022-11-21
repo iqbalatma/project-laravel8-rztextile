@@ -1,18 +1,22 @@
-<?php 
+<?php
+
 namespace App\Services;
 
 use App\Repositories\RollRepository;
 use App\Repositories\RollTransactionRepository;
 use App\Repositories\UnitRepository;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
-class RollTransactionService{
+class RollTransactionService
+{
 
   /**
    * Description : use to get all data for index controller
    * 
    * @return array
    */
-  public function getAllData():array
+  public function getAllData(): array
   {
     return [
       "title" => "Roll Transaction",
@@ -21,7 +25,7 @@ class RollTransactionService{
     ];
   }
 
-  public function getPutAwayData():array
+  public function getPutAwayData(): array
   {
     return [
       "title" => "Put Away",
@@ -30,13 +34,27 @@ class RollTransactionService{
     ];
   }
 
-  public function addNewPutAwayTransaction(array $requestedData):?object
+  public function addNewPutAwayTransaction(array $requestedData): ?object
   {
     $requestedData["type"] = "broken";
     $requestedData["user_id"] = 1; #DUMMY
-    return (new RollTransactionRepository())->addNewDataRollTransaction($requestedData);
+
+    try {
+      DB::beginTransaction();
+
+      //!NEED TO CHECK THE QUANTITY FIRST BEFORE ADD NEW QUANTITY
+
+      (new RollRepository())->decreaseQuantityRollAndUnit(
+        $requestedData["roll_id"],
+        $requestedData["quantity_roll"],
+        $requestedData["quantity_unit"]
+      );
+
+      $rollTransaction =  (new RollTransactionRepository())->addNewDataRollTransaction($requestedData);
+      DB::commit();
+    } catch (Exception $e) {
+      DB::rollBack();
+    }
+    return $rollTransaction;
   }
-
 }
-
-?>

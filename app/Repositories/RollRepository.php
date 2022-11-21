@@ -40,6 +40,14 @@ class RollRepository{
       "quantity_unit" => DB::raw("quantity_unit+$quantityUnit"),
     ]);
   }
+
+  public function decreaseQuantityRollAndUnit(int $id,int $quantityRoll=0, int $quantityUnit = 0)
+  {
+    return Roll::where("id", $id)->update([
+      "quantity_roll" => DB::raw("quantity_roll-$quantityRoll"),
+      "quantity_unit" => DB::raw("quantity_unit-$quantityUnit"),
+    ]);
+  }
 }
 
 ?>
