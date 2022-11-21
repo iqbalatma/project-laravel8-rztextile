@@ -11,7 +11,7 @@ class Roll extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        "code", "name", "quantity_roll", "quantity_unit", "barcode", "basic_price", "selling_price", "barcode_image", "unit_id"
+        "code", "name", "quantity_roll", "quantity_unit", "qrcode", "basic_price", "selling_price", "barcode_image", "unit_id"
     ];
 
     public function unit()

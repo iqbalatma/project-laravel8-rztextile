@@ -2,7 +2,6 @@
 namespace App\Services;
 
 use App\AppData;
-use App\Repositories\RoleRepository;
 use App\Repositories\RollRepository;
 use App\Repositories\UnitRepository;
 
@@ -47,7 +46,7 @@ class RollService{
    */
   public function storeNewData(array $requestedData):?object
   {
-    $requestedData["barcode"] = $this->getGenerateBarcode();
+    $requestedData["qrcode"] = $this->getGenerateBarcode();
     return (new RollRepository())->addNewDataRoll($requestedData);
   }
 

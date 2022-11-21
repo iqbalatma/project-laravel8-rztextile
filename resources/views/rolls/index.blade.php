@@ -17,7 +17,7 @@
             <th>No</th>
             <th>Name</th>
             <th>Code</th>
-            <th>Barcode</th>
+            <th>QR Code</th>
             <th>Quantity Roll</th>
             <th>Quantity Unit</th>
             <th>Last Updated Time</th>
@@ -29,7 +29,7 @@
               <td>{{ $rolls->firstItem()+$key }}</td>
               <td>{{ $roll->name }}</td>
               <td>{{ $roll->code }}</td>
-              <td>{{ $roll->barcode }}</td>
+              <td>{{ $roll->qrcode }}</td>
               <td>{{ $roll->quantity_roll . " rolls" }}</td>
               <td>{{ $roll->quantity_unit . " " . $roll->unit->name??"" }}</td>
               <td>{{ $roll->updated_at??"-" }}</td>
@@ -57,7 +57,5 @@
     </div>
   </div>
 
-  @section("custom-scripts")
-  <script src="{{ asset('js/units/index.js') }}"></script>
-  @endsection
+
 </x-app-layout>

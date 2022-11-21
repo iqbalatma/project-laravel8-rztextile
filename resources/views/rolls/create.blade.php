@@ -13,7 +13,7 @@
         </div>
         <div class="col-md-12">
           <label for="code" class="form-label">Roll Code</label>
-          <input type="text" class="form-control" id="code" name="code" placeholder="Roll code will generate automatically !" readonly required value="tes">
+          <input type="text" class="form-control" id="code" name="code" placeholder="Roll code will generate automatically !" readonly required>
         </div>
         <div class="col-md-12">
           <label for="quantity_roll" class="form-label">Quantity Roll</label>
@@ -48,4 +48,8 @@
       </form>
     </div>
   </div>
+
+  @section("custom-scripts")
+  <script src="{{ asset('js/rolls/create.js') }}"></script>
+  @endsection
 </x-app-layout>
