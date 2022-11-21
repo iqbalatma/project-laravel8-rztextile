@@ -18,8 +18,12 @@ class RollController extends Controller
         return response()->view("rolls.index", $service->getAllData());
     }
 
-    public function create()
+
+    /**
+     * Description : use to show form for add new roll
+     */
+    public function create(RollService $service):Response
     {
-        
+        return response()->view("rolls.create", $service->getCreateData());
     }
 }
