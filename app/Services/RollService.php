@@ -65,6 +65,11 @@ class RollService{
     ];
   }
   
+
+  public function updateData(int $id, array $requestedData):bool
+  {
+    return (new RollRepository())->updateDataRollById($id, $requestedData);
+  }
 }
 
 ?>

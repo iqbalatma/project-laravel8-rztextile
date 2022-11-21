@@ -23,7 +23,7 @@ class QRCodeService{
               ->generate($code);
 
     $path = '/images/qrcode/' . randomString(16) . '.png';
-    Storage::disk('local')->put($path, $qrcode); 
+    Storage::disk('public')->put($path, $qrcode); 
     
     return basename($path);
   }

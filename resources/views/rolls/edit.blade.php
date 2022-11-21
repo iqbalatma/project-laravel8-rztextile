@@ -5,8 +5,9 @@
       {{ $cardTitle }}
     </div>
     <div class="card-body">
-      <form class="row g-3" method="POST" action="{{ route('rolls.store') }}">
+      <form class="row g-3" method="POST" action="{{ route('rolls.update', $roll->id) }}">
         @csrf
+        @method("PATCH")
         <div class="col-md-12">
           <label for="name" class="form-label">Roll Name</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="Enter name of new roll" required value="{{ $roll->name }}">
@@ -14,14 +15,6 @@
         <div class="col-md-12">
           <label for="code" class="form-label">Roll Code</label>
           <input type="text" class="form-control" id="code" name="code" placeholder="Roll code will generate automatically !" readonly required value="{{ $roll->code }}">
-        </div>
-        <div class="col-md-12">
-          <label for="quantity_roll" class="form-label">Quantity Roll</label>
-          <input type="number" min="0" class="form-control" id="quantity_roll" name="quantity_roll" placeholder="Enter quantity roll" required value="{{ $roll->quantity_roll }}">
-        </div>
-        <div class="col-md-12">
-          <label for="quantity_unit" class="form-label">Quantity Unit</label>
-          <input type="number" min="0" class="form-control" id="quantity_unit" name="quantity_unit" placeholder="Enter quantity unit" required value="{{ $roll->quantity_unit }}">
         </div>
         <div class="col-md-12">
           <label for="basic_price" class="form-label">Basic Price</label>
@@ -42,7 +35,6 @@
             @endforeach
           </select>
         </div>
-
         <div class="col-12">
           <a href="{{ route('rolls.index') }}" class="btn btn-danger">Cancel</a>
           <button type="submit" class="btn btn-primary">Submit</button>

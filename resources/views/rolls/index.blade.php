@@ -20,6 +20,7 @@
             <th>QR Code</th>
             <th>Quantity Roll</th>
             <th>Quantity Unit</th>
+            <th>QR Code Image</th>
             <th>Last Updated Time</th>
             <th class="text-center">Action</th>
           </thead>
@@ -32,31 +33,23 @@
               <td>{{ $roll->qrcode }}</td>
               <td>{{ $roll->quantity_roll . " rolls" }}</td>
               <td>{{ $roll->quantity_unit . " " . $roll->unit->name??"" }}</td>
+              <td>
+                <img src="storage/images/qrcode/{{ $roll->qrcode_image }}" alt="">
+              </td>
               <td>{{ $roll->updated_at??"-" }}</td>
               <td class="text-center">
-                {{-- <form action="{{ route('rolls.destroy', $roll->id) }}" method="POST"> --}}
-                  @csrf
-                  @method("DELETE")
-                  <div class="d-grid gap-2 d-md-block">
-                    <a href="{{ route('rolls.edit', $roll->id) }}" class="btn btn-success">
-                      <i data-feather="edit"></i> Edit
-                    </a>
-                    <a class="btn btn-danger btn-delete">
-                      <i data-feather="edit"></i> Delete
-                    </a>
-                  </div>
-                  {{--
-                </form> --}}
+                <div class="d-grid gap-2 d-md-block">
+                  <a href="{{ route('rolls.edit', $roll->id) }}" class="btn btn-success">
+                    <i data-feather="edit"></i> Edit
+                  </a>
+                </div>
               </td>
             </tr>
             @endforeach
           </tbody>
         </table>
         {{ ($rolls->links()) }}
-
       </div>
     </div>
   </div>
-
-
 </x-app-layout>

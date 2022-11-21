@@ -22,6 +22,11 @@ class RollRepository{
     return Roll::find($id, $columns);
   }
 
+  public function updateDataRollById(int $id, array $requestedData):bool
+  {
+    return Roll::where("id", $id)->update($requestedData);
+  }
+
 }
 
 ?>

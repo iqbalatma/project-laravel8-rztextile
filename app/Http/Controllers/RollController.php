@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Rolls\RollStoreRequest;
+use App\Http\Requests\Rolls\RollUpdateRequest;
 use App\Services\RollService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
@@ -42,6 +43,25 @@ class RollController extends Controller
     public function edit(RollService $service, int $id):Response
     {
         return response()->view("rolls.edit", $service->getEditData($id));
+    }
+
+
+    /**
+     * Description : use to update data roll
+     * 
+     * @param RollService $service
+     */
+    public function update(RollService $service, RollUpdateRequest $request,int $id)
+    {
+        $updated = $service->updateData($id, $request->validated());
+        $redirect = redirect()
+            ->route("rolls.index");
+            
+        $updated?
+            $redirect->with("success", "Update data roll successfully"):
+            $redirect->with("failed", "Update data roll failed");
+
+        return $redirect;
     }
 
 
