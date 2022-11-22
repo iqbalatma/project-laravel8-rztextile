@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RestockController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
+use App\Http\Controllers\RollTransactionController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
@@ -71,4 +73,21 @@ Route::controller(RollController::class)
         Route::post("/", "store")->name("store");
         Route::get("/edit/{id}", "edit")->name("edit");
         Route::patch("/{id}", "update")->name("update");
+    });
+
+Route::controller(RollTransactionController::class)
+    ->name("roll.transactions.")
+    ->prefix("/roll-transactions")
+    ->group(function (){
+        Route::get("/", "index")->name("index");
+        Route::get("/put-away", "putAway")->name("putAway");
+        Route::post("/put-away", "putAwayTransaction")->name("putAwayTransaction");
+    });
+
+Route::controller(RestockController::class)
+    ->name("restock.")
+    ->prefix("/restock")
+    ->group(function (){
+        Route::get("/create", "create")->name("create");
+        Route::post("/", "store")->name("store");
     });
