@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RestockController;
@@ -23,6 +24,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::controller(AuthController::class)
+    ->name("auth.")
+    ->group(function (){
+        Route::get("/login", "login")->name("login");
+        Route::post("/authenticate", "authenticate")->name("authenticate");
+    });
 
 
 Route::controller(DashboardController::class)
