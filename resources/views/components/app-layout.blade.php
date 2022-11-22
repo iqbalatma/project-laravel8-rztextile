@@ -32,6 +32,7 @@
 		</div>
 	</div>
 	<script src="{{ asset('js/app.js') }}"></script>
+	<script src="{{ asset('js/app-layout.js') }}"></script>
 
 	@yield("custom-scripts")
 

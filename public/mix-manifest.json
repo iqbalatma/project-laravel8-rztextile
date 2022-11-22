@@ -1,5 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/app-layout.js": "/js/app-layout.js",
     "/js/customers/index.js": "/js/customers/index.js",
     "/js/units/index.js": "/js/units/index.js",
     "/js/rolls/create.js": "/js/rolls/create.js",
