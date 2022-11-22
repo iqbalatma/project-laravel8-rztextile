@@ -1,8 +1,12 @@
 <?php 
 namespace App\Services;
 
+use App\Exceptions\InvalidActionException;
 use App\Repositories\RollRepository;
+use App\Repositories\RollTransactionRepository;
 use App\Repositories\UnitRepository;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class RollService{
 
@@ -46,13 +50,28 @@ class RollService{
   public function storeNewData(array $requestedData):?object
   {
     $qrService = new QRCodeService();
-    $qrcode = $qrService->getGeneratedQrCode();
-    $qrcodeFileName = $qrService->storeNewQRCode($qrcode);
+    try{
+      DB::beginTransaction();
+      $qrcode = $qrService->getGeneratedQrCode();
+      $qrcodeFileName = $qrService->storeNewQRCode($qrcode);
+  
+      $requestedData["qrcode"] = $qrcode;
+      $requestedData["qrcode_image"] = $qrcodeFileName;
 
-    $requestedData["qrcode"] = $qrcode;
-    $requestedData["qrcode_image"] = $qrcodeFileName;
+      $roll = (new RollRepository())->addNewDataRoll($requestedData);
+
+      $requestedData["roll_id"] = $roll->id;
+      $requestedData["type"] = "restock";
+      $requestedData["user_id"] = 1;
+      (new RollTransactionRepository())->addNewDataRollTransaction($requestedData);
+
+      DB::commit();
+    }catch(Exception $e){
+      DB::rollBack();
+      throw new InvalidActionException("Add new roll failed. Something went wrong !");
+    }
     
-    return (new RollRepository())->addNewDataRoll($requestedData);
+    return $roll;
   }
 
   public function getEditData(int $id):array
