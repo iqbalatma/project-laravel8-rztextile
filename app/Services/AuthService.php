@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Repositories\RollTransactionRepository;
 use Illuminate\Support\Facades\Auth;
 
 class AuthService

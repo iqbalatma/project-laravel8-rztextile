@@ -8,6 +8,10 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
 use App\Http\Controllers\RollTransactionController;
 use App\Http\Controllers\UnitController;
+use App\Mail\CheckMail;
+use App\Models\RollTransaction;
+use App\Notifications\Check;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +27,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('mail2', function () {
+    Mail::to("iqbalatma@gmail.com")->send(new CheckMail("tes"));
+
+    return "EMAIL SUDAH TERKIRIM tek";
 });
 
 Route::controller(AuthController::class)

@@ -8,11 +8,9 @@ use App\Services\AuthService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-
     /**
      * Description : use to show form login
      * 
@@ -30,6 +28,7 @@ class AuthController extends Controller
      * 
      * @param AuthService $service dependency injection
      * @param AuthenticateRequest $request dependency injection
+     * @return RedirectResponse
      */
     public function authenticate(AuthService $service, AuthenticateRequest $request):RedirectResponse
     {
@@ -44,7 +43,9 @@ class AuthController extends Controller
     /**
      * Description : use to logout account
      * 
+     * @param AuthService $service dependency injection
      * @param Request $request
+     * @return RedirectResponse
      */
     public function logout(AuthService $service, Request $request):RedirectResponse
     {
