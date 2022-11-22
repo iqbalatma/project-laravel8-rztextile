@@ -37,8 +37,8 @@
                       <label for="password">Password</label>
                     </div>
                     <div class="form-check mb-3">
-                      <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
-                      <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
+                      <input class="form-check-input" id="rememberme" name="rememberme" type="checkbox" value="true" />
+                      <label class="form-check-label" for="rememberme">Remember Password</label>
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                       <a class="small" href="password.html">Forgot Password?</a>

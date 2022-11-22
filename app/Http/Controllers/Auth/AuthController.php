@@ -33,7 +33,7 @@ class AuthController extends Controller
      */
     public function authenticate(AuthService $service, AuthenticateRequest $request):RedirectResponse
     {
-        if(Auth::attempt($request->validated())){
+        if($service->authenticate($request->validated())){
             return redirect()->intended(route("dashboard.index"));
         }
 
@@ -46,13 +46,9 @@ class AuthController extends Controller
      * 
      * @param Request $request
      */
-    public function logout(Request $request):RedirectResponse
+    public function logout(AuthService $service, Request $request):RedirectResponse
     {
-        Auth::logout();
- 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-    
+        $service->logout($request);
         return redirect('/');
     }
 
