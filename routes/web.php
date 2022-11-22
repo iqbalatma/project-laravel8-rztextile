@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RestockController;
@@ -7,6 +8,10 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
 use App\Http\Controllers\RollTransactionController;
 use App\Http\Controllers\UnitController;
+use App\Mail\CheckMail;
+use App\Models\RollTransaction;
+use App\Notifications\Check;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,70 +29,87 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('mail2', function () {
+    Mail::to("iqbalatma@gmail.com")->send(new CheckMail("tes"));
 
-Route::controller(DashboardController::class)
-    ->name("dashboard.")
-    ->prefix("/dashboard")
+    return "EMAIL SUDAH TERKIRIM tek";
+});
+
+Route::controller(AuthController::class)
+    ->name("auth.")
     ->group(function (){
-        Route::get("/", "index")->name("index");
+        Route::get("/login", "login")->name("login");
+        Route::post("/authenticate", "authenticate")->name("authenticate");
+        Route::post("/logout", "logout")->name("logout");
     });
 
 
-Route::controller(UnitController::class)
-    ->name("units.")
-    ->prefix("/units")
+Route::middleware("auth")
     ->group(function (){
-        Route::get("/", "index")->name("index");
-        Route::get("/edit/{id}", "edit")->name("edit");
-        Route::get("/create", "create")->name("create");
-        Route::patch("/{id}", "update")->name("update");
-        Route::post("/", "store")->name("store");
-        Route::delete("/{id}", "destroy")->name("destroy");
-    });
+        Route::controller(RestockController::class)
+            ->name("restock.")
+            ->prefix("/restock")
+            ->group(function (){
+                Route::get("/create", "create")->name("create");
+                Route::post("/", "store")->name("store");
+            });
 
-Route::controller(RoleController::class)
-    ->name("roles.")
-    ->prefix("/roles")
-    ->group(function (){
-        Route::get("/", "index")->name("index");
-    });
-
-Route::controller(CustomerController::class)
-    ->name("customers.")
-    ->prefix("/customers")
-    ->group(function (){
-        Route::get("/", "index")->name("index");
-        Route::get("/create", "create")->name("create");
-        Route::get("/edit/{id}", "edit")->name("edit");
-        Route::post("/", "store")->name("store");
-        Route::patch("/{id}", "update")->name("update");
-        Route::delete("/{id}", "destroy")->name("destroy");
-    });
-
-Route::controller(RollController::class)
-    ->name("rolls.")
-    ->prefix("/rolls")
-    ->group(function (){
-        Route::get("/", "index")->name("index");
-        Route::get("/create", "create")->name("create");
-        Route::post("/", "store")->name("store");
-        Route::get("/edit/{id}", "edit")->name("edit");
-        Route::patch("/{id}", "update")->name("update");
-    });
-
-Route::controller(RollTransactionController::class)
-    ->name("roll.transactions.")
-    ->prefix("/roll-transactions")
-    ->group(function (){
-        Route::get("/", "index")->name("index");
-        Route::get("/put-away", "putAway")->name("putAway");
-        Route::post("/put-away", "putAwayTransaction")->name("putAwayTransaction");
-    });
-
-Route::controller(RestockController::class)
-    ->name("restock.")
-    ->prefix("/restock")
-    ->group(function (){
-        Route::get("/create", "create")->name("create");
-        Route::post("/", "store")->name("store");
+        Route::controller(DashboardController::class)
+            ->name("dashboard.")
+            ->prefix("/dashboard")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+            });
+        
+        
+        Route::controller(UnitController::class)
+            ->name("units.")
+            ->prefix("/units")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+                Route::get("/edit/{id}", "edit")->name("edit");
+                Route::get("/create", "create")->name("create");
+                Route::patch("/{id}", "update")->name("update");
+                Route::post("/", "store")->name("store");
+                Route::delete("/{id}", "destroy")->name("destroy");
+            });
+        
+        Route::controller(RoleController::class)
+            ->name("roles.")
+            ->prefix("/roles")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+            });
+        
+        Route::controller(CustomerController::class)
+            ->name("customers.")
+            ->prefix("/customers")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+                Route::get("/create", "create")->name("create");
+                Route::get("/edit/{id}", "edit")->name("edit");
+                Route::post("/", "store")->name("store");
+                Route::patch("/{id}", "update")->name("update");
+                Route::delete("/{id}", "destroy")->name("destroy");
+            });
+        
+        Route::controller(RollController::class)
+            ->name("rolls.")
+            ->prefix("/rolls")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+                Route::get("/create", "create")->name("create");
+                Route::post("/", "store")->name("store");
+                Route::get("/edit/{id}", "edit")->name("edit");
+                Route::patch("/{id}", "update")->name("update");
+            });
+        
+        Route::controller(RollTransactionController::class)
+            ->name("roll.transactions.")
+            ->prefix("/roll-transactions")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+                Route::get("/put-away", "putAway")->name("putAway");
+                Route::post("/put-away", "putAwayTransaction")->name("putAwayTransaction");
+            });
     });
