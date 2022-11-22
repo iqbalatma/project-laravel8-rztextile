@@ -49,6 +49,12 @@
                     </div>
                     Restock
                 </a>
+                <a class="nav-link" href="{{ route('roll.transactions.putAway') }}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </div>
+                    Put Away
+                </a>
             </div>
         </div>
         <div class="sb-sidenav-footer">

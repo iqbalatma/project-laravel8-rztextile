@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Restock;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class RestockRequest extends FormRequest
+class RestockRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
