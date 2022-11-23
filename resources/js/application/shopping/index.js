@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import helper from "../../module/helper";
 
 
@@ -123,6 +124,14 @@ function onClickButtonPlus(context){
     .text()
     .split(" ")[0]) - (1*quantityUnitPerRoll);
 
+  if(availableRoll<0 || availableUnit <0){
+    return Swal.fire({
+      icon: 'error',
+      title: 'Action cannot be done !',
+      text: 'Item availability is not enough!',
+    })
+  }
+
   $(row)
     .find(".quantity-roll")
     .text(`${quantityRoll} roll`);
@@ -157,15 +166,16 @@ function onClickButtonMinus(context){
 
   let code = $(row).attr("class");
 
-  let sellingPrice = helper.formatRupiahToInt($(row)
-    .find(".selling-price")
-    .text());
-
+  
   let quantityRoll = parseInt($(row)
     .find(".quantity-roll")
     .text()
     .split(" ")[0]) - 1;
-  
+
+  let sellingPrice = helper.formatRupiahToInt($(row)
+    .find(".selling-price")
+    .text());
+
   let quantityUnitPerRoll = parseInt($(row)
     .find(".quantity-unit-per-roll")
     .text()
@@ -216,6 +226,11 @@ function onClickButtonMinus(context){
     .children(`.${code}`) //all row that has same code
     .find(".available-quantity-unit") //column for availability quantity roll
     .text(`${availableUnit} ${unitName}`) //set text on column
+  
+  if(quantityRoll==0){
+    $(row).remove();
+  }
+
 }
  
 
@@ -304,6 +319,11 @@ function getButtonMinusElement(){
   }));
 }
 
+/**
+ * Description : use to get html element for remove button
+ * 
+ * @returns html element
+ */
 function getButtonRemoveElement(){
   return $("<button>",{
     class: "btn btn-danger btn-sm btn-delete-roll",
