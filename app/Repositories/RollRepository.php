@@ -15,7 +15,9 @@ class RollRepository{
 
   public function getAllDataRoll(array $columns = ["*"])
   {
-    return Roll::select($columns)->get();
+    return Roll::with(["unit"=>function ($query){
+      $query->select(["id","name"]);
+    }])->select($columns)->get();
   }
 
   public function addNewDataRoll(array $requestedData):object
