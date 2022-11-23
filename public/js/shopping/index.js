@@ -110,7 +110,7 @@ $(document).ready(function () {
     openOnFocus: false,
     render: {
       option: function option(data, escape) {
-        return "<div class=\"item-roll-selectized\"\n                      data-data=\"".concat(escape(JSON.stringify(data.data)), "\">\n                      ").concat(escape(data.data.id), " | ").concat(escape(data.data.qrcode), " | ").concat(escape(data.text), "\n                  </div>");
+        return "<div class=\"item-roll-selectized\"\n                      data-id=\"".concat(escape(data.data.id), "\"\n                      data-data=\"").concat(escape(JSON.stringify(data.data)), "\">\n                      ").concat(escape(data.data.id), " | ").concat(escape(data.data.qrcode), " | ").concat(escape(data.text), "\n                  </div>");
       }
     },
     onChange: function onChange(value) {
@@ -123,13 +123,21 @@ $(document).ready(function () {
   selectizedFocusAndClear(selectized);
   function onChangeSelectize(value) {
     var rollId = value;
-    var dataSet = $(".item-roll-selectized, .selected").data("data");
+    var dataSet = $(".item-roll-selectized[data-id=\"".concat(rollId, "\"]")).data("data");
     setSelectedOptionToTableRow(dataSet);
+  }
+  function getTotalUnitOnTable(code) {
+    var row = $(".".concat(code));
+    var rowQuantityUnit = $(row).find(".quantity-unit");
+    if (rowQuantityUnit.length > 0) {
+      rowQuantityUnit.text();
+    }
   }
   function setSelectedOptionToTableRow(dataSet) {
     var table = $("#table-product");
     var tbody = $(table).find("tbody");
-    tbody.append("\n      <tr>\n        <td>".concat(dataSet.id, "</td>\n        <td>").concat(dataSet.code, "</td>\n        <td>").concat(dataSet.name, "</td>\n        <td>1</td>\n        <td class=\"text-nowrap\">1 ").concat(dataSet.unit.name, "</td>\n        <td class=\"text-nowrap\">1 ").concat(dataSet.unit.name, "</td>\n        <td class=\"text-nowrap\">").concat(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatToRupiah(dataSet.selling_price), "</td>\n        <td class=\"text-nowrap\">").concat(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatToRupiah(dataSet.selling_price), "</td>\n        <td class=\"text-nowrap\">\n          <div class=\"d-grid gap-2 d-md-block\">\n            <button class=\"btn btn-primary btn-sm\" type=\"button\">\n              <i class=\"fa-solid fa-square-plus\"></i>\n            </button>\n            <button class=\"btn btn-secondary btn-sm\" type=\"button\">\n              <i class=\"fa-solid fa-square-minus\"></i>\n            </button>\n            <button class=\"btn btn-danger btn-sm\" type=\"button\">\n              <i class=\"fa-solid fa-trash\"></i>\n            </button>\n          </div>\n        </td>\n        <td class=\"text-nowrap\">").concat(dataSet.quantity_roll, " rolls</td>\n        <td class=\"text-nowrap\">").concat(dataSet.quantity_unit, " ").concat(dataSet.unit.name, "</td>\n      </tr>\n    "));
+    var totalUnitOnTable = getTotalUnitOnTable(dataSet.code);
+    tbody.append("\n      <tr class=\"".concat(dataSet.code, "\">\n        <td>").concat(dataSet.id, "</td>\n        <td>").concat(dataSet.code, "</td>\n        <td>").concat(dataSet.name, "</td>\n        <td>1</td>\n        <td class=\"text-nowrap\">1 ").concat(dataSet.unit.name, "</td>\n        <td class=\"text-nowrap quantity-unit\">1 ").concat(dataSet.unit.name, "</td>\n        <td class=\"text-nowrap\">").concat(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatToRupiah(dataSet.selling_price), "</td>\n        <td class=\"text-nowrap\">").concat(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatToRupiah(dataSet.selling_price), "</td>\n        <td class=\"text-nowrap\">\n          <div class=\"d-grid gap-2 d-md-block\">\n            <button class=\"btn btn-primary btn-sm\" type=\"button\">\n              <i class=\"fa-solid fa-square-plus\"></i>\n            </button>\n            <button class=\"btn btn-secondary btn-sm\" type=\"button\">\n              <i class=\"fa-solid fa-square-minus\"></i>\n            </button>\n            <button class=\"btn btn-danger btn-sm\" type=\"button\">\n              <i class=\"fa-solid fa-trash\"></i>\n            </button>\n          </div>\n        </td>\n        <td class=\"text-nowrap\">").concat(dataSet.quantity_roll, " rolls</td>\n        <td class=\"text-nowrap\">").concat(dataSet.quantity_unit, " ").concat(dataSet.unit.name, "</td>\n      </tr>\n    "));
     selectizedFocusAndClear(selectized);
   }
 });

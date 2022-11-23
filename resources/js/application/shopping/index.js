@@ -20,6 +20,7 @@ $(document).ready(function(){
     render: {
       option: function(data, escape) {
           return `<div class="item-roll-selectized"
+                      data-id="${escape(data.data.id)}"
                       data-data="${escape(JSON.stringify(data.data))}">
                       ${escape(data.data.id)} | ${escape(data.data.qrcode)} | ${escape(data.text)}
                   </div>`
@@ -37,23 +38,35 @@ $(document).ready(function(){
 
   function onChangeSelectize(value) {
     const rollId = value;
-    const dataSet =$(`.item-roll-selectized, .selected`).data("data"); 
+    const dataSet =$(`.item-roll-selectized[data-id="${rollId}"]`).data("data"); 
 
     setSelectedOptionToTableRow(dataSet);
+  }
+
+
+  function getTotalUnitOnTable(code){
+    let row = $(`.${code}`);
+    let rowQuantityUnit = $(row).find(".quantity-unit");
+
+    if(rowQuantityUnit.length>0){
+      rowQuantityUnit.text();
+    }
   }
 
   function setSelectedOptionToTableRow(dataSet){
     let table = $("#table-product");
     let tbody = $(table).find("tbody");
 
+    let totalUnitOnTable = getTotalUnitOnTable(dataSet.code);
+
     tbody.append(`
-      <tr>
+      <tr class="${dataSet.code}">
         <td>${dataSet.id}</td>
         <td>${dataSet.code}</td>
         <td>${dataSet.name}</td>
         <td>1</td>
         <td class="text-nowrap">1 ${dataSet.unit.name}</td>
-        <td class="text-nowrap">1 ${dataSet.unit.name}</td>
+        <td class="text-nowrap quantity-unit">1 ${dataSet.unit.name}</td>
         <td class="text-nowrap">${helper.formatToRupiah(dataSet.selling_price)}</td>
         <td class="text-nowrap">${helper.formatToRupiah(dataSet.selling_price)}</td>
         <td class="text-nowrap">
