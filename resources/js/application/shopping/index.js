@@ -1,5 +1,36 @@
 import helper from "../../module/helper";
 
+function getCurrentTotalUnitOnTable(code){
+  let row = $(`.${code}`);
+
+  let totalUnit = 0;
+  if(row.length>0){
+    row.each(function(){
+      let subTotalunit = $(this).find(".quantity-unit").text();
+      subTotalunit = parseInt(subTotalunit.split(" ")[0]);
+      totalUnit += subTotalunit;
+    });
+  }
+
+  return totalUnit;
+}
+
+function getCurrentTotalRollOnTable(code){
+  let row = $(`.${code}`);
+
+  let totalRoll = 0;
+  if(row.length>0){
+    row.each(function(){
+      let subtotalRoll = $(this).find(".quantity-roll").text();
+      subtotalRoll = parseInt(subtotalRoll.split(" ")[0]);
+      totalRoll += subtotalRoll;
+    });
+  }
+
+  return totalRoll;
+}
+
+
 $(document).ready(function(){
   function selectizedFocusAndClear(selectized) {
     selectized =  selectized[0].selectize;
@@ -44,27 +75,24 @@ $(document).ready(function(){
   }
 
 
-  function getTotalUnitOnTable(code){
-    let row = $(`.${code}`);
-    let rowQuantityUnit = $(row).find(".quantity-unit");
-
-    if(rowQuantityUnit.length>0){
-      rowQuantityUnit.text();
-    }
-  }
+  
 
   function setSelectedOptionToTableRow(dataSet){
     let table = $("#table-product");
     let tbody = $(table).find("tbody");
 
-    let totalUnitOnTable = getTotalUnitOnTable(dataSet.code);
+    let totalUnitOnTable = getCurrentTotalUnitOnTable(dataSet.code);
+    let totalRollOnTable = getCurrentTotalRollOnTable(dataSet.code)
+
+    console.log(totalUnitOnTable);
+    console.log(totalRollOnTable);
 
     tbody.append(`
       <tr class="${dataSet.code}">
         <td>${dataSet.id}</td>
         <td>${dataSet.code}</td>
         <td>${dataSet.name}</td>
-        <td>1</td>
+        <td class="text-nowrap quantity-roll">1 roll</td>
         <td class="text-nowrap">1 ${dataSet.unit.name}</td>
         <td class="text-nowrap quantity-unit">1 ${dataSet.unit.name}</td>
         <td class="text-nowrap">${helper.formatToRupiah(dataSet.selling_price)}</td>

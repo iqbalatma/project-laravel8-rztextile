@@ -92,6 +92,30 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../module/helper */ "./resources/js/module/helper.js");
 
+function getCurrentTotalUnitOnTable(code) {
+  var row = $(".".concat(code));
+  var totalUnit = 0;
+  if (row.length > 0) {
+    row.each(function () {
+      var subTotalunit = $(this).find(".quantity-unit").text();
+      subTotalunit = parseInt(subTotalunit.split(" ")[0]);
+      totalUnit += subTotalunit;
+    });
+  }
+  return totalUnit;
+}
+function getCurrentTotalRollOnTable(code) {
+  var row = $(".".concat(code));
+  var totalRoll = 0;
+  if (row.length > 0) {
+    row.each(function () {
+      var subtotalRoll = $(this).find(".quantity-roll").text();
+      subtotalRoll = parseInt(subtotalRoll.split(" ")[0]);
+      totalRoll += subtotalRoll;
+    });
+  }
+  return totalRoll;
+}
 $(document).ready(function () {
   function selectizedFocusAndClear(selectized) {
     selectized = selectized[0].selectize;
@@ -126,18 +150,14 @@ $(document).ready(function () {
     var dataSet = $(".item-roll-selectized[data-id=\"".concat(rollId, "\"]")).data("data");
     setSelectedOptionToTableRow(dataSet);
   }
-  function getTotalUnitOnTable(code) {
-    var row = $(".".concat(code));
-    var rowQuantityUnit = $(row).find(".quantity-unit");
-    if (rowQuantityUnit.length > 0) {
-      rowQuantityUnit.text();
-    }
-  }
   function setSelectedOptionToTableRow(dataSet) {
     var table = $("#table-product");
     var tbody = $(table).find("tbody");
-    var totalUnitOnTable = getTotalUnitOnTable(dataSet.code);
-    tbody.append("\n      <tr class=\"".concat(dataSet.code, "\">\n        <td>").concat(dataSet.id, "</td>\n        <td>").concat(dataSet.code, "</td>\n        <td>").concat(dataSet.name, "</td>\n        <td>1</td>\n        <td class=\"text-nowrap\">1 ").concat(dataSet.unit.name, "</td>\n        <td class=\"text-nowrap quantity-unit\">1 ").concat(dataSet.unit.name, "</td>\n        <td class=\"text-nowrap\">").concat(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatToRupiah(dataSet.selling_price), "</td>\n        <td class=\"text-nowrap\">").concat(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatToRupiah(dataSet.selling_price), "</td>\n        <td class=\"text-nowrap\">\n          <div class=\"d-grid gap-2 d-md-block\">\n            <button class=\"btn btn-primary btn-sm\" type=\"button\">\n              <i class=\"fa-solid fa-square-plus\"></i>\n            </button>\n            <button class=\"btn btn-secondary btn-sm\" type=\"button\">\n              <i class=\"fa-solid fa-square-minus\"></i>\n            </button>\n            <button class=\"btn btn-danger btn-sm\" type=\"button\">\n              <i class=\"fa-solid fa-trash\"></i>\n            </button>\n          </div>\n        </td>\n        <td class=\"text-nowrap\">").concat(dataSet.quantity_roll, " rolls</td>\n        <td class=\"text-nowrap\">").concat(dataSet.quantity_unit, " ").concat(dataSet.unit.name, "</td>\n      </tr>\n    "));
+    var totalUnitOnTable = getCurrentTotalUnitOnTable(dataSet.code);
+    var totalRollOnTable = getCurrentTotalRollOnTable(dataSet.code);
+    console.log(totalUnitOnTable);
+    console.log(totalRollOnTable);
+    tbody.append("\n      <tr class=\"".concat(dataSet.code, "\">\n        <td>").concat(dataSet.id, "</td>\n        <td>").concat(dataSet.code, "</td>\n        <td>").concat(dataSet.name, "</td>\n        <td class=\"text-nowrap quantity-roll\">1 roll</td>\n        <td class=\"text-nowrap\">1 ").concat(dataSet.unit.name, "</td>\n        <td class=\"text-nowrap quantity-unit\">1 ").concat(dataSet.unit.name, "</td>\n        <td class=\"text-nowrap\">").concat(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatToRupiah(dataSet.selling_price), "</td>\n        <td class=\"text-nowrap\">").concat(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatToRupiah(dataSet.selling_price), "</td>\n        <td class=\"text-nowrap\">\n          <div class=\"d-grid gap-2 d-md-block\">\n            <button class=\"btn btn-primary btn-sm\" type=\"button\">\n              <i class=\"fa-solid fa-square-plus\"></i>\n            </button>\n            <button class=\"btn btn-secondary btn-sm\" type=\"button\">\n              <i class=\"fa-solid fa-square-minus\"></i>\n            </button>\n            <button class=\"btn btn-danger btn-sm\" type=\"button\">\n              <i class=\"fa-solid fa-trash\"></i>\n            </button>\n          </div>\n        </td>\n        <td class=\"text-nowrap\">").concat(dataSet.quantity_roll, " rolls</td>\n        <td class=\"text-nowrap\">").concat(dataSet.quantity_unit, " ").concat(dataSet.unit.name, "</td>\n      </tr>\n    "));
     selectizedFocusAndClear(selectized);
   }
 });
