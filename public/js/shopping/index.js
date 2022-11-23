@@ -226,6 +226,11 @@ function onClickButtonMinus(context) {
   .text("".concat(availableUnit, " ").concat(unitName)); //set text on column
 }
 
+function onClickButtomRemove(context) {
+  var row = $(context).closest("tr");
+  $(row).remove();
+}
+
 /**
  * Description : use to add button plus on column action
  * 
@@ -242,6 +247,12 @@ function getButtonPlusElement() {
     "class": "fa-solid fa-square-plus"
   }));
 }
+
+/**
+ * Description : use to get button minus element
+ * 
+ * @returns html elemen of button minus
+ */
 function getButtonMinusElement() {
   return $("<button>", {
     "class": "btn btn-danger btn-sm btn-minus-roll",
@@ -251,6 +262,17 @@ function getButtonMinusElement() {
     }
   }).append($("<i>", {
     "class": "fa-solid fa-square-minus"
+  }));
+}
+function getButtonRemoveElement() {
+  return $("<button>", {
+    "class": "btn btn-danger btn-sm btn-delete-roll",
+    type: "button",
+    click: function click() {
+      onClickButtomRemove(this);
+    }
+  }).append($("<i>", {
+    "class": "fa-solid fa-trash"
   }));
 }
 
@@ -343,21 +365,7 @@ $(document).ready(function () {
       "class": "text-nowrap"
     }).append($("<div>", {
       "class": "d-grid gap-2 d-md-block"
-    }).append(getButtonPlusElement()).append(getButtonMinusElement())));
-    // tr.append($(`<td class="text-nowrap">
-    //               <div class="d-grid gap-2 d-md-block">
-    //                 <button class="btn btn-primary btn-sm btn-plus-roll" type="button">
-    //                   <i class="fa-solid fa-square-plus"></i>
-    //                 </button>
-    //                 <button class="btn btn-secondary btn-sm btn-minus-roll" type="button">
-    //                   <i class="fa-solid fa-square-minus"></i>
-    //                 </button>
-    //                 <button class="btn btn-danger btn-sm btn-delete-roll" type="button">
-    //                   <i class="fa-solid fa-trash"></i>
-    //                 </button>
-    //               </div>
-    //             </td>`));
-
+    }).append(getButtonPlusElement()).append(getButtonMinusElement()).append(getButtonRemoveElement())));
     tr.append($("<td>", {
       text: "".concat(dataSet.quantity_roll, " rolls"),
       "class": "text-nowrap available-quantity-roll"

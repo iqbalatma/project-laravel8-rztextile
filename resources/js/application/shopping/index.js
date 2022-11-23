@@ -219,6 +219,13 @@ function onClickButtonMinus(context){
 
 }
  
+
+function onClickButtomRemove(context){
+  let row = $(context).closest("tr");
+
+  $(row).remove();
+}
+
 /**
  * Description : use to add button plus on column action
  * 
@@ -236,6 +243,12 @@ function getButtonPlusElement(){
   }))
 }
 
+
+/**
+ * Description : use to get button minus element
+ * 
+ * @returns html elemen of button minus
+ */
 function getButtonMinusElement(){
   return $("<button>",{
     class: "btn btn-danger btn-sm btn-minus-roll",
@@ -245,6 +258,18 @@ function getButtonMinusElement(){
     }
   }).append($("<i>",{
     class: "fa-solid fa-square-minus"
+  }));
+}
+
+function getButtonRemoveElement(){
+  return $("<button>",{
+    class: "btn btn-danger btn-sm btn-delete-roll",
+    type : "button",
+    click: function(){
+      onClickButtomRemove(this);
+    }
+  }).append($("<i>",{
+    class:"fa-solid fa-trash"
   }));
 }
 
@@ -353,20 +378,9 @@ $(document).ready(function(){
       class: "d-grid gap-2 d-md-block"
     })
     .append(getButtonPlusElement())
-    .append(getButtonMinusElement())));
-    // tr.append($(`<td class="text-nowrap">
-    //               <div class="d-grid gap-2 d-md-block">
-    //                 <button class="btn btn-primary btn-sm btn-plus-roll" type="button">
-    //                   <i class="fa-solid fa-square-plus"></i>
-    //                 </button>
-    //                 <button class="btn btn-secondary btn-sm btn-minus-roll" type="button">
-    //                   <i class="fa-solid fa-square-minus"></i>
-    //                 </button>
-    //                 <button class="btn btn-danger btn-sm btn-delete-roll" type="button">
-    //                   <i class="fa-solid fa-trash"></i>
-    //                 </button>
-    //               </div>
-    //             </td>`));
+    .append(getButtonMinusElement())
+    .append(getButtonRemoveElement())
+    ));
 
     tr.append($(`<td>`,{
       text: `${dataSet.quantity_roll} rolls`,
