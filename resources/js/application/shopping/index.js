@@ -216,12 +216,55 @@ function onClickButtonMinus(context){
     .children(`.${code}`) //all row that has same code
     .find(".available-quantity-unit") //column for availability quantity roll
     .text(`${availableUnit} ${unitName}`) //set text on column
-
 }
  
 
+/**
+ * Description : use to add behavior when button is click
+ * 
+ * @param {object} context context for button element
+ */
 function onClickButtomRemove(context){
   let row = $(context).closest("tr");
+
+  let code = $(row).attr("class");
+
+  let quantityRoll = parseInt($(row)
+    .find(".quantity-roll")
+    .text()
+    .split(" ")[0])
+  
+  let quantityUnit = $(row)
+    .find(".quantity-unit")
+    .text()
+    .split(" ");
+
+  let unitName = quantityUnit[1];
+  quantityUnit = parseInt(quantityUnit[0]);
+
+  let availableRoll = parseInt($(row)
+    .find(".available-quantity-roll")
+    .text()
+    .split(" ")[0]) + quantityRoll;
+
+  let availableUnit = parseInt($(row)
+    .find(".available-quantity-unit")
+    .text()
+    .split(" ")[0]) + quantityUnit;
+  
+
+
+  $(row)
+    .parent() //tbody
+    .children(`.${code}`) //all row that has same code
+    .find(".available-quantity-roll") //column for availability quantity roll
+    .text(`${availableRoll} roll`) //set text on column
+
+  $(row)
+    .parent() //tbody
+    .children(`.${code}`) //all row that has same code
+    .find(".available-quantity-unit") //column for availability quantity roll
+    .text(`${availableUnit} ${unitName}`) //set text on column
 
   $(row).remove();
 }

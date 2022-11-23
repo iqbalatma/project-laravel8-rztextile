@@ -226,8 +226,30 @@ function onClickButtonMinus(context) {
   .text("".concat(availableUnit, " ").concat(unitName)); //set text on column
 }
 
+/**
+ * Description : use to add behavior when button is click
+ * 
+ * @param {object} context context for button element
+ */
 function onClickButtomRemove(context) {
   var row = $(context).closest("tr");
+  var code = $(row).attr("class");
+  var quantityRoll = parseInt($(row).find(".quantity-roll").text().split(" ")[0]);
+  var quantityUnit = $(row).find(".quantity-unit").text().split(" ");
+  var unitName = quantityUnit[1];
+  quantityUnit = parseInt(quantityUnit[0]);
+  var availableRoll = parseInt($(row).find(".available-quantity-roll").text().split(" ")[0]) + quantityRoll;
+  var availableUnit = parseInt($(row).find(".available-quantity-unit").text().split(" ")[0]) + quantityUnit;
+  $(row).parent() //tbody
+  .children(".".concat(code)) //all row that has same code
+  .find(".available-quantity-roll") //column for availability quantity roll
+  .text("".concat(availableRoll, " roll")); //set text on column
+
+  $(row).parent() //tbody
+  .children(".".concat(code)) //all row that has same code
+  .find(".available-quantity-unit") //column for availability quantity roll
+  .text("".concat(availableUnit, " ").concat(unitName)); //set text on column
+
   $(row).remove();
 }
 
