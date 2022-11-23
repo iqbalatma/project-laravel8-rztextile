@@ -7,6 +7,7 @@ use App\Repositories\RollRepository;
 use App\Repositories\RollTransactionRepository;
 use App\Repositories\UnitRepository;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class RollTransactionService
@@ -38,7 +39,7 @@ class RollTransactionService
   public function addNewPutAwayTransaction(array $requestedData): ?object
   {
     $requestedData["type"] = "broken";
-    $requestedData["user_id"] = 1; #DUMMY
+    $requestedData["user_id"] = Auth::user()->id;
 
     try {
       DB::beginTransaction();
