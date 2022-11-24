@@ -667,9 +667,7 @@ $(document).ready(function () {
       "class": dataSet.code
     });
     tr.append($("<td>".concat(dataSet.id, "</td>")));
-    tr.append($("<td>", {
-      text: dataSet.code
-    }));
+    tr.append($("<td>".concat(dataSet.code, "</td>")));
     tr.append($("<td>".concat(dataSet.name, "</td>")));
     tr.append(_module_quantity_roll__WEBPACK_IMPORTED_MODULE_2__["default"].getQuantityRollElement(dataSet.unit.name));
     tr.append(_module_unit_per_roll__WEBPACK_IMPORTED_MODULE_4__["default"].getUnitPerRollElement(dataSet.unit.name));
@@ -683,7 +681,7 @@ $(document).ready(function () {
       "class": "text-nowrap sub-total"
     }));
     tr.append($("<td>", {
-      "class": "text-nowrap"
+      "class": "text-nowrap action-roll"
     }).append($("<div>", {
       "class": "d-grid gap-2 d-md-block"
     }).append(_module_button__WEBPACK_IMPORTED_MODULE_1__["default"].getButtonPlusElement()).append(_module_button__WEBPACK_IMPORTED_MODULE_1__["default"].getButtonMinusElement()).append(_module_button__WEBPACK_IMPORTED_MODULE_1__["default"].getButtonRemoveElement())));
@@ -700,6 +698,17 @@ $(document).ready(function () {
     updateAvailableQuantityUnit(dataSet.code, dataSet.quantity_unit - 1 - totalUnitOnTable, dataSet.unit.name);
     selectizedFocusAndClear(selectized);
   }
+  $("#btn-summary-payment").on("click", function () {
+    var summaryPaymentContainer = $("#summary-payment-container");
+    $(summaryPaymentContainer).children().remove();
+    $("#table-product").clone().appendTo($(summaryPaymentContainer)).attr("id", "table-summary-product").find(".action-roll, .action-roll-header").remove();
+    var totalBill = 0;
+    $("#table-summary-product").find(".sub-total").each(function () {
+      var subTotal = _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatRupiahToInt($(this).text());
+      totalBill += subTotal;
+    });
+    $("#total-bill").val(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(totalBill));
+  });
 });
 })();
 

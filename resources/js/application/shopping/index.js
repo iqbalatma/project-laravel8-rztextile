@@ -154,11 +154,9 @@ $(document).ready(function(){
       class: dataSet.code
     });
 
-    tr.append($(`<td>${dataSet.id}</td>`))
-    tr.append($(`<td>`,{
-      text: dataSet.code,
-    }))
-    tr.append($(`<td>${dataSet.name}</td>`))
+    tr.append($(`<td>${dataSet.id}</td>`));
+    tr.append($(`<td>${dataSet.code}</td>`));
+    tr.append($(`<td>${dataSet.name}</td>`));
     tr.append(quantityRoll.getQuantityRollElement(dataSet.unit.name));
     tr.append(unitPerRoll.getUnitPerRollElement(dataSet.unit.name));
     tr.append($(`<td>`,{
@@ -172,7 +170,7 @@ $(document).ready(function(){
     }));
 
     tr.append($("<td>",{
-      class:"text-nowrap"
+      class:"text-nowrap action-roll"
     }).append($("<div>",{
       class: "d-grid gap-2 d-md-block"
     })
@@ -204,4 +202,27 @@ $(document).ready(function(){
     );
     selectizedFocusAndClear(selectized);
   }
+
+  $("#btn-summary-payment").on("click", function(){
+    let summaryPaymentContainer = $("#summary-payment-container");
+
+    $(summaryPaymentContainer).children().remove();
+
+    $("#table-product")
+      .clone()
+      .appendTo($(summaryPaymentContainer))
+      .attr("id", "table-summary-product")
+      .find(".action-roll, .action-roll-header")
+      .remove();
+
+    let totalBill = 0;
+    $("#table-summary-product").find(".sub-total").each(function(){
+      let subTotal = helper.formatRupiahToInt($(this).text());
+      totalBill+= subTotal;
+    });
+
+    $("#total-bill").val(helper.formatIntToRupiah(totalBill));
+
+    
+  });
 });
