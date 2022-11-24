@@ -27,7 +27,6 @@ export default {
 
   preventTab:(context, event)=>{
     if (event.which == 9) {
-      console.log("TAB");
       event.preventDefault();
       $(context).next().focus();
     }

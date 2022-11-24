@@ -30,8 +30,6 @@ function onBlurUnitPerRoll(context, unitName){
   let diffrence = newQuantityUnit - quantityUnit;
   let newAvailableQuantityUnit = availableQuantityUnit - diffrence;
 
-  console.log(diffrence);
-  
   if(newAvailableQuantityUnit<0){
     $(context).text(`${tempData.getValue()} ${unitName}`);
     if(tempData.getValue()!=unitPerRoll){
@@ -55,6 +53,10 @@ function onKeyDownUnitPerRoll(context, event){
   helper.preventTab(context, event);
 }
 
+function onFocusUnitPerRoll(context){
+  $(context).text(`${parseInt($(context).text())}`);
+}
+
 
 export default {
   getUnitPerRollElement(unitName){
@@ -66,6 +68,9 @@ export default {
       },
       click: function(){
         onClickUnitPerRoll(this);
+      },
+      focus: function(){
+        onFocusUnitPerRoll(this);
       },
       blur: function(){
         onBlurUnitPerRoll(this, unitName);

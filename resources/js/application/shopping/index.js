@@ -1,5 +1,6 @@
 import helper from "../../module/helper"
 import button from "./module/button";
+import quantityRoll from "./module/quantity-roll";
 import unitPerRoll from "./module/unit-per-roll";
 
 
@@ -157,10 +158,7 @@ $(document).ready(function(){
       text: dataSet.code,
     }))
     tr.append($(`<td>${dataSet.name}</td>`))
-    tr.append($(`<td>`,{
-      text: "1 roll",
-      class: "text-nowrap quantity-roll"
-    }));
+    tr.append(quantityRoll.getQuantityRollElement(dataSet.unit.name));
     tr.append(unitPerRoll.getUnitPerRollElement(dataSet.unit.name));
     tr.append($(`<td>`,{
       text: `1 ${dataSet.unit.name}`,

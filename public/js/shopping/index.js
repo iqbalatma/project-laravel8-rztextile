@@ -167,6 +167,99 @@ function onClickButtonPlus(context) {
 
 /***/ }),
 
+/***/ "./resources/js/application/shopping/module/quantity-roll.js":
+/*!*******************************************************************!*\
+  !*** ./resources/js/application/shopping/module/quantity-roll.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _module_alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../module/alert */ "./resources/js/module/alert.js");
+/* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../module/helper */ "./resources/js/module/helper.js");
+
+
+var tempData = {
+  value: null,
+  setValue: function setValue(value) {
+    this.value = value;
+  },
+  getValue: function getValue() {
+    return this.value;
+  }
+};
+function onClickQuantityRoll(context) {
+  tempData.setValue(parseInt($(context).text()));
+  $(context).text(parseInt($(context).text()));
+}
+function onBlurQuantityRoll(context, unitName) {
+  var row = $(context).closest("tr");
+  var quantityRoll = parseInt($(row).find(".quantity-roll").text());
+  var quantityUnit = parseInt($(row).find(".quantity-unit").text());
+  var unitPerRoll = parseInt($(row).find(".quantity-unit-per-roll").text());
+  var sellingPrice = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($(row).find(".selling-price").text());
+  var availableQuantityRoll = parseInt($(row).find(".available-quantity-roll").text());
+  var availableQuantityUnit = parseInt($(row).find(".available-quantity-unit").text());
+  var newQuantityUnit = quantityRoll * unitPerRoll;
+  var newSubTotal = sellingPrice * newQuantityUnit;
+  var diffrenceUnit = newQuantityUnit - quantityUnit;
+  var diffrenceRoll = quantityRoll - tempData.getValue();
+  var newAvailableQuantityUnit = availableQuantityUnit - diffrenceUnit;
+  var newAvailableQuantityRoll = availableQuantityRoll - diffrenceRoll;
+  if (newAvailableQuantityUnit < 0 || newAvailableQuantityRoll < 0) {
+    $(context).text("".concat(tempData.getValue(), " roll"));
+    if (tempData.getValue() != quantityRoll) {
+      return (0,_module_alert__WEBPACK_IMPORTED_MODULE_0__.alertQuantityNotEnough)();
+    }
+    return false;
+  }
+  $(row).find(".quantity-roll").text("".concat(quantityRoll, " roll"));
+  $(row).find(".sub-total").text("".concat(_module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(newSubTotal)));
+  $(row).find(".available-quantity-unit").text("".concat(newAvailableQuantityUnit, " ").concat(unitName));
+  $(row).find(".available-quantity-roll").text("".concat(newAvailableQuantityRoll, " roll"));
+  $(row).find(".quantity-unit").text("".concat(newQuantityUnit, " ").concat(unitName));
+}
+function onKeyPressQuantityRoll(context, event) {
+  _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].preventEnter(context, event);
+  _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].prenvetNonNumeric(event);
+}
+function onKeyDownQuantityRoll(context, event) {
+  _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].preventTab(context, event);
+}
+function onFocusQuantityRoll(context) {
+  $(context).text("".concat(parseInt($(context).text())));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  getQuantityRollElement: function getQuantityRollElement(unitName) {
+    return $("<td>", {
+      text: "1 roll",
+      "class": "text-nowrap quantity-roll",
+      attr: {
+        contenteditable: true
+      },
+      click: function click() {
+        onClickQuantityRoll(this);
+      },
+      blur: function blur() {
+        onBlurQuantityRoll(this, unitName);
+      },
+      focus: function focus() {
+        onFocusQuantityRoll(this);
+      },
+      keypress: function keypress(event) {
+        onKeyPressQuantityRoll(this, event);
+      },
+      keydown: function keydown(event) {
+        onKeyDownQuantityRoll(this, event);
+      }
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/application/shopping/module/unit-per-roll.js":
 /*!*******************************************************************!*\
   !*** ./resources/js/application/shopping/module/unit-per-roll.js ***!
@@ -205,7 +298,6 @@ function onBlurUnitPerRoll(context, unitName) {
   var newSubTotal = sellingPrice * newQuantityUnit;
   var diffrence = newQuantityUnit - quantityUnit;
   var newAvailableQuantityUnit = availableQuantityUnit - diffrence;
-  console.log(diffrence);
   if (newAvailableQuantityUnit < 0) {
     $(context).text("".concat(tempData.getValue(), " ").concat(unitName));
     if (tempData.getValue() != unitPerRoll) {
@@ -225,6 +317,9 @@ function onKeyPressUnitPerRoll(context, event) {
 function onKeyDownUnitPerRoll(context, event) {
   _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].preventTab(context, event);
 }
+function onFocusUnitPerRoll(context) {
+  $(context).text("".concat(parseInt($(context).text())));
+}
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   getUnitPerRollElement: function getUnitPerRollElement(unitName) {
     return $("<td>", {
@@ -235,6 +330,9 @@ function onKeyDownUnitPerRoll(context, event) {
       },
       click: function click() {
         onClickUnitPerRoll(this);
+      },
+      focus: function focus() {
+        onFocusUnitPerRoll(this);
       },
       blur: function blur() {
         onBlurUnitPerRoll(this, unitName);
@@ -307,7 +405,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   preventTab: function preventTab(context, event) {
     if (event.which == 9) {
-      console.log("TAB");
       event.preventDefault();
       $(context).next().focus();
     }
@@ -381,7 +478,9 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../module/helper */ "./resources/js/module/helper.js");
 /* harmony import */ var _module_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/button */ "./resources/js/application/shopping/module/button.js");
-/* harmony import */ var _module_unit_per_roll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/unit-per-roll */ "./resources/js/application/shopping/module/unit-per-roll.js");
+/* harmony import */ var _module_quantity_roll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/quantity-roll */ "./resources/js/application/shopping/module/quantity-roll.js");
+/* harmony import */ var _module_unit_per_roll__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/unit-per-roll */ "./resources/js/application/shopping/module/unit-per-roll.js");
+
 
 
 
@@ -520,11 +619,8 @@ $(document).ready(function () {
       text: dataSet.code
     }));
     tr.append($("<td>".concat(dataSet.name, "</td>")));
-    tr.append($("<td>", {
-      text: "1 roll",
-      "class": "text-nowrap quantity-roll"
-    }));
-    tr.append(_module_unit_per_roll__WEBPACK_IMPORTED_MODULE_2__["default"].getUnitPerRollElement(dataSet.unit.name));
+    tr.append(_module_quantity_roll__WEBPACK_IMPORTED_MODULE_2__["default"].getQuantityRollElement(dataSet.unit.name));
+    tr.append(_module_unit_per_roll__WEBPACK_IMPORTED_MODULE_3__["default"].getUnitPerRollElement(dataSet.unit.name));
     tr.append($("<td>", {
       text: "1 ".concat(dataSet.unit.name),
       "class": "text-nowrap quantity-unit",
