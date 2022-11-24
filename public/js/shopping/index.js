@@ -260,6 +260,56 @@ function onFocusQuantityRoll(context) {
 
 /***/ }),
 
+/***/ "./resources/js/application/shopping/module/selling-price.js":
+/*!*******************************************************************!*\
+  !*** ./resources/js/application/shopping/module/selling-price.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../module/helper */ "./resources/js/module/helper.js");
+
+function onClickSellingPrice(context) {
+  $(context).text(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatRupiahToInt($(context).text()));
+}
+function onKeyPressSellingPrice(context, event) {
+  _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].preventEnter(context, event);
+  _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].prenvetNonNumeric(event);
+}
+function onBlurSellingPrice(context) {
+  var row = $(context).closest("tr");
+  var sellingPrice = $(row).find(".selling-price").text();
+  var quantityUnit = parseInt($(row).find(".quantity-unit").text());
+  var newSubTotal = sellingPrice * quantityUnit;
+  $(row).find(".sub-total").text(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(newSubTotal));
+  $(row).find(".selling-price").text(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(sellingPrice));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  getSellingPriceElement: function getSellingPriceElement(sellingPrice) {
+    return $("<td>", {
+      text: _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(sellingPrice),
+      "class": "text-nowrap selling-price",
+      attr: {
+        contenteditable: true
+      },
+      click: function click() {
+        onClickSellingPrice(this);
+      },
+      blur: function blur() {
+        onBlurSellingPrice(this);
+      },
+      keypress: function keypress(event) {
+        onKeyPressSellingPrice(this, event);
+      }
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/application/shopping/module/unit-per-roll.js":
 /*!*******************************************************************!*\
   !*** ./resources/js/application/shopping/module/unit-per-roll.js ***!
@@ -479,7 +529,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../module/helper */ "./resources/js/module/helper.js");
 /* harmony import */ var _module_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/button */ "./resources/js/application/shopping/module/button.js");
 /* harmony import */ var _module_quantity_roll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/quantity-roll */ "./resources/js/application/shopping/module/quantity-roll.js");
-/* harmony import */ var _module_unit_per_roll__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/unit-per-roll */ "./resources/js/application/shopping/module/unit-per-roll.js");
+/* harmony import */ var _module_selling_price__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/selling-price */ "./resources/js/application/shopping/module/selling-price.js");
+/* harmony import */ var _module_unit_per_roll__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/unit-per-roll */ "./resources/js/application/shopping/module/unit-per-roll.js");
+
 
 
 
@@ -620,18 +672,12 @@ $(document).ready(function () {
     }));
     tr.append($("<td>".concat(dataSet.name, "</td>")));
     tr.append(_module_quantity_roll__WEBPACK_IMPORTED_MODULE_2__["default"].getQuantityRollElement(dataSet.unit.name));
-    tr.append(_module_unit_per_roll__WEBPACK_IMPORTED_MODULE_3__["default"].getUnitPerRollElement(dataSet.unit.name));
+    tr.append(_module_unit_per_roll__WEBPACK_IMPORTED_MODULE_4__["default"].getUnitPerRollElement(dataSet.unit.name));
     tr.append($("<td>", {
       text: "1 ".concat(dataSet.unit.name),
-      "class": "text-nowrap quantity-unit",
-      attr: {
-        contenteditable: true
-      }
+      "class": "text-nowrap quantity-unit"
     }));
-    tr.append($("<td>", {
-      text: _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(dataSet.selling_price),
-      "class": "text-nowrap selling-price"
-    }));
+    tr.append(_module_selling_price__WEBPACK_IMPORTED_MODULE_3__["default"].getSellingPriceElement(dataSet.selling_price));
     tr.append($("<td>", {
       text: _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(dataSet.selling_price),
       "class": "text-nowrap sub-total"

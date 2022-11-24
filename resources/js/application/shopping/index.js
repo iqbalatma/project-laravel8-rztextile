@@ -1,6 +1,7 @@
 import helper from "../../module/helper"
 import button from "./module/button";
 import quantityRoll from "./module/quantity-roll";
+import sellingPrice from "./module/selling-price";
 import unitPerRoll from "./module/unit-per-roll";
 
 
@@ -163,14 +164,8 @@ $(document).ready(function(){
     tr.append($(`<td>`,{
       text: `1 ${dataSet.unit.name}`,
       class: "text-nowrap quantity-unit",
-      attr:{
-        contenteditable: true
-      }
     }));
-    tr.append($(`<td>`,{
-      text: helper.formatIntToRupiah(dataSet.selling_price),
-      class: "text-nowrap selling-price"
-    }));
+    tr.append(sellingPrice.getSellingPriceElement(dataSet.selling_price));
     tr.append($(`<td>`,{
       text: helper.formatIntToRupiah(dataSet.selling_price),
       class: "text-nowrap sub-total"
