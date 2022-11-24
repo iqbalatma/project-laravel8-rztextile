@@ -1,5 +1,8 @@
 import Swal from "sweetalert2";
-import helper from "../../module/helper";
+import helper from "../../module/helper"
+import button from "./module/button";
+import unitPerRoll from "./module/unit-per-roll";
+
 
 
 /**
@@ -78,263 +81,6 @@ function updateAvailableQuantityUnit(code,availableRoll,unitName){
 } 
 
 
-/**
- * Description : use to add behavior when button is click
- * 
- * @param {object} context context for button elemen
- */
-function onClickButtonPlus(context){
-  let row = $(context).closest("tr");
-
-  let code = $(row).attr("class");
-
-  let sellingPrice = helper.formatRupiahToInt($(row)
-    .find(".selling-price")
-    .text());
-
-  let quantityRoll = parseInt($(row)
-    .find(".quantity-roll")
-    .text()
-    .split(" ")[0]) + 1;
-  
-  let quantityUnitPerRoll = parseInt($(row)
-    .find(".quantity-unit-per-roll")
-    .text()
-    .split(" ")[0]);
-
-  let quantityUnit = $(row)
-    .find(".quantity-unit")
-    .text()
-    .split(" ");
-  
-  let unitName = quantityUnit[1];
-  quantityUnit = parseInt(quantityUnit[0]);
-
-  let newQuantityUnit = quantityRoll * quantityUnitPerRoll;
-
-  let newSubTotal = helper.formatIntToRupiah(sellingPrice * newQuantityUnit);
-
-  let availableRoll = parseInt($(row)
-    .find(".available-quantity-roll")
-    .text()
-    .split(" ")[0]) - 1;
-
-  let availableUnit = parseInt($(row)
-    .find(".available-quantity-unit")
-    .text()
-    .split(" ")[0]) - (1*quantityUnitPerRoll);
-
-  if(availableRoll<0 || availableUnit <0){
-    return Swal.fire({
-      icon: 'error',
-      title: 'Action cannot be done !',
-      text: 'Item availability is not enough!',
-    })
-  }
-
-  $(row)
-    .find(".quantity-roll")
-    .text(`${quantityRoll} roll`);
-
-  $(row)
-    .find(".quantity-unit")
-    .text(`${newQuantityUnit} ${unitName}`);
-
-  $(row)
-    .find(".sub-total")
-    .text(newSubTotal);
-  
-  $(row)
-    .parent() //tbody
-    .children(`.${code}`) //all row that has same code
-    .find(".available-quantity-roll") //column for availability quantity roll
-    .text(`${availableRoll} roll`) //set text on column
-  
-  $(row)
-    .parent() //tbody
-    .children(`.${code}`) //all row that has same code
-    .find(".available-quantity-unit") //column for availability quantity roll
-    .text(`${availableUnit} ${unitName}`) //set text on column
-}
-
-/**
- * Description : use to add behavior when button is click
- * @param {object} context context for button element
- */
-function onClickButtonMinus(context){
-  let row = $(context).closest("tr");
-
-  let code = $(row).attr("class");
-
-  
-  let quantityRoll = parseInt($(row)
-    .find(".quantity-roll")
-    .text()
-    .split(" ")[0]) - 1;
-
-  let sellingPrice = helper.formatRupiahToInt($(row)
-    .find(".selling-price")
-    .text());
-
-  let quantityUnitPerRoll = parseInt($(row)
-    .find(".quantity-unit-per-roll")
-    .text()
-    .split(" ")[0]);
-
-  let quantityUnit = $(row)
-    .find(".quantity-unit")
-    .text()
-    .split(" ");
-  
-  let unitName = quantityUnit[1];
-  quantityUnit = parseInt(quantityUnit[0]);
-
-  let newQuantityUnit = quantityRoll * quantityUnitPerRoll;
-  
-  let newSubTotal = helper.formatIntToRupiah(sellingPrice * newQuantityUnit);
-
-  let availableRoll = parseInt($(row)
-    .find(".available-quantity-roll")
-    .text()
-    .split(" ")[0]) + 1;
-
-  let availableUnit = parseInt($(row)
-    .find(".available-quantity-unit")
-    .text()
-    .split(" ")[0]) + (1*quantityUnitPerRoll);
-
-  $(row)
-    .find(".quantity-roll")
-    .text(`${quantityRoll} roll`);
-
-  $(row)
-    .find(".quantity-unit")
-    .text(`${newQuantityUnit} ${unitName}`);
-
-  $(row)
-    .find(".sub-total")
-    .text(newSubTotal);
-  
-  $(row)
-    .parent() //tbody
-    .children(`.${code}`) //all row that has same code
-    .find(".available-quantity-roll") //column for availability quantity roll
-    .text(`${availableRoll} roll`) //set text on column
-  
-  $(row)
-    .parent() //tbody
-    .children(`.${code}`) //all row that has same code
-    .find(".available-quantity-unit") //column for availability quantity roll
-    .text(`${availableUnit} ${unitName}`) //set text on column
-  
-  if(quantityRoll==0){
-    $(row).remove();
-  }
-
-}
- 
-
-/**
- * Description : use to add behavior when button is click
- * 
- * @param {object} context context for button element
- */
-function onClickButtomRemove(context){
-  let row = $(context).closest("tr");
-
-  let code = $(row).attr("class");
-
-  let quantityRoll = parseInt($(row)
-    .find(".quantity-roll")
-    .text()
-    .split(" ")[0])
-  
-  let quantityUnit = $(row)
-    .find(".quantity-unit")
-    .text()
-    .split(" ");
-
-  let unitName = quantityUnit[1];
-  quantityUnit = parseInt(quantityUnit[0]);
-
-  let availableRoll = parseInt($(row)
-    .find(".available-quantity-roll")
-    .text()
-    .split(" ")[0]) + quantityRoll;
-
-  let availableUnit = parseInt($(row)
-    .find(".available-quantity-unit")
-    .text()
-    .split(" ")[0]) + quantityUnit;
-  
-
-
-  $(row)
-    .parent() //tbody
-    .children(`.${code}`) //all row that has same code
-    .find(".available-quantity-roll") //column for availability quantity roll
-    .text(`${availableRoll} roll`) //set text on column
-
-  $(row)
-    .parent() //tbody
-    .children(`.${code}`) //all row that has same code
-    .find(".available-quantity-unit") //column for availability quantity roll
-    .text(`${availableUnit} ${unitName}`) //set text on column
-
-  $(row).remove();
-}
-
-/**
- * Description : use to add button plus on column action
- * 
- * @returns html element for button plus
- */
-function getButtonPlusElement(){
-  return $("<button>",{
-    class:"btn btn-primary btn-sm btn-plus-roll",
-    type: "button",
-    click: function(){
-      onClickButtonPlus(this);
-    }
-  }).append($("<i>",{
-    class:"fa-solid fa-square-plus"
-  }))
-}
-
-
-/**
- * Description : use to get button minus element
- * 
- * @returns html elemen of button minus
- */
-function getButtonMinusElement(){
-  return $("<button>",{
-    class: "btn btn-danger btn-sm btn-minus-roll",
-    type: "button",
-    click: function(){
-      onClickButtonMinus(this);
-    }
-  }).append($("<i>",{
-    class: "fa-solid fa-square-minus"
-  }));
-}
-
-/**
- * Description : use to get html element for remove button
- * 
- * @returns html element
- */
-function getButtonRemoveElement(){
-  return $("<button>",{
-    class: "btn btn-danger btn-sm btn-delete-roll",
-    type : "button",
-    click: function(){
-      onClickButtomRemove(this);
-    }
-  }).append($("<i>",{
-    class:"fa-solid fa-trash"
-  }));
-}
 
 /**
  * Description : selectize option configuration
@@ -379,8 +125,6 @@ $(document).ready(function(){
 
   selectizedFocusAndClear(selectized);
 
-  
-
   /**
    * Description : function that will execute on change selectize
    * 
@@ -418,13 +162,13 @@ $(document).ready(function(){
       text: "1 roll",
       class: "text-nowrap quantity-roll"
     }));
+    tr.append(unitPerRoll.getUnitPerRollElement(dataSet.unit.name));
     tr.append($(`<td>`,{
       text: `1 ${dataSet.unit.name}`,
-      class: "text-nowrap quantity-unit-per-roll"
-    }));
-    tr.append($(`<td>`,{
-      text: `1 ${dataSet.unit.name}`,
-      class: "text-nowrap quantity-unit"
+      class: "text-nowrap quantity-unit",
+      attr:{
+        contenteditable: true
+      }
     }));
     tr.append($(`<td>`,{
       text: helper.formatIntToRupiah(dataSet.selling_price),
@@ -440,9 +184,9 @@ $(document).ready(function(){
     }).append($("<div>",{
       class: "d-grid gap-2 d-md-block"
     })
-    .append(getButtonPlusElement())
-    .append(getButtonMinusElement())
-    .append(getButtonRemoveElement())
+    .append(button.getButtonPlusElement())
+    .append(button.getButtonMinusElement())
+    .append(button.getButtonRemoveElement())
     ));
 
     tr.append($(`<td>`,{
@@ -457,8 +201,6 @@ $(document).ready(function(){
 
     tbody.append(tr);
 
-  
-    // setActionToButtonPlus();
     updateAvailableQuantityRoll(
       dataSet.code,
       (dataSet.quantity_roll-1-totalRollOnTable)

@@ -1,6 +1,231 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./resources/js/application/shopping/module/button.js":
+/*!************************************************************!*\
+  !*** ./resources/js/application/shopping/module/button.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../module/helper */ "./resources/js/module/helper.js");
+
+
+/**
+ * Description : use to add behavior when button is click
+ * 
+ * @param {object} context context for button element
+ */
+function onClickButtomRemove(context) {
+  var row = $(context).closest("tr");
+  var code = $(row).attr("class");
+  var quantityRoll = parseInt($(row).find(".quantity-roll").text().split(" ")[0]);
+  var quantityUnit = $(row).find(".quantity-unit").text().split(" ");
+  var unitName = quantityUnit[1];
+  quantityUnit = parseInt(quantityUnit[0]);
+  var availableRoll = parseInt($(row).find(".available-quantity-roll").text().split(" ")[0]) + quantityRoll;
+  var availableUnit = parseInt($(row).find(".available-quantity-unit").text().split(" ")[0]) + quantityUnit;
+  $(row).parent() //tbody
+  .children(".".concat(code)) //all row that has same code
+  .find(".available-quantity-roll") //column for availability quantity roll
+  .text("".concat(availableRoll, " roll")); //set text on column
+
+  $(row).parent() //tbody
+  .children(".".concat(code)) //all row that has same code
+  .find(".available-quantity-unit") //column for availability quantity roll
+  .text("".concat(availableUnit, " ").concat(unitName)); //set text on column
+
+  $(row).remove();
+}
+
+/**
+ * Description : use to add behavior when button is click
+ * @param {object} context context for button element
+ */
+function onClickButtonMinus(context) {
+  var row = $(context).closest("tr");
+  var code = $(row).attr("class");
+  var quantityRoll = parseInt($(row).find(".quantity-roll").text().split(" ")[0]) - 1;
+  var sellingPrice = _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatRupiahToInt($(row).find(".selling-price").text());
+  var quantityUnitPerRoll = parseInt($(row).find(".quantity-unit-per-roll").text().split(" ")[0]);
+  var quantityUnit = $(row).find(".quantity-unit").text().split(" ");
+  var unitName = quantityUnit[1];
+  quantityUnit = parseInt(quantityUnit[0]);
+  var newQuantityUnit = quantityRoll * quantityUnitPerRoll;
+  var newSubTotal = _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(sellingPrice * newQuantityUnit);
+  var availableRoll = parseInt($(row).find(".available-quantity-roll").text().split(" ")[0]) + 1;
+  var availableUnit = parseInt($(row).find(".available-quantity-unit").text().split(" ")[0]) + 1 * quantityUnitPerRoll;
+  $(row).find(".quantity-roll").text("".concat(quantityRoll, " roll"));
+  $(row).find(".quantity-unit").text("".concat(newQuantityUnit, " ").concat(unitName));
+  $(row).find(".sub-total").text(newSubTotal);
+  $(row).parent() //tbody
+  .children(".".concat(code)) //all row that has same code
+  .find(".available-quantity-roll") //column for availability quantity roll
+  .text("".concat(availableRoll, " roll")); //set text on column
+
+  $(row).parent() //tbody
+  .children(".".concat(code)) //all row that has same code
+  .find(".available-quantity-unit") //column for availability quantity roll
+  .text("".concat(availableUnit, " ").concat(unitName)); //set text on column
+
+  if (quantityRoll == 0) {
+    $(row).remove();
+  }
+}
+
+/**
+* Description : use to add behavior when button is click
+* 
+* @param {object} context context for button elemen
+*/
+function onClickButtonPlus(context) {
+  var row = $(context).closest("tr");
+  var code = $(row).attr("class");
+  var sellingPrice = _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatRupiahToInt($(row).find(".selling-price").text());
+  var quantityRoll = parseInt($(row).find(".quantity-roll").text().split(" ")[0]) + 1;
+  var quantityUnitPerRoll = parseInt($(row).find(".quantity-unit-per-roll").text().split(" ")[0]);
+  var quantityUnit = $(row).find(".quantity-unit").text().split(" ");
+  var unitName = quantityUnit[1];
+  quantityUnit = parseInt(quantityUnit[0]);
+  var newQuantityUnit = quantityRoll * quantityUnitPerRoll;
+  var newSubTotal = _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(sellingPrice * newQuantityUnit);
+  var availableRoll = parseInt($(row).find(".available-quantity-roll").text().split(" ")[0]) - 1;
+  var availableUnit = parseInt($(row).find(".available-quantity-unit").text().split(" ")[0]) - 1 * quantityUnitPerRoll;
+  if (availableRoll < 0 || availableUnit < 0) {
+    return Swal.fire({
+      icon: 'error',
+      title: 'Action cannot be done !',
+      text: 'Item availability is not enough!'
+    });
+  }
+  $(row).find(".quantity-roll").text("".concat(quantityRoll, " roll"));
+  $(row).find(".quantity-unit").text("".concat(newQuantityUnit, " ").concat(unitName));
+  $(row).find(".sub-total").text(newSubTotal);
+  $(row).parent() //tbody
+  .children(".".concat(code)) //all row that has same code
+  .find(".available-quantity-roll") //column for availability quantity roll
+  .text("".concat(availableRoll, " roll")); //set text on column
+
+  $(row).parent() //tbody
+  .children(".".concat(code)) //all row that has same code
+  .find(".available-quantity-unit") //column for availability quantity roll
+  .text("".concat(availableUnit, " ").concat(unitName)); //set text on column
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  /**
+   * Description : use to add button plus on column action
+   * 
+   * @returns html element for button plus
+   */
+  getButtonPlusElement: function getButtonPlusElement() {
+    return $("<button>", {
+      "class": "btn btn-primary btn-sm btn-plus-roll",
+      type: "button",
+      click: function click() {
+        onClickButtonPlus(this);
+      }
+    }).append($("<i>", {
+      "class": "fa-solid fa-square-plus"
+    }));
+  },
+  /**
+   * Description : use to get button minus element
+   * 
+   * @returns html elemen of button minus
+   */
+  getButtonMinusElement: function getButtonMinusElement() {
+    return $("<button>", {
+      "class": "btn btn-danger btn-sm btn-minus-roll",
+      type: "button",
+      click: function click() {
+        onClickButtonMinus(this);
+      }
+    }).append($("<i>", {
+      "class": "fa-solid fa-square-minus"
+    }));
+  },
+  /**
+   * Description : use to get html element for remove button
+   * 
+   * @returns html element
+   */
+  getButtonRemoveElement: function getButtonRemoveElement() {
+    return $("<button>", {
+      "class": "btn btn-danger btn-sm btn-delete-roll",
+      type: "button",
+      click: function click() {
+        onClickButtomRemove(this);
+      }
+    }).append($("<i>", {
+      "class": "fa-solid fa-trash"
+    }));
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/application/shopping/module/unit-per-roll.js":
+/*!*******************************************************************!*\
+  !*** ./resources/js/application/shopping/module/unit-per-roll.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../module/helper */ "./resources/js/module/helper.js");
+
+function onClickUnitPerRoll(context) {
+  $(context).text(parseInt($(context).text()));
+}
+function onBlurUnitPerRoll(context, unitName) {
+  var row = $(context).closest("tr");
+  var quantityRoll = parseInt($(row).find(".quantity-roll").text());
+  var unitPerRoll = parseInt($(context).text());
+  var unitQuantity = quantityRoll * unitPerRoll;
+  $(row).find(".quantity-unit").text("".concat(unitQuantity, " ").concat(unitName));
+  $(context).text("".concat(unitPerRoll, " ").concat(unitName));
+}
+function onKeyPressUnitPerRoll(context, event) {
+  _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].preventEnter(context, event);
+  _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].prenvetNonNumeric(event);
+}
+function onKeyDownUnitPerRoll(context, event) {
+  _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].preventTab(context, event);
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  getUnitPerRollElement: function getUnitPerRollElement(unitName) {
+    return $("<td>", {
+      text: "1 ".concat(unitName),
+      "class": "text-nowrap quantity-unit-per-roll",
+      attr: {
+        contenteditable: true
+      },
+      click: function click() {
+        onClickUnitPerRoll(this);
+      },
+      blur: function blur() {
+        onBlurUnitPerRoll(this, unitName);
+      },
+      keypress: function keypress(event) {
+        onKeyPressUnitPerRoll(this, event);
+      },
+      keydown: function keydown(event) {
+        onKeyDownUnitPerRoll(this, event);
+      }
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/module/helper.js":
 /*!***************************************!*\
   !*** ./resources/js/module/helper.js ***!
@@ -23,6 +248,24 @@ __webpack_require__.r(__webpack_exports__);
     rupiahInt = rupiahInt.split(" ")[0];
     rupiahInt = parseInt(rupiahInt);
     return rupiahInt;
+  },
+  preventEnter: function preventEnter(context, event) {
+    if (event.key == "Enter") {
+      event.preventDefault();
+      $(context).blur();
+    }
+  },
+  prenvetNonNumeric: function prenvetNonNumeric(event) {
+    if (event.which < 48 || event.which > 57) {
+      event.preventDefault();
+    }
+  },
+  preventTab: function preventTab(context, event) {
+    if (event.which == 9) {
+      console.log("TAB");
+      event.preventDefault();
+      $(context).next().focus();
+    }
   }
 });
 
@@ -4054,6 +4297,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../module/helper */ "./resources/js/module/helper.js");
+/* harmony import */ var _module_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/button */ "./resources/js/application/shopping/module/button.js");
+/* harmony import */ var _module_unit_per_roll__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/unit-per-roll */ "./resources/js/application/shopping/module/unit-per-roll.js");
+
+
 
 
 
@@ -4127,158 +4374,6 @@ function updateAvailableQuantityUnit(code, availableRoll, unitName) {
 }
 
 /**
- * Description : use to add behavior when button is click
- * 
- * @param {object} context context for button elemen
- */
-function onClickButtonPlus(context) {
-  var row = $(context).closest("tr");
-  var code = $(row).attr("class");
-  var sellingPrice = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($(row).find(".selling-price").text());
-  var quantityRoll = parseInt($(row).find(".quantity-roll").text().split(" ")[0]) + 1;
-  var quantityUnitPerRoll = parseInt($(row).find(".quantity-unit-per-roll").text().split(" ")[0]);
-  var quantityUnit = $(row).find(".quantity-unit").text().split(" ");
-  var unitName = quantityUnit[1];
-  quantityUnit = parseInt(quantityUnit[0]);
-  var newQuantityUnit = quantityRoll * quantityUnitPerRoll;
-  var newSubTotal = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(sellingPrice * newQuantityUnit);
-  var availableRoll = parseInt($(row).find(".available-quantity-roll").text().split(" ")[0]) - 1;
-  var availableUnit = parseInt($(row).find(".available-quantity-unit").text().split(" ")[0]) - 1 * quantityUnitPerRoll;
-  if (availableRoll < 0 || availableUnit < 0) {
-    return sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire({
-      icon: 'error',
-      title: 'Action cannot be done !',
-      text: 'Item availability is not enough!'
-    });
-  }
-  $(row).find(".quantity-roll").text("".concat(quantityRoll, " roll"));
-  $(row).find(".quantity-unit").text("".concat(newQuantityUnit, " ").concat(unitName));
-  $(row).find(".sub-total").text(newSubTotal);
-  $(row).parent() //tbody
-  .children(".".concat(code)) //all row that has same code
-  .find(".available-quantity-roll") //column for availability quantity roll
-  .text("".concat(availableRoll, " roll")); //set text on column
-
-  $(row).parent() //tbody
-  .children(".".concat(code)) //all row that has same code
-  .find(".available-quantity-unit") //column for availability quantity roll
-  .text("".concat(availableUnit, " ").concat(unitName)); //set text on column
-}
-
-/**
- * Description : use to add behavior when button is click
- * @param {object} context context for button element
- */
-function onClickButtonMinus(context) {
-  var row = $(context).closest("tr");
-  var code = $(row).attr("class");
-  var quantityRoll = parseInt($(row).find(".quantity-roll").text().split(" ")[0]) - 1;
-  var sellingPrice = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($(row).find(".selling-price").text());
-  var quantityUnitPerRoll = parseInt($(row).find(".quantity-unit-per-roll").text().split(" ")[0]);
-  var quantityUnit = $(row).find(".quantity-unit").text().split(" ");
-  var unitName = quantityUnit[1];
-  quantityUnit = parseInt(quantityUnit[0]);
-  var newQuantityUnit = quantityRoll * quantityUnitPerRoll;
-  var newSubTotal = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(sellingPrice * newQuantityUnit);
-  var availableRoll = parseInt($(row).find(".available-quantity-roll").text().split(" ")[0]) + 1;
-  var availableUnit = parseInt($(row).find(".available-quantity-unit").text().split(" ")[0]) + 1 * quantityUnitPerRoll;
-  $(row).find(".quantity-roll").text("".concat(quantityRoll, " roll"));
-  $(row).find(".quantity-unit").text("".concat(newQuantityUnit, " ").concat(unitName));
-  $(row).find(".sub-total").text(newSubTotal);
-  $(row).parent() //tbody
-  .children(".".concat(code)) //all row that has same code
-  .find(".available-quantity-roll") //column for availability quantity roll
-  .text("".concat(availableRoll, " roll")); //set text on column
-
-  $(row).parent() //tbody
-  .children(".".concat(code)) //all row that has same code
-  .find(".available-quantity-unit") //column for availability quantity roll
-  .text("".concat(availableUnit, " ").concat(unitName)); //set text on column
-
-  if (quantityRoll == 0) {
-    $(row).remove();
-  }
-}
-
-/**
- * Description : use to add behavior when button is click
- * 
- * @param {object} context context for button element
- */
-function onClickButtomRemove(context) {
-  var row = $(context).closest("tr");
-  var code = $(row).attr("class");
-  var quantityRoll = parseInt($(row).find(".quantity-roll").text().split(" ")[0]);
-  var quantityUnit = $(row).find(".quantity-unit").text().split(" ");
-  var unitName = quantityUnit[1];
-  quantityUnit = parseInt(quantityUnit[0]);
-  var availableRoll = parseInt($(row).find(".available-quantity-roll").text().split(" ")[0]) + quantityRoll;
-  var availableUnit = parseInt($(row).find(".available-quantity-unit").text().split(" ")[0]) + quantityUnit;
-  $(row).parent() //tbody
-  .children(".".concat(code)) //all row that has same code
-  .find(".available-quantity-roll") //column for availability quantity roll
-  .text("".concat(availableRoll, " roll")); //set text on column
-
-  $(row).parent() //tbody
-  .children(".".concat(code)) //all row that has same code
-  .find(".available-quantity-unit") //column for availability quantity roll
-  .text("".concat(availableUnit, " ").concat(unitName)); //set text on column
-
-  $(row).remove();
-}
-
-/**
- * Description : use to add button plus on column action
- * 
- * @returns html element for button plus
- */
-function getButtonPlusElement() {
-  return $("<button>", {
-    "class": "btn btn-primary btn-sm btn-plus-roll",
-    type: "button",
-    click: function click() {
-      onClickButtonPlus(this);
-    }
-  }).append($("<i>", {
-    "class": "fa-solid fa-square-plus"
-  }));
-}
-
-/**
- * Description : use to get button minus element
- * 
- * @returns html elemen of button minus
- */
-function getButtonMinusElement() {
-  return $("<button>", {
-    "class": "btn btn-danger btn-sm btn-minus-roll",
-    type: "button",
-    click: function click() {
-      onClickButtonMinus(this);
-    }
-  }).append($("<i>", {
-    "class": "fa-solid fa-square-minus"
-  }));
-}
-
-/**
- * Description : use to get html element for remove button
- * 
- * @returns html element
- */
-function getButtonRemoveElement() {
-  return $("<button>", {
-    "class": "btn btn-danger btn-sm btn-delete-roll",
-    type: "button",
-    click: function click() {
-      onClickButtomRemove(this);
-    }
-  }).append($("<i>", {
-    "class": "fa-solid fa-trash"
-  }));
-}
-
-/**
  * Description : selectize option configuration
  */
 var selectizeOption = {
@@ -4347,13 +4442,13 @@ $(document).ready(function () {
       text: "1 roll",
       "class": "text-nowrap quantity-roll"
     }));
+    tr.append(_module_unit_per_roll__WEBPACK_IMPORTED_MODULE_3__["default"].getUnitPerRollElement(dataSet.unit.name));
     tr.append($("<td>", {
       text: "1 ".concat(dataSet.unit.name),
-      "class": "text-nowrap quantity-unit-per-roll"
-    }));
-    tr.append($("<td>", {
-      text: "1 ".concat(dataSet.unit.name),
-      "class": "text-nowrap quantity-unit"
+      "class": "text-nowrap quantity-unit",
+      attr: {
+        contenteditable: true
+      }
     }));
     tr.append($("<td>", {
       text: _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(dataSet.selling_price),
@@ -4367,7 +4462,7 @@ $(document).ready(function () {
       "class": "text-nowrap"
     }).append($("<div>", {
       "class": "d-grid gap-2 d-md-block"
-    }).append(getButtonPlusElement()).append(getButtonMinusElement()).append(getButtonRemoveElement())));
+    }).append(_module_button__WEBPACK_IMPORTED_MODULE_2__["default"].getButtonPlusElement()).append(_module_button__WEBPACK_IMPORTED_MODULE_2__["default"].getButtonMinusElement()).append(_module_button__WEBPACK_IMPORTED_MODULE_2__["default"].getButtonRemoveElement())));
     tr.append($("<td>", {
       text: "".concat(dataSet.quantity_roll, " rolls"),
       "class": "text-nowrap available-quantity-roll"
@@ -4377,8 +4472,6 @@ $(document).ready(function () {
       "class": "text-nowrap available-quantity-unit"
     }));
     tbody.append(tr);
-
-    // setActionToButtonPlus();
     updateAvailableQuantityRoll(dataSet.code, dataSet.quantity_roll - 1 - totalRollOnTable);
     updateAvailableQuantityUnit(dataSet.code, dataSet.quantity_unit - 1 - totalUnitOnTable, dataSet.unit.name);
     selectizedFocusAndClear(selectized);
