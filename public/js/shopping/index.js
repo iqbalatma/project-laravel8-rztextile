@@ -197,15 +197,21 @@ function onClickUnitPerRoll(context) {
 function onBlurUnitPerRoll(context, unitName) {
   var row = $(context).closest("tr");
   var quantityRoll = parseInt($(row).find(".quantity-roll").text());
+  var quantityUnit = parseInt($(row).find(".quantity-unit").text());
   var unitPerRoll = parseInt($(context).text());
   var sellingPrice = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($(row).find(".selling-price").text());
   var availableQuantityUnit = parseInt($(row).find(".available-quantity-unit").text());
   var newQuantityUnit = quantityRoll * unitPerRoll;
   var newSubTotal = sellingPrice * newQuantityUnit;
-  var newAvailableQuantityUnit = availableQuantityUnit - newQuantityUnit;
+  var diffrence = newQuantityUnit - quantityUnit;
+  var newAvailableQuantityUnit = availableQuantityUnit - diffrence;
+  console.log(diffrence);
   if (newAvailableQuantityUnit < 0) {
     $(context).text("".concat(tempData.getValue(), " ").concat(unitName));
-    return (0,_module_alert__WEBPACK_IMPORTED_MODULE_0__.alertQuantityNotEnough)();
+    if (tempData.getValue() != unitPerRoll) {
+      return (0,_module_alert__WEBPACK_IMPORTED_MODULE_0__.alertQuantityNotEnough)();
+    }
+    return false;
   }
   $(row).find(".quantity-unit").text("".concat(newQuantityUnit, " ").concat(unitName));
   $(row).find(".available-quantity-unit").text("".concat(newAvailableQuantityUnit, " ").concat(unitName));

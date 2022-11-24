@@ -20,17 +20,24 @@ function onClickUnitPerRoll(context){
 function onBlurUnitPerRoll(context, unitName){
   let row = $(context).closest("tr");
   let quantityRoll = parseInt($(row).find(".quantity-roll").text());
+  let quantityUnit = parseInt($(row).find(".quantity-unit").text());
   let unitPerRoll = parseInt($(context).text());
   let sellingPrice = helper.formatRupiahToInt($(row).find(".selling-price").text());
   let availableQuantityUnit = parseInt($(row).find(".available-quantity-unit").text());
 
   let newQuantityUnit = quantityRoll * unitPerRoll;
   let newSubTotal = sellingPrice * newQuantityUnit;
-  let newAvailableQuantityUnit = availableQuantityUnit - newQuantityUnit;
+  let diffrence = newQuantityUnit - quantityUnit;
+  let newAvailableQuantityUnit = availableQuantityUnit - diffrence;
+
+  console.log(diffrence);
   
   if(newAvailableQuantityUnit<0){
     $(context).text(`${tempData.getValue()} ${unitName}`);
-    return alertQuantityNotEnough();
+    if(tempData.getValue()!=unitPerRoll){
+      return alertQuantityNotEnough();
+    }
+    return false;
   }
 
   $(row).find(".quantity-unit").text(`${newQuantityUnit} ${unitName}`)
