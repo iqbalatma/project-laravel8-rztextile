@@ -1,3 +1,4 @@
+import { alertQuantityNotEnough } from "../../../module/alert";
 import helper from "../../../module/helper";
 
   /**
@@ -172,11 +173,7 @@ import helper from "../../../module/helper";
       .split(" ")[0]) - (1*quantityUnitPerRoll);
 
     if(availableRoll<0 || availableUnit <0){
-      return Swal.fire({
-        icon: 'error',
-        title: 'Action cannot be done !',
-        text: 'Item availability is not enough!',
-      })
+      return alertQuantityNotEnough();
     }
 
     $(row)

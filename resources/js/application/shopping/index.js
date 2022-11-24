@@ -1,4 +1,3 @@
-import Swal from "sweetalert2";
 import helper from "../../module/helper"
 import button from "./module/button";
 import unitPerRoll from "./module/unit-per-roll";
