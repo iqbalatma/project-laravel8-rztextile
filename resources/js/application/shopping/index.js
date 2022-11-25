@@ -1,5 +1,6 @@
 import helper from "../../module/helper"
 import button from "./module/button";
+import confirmShopping from "./module/confirm-shopping";
 import quantityRoll from "./module/quantity-roll";
 import sellingPrice from "./module/selling-price";
 import unitPerRoll from "./module/unit-per-roll";
@@ -241,4 +242,8 @@ $(document).ready(function(){
     $("#address").val(dataCustomer["address"])
     $("#phone").val(dataCustomer["phone"])
   })
+
+  $("#btn-confirm-shopping").on("click", function(){
+    confirmShopping.onClickConfirm(this);
+  });
 });

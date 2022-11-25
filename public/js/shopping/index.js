@@ -186,6 +186,32 @@ var button = {
 
 /***/ }),
 
+/***/ "./resources/js/application/shopping/module/confirm-shopping.js":
+/*!**********************************************************************!*\
+  !*** ./resources/js/application/shopping/module/confirm-shopping.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  onClickConfirm: function onClickConfirm(context) {
+    var dataset = {
+      customerId: null,
+      roll: []
+    };
+    var isWithCustomer = $("#is-with-customer").is(":checked");
+    var selectedCustomer = $("#select-customer").find("option:selected").val();
+    if (isWithCustomer && selectedCustomer != "") {
+      dataset.customerId = selectedCustomer;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/application/shopping/module/quantity-roll.js":
 /*!*******************************************************************!*\
   !*** ./resources/js/application/shopping/module/quantity-roll.js ***!
@@ -547,9 +573,11 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../module/helper */ "./resources/js/module/helper.js");
 /* harmony import */ var _module_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/button */ "./resources/js/application/shopping/module/button.js");
-/* harmony import */ var _module_quantity_roll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/quantity-roll */ "./resources/js/application/shopping/module/quantity-roll.js");
-/* harmony import */ var _module_selling_price__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/selling-price */ "./resources/js/application/shopping/module/selling-price.js");
-/* harmony import */ var _module_unit_per_roll__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/unit-per-roll */ "./resources/js/application/shopping/module/unit-per-roll.js");
+/* harmony import */ var _module_confirm_shopping__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/confirm-shopping */ "./resources/js/application/shopping/module/confirm-shopping.js");
+/* harmony import */ var _module_quantity_roll__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/quantity-roll */ "./resources/js/application/shopping/module/quantity-roll.js");
+/* harmony import */ var _module_selling_price__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/selling-price */ "./resources/js/application/shopping/module/selling-price.js");
+/* harmony import */ var _module_unit_per_roll__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/unit-per-roll */ "./resources/js/application/shopping/module/unit-per-roll.js");
+
 
 
 
@@ -689,13 +717,13 @@ $(document).ready(function () {
     tr.append($("<td>".concat(dataSet.id, "</td>")));
     tr.append($("<td>".concat(dataSet.code, "</td>")));
     tr.append($("<td>".concat(dataSet.name, "</td>")));
-    tr.append(_module_quantity_roll__WEBPACK_IMPORTED_MODULE_2__["default"].getQuantityRollElement(dataSet.unit.name));
-    tr.append(_module_unit_per_roll__WEBPACK_IMPORTED_MODULE_4__["default"].getUnitPerRollElement(dataSet.unit.name));
+    tr.append(_module_quantity_roll__WEBPACK_IMPORTED_MODULE_3__["default"].getQuantityRollElement(dataSet.unit.name));
+    tr.append(_module_unit_per_roll__WEBPACK_IMPORTED_MODULE_5__["default"].getUnitPerRollElement(dataSet.unit.name));
     tr.append($("<td>", {
       text: "1 ".concat(dataSet.unit.name),
       "class": "text-nowrap quantity-unit"
     }));
-    tr.append(_module_selling_price__WEBPACK_IMPORTED_MODULE_3__["default"].getSellingPriceElement(dataSet.selling_price));
+    tr.append(_module_selling_price__WEBPACK_IMPORTED_MODULE_4__["default"].getSellingPriceElement(dataSet.selling_price));
     tr.append($("<td>", {
       text: _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(dataSet.selling_price),
       "class": "text-nowrap sub-total"
@@ -742,6 +770,9 @@ $(document).ready(function () {
     $("#name").val(dataCustomer["name"]);
     $("#address").val(dataCustomer["address"]);
     $("#phone").val(dataCustomer["phone"]);
+  });
+  $("#btn-confirm-shopping").on("click", function () {
+    _module_confirm_shopping__WEBPACK_IMPORTED_MODULE_2__["default"].onClickConfirm(this);
   });
 });
 })();
