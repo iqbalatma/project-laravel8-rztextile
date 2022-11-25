@@ -224,4 +224,21 @@ $(document).ready(function(){
 
     $("#total-bill").val(helper.formatIntToRupiah(totalBill));
   });
+
+  $("#is-with-customer").on("change", function(){
+    if(this.checked){
+      $("#customer-container-modal").removeClass("d-none");
+    }else{
+      $("#customer-container-modal").addClass("d-none");
+    }
+  })
+
+  $("#select-customer").on("change", function(){
+    let dataCustomer = $(this).find("option:selected").data("json");
+
+    $("#id_number").val(dataCustomer["id_number"])
+    $("#name").val(dataCustomer["name"])
+    $("#address").val(dataCustomer["address"])
+    $("#phone").val(dataCustomer["phone"])
+  })
 });

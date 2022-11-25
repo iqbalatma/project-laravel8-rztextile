@@ -63,30 +63,38 @@
                         <input type="checkbox" class="btn-check" id="is-with-customer" autocomplete="off">
                         <label class="btn btn-outline-primary" for="is-with-customer">Choose Customer</label>
                       </div>
-                      <div class="col-md-6">
-                        <label for="payment-type" class="form-label">Payment Type</label>
-                        <select id="payment-type" class="form-select">
-                          <option value="cash">Cash</option>
-                          <option value="transfer">Transfer</option>
+                    </div>
+                    <div class="row g-3 d-none" id="customer-container-modal">
+                      <div class="col-md-12">
+                        <label for="select-customer" class="form-label">Customer</label>
+                        <select id="select-customer" class="form-select">
+                          <option value="" selected disabled>-- Select customer --</option>
+                          @foreach ($customers as $customer)
+                          <option value="{{ $customer->id }}" data-json="{{ json_encode($customer) }}">{{ $customer->name }}</option>
+                          @endforeach
                         </select>
                       </div>
                       <div class="col-md-6">
-                        <label for="total-bill" class="form-label">Total Bill</label>
-                        <input type="number" class="form-control" id="total-bill" value="0" readonly>
+                        <label for="id_number" class="form-label">ID Number</label>
+                        <input type="number" class="form-control" id="id_number" readonly>
                       </div>
                       <div class="col-md-6">
-                        <label for="total-bill" class="form-label">Total Bill</label>
-                        <input type="number" class="form-control" id="total-bill" value="0" readonly>
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" readonly>
                       </div>
                       <div class="col-md-6">
-                        <label for="total-bill" class="form-label">Total Bill</label>
-                        <input type="number" class="form-control" id="total-bill" value="0" readonly>
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="address" readonly>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="text" class="form-control" id="phone" readonly>
                       </div>
                     </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary">Confirm</button>
                   </div>
                 </div>
               </div>
