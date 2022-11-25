@@ -1,8 +1,8 @@
 export default {
   onClickConfirm(context){
-    let dataset = {
+    let dataSet = {
       customerId : null,
-      roll: []
+      rolls: []
     };
 
     let isWithCustomer = $("#is-with-customer").is(":checked");
@@ -10,7 +10,21 @@ export default {
 
 
     if(isWithCustomer && selectedCustomer!= ""){
-      dataset.customerId = selectedCustomer;
+      dataSet.customerId = selectedCustomer;
     }
+
+    let tableRows = $("#summary-payment-container tbody tr");
+    tableRows.each(function(){
+     let rollId = $(this).find("td").eq(0).text();
+     let quantityRoll = $(this).find("td").eq(3).text();
+     let quantityUnit = $(this).find("td").eq(5).text();
+     let subTotal = $(this).find("td").eq(7).text();
+
+     let roll = {rollId, quantityRoll, quantityUnit, subTotal};
+
+     dataSet.rolls.push(roll);
+    })
+
+    console.log(dataSet);
   }
 }

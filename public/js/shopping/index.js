@@ -198,15 +198,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   onClickConfirm: function onClickConfirm(context) {
-    var dataset = {
+    var dataSet = {
       customerId: null,
-      roll: []
+      rolls: []
     };
     var isWithCustomer = $("#is-with-customer").is(":checked");
     var selectedCustomer = $("#select-customer").find("option:selected").val();
     if (isWithCustomer && selectedCustomer != "") {
-      dataset.customerId = selectedCustomer;
+      dataSet.customerId = selectedCustomer;
     }
+    var tableRows = $("#summary-payment-container tbody tr");
+    tableRows.each(function () {
+      var rollId = $(this).find("td").eq(0).text();
+      var quantityRoll = $(this).find("td").eq(3).text();
+      var quantityUnit = $(this).find("td").eq(5).text();
+      var subTotal = $(this).find("td").eq(7).text();
+      var roll = {
+        rollId: rollId,
+        quantityRoll: quantityRoll,
+        quantityUnit: quantityUnit,
+        subTotal: subTotal
+      };
+      dataSet.rolls.push(roll);
+    });
+    console.log(dataSet);
   }
 });
 
