@@ -9,6 +9,8 @@ import helper from "../../../module/helper";
   function onClickButtomRemove(context){
     let row = $(context).closest("tr");
 
+    let tbody = $(row).parent().find("tr");
+    
     let code = $(row).attr("class");
 
     let quantityRoll = parseInt($(row)
@@ -49,6 +51,10 @@ import helper from "../../../module/helper";
       .text(`${availableUnit} ${unitName}`) //set text on column
 
     $(row).remove();
+
+    if(tbody.length==1){
+      button.hideButtonSummaryPayment();
+    }
   }
 
   /**
@@ -58,9 +64,10 @@ import helper from "../../../module/helper";
   function onClickButtonMinus(context){
     let row = $(context).closest("tr");
 
+    let tbody = $(row).parent().find("tr");
+
     let code = $(row).attr("class");
 
-    
     let quantityRoll = parseInt($(row)
       .find(".quantity-roll")
       .text()
@@ -123,6 +130,9 @@ import helper from "../../../module/helper";
     
     if(quantityRoll==0){
       $(row).remove();
+      if(tbody.length==1){
+        button.hideButtonSummaryPayment()
+      }
     }
   }
 
@@ -201,7 +211,19 @@ import helper from "../../../module/helper";
       .text(`${availableUnit} ${unitName}`) //set text on column
   }
 
-export default {
+const button =  {
+  /**
+   * Description : use to show button summary payment
+   * 
+   */
+  showButtonSummaryPayment(){
+    $("#btn-summary-payment").removeClass("d-none");
+  },
+
+  hideButtonSummaryPayment(){
+    $("#btn-summary-payment").addClass("d-none");
+  },
+
   /**
    * Description : use to add button plus on column action
    * 
@@ -253,3 +275,5 @@ export default {
     }));
   },
 }
+
+export default button;

@@ -144,6 +144,7 @@ $(document).ready(function(){
    * @param {object} dataSet 
    */
   function setSelectedOptionToTableRow(dataSet){
+    button.showButtonSummaryPayment();
     let table = $("#table-product");
     let tbody = $(table).find("tbody");
 
@@ -218,11 +219,9 @@ $(document).ready(function(){
     let totalBill = 0;
     $("#table-summary-product").find(".sub-total").each(function(){
       let subTotal = helper.formatRupiahToInt($(this).text());
-      totalBill+= subTotal;
+      totalBill += subTotal;
     });
 
     $("#total-bill").val(helper.formatIntToRupiah(totalBill));
-
-    
   });
 });

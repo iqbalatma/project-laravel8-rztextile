@@ -24,6 +24,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 function onClickButtomRemove(context) {
   var row = $(context).closest("tr");
+  var tbody = $(row).parent().find("tr");
   var code = $(row).attr("class");
   var quantityRoll = parseInt($(row).find(".quantity-roll").text().split(" ")[0]);
   var quantityUnit = $(row).find(".quantity-unit").text().split(" ");
@@ -42,6 +43,9 @@ function onClickButtomRemove(context) {
   .text("".concat(availableUnit, " ").concat(unitName)); //set text on column
 
   $(row).remove();
+  if (tbody.length == 1) {
+    button.hideButtonSummaryPayment();
+  }
 }
 
 /**
@@ -50,6 +54,7 @@ function onClickButtomRemove(context) {
  */
 function onClickButtonMinus(context) {
   var row = $(context).closest("tr");
+  var tbody = $(row).parent().find("tr");
   var code = $(row).attr("class");
   var quantityRoll = parseInt($(row).find(".quantity-roll").text().split(" ")[0]) - 1;
   var sellingPrice = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($(row).find(".selling-price").text());
@@ -76,6 +81,9 @@ function onClickButtonMinus(context) {
 
   if (quantityRoll == 0) {
     $(row).remove();
+    if (tbody.length == 1) {
+      button.hideButtonSummaryPayment();
+    }
   }
 }
 
@@ -114,7 +122,17 @@ function onClickButtonPlus(context) {
   .text("".concat(availableUnit, " ").concat(unitName)); //set text on column
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+var button = {
+  /**
+   * Description : use to show button summary payment
+   * 
+   */
+  showButtonSummaryPayment: function showButtonSummaryPayment() {
+    $("#btn-summary-payment").removeClass("d-none");
+  },
+  hideButtonSummaryPayment: function hideButtonSummaryPayment() {
+    $("#btn-summary-payment").addClass("d-none");
+  },
   /**
    * Description : use to add button plus on column action
    * 
@@ -163,7 +181,8 @@ function onClickButtonPlus(context) {
       "class": "fa-solid fa-trash"
     }));
   }
-});
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (button);
 
 /***/ }),
 
@@ -659,6 +678,7 @@ $(document).ready(function () {
    * @param {object} dataSet 
    */
   function setSelectedOptionToTableRow(dataSet) {
+    _module_button__WEBPACK_IMPORTED_MODULE_1__["default"].showButtonSummaryPayment();
     var table = $("#table-product");
     var tbody = $(table).find("tbody");
     var totalUnitOnTable = getCurrentTotalUnitOnTable(dataSet.code);

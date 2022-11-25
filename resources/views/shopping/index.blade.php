@@ -27,10 +27,9 @@
               </tbody>
             </table>
             <br>
-            <hr>
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" id="btn-summary-payment" data-bs-toggle="modal" data-bs-target="#summary-payment-modal">
+            <button type="button" class="btn btn-primary d-none" id="btn-summary-payment" data-bs-toggle="modal" data-bs-target="#summary-payment-modal">
               Summary Payment
             </button>
 
@@ -46,7 +45,6 @@
                     <div class="table-responsive" id="summary-payment-container">
                     </div>
                     <br>
-                    <hr>
                     <div class="row g-3">
                       <div class="col-md-6">
                         <label for="payment-type" class="form-label">Payment Type</label>
