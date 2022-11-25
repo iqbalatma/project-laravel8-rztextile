@@ -1,4 +1,5 @@
 <x-app-layout :title="$title">
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <div class="row">
     <div class="col-xl-7 col-xxl-8 mb-4">
       <div class="card flex-fill w-100">

@@ -196,32 +196,50 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+function purchase(dataSet) {
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  $.ajax({
+    url: "/shopping/purchase",
+    context: document.body,
+    data: dataSet,
+    method: "POST"
+  }).done(function (response) {
+    console.log(response);
+  }).fail(function (response) {
+    console.log(response);
+  });
+}
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   onClickConfirm: function onClickConfirm(context) {
     var dataSet = {
-      customerId: null,
+      customer_id: null,
+      payment_type: $("#payment-type").find("option:selected").val(),
       rolls: []
     };
     var isWithCustomer = $("#is-with-customer").is(":checked");
     var selectedCustomer = $("#select-customer").find("option:selected").val();
     if (isWithCustomer && selectedCustomer != "") {
-      dataSet.customerId = selectedCustomer;
+      dataSet.customer_id = selectedCustomer;
     }
     var tableRows = $("#summary-payment-container tbody tr");
     tableRows.each(function () {
-      var rollId = $(this).find("td").eq(0).text();
-      var quantityRoll = $(this).find("td").eq(3).text();
-      var quantityUnit = $(this).find("td").eq(5).text();
-      var subTotal = $(this).find("td").eq(7).text();
+      var roll_id = $(this).find("td").eq(0).text();
+      var quantity_roll = $(this).find("td").eq(3).text();
+      var quantity_unit = $(this).find("td").eq(5).text();
+      var sub_total = $(this).find("td").eq(7).text();
       var roll = {
-        rollId: rollId,
-        quantityRoll: quantityRoll,
-        quantityUnit: quantityUnit,
-        subTotal: subTotal
+        roll_id: roll_id,
+        quantity_roll: quantity_roll,
+        quantity_unit: quantity_unit,
+        sub_total: sub_total
       };
       dataSet.rolls.push(roll);
     });
-    console.log(dataSet);
+    purchase(dataSet);
   }
 });
 

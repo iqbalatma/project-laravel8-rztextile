@@ -1,7 +1,28 @@
+function purchase(dataSet){
+  $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  }); 
+
+
+  $.ajax({
+    url: "/shopping/purchase",
+    context: document.body,
+    data: dataSet,
+    method: "POST"
+  }).done(function(response) {
+    console.log(response);
+  }).fail(function(response){
+    console.log(response);
+  });
+}
+
 export default {
   onClickConfirm(context){
     let dataSet = {
-      customerId : null,
+      customer_id : null,
+      payment_type: $("#payment-type").find("option:selected").val(),
       rolls: []
     };
 
@@ -10,21 +31,22 @@ export default {
 
 
     if(isWithCustomer && selectedCustomer!= ""){
-      dataSet.customerId = selectedCustomer;
+      dataSet.customer_id = selectedCustomer;
     }
 
     let tableRows = $("#summary-payment-container tbody tr");
-    tableRows.each(function(){
-     let rollId = $(this).find("td").eq(0).text();
-     let quantityRoll = $(this).find("td").eq(3).text();
-     let quantityUnit = $(this).find("td").eq(5).text();
-     let subTotal = $(this).find("td").eq(7).text();
 
-     let roll = {rollId, quantityRoll, quantityUnit, subTotal};
+    tableRows.each(function(){
+     let roll_id = $(this).find("td").eq(0).text();
+     let quantity_roll = $(this).find("td").eq(3).text();
+     let quantity_unit = $(this).find("td").eq(5).text();
+     let sub_total = $(this).find("td").eq(7).text();
+
+     let roll = {roll_id, quantity_roll, quantity_unit, sub_total};
 
      dataSet.rolls.push(roll);
     })
 
-    console.log(dataSet);
+    purchase(dataSet);
   }
 }

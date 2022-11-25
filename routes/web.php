@@ -10,8 +10,6 @@ use App\Http\Controllers\RollTransactionController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\UnitController;
 use App\Mail\CheckMail;
-use App\Models\RollTransaction;
-use App\Notifications\Check;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -119,5 +117,6 @@ Route::middleware("auth")
             ->prefix("/shopping")
             ->group(function (){
                 Route::get("/", "index")->name("index");
+                Route::post("/purchase", "purchase")->name("purchase");
             });
     });

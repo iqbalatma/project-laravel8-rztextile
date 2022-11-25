@@ -4,6 +4,9 @@ namespace App\Services;
 use App\AppData;
 use App\Repositories\CustomerRepository;
 use App\Repositories\RollRepository;
+use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ShoppingService{
   private const ALL_ROLL_SELECT_COLUMN = [
@@ -38,6 +41,34 @@ class ShoppingService{
       "rolls" => (new RollRepository())->getAllDataRoll(self::ALL_ROLL_SELECT_COLUMN),
       "customers" => (new CustomerRepository())->getAllDataCustomer(self::ALL_CUSTOMER_SELECT_COLUMN)
     ];
+  }
+
+  public function purchase(array $requestedData)
+  {
+    try{
+      DB::beginTransaction();
+      $dataInvoice = [
+        "code" => $this->getGeneratedInvoiceCode(),
+        "is_paid_off" => true,
+        "total_capital" => 0, #problem, send capital also to request post, set hidden
+        "total_payment" => 0,
+        "total_profit" => 0,
+        "payment_type" => $requestedData["payment_type"],
+        "customer_id" => $requestedData["customer_id"],
+        "user_id" => Auth::user()->id
+      ];
+
+
+      DB::commit();
+    }catch(Exception $e){
+      DB::rollBack();
+    }
+    return $dataInvoice;
+  }
+
+  public function getGeneratedInvoiceCode():string
+  {
+    return "ini adalah code";
   }
 }
 
