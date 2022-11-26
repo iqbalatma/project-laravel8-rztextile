@@ -20,6 +20,12 @@ class RollRepository{
     }])->select($columns)->get();
   }
 
+
+  public function getDataRollByIds(array $ids, array $columns = ["*"])
+  {
+    return Roll::select($columns)->whereIn("id", $ids)->get();
+  }
+
   public function addNewDataRoll(array $requestedData):object
   {
     return Roll::create($requestedData);

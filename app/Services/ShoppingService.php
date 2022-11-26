@@ -7,6 +7,7 @@ use App\Repositories\RollRepository;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ShoppingService{
   private const ALL_ROLL_SELECT_COLUMN = [
@@ -47,12 +48,16 @@ class ShoppingService{
   {
     try{
       DB::beginTransaction();
+      Log::info($requestedData);
+      Log::info(array_column($requestedData["rolls"], 'roll_id'));
+      $totalPayment = $this->getTotalPayment($requestedData["rolls"]);
+      $totalCapital = $this->getTotalCapital($requestedData["rolls"]);
       $dataInvoice = [
         "code" => $this->getGeneratedInvoiceCode(),
         "is_paid_off" => true,
-        "total_capital" => 0, #problem, send capital also to request post, set hidden
-        "total_payment" => 0,
-        "total_profit" => 0,
+        "total_capital" => $totalCapital,
+        "total_payment" => $totalPayment,
+        "total_profit" => $totalPayment-$totalCapital,
         "payment_type" => $requestedData["payment_type"],
         "customer_id" => $requestedData["customer_id"],
         "user_id" => Auth::user()->id
@@ -63,12 +68,38 @@ class ShoppingService{
     }catch(Exception $e){
       DB::rollBack();
     }
+
     return $dataInvoice;
   }
 
   public function getGeneratedInvoiceCode():string
   {
     return "ini adalah code";
+  }
+
+  public function getTotalCapital(array $requestedData):int
+  {
+    $rollsId = array_column($requestedData, 'roll_id');
+    $rolls = (new RollRepository())->getDataRollByIds($rollsId);
+
+    $totalCapital = 0;
+
+    foreach ($rollsId as $key => $roll) {
+      foreach ($rolls as $key => $item) {
+        if($roll==$item->id){
+          $totalCapital+= $item->basic_price;
+        }
+      }
+    }
+
+    return $totalCapital;
+  }
+
+  public function getTotalPayment(array $requestedData):int
+  {
+    $totalPayment = array_sum(array_column($requestedData, 'sub_total'));
+    
+    return $totalPayment;
   }
 }
 

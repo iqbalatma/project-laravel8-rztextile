@@ -196,6 +196,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../module/helper */ "./resources/js/module/helper.js");
+
 function purchase(dataSet) {
   $.ajaxSetup({
     headers: {
@@ -230,7 +232,7 @@ function purchase(dataSet) {
       var roll_id = $(this).find("td").eq(0).text();
       var quantity_roll = $(this).find("td").eq(3).text();
       var quantity_unit = $(this).find("td").eq(5).text();
-      var sub_total = $(this).find("td").eq(7).text();
+      var sub_total = _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatRupiahToInt($(this).find("td").eq(7).text());
       var roll = {
         roll_id: roll_id,
         quantity_roll: quantity_roll,
