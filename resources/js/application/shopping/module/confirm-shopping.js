@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import helper from "../../../module/helper";
 
 function purchase(dataSet){
@@ -14,9 +15,33 @@ function purchase(dataSet){
     data: dataSet,
     method: "POST"
   }).done(function(response) {
-    console.log(response);
+    if(response.status==200){
+      let timerInterval = 2000;
+      Swal.fire({
+        icon: 'success',
+        title: 'Purchasing successfully!',
+        timer: 1500,
+        timerProgressBar: true,
+        willClose: () => {
+          clearInterval(timerInterval)
+        }
+      }).then((result) => {
+        window.location.href = `/shopping`;
+      })
+    }
   }).fail(function(response){
-    console.log(response);
+    let timerInterval = 2000;
+    Swal.fire({
+      icon: 'failed',
+      title: 'Purchasing failed. Something went wrong !',
+      timer: 1500,
+      timerProgressBar: true,
+      willClose: () => {
+        clearInterval(timerInterval)
+      }
+    }).then((result) => {
+      window.location.href = `/shopping`;
+    })
   });
 }
 
