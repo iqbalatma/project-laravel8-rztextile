@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Repositories\RollRepository;
 use App\Repositories\RollTransactionRepository;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class RestockService{
@@ -32,7 +33,7 @@ class RestockService{
   public function storeNewRestock(array $requestedData):?object
   {
     $requestedData["type"] = "restock";
-    $requestedData["user_id"] = 1; #DUMMY
+    $requestedData["user_id"] = Auth::user()->id;
 
     try{
       DB::beginTransaction();

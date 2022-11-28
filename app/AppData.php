@@ -9,6 +9,9 @@ class AppData {
 
   public const BARCODE_LENGTH = 8;
 
+  public const TABLE_ROLL = "rolls";
+  public const TABLE_USER = "users";
+
 }
 
 ?>

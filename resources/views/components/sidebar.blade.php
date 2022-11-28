@@ -55,6 +55,12 @@
                     </div>
                     Put Away
                 </a>
+                <a class="nav-link" href="{{ route('shopping.index') }}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    Shopping
+                </a>
             </div>
         </div>
         <div class="sb-sidenav-footer">
