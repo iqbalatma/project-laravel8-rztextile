@@ -7,10 +7,9 @@ use App\Http\Controllers\RestockController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
 use App\Http\Controllers\RollTransactionController;
+use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\UnitController;
 use App\Mail\CheckMail;
-use App\Models\RollTransaction;
-use App\Notifications\Check;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -111,5 +110,13 @@ Route::middleware("auth")
                 Route::get("/", "index")->name("index");
                 Route::get("/put-away", "putAway")->name("putAway");
                 Route::post("/put-away", "putAwayTransaction")->name("putAwayTransaction");
+            });
+        
+        Route::controller(ShoppingController::class)
+            ->name("shopping.")
+            ->prefix("/shopping")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+                Route::post("/purchase", "purchase")->name("purchase");
             });
     });

@@ -14,6 +14,14 @@ class CustomerRepository{
       ->paginate($perPage);
   }
 
+  public function getAllDataCustomer(array $columns = ["*"])
+  {
+    return User::with("role")
+      ->select($columns)
+      ->where("role_id", AppData::ROLE_ID_CUSTOMER)
+      ->get();
+  }
+
 
   public function addNewDataCustomer(array $requestedData):?object
   {
