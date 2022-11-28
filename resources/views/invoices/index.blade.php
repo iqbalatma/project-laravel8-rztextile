@@ -16,6 +16,7 @@
             <th>Payment Type</th>
             <th>Customer</th>
             <th>Admin</th>
+            <th>Is Paid Off</th>
             <th>Last Updated Time</th>
           </thead>
           <tbody>
@@ -23,9 +24,9 @@
             <tr>
               <td>{{ $invoices->firstItem()+$key }}</td>
               <td>{{ $invoice->code }}</td>
-              <td>{{ $invoice->total_capital }}</td>
-              <td>{{ $invoice->total_payment }}</td>
-              <td>{{ $invoice->total_profit }}</td>
+              <td>{{ formatToRupiah($invoice->total_capital) }}</td>
+              <td>{{ formatToRupiah($invoice->total_payment) }}</td>
+              <td>{{ formatToRupiah($invoice->total_profit) }}</td>
               <td>
                 @if ($invoice->payment_type == "cash")
                 <span class="badge bg-primary">
@@ -39,6 +40,13 @@
               </td>
               <td>{{ $invoice->customer->name??"-" }}</td>
               <td>{{ $invoice->user->name??"-" }}</td>
+              <td>
+                @if ($invoice->is_paid_off)
+                <span class="badge bg-success">Paid Off</span>
+                @else
+                <span class="badge bg-danger">Not Paid Off</span>
+                @endif
+              </td>
               <td>{{ $invoice->updated_at }}</td>
             </tr>
             @endforeach
