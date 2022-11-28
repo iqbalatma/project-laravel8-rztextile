@@ -230,8 +230,8 @@ function purchase(dataSet) {
     var tableRows = $("#summary-payment-container tbody tr");
     tableRows.each(function () {
       var roll_id = $(this).find("td").eq(0).text();
-      var quantity_roll = $(this).find("td").eq(3).text();
-      var quantity_unit = $(this).find("td").eq(5).text();
+      var quantity_roll = parseInt($(this).find("td").eq(3).text());
+      var quantity_unit = parseInt($(this).find("td").eq(5).text());
       var sub_total = _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatRupiahToInt($(this).find("td").eq(7).text());
       var roll = {
         roll_id: roll_id,
