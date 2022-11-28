@@ -42,9 +42,9 @@
               <td>{{ $invoice->updated_at }}</td>
             </tr>
             @endforeach
-
           </tbody>
         </table>
+        {{ $invoices->links() }}
       </div>
     </div>
   </div>
