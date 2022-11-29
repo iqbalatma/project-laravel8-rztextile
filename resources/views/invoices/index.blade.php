@@ -11,9 +11,8 @@
             <th>No</th>
             <th>Code</th>
             <th>Capital</th>
-            <th>Payment</th>
+            <th>Bill</th>
             <th>Profit</th>
-            <th>Payment Type</th>
             <th>Customer</th>
             <th>Admin</th>
             <th>Is Paid Off</th>
@@ -25,19 +24,8 @@
               <td>{{ $invoices->firstItem()+$key }}</td>
               <td>{{ $invoice->code }}</td>
               <td>{{ formatToRupiah($invoice->total_capital) }}</td>
-              <td>{{ formatToRupiah($invoice->total_payment) }}</td>
+              <td>{{ formatToRupiah($invoice->total_bill) }}</td>
               <td>{{ formatToRupiah($invoice->total_profit) }}</td>
-              <td>
-                @if ($invoice->payment_type == "cash")
-                <span class="badge bg-primary">
-                  {{ ucfirst($invoice->payment_type) }}
-                </span>
-                @else
-                <span class="badge bg-secondary">
-                  {{ ucfirst($invoice->payment_type) }}
-                </span>
-                @endif
-              </td>
               <td>{{ $invoice->customer->name??"-" }}</td>
               <td>{{ $invoice->user->name??"-" }}</td>
               <td>

@@ -90,15 +90,15 @@ class ShoppingService{
    */
   private function addNewInvoice(array $requestedData, ?object $rolls):?object
   {
-    $totalPayment = $this->getTotalPayment($requestedData["rolls"]);
+    $totalBill = $this->getTotalBill($requestedData["rolls"]);
     $totalCapital = $this->getTotalCapital($requestedData["rolls"], $rolls);
     $dataInvoice = [
       "code" => $this->getGeneratedInvoiceCode(),
-      "is_paid_off" => true,
+      "is_paid_off" => false,
       "total_capital" => $totalCapital,
-      "total_payment" => $totalPayment,
-      "total_profit" => $totalPayment-$totalCapital,
-      "payment_type" => $requestedData["payment_type"],
+      "total_bill" => $totalBill,
+      "total_paid_amount" => 0,
+      "total_profit" => $totalBill-$totalCapital,
       "customer_id" => $requestedData["customer_id"],
       "user_id" => Auth::user()->id
     ];
@@ -211,7 +211,7 @@ class ShoppingService{
    * @param array $requestedRolls from client
    * @return int of total payment
    */
-  public function getTotalPayment(array $requestedRolls):int
+  public function getTotalBill(array $requestedRolls):int
   {
     return array_sum(array_column($requestedRolls, 'sub_total'));
   }
