@@ -98,6 +98,7 @@ class ShoppingService{
       "total_capital" => $totalCapital,
       "total_bill" => $totalBill,
       "total_paid_amount" => 0,
+      "bill_left" => $totalBill,
       "total_profit" => $totalBill-$totalCapital,
       "customer_id" => $requestedData["customer_id"],
       "user_id" => Auth::user()->id
