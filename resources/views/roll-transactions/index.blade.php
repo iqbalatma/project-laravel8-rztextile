@@ -19,6 +19,7 @@
         <table class="table align-middle">
           <thead>
             <th>No</th>
+            <th>Invoice Code</th>
             <th>Roll Name</th>
             <th>Roll Code</th>
             <th>Quantity Roll</th>
@@ -31,6 +32,7 @@
             @foreach ($rollTransactions as $key => $transaction)
             <tr>
               <td>{{ $rollTransactions->firstItem()+$key }}</td>
+              <td>{{ $transaction->invoice->code??"-" }}</td>
               <td>{{ $transaction->roll->name??"-" }}</td>
               <td>{{ $transaction->roll->code??"-" }}</td>
               <td>{{ $transaction->quantity_roll??0 }}</td>
