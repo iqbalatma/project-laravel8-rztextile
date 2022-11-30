@@ -68,15 +68,16 @@ class ShoppingService{
       $storedInvoice = $this->addNewInvoice($requestedData, $rolls);
       
 
-      #to add data payment
-      $this->addNewPayment($storedInvoice->id, $requestedData);
+      if($requestedData["paid_amount"]>0){
+        #to add data payment
+        $this->addNewPayment($storedInvoice->id, $requestedData);
+      }
 
       #to add roll transaction hisotry
       $this->addNewRollTransaction($requestedRolls, $rolls, $storedInvoice->id);
 
       #to reduce data roll that sold out
       $this->reduceQuantityRollAndUnit($requestedRolls);
-
 
       DB::commit();
     }catch(Exception $e){
@@ -87,7 +88,15 @@ class ShoppingService{
     return $storedInvoice;
   }
 
-  private function addNewPayment(int $invoiceId, array $requestedData)
+
+  /**
+   * Description : use to add new paymen when paid amount more than 0
+   * 
+   * @param int $invoiceId of stored invoice
+   * @param array $requestedData from client request
+   * @return ?object 
+   */
+  private function addNewPayment(int $invoiceId, array $requestedData):?object
   {
     $dataPayment = [
       "code" => "ini code",

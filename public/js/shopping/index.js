@@ -214,19 +214,18 @@ function purchase(dataSet) {
     data: dataSet,
     method: "POST"
   }).done(function (response) {
-    console.log(response);
     if (response.status == 200) {
-      var timerInterval = 2000;
+      var title = 'Purchasing successfully!';
+      if (parseInt(dataSet.total_bill) < parseInt(dataSet.paid_amount)) {
+        var change = parseInt(dataSet.paid_amount) - parseInt(dataSet.total_bill);
+        change = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(change);
+        title = 'Purchasing successfully! Change ' + change;
+      }
       sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire({
         icon: 'success',
-        title: 'Purchasing successfully!',
-        timer: 1500,
-        timerProgressBar: true,
-        willClose: function willClose() {
-          clearInterval(timerInterval);
-        }
+        title: title
       }).then(function (result) {
-        // window.location.href = `/shopping`;
+        window.location.href = "/shopping";
       });
     }
   }).fail(function (response) {
@@ -234,14 +233,9 @@ function purchase(dataSet) {
     var timerInterval = 2000;
     sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire({
       icon: 'failed',
-      title: 'Purchasing failed. Something went wrong !',
-      timer: 1500,
-      timerProgressBar: true,
-      willClose: function willClose() {
-        clearInterval(timerInterval);
-      }
+      title: 'Purchasing failed. Something went wrong !'
     }).then(function (result) {
-      // window.location.href = `/shopping`;
+      window.location.href = "/shopping";
     });
   });
 }
