@@ -5,6 +5,12 @@
       {{ $cardTitle }}
     </div>
     <div class="card-body">
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a href="{{ route('payments.create') }}" type="button" class="btn btn-primary">
+          <i class="fa-solid fa-square-plus"></i>
+          Add New Payment</a>
+      </div>
+
       <div class="table-responsive mt-4">
         <table class="table align-middle">
           <thead>
@@ -29,10 +35,8 @@
                 @else
                 <span class="badge rounded-pill bg-primary">{{ ucfirst($payment->payment_type) }}</span>
                 @endif
-
-
               </td>
-              <td>{{ $payment->user->name }}</td>
+              <td>{{ $payment->user->name??"-" }}</td>
               <td>{{ $payment->created_at }}</td>
             </tr>
             @endforeach
@@ -41,6 +45,8 @@
       </div>
     </div>
   </div>
+
+
 
 
 </x-app-layout>
