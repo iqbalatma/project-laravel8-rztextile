@@ -47,17 +47,22 @@
                     </div>
                     <br>
                     <div class="row g-3">
-                      <div class="col-md-6">
+                      <div class="col-md-4">
+                        <label for="total-bill" class="form-label">Total Bill</label>
+                        <input type="text" class="form-control" id="total-bill" value="0" readonly>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="paid-amount" class="form-label">Paid Amount</label>
+                        <input type="text" class="form-control" id="paid-amount" value="0">
+                      </div>
+                      <div class="col-md-4">
                         <label for="payment-type" class="form-label">Payment Type</label>
                         <select id="payment-type" class="form-select">
                           <option value="cash">Cash</option>
                           <option value="transfer">Transfer</option>
                         </select>
                       </div>
-                      <div class="col-md-6">
-                        <label for="total-bill" class="form-label">Total Bill</label>
-                        <input type="text" class="form-control" id="total-bill" value="0" readonly>
-                      </div>
+
                     </div>
                     <div class="row g-3 mt-4">
                       <div class="col-md-12 mb-4">

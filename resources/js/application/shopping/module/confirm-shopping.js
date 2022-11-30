@@ -15,6 +15,7 @@ function purchase(dataSet){
     data: dataSet,
     method: "POST"
   }).done(function(response) {
+    console.log(response);
     if(response.status==200){
       let timerInterval = 2000;
       Swal.fire({
@@ -26,10 +27,11 @@ function purchase(dataSet){
           clearInterval(timerInterval)
         }
       }).then((result) => {
-        window.location.href = `/shopping`;
+        // window.location.href = `/shopping`;
       })
     }
   }).fail(function(response){
+    console.log(response);
     let timerInterval = 2000;
     Swal.fire({
       icon: 'failed',
@@ -40,16 +42,18 @@ function purchase(dataSet){
         clearInterval(timerInterval)
       }
     }).then((result) => {
-      window.location.href = `/shopping`;
+      // window.location.href = `/shopping`;
     })
   });
 }
 
 export default {
-  onClickConfirm(context){
+  onClickConfirm(){
     let dataSet = {
       customer_id : null,
       payment_type: $("#payment-type").find("option:selected").val(),
+      total_bill:  helper.formatRupiahToInt(($("#total-bill").val())),
+      paid_amount: $("#paid-amount").val(),
       rolls: []
     };
 
