@@ -48,4 +48,9 @@ class PaymentController extends Controller
             ->route("payments.index")
             ->with("success", "Add new payment successfully ! Change " . formatToRupiah($change));
     }
+
+    public function createByInvoiceId(PaymentService $service, int $invoiceId):Response
+    {
+        return response()->view("payments.create-by-invoice-id", $service->getDataCreateByInvoiceId($invoiceId));
+    }
 }

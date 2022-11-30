@@ -134,6 +134,7 @@ Route::middleware("auth")
             ->prefix("/payments")
             ->group(function (){
                 Route::get("/", "index")->name("index");
+                Route::get("/create/{id}", "createByInvoiceId")->name("createByInvoiceId");
                 Route::get("/create", "create")->name("create");
                 Route::post("/", "store")->name("store");
             });

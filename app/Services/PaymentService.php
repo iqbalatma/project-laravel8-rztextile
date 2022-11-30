@@ -21,6 +21,22 @@ class PaymentService{
     ];
   }
 
+
+  /**
+   * Description : use to get data for create form by invoice id
+   * 
+   * @param int $invoiceId 
+   * @return array
+   */
+  public function getDataCreateByInvoiceId(int $invoiceId):array
+  {
+    return [
+      "title" => "Payment",
+      "cardTitle" => "Payments",
+      "invoice" => (new InvoiceRepository())->getDataInvoiceById($invoiceId)
+    ];
+  }
+
   public function getCreateData():array
   {
     return [

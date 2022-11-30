@@ -19,6 +19,7 @@
             <th>Admin</th>
             <th>Is Paid Off</th>
             <th>Last Updated Time</th>
+            <th>Action</th>
           </thead>
           <tbody>
             @foreach ($invoices as $key => $invoice)
@@ -40,6 +41,13 @@
                 @endif
               </td>
               <td>{{ $invoice->updated_at }}</td>
+              <td>
+                @if (!$invoice->is_paid_off)
+                <a href="{{ route('payments.createByInvoiceId', $invoice->id) }}" class="btn btn-primary">Add Payment</a>
+                @else
+                -
+                @endif
+              </td>
             </tr>
             @endforeach
           </tbody>
@@ -48,7 +56,4 @@
       </div>
     </div>
   </div>
-
-  @section("custom-scripts")
-  @endsection
 </x-app-layout>
