@@ -135,6 +135,7 @@ class ShoppingService{
     if($requestedData["paid_amount"] >= $requestedData["total_bill"]){
       $dataInvoice["total_paid_amount"] = $requestedData["total_bill"];
       $dataInvoice["bill_left"] = 0;
+      $dataInvoice["is_paid_off"] = true;
     }
 
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RestockController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
@@ -124,6 +125,13 @@ Route::middleware("auth")
         Route::controller(InvoiceController::class)
             ->name("invoices.")
             ->prefix("/invoices")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+            });
+
+        Route::controller(PaymentController::class)
+            ->name("payments.")
+            ->prefix("/payments")
             ->group(function (){
                 Route::get("/", "index")->name("index");
             });
