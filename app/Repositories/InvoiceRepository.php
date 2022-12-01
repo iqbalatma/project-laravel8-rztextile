@@ -30,6 +30,19 @@ class InvoiceRepository{
       ->orderBy("created_at", "DESC")
       ->first();
   }
+
+  public function getDataUnpaidInvoice(array $columns = ["*"])
+  {
+    return Invoice::select($columns)
+      ->where("is_paid_off", 0)
+      ->where("bill_left", ">", 0)
+      ->get();
+  }
+
+  public function getDataInvoiceById(int $id, $columns = ["*"])
+  {
+    return Invoice::find($id, $columns);
+  }
 }
 
 ?>

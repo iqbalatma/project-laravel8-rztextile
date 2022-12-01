@@ -16,29 +16,25 @@ function purchase(dataSet){
     method: "POST"
   }).done(function(response) {
     if(response.status==200){
-      let timerInterval = 2000;
+      let title = 'Purchasing successfully!';
+      if(parseInt(dataSet.total_bill)< parseInt(dataSet.paid_amount)){
+        let change = parseInt(dataSet.paid_amount) - parseInt(dataSet.total_bill);
+        change = helper.formatIntToRupiah(change);
+        title = 'Purchasing successfully! Change ' + change;
+      }
       Swal.fire({
         icon: 'success',
-        title: 'Purchasing successfully!',
-        timer: 1500,
-        timerProgressBar: true,
-        willClose: () => {
-          clearInterval(timerInterval)
-        }
+        title: title,
       }).then((result) => {
         window.location.href = `/shopping`;
       })
     }
   }).fail(function(response){
+    console.log(response);
     let timerInterval = 2000;
     Swal.fire({
       icon: 'failed',
       title: 'Purchasing failed. Something went wrong !',
-      timer: 1500,
-      timerProgressBar: true,
-      willClose: () => {
-        clearInterval(timerInterval)
-      }
     }).then((result) => {
       window.location.href = `/shopping`;
     })
@@ -46,10 +42,12 @@ function purchase(dataSet){
 }
 
 export default {
-  onClickConfirm(context){
+  onClickConfirm(){
     let dataSet = {
       customer_id : null,
       payment_type: $("#payment-type").find("option:selected").val(),
+      total_bill:  helper.formatRupiahToInt(($("#total-bill").val())),
+      paid_amount: $("#paid-amount").val(),
       rolls: []
     };
 

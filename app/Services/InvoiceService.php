@@ -18,6 +18,19 @@ class InvoiceService{
       "invoices" => (new InvoiceRepository())->getAllDataInvoicePaginated()
     ];
   }
+
+  public function reduceBill(int $invoiceId, int $paidAmount):void
+  {
+    $invoice = (new InvoiceRepository())->getDataInvoiceById($invoiceId);
+
+    if($paidAmount >= $invoice->bill_left){
+      $paidAmount = $invoice->bill_left;
+      $invoice->is_paid_off = true;
+    }
+    $invoice->bill_left -= $paidAmount;
+    $invoice->total_paid_amount += $paidAmount;
+    $invoice->save();
+  }
 }
 
 ?>

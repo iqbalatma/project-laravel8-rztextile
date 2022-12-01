@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Shopping;
+namespace App\Http\Requests\Payments;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class PurchaseRequest extends FormRequest
+class PaymentStoreRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,10 @@ class PurchaseRequest extends FormRequest
     public function rules()
     {
         return [
-            "customer_id" => "nullable|numeric",
+            "invoice_id" => "required|numeric",
+            "paid_amount" => "numeric",
             "payment_type" => "required|in:cash,transfer",
-            "rolls" => "required",
-            "total_bill" => "required|numeric",
-            "paid_amount" => "required|numeric"
+            "bill_left" => "required|numeric"
         ];
     }
 }

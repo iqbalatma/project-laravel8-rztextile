@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RestockController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\RollTransactionController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\UnitController;
 use App\Mail\CheckMail;
+use App\Repositories\PaymentRepository;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -29,10 +31,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('mail2', function () {
-    Mail::to("iqbalatma@gmail.com")->send(new CheckMail("tes"));
-
-    return "EMAIL SUDAH TERKIRIM tek";
+Route::get('testok', function () {
+   
+    dd((new PaymentRepository())->getLatestDataPaymentThisMonth());
 });
 
 Route::controller(AuthController::class)
@@ -126,5 +127,15 @@ Route::middleware("auth")
             ->prefix("/invoices")
             ->group(function (){
                 Route::get("/", "index")->name("index");
+            });
+
+        Route::controller(PaymentController::class)
+            ->name("payments.")
+            ->prefix("/payments")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+                Route::get("/create/{id}", "createByInvoiceId")->name("createByInvoiceId");
+                Route::get("/create", "create")->name("create");
+                Route::post("/", "store")->name("store");
             });
     });

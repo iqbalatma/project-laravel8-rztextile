@@ -16,8 +16,8 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->string("code",64);
-            $table->float("total_capital")->default(0);;
-            $table->float("total_payment")->default(0);;
+            $table->float("total_capital")->default(0);
+            $table->float("total_payment")->default(0);
             $table->float("total_profit")->default(0);
             $table->enum("payment_type", ["cash", "transfer"])->nullable();
             $table->boolean("is_paid_off")->default(0);
