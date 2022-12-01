@@ -9,7 +9,6 @@ use Illuminate\Http\Response;
 
 class PaymentController extends Controller
 {
-
     /**
      * Description : use to show list of payments
      * 
@@ -33,6 +32,12 @@ class PaymentController extends Controller
     }
 
 
+    public function createByInvoiceId(PaymentService $service, int $invoiceId):Response
+    {
+        return response()->view("payments.create-by-invoice-id", $service->getDataCreateByInvoiceId($invoiceId));
+    }
+
+
     /**
      * Description : use to add new payment
      * 
@@ -47,10 +52,5 @@ class PaymentController extends Controller
         return redirect()
             ->route("payments.index")
             ->with("success", "Add new payment successfully ! Change " . formatToRupiah($change));
-    }
-
-    public function createByInvoiceId(PaymentService $service, int $invoiceId):Response
-    {
-        return response()->view("payments.create-by-invoice-id", $service->getDataCreateByInvoiceId($invoiceId));
     }
 }

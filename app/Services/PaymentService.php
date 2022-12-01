@@ -103,7 +103,5 @@ class PaymentService{
 
     return $newCode;
   }
-
 }
-
 ?>
