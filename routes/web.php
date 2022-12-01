@@ -12,6 +12,7 @@ use App\Http\Controllers\RollTransactionController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\UnitController;
 use App\Mail\CheckMail;
+use App\Repositories\PaymentRepository;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -30,10 +31,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('mail2', function () {
-    Mail::to("iqbalatma@gmail.com")->send(new CheckMail("tes"));
-
-    return "EMAIL SUDAH TERKIRIM tek";
+Route::get('testok', function () {
+   
+    dd((new PaymentRepository())->getLatestDataPaymentThisMonth());
 });
 
 Route::controller(AuthController::class)

@@ -99,7 +99,7 @@ class ShoppingService{
   private function addNewPayment(int $invoiceId, array $requestedData):?object
   {
     $dataPayment = [
-      "code" => "ini code",
+      "code" => (new PaymentService())->getGeneratedPaymentCode(),
       "paid_amount"=> $requestedData["paid_amount"],
       "payment_type" => $requestedData["payment_type"],
       "invoice_id" => $invoiceId,
