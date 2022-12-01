@@ -15,6 +15,26 @@ class InvoiceRepository{
       ->paginate($perPage);
   }
 
+  public function getPaidOffDataInvoicePaginated(array $columns = ["*"], $perPage = AppData::DEFAULT_PERPAGE):?object
+  {
+    return Invoice::with(["customer", "user"])
+      ->select($columns)
+      ->where("is_paid_off", true)
+      ->where("bill_left", "=", 0)
+      ->orderBy("created_at", "DESC")
+      ->paginate($perPage);
+  }
+
+  public function getNotPaidOffDataInvoicePaginated(array $columns = ["*"], $perPage = AppData::DEFAULT_PERPAGE):?object
+  {
+    return Invoice::with(["customer", "user"])
+      ->select($columns)
+      ->where("is_paid_off", false)
+      ->where("bill_left", ">", 0)
+      ->orderBy("created_at", "DESC")
+      ->paginate($perPage);
+  }
+
   public function addNewDataRepository(array $requestedData):object
   {
     return Invoice::create($requestedData);
