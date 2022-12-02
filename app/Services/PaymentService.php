@@ -17,10 +17,22 @@ class PaymentService{
    */
   public function getAllData():array
   {
+    $type = request("type") ?? "all";
+    switch ($type) {
+      case "cash":
+        $payments = (new PaymentRepository())->getDataPaymentCashPaginated();
+        break;
+      case "transfer":
+        $payments = (new PaymentRepository())->getDataPaymentTransferPaginated();
+        break;
+      default:
+        $payments = (new PaymentRepository())->getAllDataPaymentPaginated();
+    }
     return [
       "title" => "Payment",
       "cardTitle" => "Payments",
-      "payments" => (new PaymentRepository())->getAllDataPaymentPaginated(),
+      "type" => $type,
+      "payments" => $payments
     ];
   }
 

@@ -5,6 +5,17 @@
       {{ $cardTitle }}
     </div>
     <div class="card-body">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link @if ($type=='all') active @endif" aria-current="page" href="{{ route('invoices.index',['type'=>'all']) }}">All</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link @if ($type=='not-paid-off') active @endif" href="{{ route('invoices.index',['type'=>'not-paid-off']) }}">Not Paid Off</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link @if ($type=='paid-off') active @endif" href="{{ route('invoices.index',['type'=>'paid-off']) }}">Paid Off</a>
+        </li>
+      </ul>
       <div class="table-responsive mt-4">
         <table class="table align-middle">
           <thead>
