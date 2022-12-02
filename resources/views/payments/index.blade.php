@@ -5,11 +5,23 @@
       {{ $cardTitle }}
     </div>
     <div class="card-body">
-      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4">
         <a href="{{ route('payments.create') }}" type="button" class="btn btn-primary">
           <i class="fa-solid fa-square-plus"></i>
           Add New Payment</a>
       </div>
+
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link @if ($type=='all') active @endif" aria-current="page" href="{{ route('payments.index',['type'=>'all']) }}">All</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link @if ($type=='cash') active @endif" href="{{ route('payments.index',['type'=>'cash']) }}">Cash</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link @if ($type=='transfer') active @endif" href="{{ route('payments.index',['type'=>'transfer']) }}">Transfer</a>
+        </li>
+      </ul>
 
       <div class="table-responsive mt-4">
         <table class="table align-middle">

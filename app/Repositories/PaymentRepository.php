@@ -12,7 +12,29 @@ class PaymentRepository{
     return Payment::with("user", "invoice")
       ->select($columns)
       ->orderBy("created_at","DESC")
-      ->paginate($perPage);
+      ->paginate($perPage)
+      ->appends(request()->query());
+  }
+
+  public function getDataPaymentCashPaginated(array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE):?object
+  {
+    return Payment::with("user", "invoice")
+      ->select($columns)
+      ->where("payment_type", "cash")
+      ->orderBy("created_at","DESC")
+      ->paginate($perPage)
+      ->appends(request()->query());
+  }
+ 
+ 
+  public function getDataPaymentTransferPaginated(array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE):?object
+  {
+    return Payment::with("user", "invoice")
+      ->select($columns)
+      ->where("payment_type", "transfer")
+      ->orderBy("created_at","DESC")
+      ->paginate($perPage)
+      ->appends(request()->query());
   }
 
   public function getLatestDataPaymentThisMonth(array $columns = ["*"]):?object
