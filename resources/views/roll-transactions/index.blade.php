@@ -5,7 +5,7 @@
       {{ $cardTitle }}
     </div>
     <div class="card-body">
-      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4">
         <a href="{{ route('roll.transactions.putAway') }}" type="button" class="btn btn-danger">
           <i class="fa-solid fa-square-minus"></i>
           Put Away
@@ -15,6 +15,22 @@
           Restock
         </a>
       </div>
+
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link @if ($type=='all') active @endif" aria-current="page" href="{{ route('roll.transactions.index',['type'=>'all']) }}">All</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link @if ($type=='restock') active @endif" href="{{ route('roll.transactions.index',['type'=>'restock']) }}">Restock</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link @if ($type=='sold') active @endif" href="{{ route('roll.transactions.index',['type'=>'sold']) }}">Sold</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link @if ($type=='broken') active @endif" href="{{ route('roll.transactions.index',['type'=>'broken']) }}">Broken</a>
+        </li>
+      </ul>
+
       <div class="table-responsive mt-4">
         <table class="table align-middle">
           <thead>
