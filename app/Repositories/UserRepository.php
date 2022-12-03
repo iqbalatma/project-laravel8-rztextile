@@ -18,6 +18,16 @@ class UserRepository{
   {
     return User::create($requestedData);
   }
+
+  public function getDataUserById(int $id, array $columns = ["*"]):?object
+  {
+    return User::find($id, $columns);
+  }
+
+  public function updateDataUserById(int $id, array $requestedData)
+  {
+    return User::where("id", $id)->update($requestedData);
+  }
 }
 
 ?>

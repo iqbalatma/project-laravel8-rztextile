@@ -4,7 +4,7 @@ namespace App\Http\Requests\Users;
 
 use App\Http\Requests\BaseFormRequest;
 
-class StoreUserRequest extends BaseFormRequest
+class UserStoreRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,11 +26,10 @@ class StoreUserRequest extends BaseFormRequest
         return [
             "id_number" => "numeric",
             "name" => "required",
-            "email" => "email",
+            "email" => "email|nullable",
             "phone" => "",
             "address" => "",
             "role_id" => "required|numeric",
-
         ];
     }
 }

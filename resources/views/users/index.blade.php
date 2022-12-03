@@ -22,6 +22,7 @@
             <th>Phone Number</th>
             <th>Role</th>
             <th>Last Updated Time</th>
+            <th>Action</th>
           </thead>
           <tbody>
             @foreach ($users as $key => $user)
@@ -46,6 +47,12 @@
                ">{{ ucfirst($user->role->name) }}</span>
               </td>
               <td>{{ $user->updated_at }}</td>
+              <td>
+                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-success">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                  Edit
+                </a>
+              </td>
             </tr>
             @endforeach
           </tbody>

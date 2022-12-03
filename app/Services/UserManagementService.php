@@ -37,6 +37,23 @@ class UserManagementService{
 
 
   /**
+   * Description : use to get data for create new user form
+   * 
+   * @param int $id of user that want to be edited
+   * @return array
+   */
+  public function getEditData(int $id):array
+  {
+    return [
+      "title" => "User Management",
+      "cardTitle" => "Edit User",
+      "roles" => (new RoleRepository())->getAllDataRole(),
+      "user" => (new UserRepository())->getDataUserById($id)
+    ];
+  }
+
+
+  /**
    * Description : use to add new data user
    * 
    * @param array $requestedDatata
@@ -45,6 +62,11 @@ class UserManagementService{
   public function storeNewData(array $requestedData):?object
   {
     return (new UserRepository())->addNewDataUser($requestedData);
+  }
+
+  public function updateData(int $id, array $requestedData):bool
+  {
+    return (new UserRepository())->updateDataUserById($id, $requestedData);
   }
 
 
