@@ -1,6 +1,7 @@
 <?php 
 namespace App\Services;
 
+use App\Repositories\UserRepository;
 
 class UserManagementService{
 
@@ -14,8 +15,11 @@ class UserManagementService{
     return [
       "title" => "User Management",
       "cardTitle" => "User Management",
+      "users" => (new UserRepository())->getAllDataUserPaginated()
     ];
   }
+
+
 }
 
 ?>

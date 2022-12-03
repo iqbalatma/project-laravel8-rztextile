@@ -15,12 +15,39 @@
         <table class="table align-middle">
           <thead>
             <th>No</th>
+            <th>ID Number</th>
             <th>Name</th>
-            <th>Shortname</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Phone Number</th>
+            <th>Role</th>
             <th>Last Updated Time</th>
-            <th class="text-center">Action</th>
           </thead>
           <tbody>
+            @foreach ($users as $key => $user)
+            <tr>
+              <td>{{ $users->firstItem()+$key }}</td>
+              <td>{{ $user->id_number??"-" }}</td>
+              <td>{{ $user->name }}</td>
+              <td>{{ $user->email }}</td>
+              <td>{{ $user->address }}</td>
+              <td>{{ $user->phone }}</td>
+              <td>
+                <span class="badge rounded-pill 
+                @if ($user->role->id==1)
+                bg-danger
+                @elseif($user->role->id==2)
+                bg-warning
+                @elseif($user->role->id==3)
+                bg-success
+                @else
+                bg-primary
+                @endif
+               ">{{ ucfirst($user->role->name) }}</span>
+              </td>
+              <td>{{ $user->updated_at }}</td>
+            </tr>
+            @endforeach
 
           </tbody>
         </table>
