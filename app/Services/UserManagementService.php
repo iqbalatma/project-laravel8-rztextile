@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Hash;
 
 class UserManagementService{
 
@@ -61,6 +62,7 @@ class UserManagementService{
    */
   public function storeNewData(array $requestedData):?object
   {
+    $requestedData["password"] = Hash::make($requestedData["password"]);
     return (new UserRepository())->addNewDataUser($requestedData);
   }
 
