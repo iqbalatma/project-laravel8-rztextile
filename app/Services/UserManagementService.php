@@ -66,12 +66,18 @@ class UserManagementService{
     return (new UserRepository())->addNewDataUser($requestedData);
   }
 
+
+  /**
+   * Description : use to update data user by user id
+   * 
+   * @param int $id of user that want to be updated
+   * @param array $requestedData request from client
+   * @return bool status of update data success or fail
+   */
   public function updateData(int $id, array $requestedData):bool
   {
     return (new UserRepository())->updateDataUserById($id, $requestedData);
   }
-
-
 }
 
 ?>
