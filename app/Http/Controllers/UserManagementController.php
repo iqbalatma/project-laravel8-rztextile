@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Users\StoreUserRequest;
 use App\Services\UserManagementService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
 class UserManagementController extends Controller
@@ -29,5 +31,27 @@ class UserManagementController extends Controller
     public function create(UserManagementService $service):Response
     {
         return response()->view("users.create", $service->getCreateData());
+    }
+
+
+    /**
+     * Description : use to add new data user
+     * 
+     * @param UserManagementService $service dependency injection
+     * @param StoreUserRequest $request dependency injection
+     * @return RedirectResponse
+     */
+    public function store(UserManagementService $service, StoreUserRequest $request):RedirectResponse
+    {
+        $stored = $service->storeNewData($request->validated());   
+
+        $redirect = redirect()
+            ->route("users.index");
+            
+        $stored?
+            $redirect->with("success", "Add new data user successfully"):
+            $redirect->with("failed", "Add new data user failed");
+
+        return $redirect;
     }
 }

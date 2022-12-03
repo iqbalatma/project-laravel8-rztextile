@@ -5,7 +5,7 @@
       {{ $cardTitle }}
     </div>
     <div class="card-body">
-      <form class="row g-3" method="POST" action="{{ route('units.store') }}">
+      <form class="row g-3" method="POST" action="{{ route('users.store') }}">
         @csrf
         <div class="col-md-12">
           <label for="id_number" class="form-label">ID Number</label>

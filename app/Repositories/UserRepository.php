@@ -13,6 +13,11 @@ class UserRepository{
       ->where("role_id", "!=", AppData::ROLE_ID_CUSTOMER)
       ->paginate($perPage);
   }
+
+  public function addNewDataUser(array $requestedData):?object
+  {
+    return User::create($requestedData);
+  }
 }
 
 ?>

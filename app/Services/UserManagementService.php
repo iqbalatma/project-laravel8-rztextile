@@ -36,6 +36,18 @@ class UserManagementService{
   }
 
 
+  /**
+   * Description : use to add new data user
+   * 
+   * @param array $requestedDatata
+   * @return ?object of new eloquent instance
+   */
+  public function storeNewData(array $requestedData):?object
+  {
+    return (new UserRepository())->addNewDataUser($requestedData);
+  }
+
+
 }
 
 ?>
