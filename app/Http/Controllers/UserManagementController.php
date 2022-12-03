@@ -18,4 +18,16 @@ class UserManagementController extends Controller
     {
         return response()->view("users.index", $service->getAllData());
     }
+
+
+    /**
+     * Description : use to show add new user form
+     * 
+     * @param UserManagementService $service dependency injection
+     * @return Response
+     */
+    public function create(UserManagementService $service):Response
+    {
+        return response()->view("users.create", $service->getCreateData());
+    }
 }

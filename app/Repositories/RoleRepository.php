@@ -12,6 +12,12 @@ class RoleRepository{
       ->paginate($perPage);
   }
 
+  public function getAllDataRole(array $columns = ["*"])
+  {
+    return Role::select($columns)
+      ->get();
+  }
+
 }
 
 ?>
