@@ -11,6 +11,7 @@ use App\Http\Controllers\RollController;
 use App\Http\Controllers\RollTransactionController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\UserManagementController;
 use App\Mail\CheckMail;
 use App\Repositories\PaymentRepository;
 use Illuminate\Support\Facades\Mail;
@@ -137,5 +138,12 @@ Route::middleware("auth")
                 Route::get("/create/{id}", "createByInvoiceId")->name("createByInvoiceId");
                 Route::get("/create", "create")->name("create");
                 Route::post("/", "store")->name("store");
+            });
+
+        Route::controller(UserManagementController::class)
+            ->name("users.")
+            ->prefix("/users")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
             });
     });
