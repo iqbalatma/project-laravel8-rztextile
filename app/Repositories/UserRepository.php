@@ -24,6 +24,11 @@ class UserRepository{
     return User::find($id, $columns);
   }
 
+  public function getDataUserByEmail(string $email, array $columns = ["*"])
+  {
+    return User::where("email", $email)->first($columns);
+  }
+
   public function updateDataUserById(int $id, array $requestedData)
   {
     return User::where("id", $id)->update($requestedData);
