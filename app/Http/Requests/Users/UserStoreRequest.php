@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Users;
 
 use App\Http\Requests\BaseFormRequest;
+use Illuminate\Validation\Rule;
 
 class UserStoreRequest extends BaseFormRequest
 {
@@ -26,7 +27,7 @@ class UserStoreRequest extends BaseFormRequest
         return [
             "id_number" => "numeric",
             "name" => "required",
-            "email" => "email|nullable",
+            "email" =>  [Rule::unique("users", "email")->whereNull("deleted_at"), "email", "required"],
             "phone" => "",
             "address" => "",
             "role_id" => "required|numeric",

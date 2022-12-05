@@ -1,8 +1,10 @@
 <?php 
 namespace App\Services;
 
+use App\AppData;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
+use Exception;
 use Illuminate\Support\Facades\Hash;
 
 class UserManagementService{
@@ -32,7 +34,7 @@ class UserManagementService{
     return [
       "title" => "User Management",
       "cardTitle" => "Add New User",
-      "roles" => (new RoleRepository())->getAllDataRole()
+      "roles" => (new RoleRepository())->getAllDataRole()->except([AppData::ROLE_ID_CUSTOMER, AppData::ROLE_ID_SUPERADMIN])
     ];
   }
 
@@ -60,10 +62,11 @@ class UserManagementService{
    * @param array $requestedDatata
    * @return ?object of new eloquent instance
    */
-  public function storeNewData(array $requestedData):?object
+  public function storeNewData(array $requestedData)
   {
     $requestedData["password"] = Hash::make($requestedData["password"]);
-    return (new UserRepository())->addNewDataUser($requestedData);
+    $user = (new UserRepository())->addNewDataUser($requestedData);
+    return $user;
   }
 
 

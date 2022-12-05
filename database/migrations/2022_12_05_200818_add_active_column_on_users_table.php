@@ -13,10 +13,10 @@ class AddActiveColumnOnUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table("users", function (Blueprint $table){
+        Schema::table("users", function(Blueprint $table){
             $table->boolean("is_active")
                 ->after("role_id")
-                ->default(false);
+                ->default(1);
         });
     }
 
@@ -27,7 +27,7 @@ class AddActiveColumnOnUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table("users", function (Blueprint $table){
+        Schema::table("users", function(Blueprint $table){
             $table->dropColumn("is_active");
         });
     }

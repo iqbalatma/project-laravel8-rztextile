@@ -33,10 +33,10 @@
         </div>
         <div class="col-md-12">
           <label for="address" class="form-label">Address</label>
-          <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter your address">{{old('address')}}"</textarea>
+          <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter your address">{{old('address')}}</textarea>
         </div>
         <div class="col-md-12">
-          <label for="role_id" class="form-label">Address</label>
+          <label for="role_id" class="form-label">Roles</label>
           <select class="form-select" aria-label="Default select example" name="role_id">
             @foreach ($roles as $role)
             <option value="{{ $role->id }}">{{ ucfirst($role->name) }}</option>
