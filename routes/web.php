@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
@@ -12,9 +13,7 @@ use App\Http\Controllers\RollTransactionController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserManagementController;
-use App\Mail\CheckMail;
 use App\Repositories\PaymentRepository;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,7 +33,7 @@ Route::get('/', function () {
 
 Route::get('testok', function () {
    
-    dd((new PaymentRepository())->getLatestDataPaymentThisMonth());
+    return view("email.reset-password");
 });
 
 Route::controller(AuthController::class)
@@ -43,6 +42,16 @@ Route::controller(AuthController::class)
         Route::get("/login", "login")->name("login");
         Route::post("/authenticate", "authenticate")->name("authenticate");
         Route::post("/logout", "logout")->name("logout");
+    });
+
+Route::controller(ForgotPasswordController::class)
+    ->prefix("/forgot-password")
+    ->name("forgot.password.")
+    ->group(function (){
+        Route::get("/", "forgot")->name("forgot");
+        Route::get("/reset/{token}/{email}", "reset")->name("reset");
+        Route::post("/", "sendResetLink")->name("sendResetLink");
+        Route::post("/reset-password", "resetPassword")->name("resetPassword");
     });
 
 
