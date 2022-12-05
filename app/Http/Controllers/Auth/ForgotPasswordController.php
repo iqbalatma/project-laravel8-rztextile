@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Http\Requests\Auth\SendResetLinkRequest;
 use App\Services\ForgotPasswordService;
 use Illuminate\Http\Response;
@@ -15,19 +16,30 @@ class ForgotPasswordController extends Controller
         return response()->view("auth.forgot-password", $service->getForgotData());
     }
 
-    public function reset(ForgotPasswordService $service, string $token)
+    public function reset(ForgotPasswordService $service, string $token, string $email)
     {
-        return response()->view("auth.reset-password", $service->getResetData($token));
+        return response()->view("auth.reset-password", $service->getResetData($token, $email));
     }
 
     public function sendResetLink(ForgotPasswordService $service, SendResetLinkRequest $request)
     {
-        $status = $service->resetPassword($request->validated());
+        $status = $service->sendResetRequest($request->validated());
 
         if($status){
-            return redirect()->route("forgot.password.forgot")->with("success", "mantap");
+            return redirect()->route("forgot.password.forgot")->with("success", "Reset password link have been sent to your email !");
         }else{
-            return redirect()->route("forgot.password.forgot")->with("failed", "gagal");
+            return redirect()->route("forgot.password.forgot")->with("failed", "Something went wrong ! Please try again later ");
+        }
+    }
+
+    public function resetPassword(ForgotPasswordService $service, ResetPasswordRequest $request)
+    {
+        $updated = $service->resetPassword($request->validated());
+
+        if($updated){
+            return redirect()->route("auth.login")->with("success", "Reset password successfully, login to continue !");
+        }else{
+            return redirect()->route("auth.login")->with("failed", "Reset password failed, please try again later !");
         }
     }
 }

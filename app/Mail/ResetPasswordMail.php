@@ -17,9 +17,12 @@ class ResetPasswordMail extends Mailable
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct($reset)
     {
-        $this->url = route("forgot.password.reset", $token);
+        $this->url = route("forgot.password.reset", [
+            "token" => $reset->token,
+            "email"=>$reset->email
+        ]);
     }
 
     /**

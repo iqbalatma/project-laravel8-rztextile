@@ -49,8 +49,9 @@ Route::controller(ForgotPasswordController::class)
     ->name("forgot.password.")
     ->group(function (){
         Route::get("/", "forgot")->name("forgot");
-        Route::get("/reset/{token}", "reset")->name("reset");
+        Route::get("/reset/{token}/{email}", "reset")->name("reset");
         Route::post("/", "sendResetLink")->name("sendResetLink");
+        Route::post("/reset-password", "resetPassword")->name("resetPassword");
     });
 
 

@@ -27,16 +27,22 @@
                 <div class="card-body">
                   <x-alert></x-alert>
 
-                  <div class="small mb-3 text-muted">Enter your email address and we will send you a link to reset your password.</div>
-                  <form method="POST" action="{{ route('forgot.password.sendResetLink') }}">
+                  <div class="small mb-3 text-muted">Enter your new passowrd</div>
+                  <form method="POST" action="{{ route('forgot.password.resetPassword') }}">
                     @csrf
+                    <input type="hidden" name="token" value="{{ $token }}">
+                    <input type="hidden" name="email" value="{{ $email }}">
                     <div class="form-floating mb-3">
-                      <input class="form-control" id="email" name="email" type="email" placeholder="Example : name@example.com" required />
-                      <label for="inputEmail">Email address</label>
+                      <input class="form-control" id="password" name="password" type="password" placeholder="Example : name@example.com" required />
+                      <label for="password">New Password</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                      <input class="form-control" id="password_confirmation" name="password_confirmation" type="password" placeholder="Example : name@example.com" required />
+                      <label for="password_confirmation">Confirm New Passowrd</label>
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                      <a class="small" href="{{ route('auth.login') }}">Return to login {{ $token }} </a>
-                      <button type="submit" class="btn btn-primary" href="login.html">Reset Password</button>
+                      <a class="small" href="{{ route('auth.login') }}">Return to login</a>
+                      <button type="submit" class="btn btn-primary" href="login.html">Reset</button>
                     </div>
                   </form>
                 </div>

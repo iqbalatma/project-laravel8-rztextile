@@ -9,6 +9,7 @@ use App\Repositories\UserRepository;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -32,11 +33,12 @@ class ForgotPasswordService
    * 
    * @return array
    */
-  public function getResetData(string $token):array
+  public function getResetData(string $token, string $email):array
   {
     return [
       "title" => "Reset Password",
-      "token" => $token
+      "token" => $token,
+      "email" => $email
     ];
   }
 
@@ -46,7 +48,7 @@ class ForgotPasswordService
    * 
    * @param array $requestedData email from reset password
    */
-  public function resetPassword(array $requestedData)
+  public function sendResetRequest(array $requestedData)
   {
     $resetData = [
       "email" => $requestedData["email"],
@@ -63,7 +65,7 @@ class ForgotPasswordService
       }
       $passwordRepository->deleteDataPasswordResetByEmail($requestedData["email"]);
       $reset = $passwordRepository->addNewDataPasswordReset($resetData);
-      Mail::to($reset->email)->send(new ResetPasswordMail($reset->token));
+      Mail::to($reset->email)->send(new ResetPasswordMail($reset));
       DB::commit();
     }catch(Exception $e){
       DB::rollback();
@@ -73,5 +75,26 @@ class ForgotPasswordService
     return true;
   }
 
+
+  public function resetPassword(array $requestedData)
+  {
+    try {
+      DB::beginTransaction();
+      $isTokenValid = (new PasswordResetRepository())->getDataPasswordResetByEmailToken(["email"=>$requestedData["email"], "token" => $requestedData["token"]]);
+
+      if(!$isTokenValid){
+        return false;
+      }
+
+      $updated = (new UserRepository())->updateDataUserByEmail($requestedData["email"], ["password" => Hash::make($requestedData["password"])]);
+      DB::commit();
+    } catch (Exception $e) {
+      DB::rollBack();
+
+      return false;
+    }
+
+    return $updated;
+  }
 
 }

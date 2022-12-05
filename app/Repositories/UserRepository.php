@@ -33,6 +33,11 @@ class UserRepository{
   {
     return User::where("id", $id)->update($requestedData);
   }
+
+  public function updateDataUserByEmail(string $email, array $requestedData)
+  {
+    return User::where("email", $email)->update($requestedData);
+  }
 }
 
 ?>

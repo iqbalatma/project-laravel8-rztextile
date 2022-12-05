@@ -13,5 +13,10 @@ class PasswordResetRepository{
   {
     return PasswordReset::where("email", $email)->delete();
   }
+
+  public function getDataPasswordResetByEmailToken(array $whereClause)
+  {
+    return PasswordReset::where($whereClause)->first();
+  }
 }
 ?>
