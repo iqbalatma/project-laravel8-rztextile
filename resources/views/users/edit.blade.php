@@ -29,13 +29,24 @@
           <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter your address">{{ $user->address }}"</textarea>
         </div>
         <div class="col-md-12">
-          <label for="role_id" class="form-label">Address</label>
+          <label for="role_id" class="form-label">Role</label>
           <select class="form-select" aria-label="Default select example" name="role_id">
             @foreach ($roles as $role)
             <option value="{{ $role->id }}" @if ($role->id == $user->id)
               selected
               @endif>{{ ucfirst($role->name) }}</option>
             @endforeach
+          </select>
+        </div>
+        <div class="col-md-12">
+          <label for="role_id" class="form-label">Role</label>
+          <select class="form-select" aria-label="Default select example" name="role_id">
+            <option value="1" @if ($user->is_active)
+              selected
+              @endif>Active</option>
+            <option value="0" @if (!$user->is_active)
+              selected
+              @endif>Nonactive</option>
           </select>
         </div>
         <div class="col-12">

@@ -3,6 +3,7 @@ namespace App\Repositories;
 
 use App\AppData;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserRepository{
 
@@ -11,6 +12,7 @@ class UserRepository{
     return User::with("role")
       ->select($columns)
       ->where("role_id", "!=", AppData::ROLE_ID_CUSTOMER)
+      ->where("id", "!=", Auth::user()->id)
       ->paginate($perPage);
   }
 

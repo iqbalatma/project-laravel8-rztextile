@@ -5,6 +5,7 @@ use App\AppData;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserManagementService{
