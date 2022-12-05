@@ -21,6 +21,7 @@
             <th>Address</th>
             <th>Phone Number</th>
             <th>Role</th>
+            <th>Status</th>
             <th>Last Updated Time</th>
             <th>Action</th>
           </thead>
@@ -45,6 +46,13 @@
                 bg-primary
                 @endif
                ">{{ ucfirst($user->role->name) }}</span>
+              </td>
+              <td>
+                @if ($user->is_active)
+                <span class="badge bg-success">Active</span>
+                @else
+                <span class="badge bg-danger">Inactive</span>
+                @endif
               </td>
               <td>{{ $user->updated_at }}</td>
               <td>
