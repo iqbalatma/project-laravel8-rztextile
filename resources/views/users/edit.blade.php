@@ -18,7 +18,7 @@
         </div>
         <div class="col-md-12">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="Enter email of new user" value="{{ $user->email }}">
+          <input type="email" class="form-control" id="email" name="email" placeholder="Enter email of new user" value="{{ $user->email }}" readonly>
         </div>
         <div class="col-md-12">
           <label for="phone" class="form-label">Phone Number</label>
@@ -39,8 +39,8 @@
           </select>
         </div>
         <div class="col-md-12">
-          <label for="role_id" class="form-label">Role</label>
-          <select class="form-select" aria-label="Default select example" name="role_id">
+          <label for="is_active" class="form-label">Role</label>
+          <select class="form-select" aria-label="Default select example" name="is_active">
             <option value="1" @if ($user->is_active)
               selected
               @endif>Active</option>

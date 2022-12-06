@@ -31,6 +31,29 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get("/tesarray", function ()
+{
+    $data = [1,2,3,4,5,6,7,8,9,10];
+
+    function shift($numberOfShift, $dataSet, $direction)
+    {
+        if($direction=="left"){
+            $slicedData = array_slice($dataSet, 0, $numberOfShift);
+            return array_merge(array_splice($dataSet, $numberOfShift), $slicedData);
+        }else{
+            $slicedData = array_slice($dataSet, 0, -$numberOfShift);
+            return array_merge(array_splice($dataSet, -$numberOfShift), $slicedData);
+        }
+    }
+
+   
+   
+   echo "<pre>";
+   var_dump(shift(3, $data, "left")); 
+   var_dump(shift(3, $data, "right")); 
+   echo "</pre>";
+});
+
 Route::get('testok', function () {
    
     return view("email.reset-password");

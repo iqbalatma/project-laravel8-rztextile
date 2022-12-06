@@ -108,7 +108,7 @@ class PaymentService{
     
     if($latestPaymentThisMonth){
       $latestCode = explode('-', $latestPaymentThisMonth->code);
-      $newCode .= getIncreasedDigitNumber(end($latestCode));
+      $newCode .=  getIncreasedDigitNumber(end($latestCode));
     }else{
       $newCode .= "0001";
     }

@@ -26,10 +26,10 @@ class UserUpdateRequest extends BaseFormRequest
         return [
             "id_number" => "numeric",
             "name" => "required",
-            "email" => "email|nullable",
             "phone" => "",
             "address" => "",
             "role_id" => "required|numeric",
+            "is_active" => "required|boolean"
         ];
     }
 }

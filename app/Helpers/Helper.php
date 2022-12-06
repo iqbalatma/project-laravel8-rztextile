@@ -19,7 +19,7 @@ function randomString(int $length):string
  * @param string $number for increase the digit
  * @return string of increased digit
  */
-function getIncreasedDigitNumber(string $number): string
+function getIncreasedDigitNumber(string $number ): string
 {
   $exploded = explode('-', $number);
   $lastNumber = end($exploded);
