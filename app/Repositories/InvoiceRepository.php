@@ -7,6 +7,13 @@ use Carbon\Carbon;
 
 class InvoiceRepository{
 
+  private $month, $year;
+  public function __construct() {
+    $this->month = Carbon::now()->format("m");
+    $this->year = Carbon::now()->format("Y");
+  }
+
+
   public function getAllDataInvoicePaginated(array $columns = ["*"], $perPage = AppData::DEFAULT_PERPAGE):?object
   {
     return Invoice::with(["customer", "user"])
@@ -83,6 +90,42 @@ class InvoiceRepository{
       ->whereMonth("created_at", "=", Carbon::now()->format("m"))
       ->groupBy("date")
       ->get();
+  }
+
+  public function getTotalInvoiceMonthly($month = null, $year = null)
+  {
+    $month = $month ?? $this->month;
+    $year = $year ?? $this->year;
+    return Invoice::whereYear("created_at", "=", $year)
+      ->whereMonth("created_at", "=", $month)
+      ->count();
+  }
+
+  public function getTotalProfitMonthly($month = null, $year = null)
+  {
+    $month = $month ?? $this->month;
+    $year = $year ?? $this->year;
+    return Invoice::whereYear("created_at", "=", $year)
+      ->whereMonth("created_at", "=", $month)
+      ->sum("total_profit");
+  }
+
+  public function getTotalCapitalMonthly($month = null, $year = null)
+  {
+    $month = $month ?? $this->month;
+    $year = $year ?? $this->year;
+    return Invoice::whereYear("created_at", "=", $year)
+      ->whereMonth("created_at", "=", $month)
+      ->sum("total_capital");
+  }
+
+  public function getTotalBillLeftMonthly($month = null, $year = null)
+  {
+    $month = $month ?? $this->month;
+    $year = $year ?? $this->year;
+    return Invoice::whereYear("created_at", "=", $year)
+      ->whereMonth("created_at", "=", $month)
+      ->sum("bill_left");
   }
 
   public function getAllDataInvoiceTotalProfitThisMonth()
