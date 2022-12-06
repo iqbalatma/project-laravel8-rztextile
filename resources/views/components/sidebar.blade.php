@@ -32,8 +32,12 @@
                     </div>
                     Rolls
                 </a>
-
-
+                <a class="nav-link" href="{{ route('users.index') }}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-solid fa-users-gear"></i>
+                    </div>
+                    User Management
+                </a>
 
 
                 <div class="sb-sidenav-menu-heading">Transaction</div>
@@ -42,6 +46,12 @@
                         <i class="fa-solid fa-file-invoice-dollar"></i>
                     </div>
                     Invoices
+                </a>
+                <a class="nav-link" href="{{ route('payments.index') }}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-solid fa-money-check-dollar"></i>
+                    </div>
+                    Payments
                 </a>
                 <a class="nav-link" href="{{ route('roll.transactions.index') }}">
                     <div class="sb-nav-link-icon">

@@ -5,6 +5,7 @@ use App\AppData;
 use App\Models\RollTransaction;
 use App\Repositories\CustomerRepository;
 use App\Repositories\InvoiceRepository;
+use App\Repositories\PaymentRepository;
 use App\Repositories\RollRepository;
 use Carbon\Carbon;
 use Exception;
@@ -57,7 +58,8 @@ class ShoppingService{
    */
   public function purchase(array $requestedData)
   {
-    $rollsId = array_column($requestedData["rolls"], 'roll_id');
+    $requestedRolls = $requestedData["rolls"];
+    $rollsId = array_column($requestedRolls, 'roll_id');
     $rolls = (new RollRepository())->getDataRollByIds($rollsId);
 
     try{
@@ -65,12 +67,17 @@ class ShoppingService{
       
       $storedInvoice = $this->addNewInvoice($requestedData, $rolls);
       
+
+      if($requestedData["paid_amount"]>0){
+        #to add data payment
+        $this->addNewPayment($storedInvoice->id, $requestedData);
+      }
+
       #to add roll transaction hisotry
-      $this->addNewRollTransaction($requestedData["rolls"], $rolls, $storedInvoice->id);
+      $this->addNewRollTransaction($requestedRolls, $rolls, $storedInvoice->id);
 
       #to reduce data roll that sold out
-      $this->reduceQuantityRollAndUnit($requestedData["rolls"]);
-
+      $this->reduceQuantityRollAndUnit($requestedRolls);
 
       DB::commit();
     }catch(Exception $e){
@@ -79,6 +86,29 @@ class ShoppingService{
     }
 
     return $storedInvoice;
+  }
+
+
+  /**
+   * Description : use to add new paymen when paid amount more than 0
+   * 
+   * @param int $invoiceId of stored invoice
+   * @param array $requestedData from client request
+   * @return ?object 
+   */
+  private function addNewPayment(int $invoiceId, array $requestedData):?object
+  {
+    $dataPayment = [
+      "code" => (new PaymentService())->getGeneratedPaymentCode(),
+      "paid_amount"=> $requestedData["paid_amount"],
+      "payment_type" => $requestedData["payment_type"],
+      "invoice_id" => $invoiceId,
+      "user_id" => Auth::user()->id,
+    ];
+    if($requestedData["paid_amount"] >= $requestedData["total_bill"]){
+      $dataPayment["paid_amount"] = $requestedData["total_bill"];
+    }
+    return (new PaymentRepository())->addNewDataPayment($dataPayment);
   }
 
   /**
@@ -90,18 +120,24 @@ class ShoppingService{
    */
   private function addNewInvoice(array $requestedData, ?object $rolls):?object
   {
-    $totalPayment = $this->getTotalPayment($requestedData["rolls"]);
     $totalCapital = $this->getTotalCapital($requestedData["rolls"], $rolls);
     $dataInvoice = [
       "code" => $this->getGeneratedInvoiceCode(),
-      "is_paid_off" => true,
+      "is_paid_off" => false,
       "total_capital" => $totalCapital,
-      "total_payment" => $totalPayment,
-      "total_profit" => $totalPayment-$totalCapital,
-      "payment_type" => $requestedData["payment_type"],
+      "total_bill" => $requestedData["total_bill"],
+      "total_paid_amount" => $requestedData["paid_amount"],
+      "bill_left" => $requestedData["total_bill"]-$requestedData["paid_amount"],
+      "total_profit" => $requestedData["total_bill"]-$totalCapital,
       "customer_id" => $requestedData["customer_id"],
       "user_id" => Auth::user()->id
     ];
+    if($requestedData["paid_amount"] >= $requestedData["total_bill"]){
+      $dataInvoice["total_paid_amount"] = $requestedData["total_bill"];
+      $dataInvoice["bill_left"] = 0;
+      $dataInvoice["is_paid_off"] = true;
+    }
+
 
     return (new InvoiceRepository())->addNewDataRepository($dataInvoice);
   }
@@ -203,17 +239,6 @@ class ShoppingService{
     }
 
     return $totalCapital;
-  }
-
-  /**
-   * Description : use to get all total payment from client request
-   * 
-   * @param array $requestedRolls from client
-   * @return int of total payment
-   */
-  public function getTotalPayment(array $requestedRolls):int
-  {
-    return array_sum(array_column($requestedRolls, 'sub_total'));
   }
 }
 

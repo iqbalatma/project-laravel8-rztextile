@@ -11,7 +11,7 @@ class Invoice extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        "code", "total_capital", "total_payment", "total_profit", "payment_type", "is_paid_off", "customer_id", "user_id"
+        "code", "total_capital", "total_bill", "total_profit", "total_paid_amount","bill_left", "is_paid_off", "customer_id", "user_id"
     ];
 
 

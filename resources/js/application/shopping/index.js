@@ -244,6 +244,6 @@ $(document).ready(function(){
   })
 
   $("#btn-confirm-shopping").on("click", function(){
-    confirmShopping.onClickConfirm(this);
+    confirmShopping.onClickConfirm();
   });
 });

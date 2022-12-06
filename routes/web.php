@@ -1,17 +1,20 @@
 <?php
 
+use App\Http\Controllers\AJAX\DashboardController as AJAXDashboardController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RestockController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
 use App\Http\Controllers\RollTransactionController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\UnitController;
-use App\Mail\CheckMail;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\UserManagementController;
+use App\Repositories\PaymentRepository;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,10 +32,32 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('mail2', function () {
-    Mail::to("iqbalatma@gmail.com")->send(new CheckMail("tes"));
+Route::get("/tesarray", function ()
+{
+    $data = [1,2,3,4,5,6,7,8,9,10];
 
-    return "EMAIL SUDAH TERKIRIM tek";
+    function shift($numberOfShift, $dataSet, $direction)
+    {
+        if($direction=="left"){
+            $slicedData = array_slice($dataSet, 0, $numberOfShift);
+            return array_merge(array_splice($dataSet, $numberOfShift), $slicedData);
+        }else{
+            $slicedData = array_slice($dataSet, 0, -$numberOfShift);
+            return array_merge(array_splice($dataSet, -$numberOfShift), $slicedData);
+        }
+    }
+
+   
+   
+   echo "<pre>";
+   var_dump(shift(3, $data, "left")); 
+   var_dump(shift(3, $data, "right")); 
+   echo "</pre>";
+});
+
+Route::get('testok', function () {
+   
+    return view("email.reset-password");
 });
 
 Route::controller(AuthController::class)
@@ -43,9 +68,28 @@ Route::controller(AuthController::class)
         Route::post("/logout", "logout")->name("logout");
     });
 
+Route::controller(ForgotPasswordController::class)
+    ->prefix("/forgot-password")
+    ->name("forgot.password.")
+    ->group(function (){
+        Route::get("/", "forgot")->name("forgot");
+        Route::get("/reset/{token}/{email}", "reset")->name("reset");
+        Route::post("/", "sendResetLink")->name("sendResetLink");
+        Route::post("/reset-password", "resetPassword")->name("resetPassword");
+    });
+
 
 Route::middleware("auth")
     ->group(function (){
+
+        Route::controller(AJAXDashboardController::class)
+            ->name("ajax.dashboard.")
+            ->prefix("/ajax/dashboard")
+            ->group(function (){
+                Route::get("/sales-summary", "salesSummary")->name("sales.summary");
+            });
+
+
         Route::controller(RestockController::class)
             ->name("restock.")
             ->prefix("/restock")
@@ -126,5 +170,26 @@ Route::middleware("auth")
             ->prefix("/invoices")
             ->group(function (){
                 Route::get("/", "index")->name("index");
+            });
+
+        Route::controller(PaymentController::class)
+            ->name("payments.")
+            ->prefix("/payments")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+                Route::get("/create/{id}", "createByInvoiceId")->name("createByInvoiceId");
+                Route::get("/create", "create")->name("create");
+                Route::post("/", "store")->name("store");
+            });
+
+        Route::controller(UserManagementController::class)
+            ->name("users.")
+            ->prefix("/users")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+                Route::get("/create", "create")->name("create");
+                Route::post("/", "store")->name("store");
+                Route::get("/edit/{id}", "edit")->name("edit");
+                Route::patch("/{id}", "update")->name("update");
             });
     });

@@ -26,7 +26,9 @@ class PurchaseRequest extends FormRequest
         return [
             "customer_id" => "nullable|numeric",
             "payment_type" => "required|in:cash,transfer",
-            "rolls" => "required"
+            "rolls" => "required",
+            "total_bill" => "required|numeric",
+            "paid_amount" => "required|numeric"
         ];
     }
 }

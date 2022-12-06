@@ -20,10 +20,26 @@ class RollTransactionService
    */
   public function getAllData(): array
   {
+    $type = request("type", "all");
+
+    switch ($type) {
+      case "broken":
+        $rollTransactions = (new RollTransactionRepository())->getDataRollTransactionBrokenPaginated();
+        break;
+      case "sold":
+        $rollTransactions = (new RollTransactionRepository())->getDataRollTransactionSoldPaginated();
+        break;
+      case "restock":
+        $rollTransactions = (new RollTransactionRepository())->getDataRollTransactionRestockPaginated();
+        break;
+      default:
+        $rollTransactions = (new RollTransactionRepository())->getAllDataRollTransactionPaginated();
+    }
     return [
       "title" => "Roll Transaction",
       "cardTitle" => "Roll Transactions",
-      "rollTransactions" => (new RollTransactionRepository())->getAllDataRollTransactionPaginated()
+      "type" => $type,
+      "rollTransactions" => $rollTransactions
     ];
   }
 
