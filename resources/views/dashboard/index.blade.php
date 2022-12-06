@@ -71,7 +71,7 @@
     <div class="col-xl-6">
       <div class="card mb-4">
         <div class="card-header">
-          <i class="fas fa-chart-area me-1"></i>
+          <i class="fa-solid fa-file-invoice-dollar"></i>
           Latest Invoices
         </div>
         <div class="card-body">
@@ -105,7 +105,7 @@
     <div class="col-xl-6">
       <div class="card mb-4">
         <div class="card-header">
-          <i class="fas fa-chart-area me-1"></i>
+          <i class="fa-solid fa-money-check-dollar"></i>
           Latest Payments
         </div>
         <div class="card-body">
