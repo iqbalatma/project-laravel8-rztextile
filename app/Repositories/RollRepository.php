@@ -20,6 +20,13 @@ class RollRepository{
     }])->select($columns)->get();
   }
 
+  public function getLeastRoll(int $limit = 5, array $columns = ["*"])
+  {
+    return Roll::with("unit")
+      ->orderBy("quantity_unit", "ASC")
+      ->limit($limit)
+      ->get($columns);
+  }
 
   public function getDataRollByIds(array $ids, array $columns = ["*"])
   {
