@@ -32,7 +32,7 @@
               <td>{{ $roll->code }}</td>
               <td>{{ $roll->qrcode }}</td>
               <td>{{ $roll->quantity_roll . " rolls" }}</td>
-              <td>{{ $roll->quantity_unit . " " . $roll->unit->name??"" }}</td>
+              <td>{{ $roll->quantity_unit . " " . ($roll->unit->name??"") }}</td>
               <td>
                 <img src="storage/images/qrcode/{{ $roll->qrcode_image }}" alt="">
               </td>
