@@ -13,6 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .js("resources/js/application/app-layout.js", "public/js")
+    .js("resources/js/application/dashboard/index.js", "public/js/dashboard")
     .js("resources/js/application/customers/index.js", "public/js/customers")
     .js("resources/js/application/shopping/index.js", "public/js/shopping")
     .js("resources/js/application/payments/create.js", "public/js/payments")

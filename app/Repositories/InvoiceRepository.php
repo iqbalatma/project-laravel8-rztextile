@@ -66,6 +66,24 @@ class InvoiceRepository{
   {
     return Invoice::find($id, $columns);
   }
+
+  public function getAllDataInvoiceTotalBillThisMonth()
+  {
+    return Invoice::selectRaw("DATE_FORMAT(created_at,'%d') date, SUM(total_bill) as total")
+      ->whereYear("created_at", "=", Carbon::now()->format("Y"))
+      ->whereMonth("created_at", "=", Carbon::now()->format("m"))
+      ->groupBy("date")
+      ->get();
+  }
+
+  public function getAllDataInvoiceTotalProfitThisMonth()
+  {
+    return Invoice::selectRaw("DATE_FORMAT(created_at,'%d') date, SUM(total_profit) as total")
+      ->whereYear("created_at", "=", Carbon::now()->format("Y"))
+      ->whereMonth("created_at", "=", Carbon::now()->format("m"))
+      ->groupBy("date")
+      ->get();
+  }
 }
 
 ?>

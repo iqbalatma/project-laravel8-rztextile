@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AJAX\DashboardController as AJAXDashboardController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\CustomerController;
@@ -80,6 +81,15 @@ Route::controller(ForgotPasswordController::class)
 
 Route::middleware("auth")
     ->group(function (){
+
+        Route::controller(AJAXDashboardController::class)
+            ->name("ajax.dashboard.")
+            ->prefix("/ajax/dashboard")
+            ->group(function (){
+                Route::get("/sales-summary", "salesSummary")->name("sales.summary");
+            });
+
+
         Route::controller(RestockController::class)
             ->name("restock.")
             ->prefix("/restock")

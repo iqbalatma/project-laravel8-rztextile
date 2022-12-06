@@ -38,7 +38,7 @@
             @foreach ($payments as $key => $payment)
             <tr>
               <td>{{ $payments->firstItem()+$key }}</td>
-              <td>{{ $payment->invoice->code }}</td>
+              <td>{{ $payment->invoice->code??"-" }}</td>
               <td>{{ $payment->code }}</td>
               <td>{{ formatToRupiah($payment->paid_amount) }}</td>
               <td>
