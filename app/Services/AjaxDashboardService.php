@@ -14,8 +14,31 @@ class AjaxDashboardService{
       "month" => Carbon::now()->format("F"),
       "total_bill" => $this->getTotalBill($period),
       "total_profit" => $this->getTotalProfit($period),
+      "total_capital" => $this->getTotalCapital($period),
       "tes" => (new InvoiceRepository())->getAllDataInvoiceTotalBillThisMonth()
     ];
+  }
+
+  private function getTotalCapital($period)
+  {
+    $dataset =  (new InvoiceRepository())->getAllDataInvoiceTotalCapitalThisMonth();
+    $totalCapital = [];
+    foreach ($period as $key => $value) {
+      $exists = false;
+      foreach ($dataset as $subKey => $subValue) {
+        if(intval($subValue->date) == $value){
+          array_push($totalCapital, $subValue->total);
+          unset($dataset[$subKey]);
+          $exists = true;
+          break;
+        }
+      }
+
+      if(!$exists){
+        array_push($totalCapital, null);
+      }
+    }
+    return $totalCapital;
   }
 
   private function getTotalProfit(array $period)
