@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Repositories\InvoiceRepository;
 use App\Repositories\PaymentRepository;
+use App\Repositories\RollRepository;
 use Carbon\Carbon;
 
 class DashboardService{
@@ -17,7 +18,8 @@ class DashboardService{
       "total_capital" => formatToRupiah($invoiceRepository->getTotalCapitalMonthly()),
       "currentMonth" => Carbon::now()->format("F"),
       "latestInvoices" => $invoiceRepository->getDataLatestInvoice(),
-      "latestPayments" => (new PaymentRepository())->getDataLatestPayment()
+      "latestPayments" => (new PaymentRepository())->getDataLatestPayment(),
+      "leastRolls" => (new RollRepository())->getLeastRoll()
     ];
   }
 }

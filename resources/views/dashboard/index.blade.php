@@ -66,7 +66,6 @@
       </div>
     </div>
   </div>
-
   <div class="row">
     <div class="col-xl-6">
       <div class="card mb-4">
@@ -129,6 +128,42 @@
 
                   </td>
                   <td>{{ formatToRupiah($payment->paid_amount) }}</td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card mb-4">
+        <div class="card-header">
+          <i class="fa-solid fa-boxes-stacked"></i>
+          Least Rolls
+        </div>
+        <div class="card-body">
+          <div class="table-responsive mt-4">
+            <table class="table align-middle">
+              <thead>
+                <th>No</th>
+                <th>Code</th>
+                <th>Roll Name</th>
+                <th>Quantity Roll</th>
+                <th>Quantity Unit</th>
+                <th>Selling Price</th>
+              </thead>
+              <tbody>
+                @foreach ($leastRolls as $key => $roll)
+                <tr>
+                  <td>{{ $key+1 }}</td>
+                  <td>{{ $roll->code }}</td>
+                  <td>{{ $roll->name }}</td>
+                  <td>{{ $roll->quantity_roll }}</td>
+                  <td>{{ $roll->quantity_unit . " " . ($roll->unit->name ?? "") }}</td>
+                  <td>{{ formatToRupiah($roll->selling_price) }}</td>
                 </tr>
                 @endforeach
               </tbody>
