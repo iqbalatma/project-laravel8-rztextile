@@ -110,6 +110,14 @@ class InvoiceRepository{
       ->sum("total_profit");
   }
 
+  public function getDataLatestInvoice($limit = 5, $columns = ["*"])
+  {
+    return Invoice::with("customer")
+      ->orderBy("created_at", "DESC")
+      ->limit($limit)
+      ->get($columns);
+  }
+
   public function getTotalCapitalMonthly($month = null, $year = null)
   {
     $month = $month ?? $this->month;

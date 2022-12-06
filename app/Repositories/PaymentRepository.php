@@ -37,6 +37,14 @@ class PaymentRepository{
       ->appends(request()->query());
   }
 
+  public function getDataLatestPayment(int $limit = 5, array $columns = ["*"])
+  {
+    return Payment::with("user")
+      ->orderBy("created_at", "DESC")
+      ->limit($limit)
+      ->get($columns);
+  }
+
   public function getLatestDataPaymentThisMonth(array $columns = ["*"]):?object
   {
     $now = Carbon::now();
