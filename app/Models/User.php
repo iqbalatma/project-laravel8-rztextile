@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Auth\Passwords\CanResetPassword;
 
-class User extends Authenticatable implements CanResetPasswordContract
+class User extends Authenticatable implements CanResetPasswordContract, MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, CanResetPassword;
 
