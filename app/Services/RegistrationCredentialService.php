@@ -47,6 +47,17 @@ class RegistrationCredentialService{
   {
     return (new RegistrationCredentialRepository())->updateDataRegistrationCredentialById($id, $requestedData);
   }
+
+  public function checkIsCredentialValid(string $credential):?int
+  {
+     $credential = (new RegistrationCredentialRepository())->getDataRegistrationCredentialByCredential($credential);
+
+     if($credential){
+      return $credential->role_id;
+     }
+
+     return null;
+  }
 }
 
 ?>

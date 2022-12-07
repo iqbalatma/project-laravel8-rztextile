@@ -23,6 +23,14 @@ class RegistrationCredentialRepository{
     return RegistrationCredential::destroy($id);
   }
 
+  public function getDataRegistrationCredentialByCredential(string $credential)
+  {
+    return RegistrationCredential::where([
+      "credential" => $credential,
+      "is_active" => true
+    ])->first();
+  }
+
   public function updateDataRegistrationCredentialById(int $id, array $requestedData)
   {
     return RegistrationCredential::where("id", $id)->update($requestedData);

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AJAX\DashboardController as AJAXDashboardController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
@@ -79,10 +80,16 @@ Route::controller(ForgotPasswordController::class)
         Route::post("/reset-password", "resetPassword")->name("resetPassword");
     });
 
+Route::controller(RegistrationController::class)
+    ->name("registration.")
+    ->prefix("/registration")
+    ->group(function (){
+        Route::get("/", "index")->name("index");
+        Route::post("/", "store")->name("store");
+    });
 
 Route::middleware("auth")
     ->group(function (){
-
         Route::controller(RegistrationCredentialController::class)
             ->name("registration.credentials.")
             ->prefix("/registration-credentials")
