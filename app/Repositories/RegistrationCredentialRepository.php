@@ -23,6 +23,10 @@ class RegistrationCredentialRepository{
     return RegistrationCredential::destroy($id);
   }
 
+  public function updateDataRegistrationCredentialById(int $id, array $requestedData)
+  {
+    return RegistrationCredential::where("id", $id)->update($requestedData);
+  }
 }
 
 ?>

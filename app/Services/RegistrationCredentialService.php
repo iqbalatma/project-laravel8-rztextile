@@ -42,6 +42,11 @@ class RegistrationCredentialService{
   {
     return (new RegistrationCredentialRepository())->deleteDataRegistrationCredentialById($id);
   }
+
+  public function updateData(int $id, array $requestedData):bool
+  {
+    return (new RegistrationCredentialRepository())->updateDataRegistrationCredentialById($id, $requestedData);
+  }
 }
 
 ?>

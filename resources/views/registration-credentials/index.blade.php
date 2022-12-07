@@ -34,12 +34,24 @@
                 @endif
               </td>
               <td>
-                <button type="button" class="btn btn-primary">Primary</button>
-                <form action="{{ route('registration.credentials.destroy', $credential->id) }}" method="POST">
-                  @csrf
-                  @method("DELETE")
-                  <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
+                <div class="d-grid gap-2 d-md-flex">
+                  <form action="{{ route('registration.credentials.update', $credential->id) }}" method="POST">
+                    @csrf
+                    @method("PUT")
+                    @if ($credential->is_active)
+                    <input type="hidden" value="0" name="is_active">
+                    <button type="submit" class="btn btn-warning">Nonactive</button>
+                    @else
+                    <input type="hidden" value="1" name="is_active">
+                    <button type="submit" class="btn btn-primary">Activate</button>
+                    @endif
+                  </form>
+                  <form action="{{ route('registration.credentials.destroy', $credential->id) }}" method="POST">
+                    @csrf
+                    @method("DELETE")
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                  </form>
+                </div>
               </td>
             </tr>
             @endforeach

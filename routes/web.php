@@ -91,6 +91,7 @@ Route::middleware("auth")
                 Route::get("/create", "create")->name("create");
                 Route::post("/", "store")->name("store");
                 Route::delete("/{id}", "destroy")->name("destroy");
+                Route::put("/{id}", "update")->name("update");
             });
 
         Route::controller(AJAXDashboardController::class)

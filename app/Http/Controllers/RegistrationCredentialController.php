@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegistrationCredentials\RegistrationCredentialStoreRequest;
+use App\Http\Requests\RegistrationCredentials\RegistrationCredentialUpdateRequest;
 use App\Services\RegistrationCredentialService;
 use Illuminate\Http\Response;
 
@@ -48,6 +49,21 @@ class RegistrationCredentialController extends Controller
         $deleted?
             $redirect->with("success", "Delete registration credential successfully"):
             $redirect->with("failed", "Delete registration credential failed");
+
+        return $redirect;
+    }
+
+
+    public function update(RegistrationCredentialService $service, RegistrationCredentialUpdateRequest $request,int $credentialId)
+    {
+        $updated = $service->updateData($credentialId, $request->validated());
+
+        $redirect = redirect()
+            ->route("registration.credentials.index");
+            
+        $updated?
+            $redirect->with("success", "Update registration credential successfully"):
+            $redirect->with("failed", "Update registration credential failed");
 
         return $redirect;
     }
