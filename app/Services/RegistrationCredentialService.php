@@ -37,6 +37,11 @@ class RegistrationCredentialService{
   {
     return (new RegistrationCredentialRepository())->addNewDataRegistrationCredential($requestedData);
   }
+
+  public function destroyData(int $id)
+  {
+    return (new RegistrationCredentialRepository())->deleteDataRegistrationCredentialById($id);
+  }
 }
 
 ?>

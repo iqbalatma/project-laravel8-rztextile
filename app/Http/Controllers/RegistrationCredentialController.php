@@ -29,11 +29,25 @@ class RegistrationCredentialController extends Controller
         $stored = $service->storeNewData($request->validated());
 
         $redirect = redirect()
-            ->route("registration.credentials.create");
+            ->route("registration.credentials.index");
             
         $stored?
             $redirect->with("success", "Add new registration credential successfully"):
             $redirect->with("failed", "Add new registration credential failed");
+
+        return $redirect;
+    }
+
+    public function destroy(RegistrationCredentialService $service, int $credentialId)
+    {
+        $deleted = $service->destroyData($credentialId);
+
+        $redirect = redirect()
+            ->route("registration.credentials.index");
+            
+        $deleted?
+            $redirect->with("success", "Delete registration credential successfully"):
+            $redirect->with("failed", "Delete registration credential failed");
 
         return $redirect;
     }

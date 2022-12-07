@@ -18,6 +18,10 @@ class RegistrationCredentialRepository{
     return RegistrationCredential::create($requestedData);
   }
 
+  public function deleteDataRegistrationCredentialById(int $id)
+  {
+    return RegistrationCredential::destroy($id);
+  }
 
 }
 

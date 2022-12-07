@@ -34,7 +34,12 @@
                 @endif
               </td>
               <td>
-
+                <button type="button" class="btn btn-primary">Primary</button>
+                <form action="{{ route('registration.credentials.destroy', $credential->id) }}" method="POST">
+                  @csrf
+                  @method("DELETE")
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
               </td>
             </tr>
             @endforeach
