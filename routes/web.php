@@ -7,6 +7,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\RegistrationCredentialController;
 use App\Http\Controllers\RestockController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
@@ -81,6 +82,17 @@ Route::controller(ForgotPasswordController::class)
 
 Route::middleware("auth")
     ->group(function (){
+
+        Route::controller(RegistrationCredentialController::class)
+            ->name("registration.credentials.")
+            ->prefix("/registration-credentials")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+                Route::get("/create", "create")->name("create");
+                Route::post("/", "store")->name("store");
+                Route::delete("/{id}", "destroy")->name("destroy");
+                Route::put("/{id}", "update")->name("update");
+            });
 
         Route::controller(AJAXDashboardController::class)
             ->name("ajax.dashboard.")
