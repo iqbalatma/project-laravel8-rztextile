@@ -17,7 +17,7 @@ class VerificationController extends Controller
     public function show(Request $request)
     {
         return $request->user()->hasVerifiedEmail()
-                        ? redirect($this->redirectPath())
+                        ? redirect("/")
                         : view('auth.verification', [
                             'title' => __('Account Verification'),
                             'cardTitle' => __('Account Verification'),

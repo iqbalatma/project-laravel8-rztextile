@@ -9,20 +9,14 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\RegistrationCredentialController;
 use App\Http\Controllers\RestockController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
+use App\Http\Controllers\RegistrationCredentialController;
 use App\Http\Controllers\RollTransactionController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserManagementController;
-use App\Mail\OrderShipped;
-use App\Models\User;
-use App\Notifications\Newvisit;
-use App\Repositories\PaymentRepository;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,89 +30,58 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get("/register", function ()
-{
-    $user = User::first();
-    // Notification::send($user, new Newvisit());
-    // Notification::sendNow($user, new Newvisit());
-    $user->notify(new Newvisit());
-
-    // Notification::route('mail', 'iqbalatma@gmail.com')
-    //     ->notify(new Newvisit());
-
-    // Mail::to($user)->send(new OrderShipped());
-    echo "tes";
-
-});
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get("/tesarray", function ()
-{
-    $data = [1,2,3,4,5,6,7,8,9,10];
 
-    function shift($numberOfShift, $dataSet, $direction)
-    {
-        if($direction=="left"){
-            $slicedData = array_slice($dataSet, 0, $numberOfShift);
-            return array_merge(array_splice($dataSet, $numberOfShift), $slicedData);
-        }else{
-            $slicedData = array_slice($dataSet, 0, -$numberOfShift);
-            return array_merge(array_splice($dataSet, -$numberOfShift), $slicedData);
-        }
-    }
 
-   
-   
-   echo "<pre>";
-   var_dump(shift(3, $data, "left")); 
-   var_dump(shift(3, $data, "right")); 
-   echo "</pre>";
-});
 
-Route::get('testok', function () {
-    return view("email.reset-password");
-});
 
-Route::controller(AuthController::class)
-    ->name("auth.")
+
+
+
+
+
+Route::middleware("guest")
     ->group(function (){
-        Route::get("/login", "login")->name("login");
-        Route::post("/authenticate", "authenticate")->name("authenticate");
-        Route::post("/logout", "logout")->name("logout");
+        Route::controller(RegistrationController::class)
+            ->name("registration.")
+            ->prefix("/registration")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+                Route::post("/", "store")->name("store");
+            });
+
+        Route::controller(ForgotPasswordController::class)
+            ->prefix("/forgot-password")
+            ->name("forgot.password.")
+            ->group(function (){
+                Route::get("/", "forgot")->name("forgot");
+                Route::get("/reset/{token}/{email}", "reset")->name("reset");
+                Route::post("/", "sendResetLink")->name("sendResetLink");
+                Route::post("/reset-password", "resetPassword")->name("resetPassword");
+            });
+
+        Route::controller(AuthController::class)
+            ->name("auth.")
+            ->group(function (){
+                Route::get("/login", "login")->name("login");
+                Route::post("/authenticate", "authenticate")->name("authenticate");
+                Route::post("/logout", "logout")->name("logout")->middleware("auth")->withoutMiddleware("guest");
+            });
     });
 
-Route::controller(ForgotPasswordController::class)
-    ->prefix("/forgot-password")
-    ->name("forgot.password.")
-    ->group(function (){
-        Route::get("/", "forgot")->name("forgot");
-        Route::get("/reset/{token}/{email}", "reset")->name("reset");
-        Route::post("/", "sendResetLink")->name("sendResetLink");
-        Route::post("/reset-password", "resetPassword")->name("resetPassword");
-    });
-
-Route::controller(RegistrationController::class)
-    ->name("registration.")
-    ->prefix("/registration")
-    ->group(function (){
-        Route::get("/", "index")->name("index");
-        Route::post("/", "store")->name("store");
-    });
 
 Route::controller(VerificationController::class)
     ->name("verification.")
     ->prefix("/email")
     ->group(function (){
-        Route::get("/verify", "show")->name("notice");
+        Route::get("/verify", "show")->name("notice")->middleware("auth");
         Route::get("/verify/{id}/{hash}", "verify")->name("verify");
-        Route::post("/resend", "resend")->name("resend");
+        Route::post("/resend", "resend")->name("resend")->middleware("auth");
     });
-
-
-
 Route::middleware(["auth", "verified"])
     ->group(function (){
         Route::controller(RegistrationCredentialController::class)
@@ -241,5 +204,6 @@ Route::middleware(["auth", "verified"])
                 Route::post("/", "store")->name("store");
                 Route::get("/edit/{id}", "edit")->name("edit");
                 Route::patch("/{id}", "update")->name("update");
+
             });
     });
