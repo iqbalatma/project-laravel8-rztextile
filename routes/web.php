@@ -37,13 +37,6 @@ Route::get('/', function () {
 
 
 
-
-
-
-
-
-
-
 Route::middleware("guest")
     ->group(function (){
         Route::controller(RegistrationController::class)
