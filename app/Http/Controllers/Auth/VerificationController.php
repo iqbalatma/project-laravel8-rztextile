@@ -39,9 +39,16 @@ class VerificationController extends Controller
         return back()->with('success', 'Verification link sent!');
     }
 
-    public function verify(EmailVerificationRequest $request)
+
+    /**
+     * Description : use to verify link verification
+     * 
+     * @param EmailVerificationRequest $request
+     * @return RedirectResponse
+     */
+    public function verify(EmailVerificationRequest $request):RedirectResponse
     {
         $request->fulfill();
-        return redirect('/');
+        return response()->redirectTo(route("dashboard.index"));
     }
 }
