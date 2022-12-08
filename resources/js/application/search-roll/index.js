@@ -1,3 +1,4 @@
+import helper from "../../module/helper";
 
 
 $(document).ready(function(){
@@ -59,7 +60,27 @@ $(document).ready(function(){
         context: document.body,
         method: "GET"
       }).done(function (response) {
-        console.log(response);
+        if(response.status == 200){
+          console.log(response);
+          console.log(response.data.created_at);
+          const data = response.data;
+          $("#roll-name").text(data.name)
+          $("#roll-code").text(data.code)
+          $("#roll-quantity-roll").text(data.quantity_roll)
+          $("#roll-quantity-unit").text(data.quantity_unit + " " + data.unit.name)
+          $("#roll-qrcode").text(data.qrcode)
+          $("#roll-basic-price").text(helper.formatIntToRupiah(data.basic_price))
+          $("#roll-selling-price").text(helper.formatIntToRupiah(data.selling_price))
+          $("#roll-last-update").text(data.updated_at)
+
+          let timerInterval
+          return Swal.fire({
+            title: 'Roll found !',
+            text: `Search roll ${data.name} successfully !`,
+            timer: 1500,
+            icon:"success"
+          });
+        }
       }).fail(function (response) {
         console.log(response);
       });

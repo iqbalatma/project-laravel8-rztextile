@@ -40,7 +40,7 @@ class RollRepository{
 
   public function getDataRollById(int $id, array $columns = ["*"]):?object
   {
-    return Roll::find($id, $columns);
+    return Roll::with("unit")->select($columns)->find($id);
   }
 
   public function updateDataRollById(int $id, array $requestedData):bool
