@@ -4,6 +4,7 @@ use App\Http\Controllers\AJAX\DashboardController as AJAXDashboardController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
@@ -16,7 +17,12 @@ use App\Http\Controllers\RollTransactionController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserManagementController;
+use App\Mail\OrderShipped;
+use App\Models\User;
+use App\Notifications\Newvisit;
 use App\Repositories\PaymentRepository;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +35,21 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get("/register", function ()
+{
+    $user = User::first();
+    // Notification::send($user, new Newvisit());
+    // Notification::sendNow($user, new Newvisit());
+    $user->notify(new Newvisit());
+
+    // Notification::route('mail', 'iqbalatma@gmail.com')
+    //     ->notify(new Newvisit());
+
+    // Mail::to($user)->send(new OrderShipped());
+    echo "tes";
+
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -88,7 +109,18 @@ Route::controller(RegistrationController::class)
         Route::post("/", "store")->name("store");
     });
 
-Route::middleware("auth")
+Route::controller(VerificationController::class)
+    ->name("verification.")
+    ->prefix("/email")
+    ->group(function (){
+        Route::get("/verify", "show")->name("notice");
+        Route::get("/verify/{id}/{hash}", "verify")->name("verify");
+        Route::post("/resend", "resend")->name("resend");
+    });
+
+
+
+Route::middleware(["auth"])
     ->group(function (){
         Route::controller(RegistrationCredentialController::class)
             ->name("registration.credentials.")
