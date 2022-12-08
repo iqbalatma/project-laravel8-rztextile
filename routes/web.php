@@ -14,6 +14,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
 use App\Http\Controllers\RegistrationCredentialController;
 use App\Http\Controllers\RollTransactionController;
+use App\Http\Controllers\SearchRollController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserManagementController;
@@ -77,6 +78,12 @@ Route::controller(VerificationController::class)
     });
 Route::middleware(["auth", "verified"])
     ->group(function (){
+        Route::controller(SearchRollController::class)
+            ->name("search-roll.")
+            ->prefix("/search-roll")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+            });
         Route::controller(RegistrationCredentialController::class)
             ->name("registration.credentials.")
             ->prefix("/registration-credentials")
