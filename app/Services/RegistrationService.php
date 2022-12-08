@@ -42,8 +42,6 @@ class RegistrationService{
     $requestedData["password"] = Hash::make($requestedData["password"]);
     $user = (new UserRepository())->addNewDataUser($requestedData);
 
-    $user->notify(new WelcomeEmailNotification());
-    Mail::to($user)->send(new OrderShipped());
     event(new Registered($user));
     auth()->login($user);
 
