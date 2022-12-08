@@ -29,7 +29,7 @@ class RegistrationStoreRequest extends BaseFormRequest
             "email" => "email|required|unique:users",
             "registration_credential" => "required",
             "password" => "required|confirmed",
-            "phone_number" => "nullable",
+            "phone" => "nullable",
             "address" => "nullable"
         ];
     }
