@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AJAX\DashboardController as AJAXDashboardController;
+use App\Http\Controllers\AJAX\SearchRollController as AJAXSearchRollController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
@@ -102,6 +103,12 @@ Route::middleware(["auth", "verified"])
                 Route::get("/sales-summary", "salesSummary")->name("sales.summary");
             });
 
+        Route::controller(AJAXSearchRollController::class)
+            ->name("ajax.search.roll")
+            ->prefix("/ajax/search-roll")
+            ->group(function (){
+                Route::get("/{id}", "show")->name("show");
+            });
 
         Route::controller(RestockController::class)
             ->name("restock.")

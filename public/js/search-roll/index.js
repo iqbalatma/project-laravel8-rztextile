@@ -34,21 +34,28 @@ $(document).ready(function () {
       onChangeSelectize(value);
     });
   }
+  var selectized = $("#select-roll").selectize(selectizeOption);
+  selectizedFocusAndClear(selectized);
 
   /**
-  * Description : function that will execute on change selectize
-  * 
-  * @param {int} value 
-  */
+   * Description : function that will execute on change selectize
+   * 
+   * @param {int} value 
+   */
   function onChangeSelectize(value) {
     var rollId = value;
     var dataSet = $(".item-roll-selectized[data-id=\"".concat(rollId, "\"]")).data("data");
-    console.log(dataSet);
-    // setSelectedOptionToTableRow(dataSet);
+    selectizedFocusAndClear(selectized);
+    $.ajax({
+      url: "/ajax/search-roll/" + rollId,
+      context: document.body,
+      method: "GET"
+    }).done(function (response) {
+      console.log(response);
+    }).fail(function (response) {
+      console.log(response);
+    });
   }
-
-  var selectized = $("#select-roll").selectize(selectizeOption);
-  selectizedFocusAndClear(selectized);
 });
 /******/ })()
 ;

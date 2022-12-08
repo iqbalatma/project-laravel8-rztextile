@@ -37,22 +37,31 @@ $(document).ready(function(){
     });
   }
 
-   /**
-   * Description : function that will execute on change selectize
-   * 
-   * @param {int} value 
-   */
-    function onChangeSelectize(value) {
-      const rollId = value;
-      const dataSet =$(`.item-roll-selectized[data-id="${rollId}"]`).data("data"); 
-  
-      console.log(dataSet);
-      // setSelectedOptionToTableRow(dataSet);
-    }
+
 
   let selectized = $("#select-roll").selectize(selectizeOption);
   selectizedFocusAndClear(selectized);
 
 
- 
+  /**
+   * Description : function that will execute on change selectize
+   * 
+   * @param {int} value 
+   */
+     function onChangeSelectize(value) {
+      const rollId = value;
+      const dataSet =$(`.item-roll-selectized[data-id="${rollId}"]`).data("data"); 
+  
+      selectizedFocusAndClear(selectized);
+
+      $.ajax({
+        url: "/ajax/search-roll/"+rollId,
+        context: document.body,
+        method: "GET"
+      }).done(function (response) {
+        console.log(response);
+      }).fail(function (response) {
+        console.log(response);
+      });
+    }
 });

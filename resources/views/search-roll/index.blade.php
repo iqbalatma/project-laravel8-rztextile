@@ -18,6 +18,58 @@
     </div>
   </div>
 
+  <div class="card mb-4">
+    <div class="card-header">
+      Result
+    </div>
+    <div class="card-body">
+      <table class="table table-borderless" id="result-searched-roll">
+        <tbody>
+          <tr>
+            <th scope="row">Name</th>
+            <th scope="row">:</th>
+            <th scope="row" id="roll-name"></th>
+          </tr>
+          <tr>
+            <th scope="row">Code</th>
+            <th scope="row">:</th>
+            <th scope="row" id="roll-code"></th>
+          </tr>
+          <tr>
+            <th scope="row">Quantity Roll</th>
+            <th scope="row">:</th>
+            <th scope="row" id="roll-quantity-roll"></th>
+          </tr>
+          <tr>
+            <th scope="row">Quantity Unit</th>
+            <th scope="row">:</th>
+            <th scope="row" id="roll-quantity-unit"></th>
+          </tr>
+          <tr>
+            <th scope="row">QR Code</th>
+            <th scope="row">:</th>
+            <th scope="row" id="roll-qrcode"></th>
+          </tr>
+          <tr>
+            <th scope="row">Basic Price</th>
+            <th scope="row">:</th>
+            <th scope="row" id="roll-basic-price"></th>
+          </tr>
+          <tr>
+            <th scope="row">Selling Price</th>
+            <th scope="row">:</th>
+            <th scope="row" id="roll-selling-price"></th>
+          </tr>
+          <tr>
+            <th scope="row">Last Update</th>
+            <th scope="row">:</th>
+            <th scope="row" id="roll-last-update"></th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   @section("custom-scripts")
   <script src="{{ asset('js/search-roll/index.js') }}"></script>
   @endsection
