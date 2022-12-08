@@ -13,7 +13,7 @@ class VerificationController extends Controller
     public function show(Request $request)
     {
         return $request->user()->hasVerifiedEmail()
-                        ? redirect(route("dashboard.index"))
+                        ? redirect("/")
                         : view('auth.verification', [
                             'title' => __('Account Verification'),
                             'cardTitle' => __('Account Verification'),

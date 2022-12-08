@@ -27,18 +27,16 @@ class RegistrationService{
    * Description : use to add new data user
    * 
    * @param array $requestedData from clinet
-   * @return ?object
    */
   public function storeNewData(array $requestedData)
   {
-    // $role_id = (new RegistrationCredentialService())->checkIsCredentialValid($requestedData["registration_credential"]);
+    $role_id = (new RegistrationCredentialService())->checkIsCredentialValid($requestedData["registration_credential"]);
 
-    // if(!$role_id){
-    //   return false;
-    // }
+    if(!$role_id){
+      return false;
+    }
 
-    // $requestedData["role_id"] = $role_id;
-    $requestedData["role_id"] = 1;
+    $requestedData["role_id"] = $role_id;
     $requestedData["password"] = Hash::make($requestedData["password"]);
     $user = (new UserRepository())->addNewDataUser($requestedData);
 
@@ -47,8 +45,6 @@ class RegistrationService{
 
     return $user;
   }
-
-
 }
 
 ?>

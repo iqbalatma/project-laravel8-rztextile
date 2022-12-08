@@ -121,7 +121,9 @@
             <label for="select-roll" class="form-label">Choose Roll</label>
             <select id="select-roll" name="roll">
               @foreach ($rolls as $key => $roll)
-              <option value="{{ $roll->id }}" data-data="{{ json_encode($roll) }}">{{ $roll->name }}</option>
+              <option value="{{ $roll->id }}" data-data="{{ json_encode($roll) }}">
+                {{ $roll->id }} | {{ $roll->name }} | {{ $roll->qrcode }}
+              </option>
               @endforeach
             </select>
           </div>
