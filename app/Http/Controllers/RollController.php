@@ -7,6 +7,9 @@ use App\Http\Requests\Rolls\RollUpdateRequest;
 use App\Services\RollService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class RollController extends Controller
 {
@@ -83,5 +86,17 @@ class RollController extends Controller
             $redirect->with("failed", "Add new data roll failed");
 
         return $redirect;
+    }
+
+    /**
+     * Description : use to download qrcode file
+     * 
+     * @param string $qrcode
+     * @return
+     */
+    public function downloadQrcode(string $qrcode):StreamedResponse
+    {
+        $headers = ['Content-Type: image/jpeg'];
+        return Storage::download("public/images/qrcode/$qrcode", "qrcode.png", $headers);
     }
 }

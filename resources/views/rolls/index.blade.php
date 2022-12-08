@@ -40,7 +40,12 @@
               <td class="text-center">
                 <div class="d-grid gap-2 d-md-block">
                   <a href="{{ route('rolls.edit', $roll->id) }}" class="btn btn-success">
-                    <i data-feather="edit"></i> Edit
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    Edit
+                  </a>
+                  <a href="{{ route('rolls.downloadQrcode', $roll->qrcode_image) }}" class="btn btn-primary">
+                    <i class="fa-solid fa-download"></i>
+                    Download
                   </a>
                 </div>
               </td>
