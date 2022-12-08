@@ -3,10 +3,13 @@
 use App\Http\Controllers\AJAX\DashboardController as AJAXDashboardController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\RegistrationController;
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\RegistrationCredentialController;
 use App\Http\Controllers\RestockController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
@@ -14,7 +17,12 @@ use App\Http\Controllers\RollTransactionController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserManagementController;
+use App\Mail\OrderShipped;
+use App\Models\User;
+use App\Notifications\Newvisit;
 use App\Repositories\PaymentRepository;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +35,21 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get("/register", function ()
+{
+    $user = User::first();
+    // Notification::send($user, new Newvisit());
+    // Notification::sendNow($user, new Newvisit());
+    $user->notify(new Newvisit());
+
+    // Notification::route('mail', 'iqbalatma@gmail.com')
+    //     ->notify(new Newvisit());
+
+    // Mail::to($user)->send(new OrderShipped());
+    echo "tes";
+
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -78,9 +101,37 @@ Route::controller(ForgotPasswordController::class)
         Route::post("/reset-password", "resetPassword")->name("resetPassword");
     });
 
-
-Route::middleware("auth")
+Route::controller(RegistrationController::class)
+    ->name("registration.")
+    ->prefix("/registration")
     ->group(function (){
+        Route::get("/", "index")->name("index");
+        Route::post("/", "store")->name("store");
+    });
+
+Route::controller(VerificationController::class)
+    ->name("verification.")
+    ->prefix("/email")
+    ->group(function (){
+        Route::get("/verify", "show")->name("notice");
+        Route::get("/verify/{id}/{hash}", "verify")->name("verify");
+        Route::post("/resend", "resend")->name("resend");
+    });
+
+
+
+Route::middleware(["auth"])
+    ->group(function (){
+        Route::controller(RegistrationCredentialController::class)
+            ->name("registration.credentials.")
+            ->prefix("/registration-credentials")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+                Route::get("/create", "create")->name("create");
+                Route::post("/", "store")->name("store");
+                Route::delete("/{id}", "destroy")->name("destroy");
+                Route::put("/{id}", "update")->name("update");
+            });
 
         Route::controller(AJAXDashboardController::class)
             ->name("ajax.dashboard.")

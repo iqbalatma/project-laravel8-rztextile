@@ -32,6 +32,12 @@
                     </div>
                     Rolls
                 </a>
+                <a class="nav-link" href="{{ route('registration.credentials.index') }}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    Registration Credential
+                </a>
                 <a class="nav-link" href="{{ route('users.index') }}">
                     <div class="sb-nav-link-icon">
                         <i class="fa-solid fa-users-gear"></i>

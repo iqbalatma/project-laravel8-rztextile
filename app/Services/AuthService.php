@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
@@ -29,7 +30,6 @@ class AuthService
 
       unset($requestedData["rememberme"]);
     }
-
     if (Auth::attempt($requestedData, $rememberme)) {
       return true;
     }
