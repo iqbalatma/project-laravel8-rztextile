@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Rolls\RollPrintRequest;
 use App\Http\Requests\Rolls\RollStoreRequest;
 use App\Http\Requests\Rolls\RollUpdateRequest;
 use App\Services\RollService;
@@ -98,5 +99,10 @@ class RollController extends Controller
     {
         $headers = ['Content-Type: image/jpeg'];
         return Storage::download("public/images/qrcode/$qrcode", "qrcode.png", $headers);
+    }
+
+    public function printQrcode(RollService $service, RollPrintRequest $request)
+    {
+        dd($request->validated());
     }
 }
