@@ -65,6 +65,12 @@
                     </div>
                     Search Roll
                 </a>
+                <a class="nav-link" href="{{ route('whatsapp.messaging.index') }}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    Whatsapp Messaging
+                </a>
                 <a class="nav-link" href="{{ route('roll.transactions.index') }}">
                     <div class="sb-nav-link-icon">
                         <i class="fa-solid fa-right-left"></i>
