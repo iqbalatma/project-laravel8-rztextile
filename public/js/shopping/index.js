@@ -4688,7 +4688,7 @@ var selectizeOption = {
   openOnFocus: false,
   render: {
     option: function option(data, escape) {
-      return "<div class=\"item-roll-selectized\"\n                      data-id=\"".concat(escape(data.data.id), "\"\n                      data-data=\"").concat(escape(JSON.stringify(data.data)), "\">\n                      ").concat(escape(data.data.id), " | ").concat(escape(data.data.qrcode), " | ").concat(escape(data.text), "\n                  </div>");
+      return "<div class=\"item-roll-selectized\"\n                      data-id=\"".concat(escape(data.data.id), "\"\n                      data-data=\"").concat(escape(JSON.stringify(data.data)), "\">\n                      ").concat(escape(data.text), "\n                  </div>");
     }
   },
   onChange: function onChange(value) {

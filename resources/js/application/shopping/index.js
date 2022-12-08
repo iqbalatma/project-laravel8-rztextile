@@ -96,7 +96,7 @@ const selectizeOption = {
           return `<div class="item-roll-selectized"
                       data-id="${escape(data.data.id)}"
                       data-data="${escape(JSON.stringify(data.data))}">
-                      ${escape(data.data.id)} | ${escape(data.data.qrcode)} | ${escape(data.text)}
+                      ${escape(data.text)}
                   </div>`
       }
   },
