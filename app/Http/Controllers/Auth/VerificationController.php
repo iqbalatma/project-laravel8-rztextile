@@ -7,6 +7,7 @@ use App\Mail\OrderShipped;
 use App\Models\User;
 use App\Notifications\WelcomeEmailNotification;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -25,20 +26,22 @@ class VerificationController extends Controller
 
     }
 
-    public function resend(Request $request)
+
+    /**
+     * Description : use to resend email verification
+     * 
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function resend(Request $request):RedirectResponse
     {
-        $request->user()->notify(new WelcomeEmailNotification());
-        Mail::to($request->user())->send(new OrderShipped());
         $request->user()->sendEmailVerificationNotification();
-
-
- 
         return back()->with('success', 'Verification link sent!');
     }
 
     public function verify(EmailVerificationRequest $request)
     {
         $request->fulfill();
-        return redirect('/home');
+        return redirect('/');
     }
 }

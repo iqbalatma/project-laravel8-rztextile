@@ -79,7 +79,6 @@ Route::get("/tesarray", function ()
 });
 
 Route::get('testok', function () {
-   
     return view("email.reset-password");
 });
 
@@ -120,7 +119,7 @@ Route::controller(VerificationController::class)
 
 
 
-Route::middleware(["auth"])
+Route::middleware(["auth", "verified"])
     ->group(function (){
         Route::controller(RegistrationCredentialController::class)
             ->name("registration.credentials.")
