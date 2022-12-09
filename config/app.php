@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -234,6 +235,7 @@ return [
         #custom aliases
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

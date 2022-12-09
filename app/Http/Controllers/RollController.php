@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Rolls\RollPrintRequest;
 use App\Http\Requests\Rolls\RollStoreRequest;
 use App\Http\Requests\Rolls\RollUpdateRequest;
 use App\Services\RollService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
-
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 class RollController extends Controller
 {
     /**
@@ -83,5 +86,29 @@ class RollController extends Controller
             $redirect->with("failed", "Add new data roll failed");
 
         return $redirect;
+    }
+
+    /**
+     * Description : use to download qrcode file
+     * 
+     * @param string $qrcode
+     * @return
+     */
+    public function downloadQrcode(string $qrcode):StreamedResponse
+    {
+        $headers = ['Content-Type: image/jpeg'];
+        return Storage::download("public/images/qrcode/$qrcode", "qrcode.png", $headers);
+    }
+
+    public function printQrcode(RollService $service, RollPrintRequest $request)
+    {
+      
+        $data = [
+            "copies" => $request->only("copies")["copies"]
+        ];
+        $pdf = Pdf::loadView("PDF/qrcode", $data);
+        $customPaper = array(0,0,302,302);
+        $pdf->set_paper($customPaper);
+        return $pdf->stream("itsolutionstuff.pdf");
     }
 }

@@ -8,5 +8,6 @@
     "/js/payments/create.js": "/js/payments/create.js",
     "/js/units/index.js": "/js/units/index.js",
     "/js/rolls/create.js": "/js/rolls/create.js",
+    "/js/rolls/index.js": "/js/rolls/index.js",
     "/css/app.css": "/css/app.css"
 }

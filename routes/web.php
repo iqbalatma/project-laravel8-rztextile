@@ -176,6 +176,8 @@ Route::middleware(["auth", "verified"])
                 Route::post("/", "store")->name("store");
                 Route::get("/edit/{id}", "edit")->name("edit");
                 Route::patch("/{id}", "update")->name("update");
+                Route::get("/download/{qrcode}", "downloadQrcode")->name("downloadQrcode");
+                Route::post("/print", "printQrcode")->name("printQrcode");
             });
         
         Route::controller(RollTransactionController::class)
