@@ -89,6 +89,17 @@ class RollService{
   {
     return (new RollRepository())->updateDataRollById($id, $requestedData);
   }
+
+  /**
+   * Description : use to print qrcode
+   * 
+   * @param array $requestedData from client
+   * 
+   */
+  public function printQrCode(array $requestedData)
+  {
+    
+  }
 }
 
 ?>

@@ -6,12 +6,11 @@ use App\Http\Requests\Rolls\RollPrintRequest;
 use App\Http\Requests\Rolls\RollStoreRequest;
 use App\Http\Requests\Rolls\RollUpdateRequest;
 use App\Services\RollService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-
 class RollController extends Controller
 {
     /**
@@ -103,6 +102,13 @@ class RollController extends Controller
 
     public function printQrcode(RollService $service, RollPrintRequest $request)
     {
-        dd($request->validated());
+      
+        $data = [
+            "copies" => $request->only("copies")["copies"]
+        ];
+        $pdf = Pdf::loadView("PDF/qrcode", $data);
+        $customPaper = array(0,0,302,302);
+        $pdf->set_paper($customPaper);
+        return $pdf->stream("itsolutionstuff.pdf");
     }
 }
