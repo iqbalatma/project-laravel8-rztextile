@@ -71,7 +71,7 @@ class InvoiceRepository{
 
   public function getDataInvoiceById(int $id, $columns = ["*"])
   {
-    return Invoice::with(["customer", "user", "roll_transaction.roll.unit",])
+    return Invoice::with(["customer", "user", "roll_transaction.roll.unit", "payment"])
       ->select($columns)
       ->find($id);
   }
