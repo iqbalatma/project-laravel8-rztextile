@@ -54,7 +54,7 @@
               <td>{{ $invoice->updated_at }}</td>
               <td>
                 <div class="d-grid gap-2 d-md-flex">
-                  <a href="{{ route('invoices.downloadInvoice', $invoice->id) }}" class="btn btn-success">
+                  <a href="{{ route('invoices.invoicPdf', ['id'=> $invoice->id, 'type'=>'download']) }}" class="btn btn-success">
                     <i class="fa-solid fa-download"></i> Download
                   </a>
 

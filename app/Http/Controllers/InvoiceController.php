@@ -25,12 +25,16 @@ class InvoiceController extends Controller
      * 
      * @param int $invoiceId that want to be download
      */
-    public function downloadInvoice(InvoiceService $service, int $invoiceId):Response
+    public function invoicPdf(InvoiceService $service, string $type, int $invoiceId):Response
     {
         $invoice = $service->download($invoiceId);
        
         $pdf = Pdf::loadView("PDF.invoice", $invoice);
         $pdf->set_paper("A5", 'landscape');
-        return $pdf->download($invoice["invoice"]->code.".pdf");
+        if($type == "download"){
+            return $pdf->download($invoice["invoice"]->code.".pdf");
+        }else{
+            return $pdf->stream($invoice["invoice"]->code.".pdf");
+        }
     }
 }

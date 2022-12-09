@@ -26,7 +26,7 @@ function purchase(dataSet){
         icon: 'success',
         title: title,
       }).then((result) => {
-        window.open("/invoices/download/" + response.data.id, "_blank");
+        window.open("/invoices/stream/" + response.data.id, "_blank");
         window.location.href = `/shopping`;
       })
     }

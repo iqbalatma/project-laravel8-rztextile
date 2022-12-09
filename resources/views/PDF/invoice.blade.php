@@ -93,6 +93,7 @@
   <br />
   <hr />
   <br />
+  @if (count($invoice->payment)>0)
   <h5>Payment Histories</h5>
   <table width="100%" align="center">
     <thead style="background-color: lightgray;">
@@ -133,6 +134,10 @@
       </tr>
     </tfoot>
   </table>
+  @else
+  <h5>No Payment Histories Available</h5>
+  @endif
+
 </body>
 
 </html>
