@@ -30,6 +30,7 @@ class AuthService
 
       unset($requestedData["rememberme"]);
     }
+    $requestedData["is_active"] = true;
     if (Auth::attempt($requestedData, $rememberme)) {
       return true;
     }
