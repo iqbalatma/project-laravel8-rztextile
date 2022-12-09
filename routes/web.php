@@ -202,6 +202,7 @@ Route::middleware(["auth", "verified"])
             ->prefix("/invoices")
             ->group(function (){
                 Route::get("/", "index")->name("index");
+                Route::get("/{type}/{id}", "invoicPdf")->name("invoicPdf");
             });
 
         Route::controller(PaymentController::class)

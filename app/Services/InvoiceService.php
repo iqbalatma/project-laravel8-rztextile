@@ -1,6 +1,7 @@
 <?php 
 namespace App\Services;
 
+use App\AppData;
 use App\Repositories\InvoiceRepository;
 
 class InvoiceService{
@@ -45,6 +46,18 @@ class InvoiceService{
     $invoice->bill_left -= $paidAmount;
     $invoice->total_paid_amount += $paidAmount;
     $invoice->save();
+  }
+
+  public function download(int $invoiceId)
+  {
+    $invoice = (new InvoiceRepository())->getDataInvoiceById($invoiceId);
+    return [
+      "invoice" => $invoice,
+      "companyName" => AppData::COMPANY_NAME,
+      "companyAddress" => AppData::COMPANY_ADDRESS,
+      "companyPhone" => AppData::COMPANY_PHONE,
+      "companyEmail" => AppData::COMPANY_EMAIL,
+    ];
   }
 }
 
