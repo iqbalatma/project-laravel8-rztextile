@@ -53,11 +53,18 @@
               </td>
               <td>{{ $invoice->updated_at }}</td>
               <td>
-                @if (!$invoice->is_paid_off)
-                <a href="{{ route('payments.createByInvoiceId', $invoice->id) }}" class="btn btn-primary">Add Payment</a>
-                @else
-                -
-                @endif
+                <div class="d-grid gap-2 d-md-flex">
+                  <form action="{{ route('invoices.downloadInvoice', $invoice->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-success">
+                      <i class="fa-solid fa-download"></i> Download
+                    </button>
+                  </form>
+
+                  @if (!$invoice->is_paid_off)
+                  <a href="{{ route('payments.createByInvoiceId', $invoice->id) }}" class="btn btn-primary">Add Payment</a>
+                  @endif
+                </div>
               </td>
             </tr>
             @endforeach

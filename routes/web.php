@@ -202,6 +202,7 @@ Route::middleware(["auth", "verified"])
             ->prefix("/invoices")
             ->group(function (){
                 Route::get("/", "index")->name("index");
+                Route::post("/download/{id}", "downloadInvoice")->name("downloadInvoice");
             });
 
         Route::controller(PaymentController::class)

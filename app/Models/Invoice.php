@@ -25,4 +25,9 @@ class Invoice extends Model
         return $this->belongsTo(User::class, "user_id");
     }
 
+    public function roll_transaction()
+    {
+        return $this->hasMany(RollTransaction::class);
+    }
+
 }

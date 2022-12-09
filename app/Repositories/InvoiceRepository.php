@@ -71,7 +71,9 @@ class InvoiceRepository{
 
   public function getDataInvoiceById(int $id, $columns = ["*"])
   {
-    return Invoice::find($id, $columns);
+    return Invoice::with(["customer", "user", "roll_transaction.roll.unit",])
+      ->select($columns)
+      ->find($id);
   }
 
   public function getAllDataInvoiceTotalBillThisMonth()
