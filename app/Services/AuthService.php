@@ -21,7 +21,6 @@ class AuthService
   }
 
 
-
   public function authenticate(array $requestedData): bool
   {
     $rememberme = false;
