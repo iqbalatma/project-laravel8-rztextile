@@ -22,7 +22,7 @@
             <div class="col-lg-5">
               <div class="card shadow-lg border-0 rounded-lg mt-5">
                 <div class="card-header">
-                  <h3 class="text-center font-weight-light my-4">Login</h3>
+                  <h3 class="text-center font-weight-light my-4">Welcome To RZ Textile System</h3>
                 </div>
                 <div class="card-body">
                   <x-alert></x-alert>
@@ -59,7 +59,7 @@
       <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid px-4">
           <div class="d-flex align-items-center justify-content-between small">
-            <div class="text-muted">Copyright &copy; Your Website 2021</div>
+            <div class="text-muted">Copyright &copy; RZ Textile 2022</div>
             <div>
               <a href="#">Privacy Policy</a>
               &middot;
