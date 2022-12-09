@@ -39,7 +39,7 @@
           </select>
         </div>
         <div class="col-md-12">
-          <label for="is_active" class="form-label">Role</label>
+          <label for="is_active" class="form-label">Status Active</label>
           <select class="form-select" aria-label="Default select example" name="is_active">
             <option value="1" @if ($user->is_active)
               selected

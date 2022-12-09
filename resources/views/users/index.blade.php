@@ -22,6 +22,7 @@
             <th>Phone Number</th>
             <th>Role</th>
             <th>Status</th>
+            <th>Email Verified At</th>
             <th>Last Updated Time</th>
             <th>Action</th>
           </thead>
@@ -52,6 +53,13 @@
                 <span class="badge bg-success">Active</span>
                 @else
                 <span class="badge bg-danger">Inactive</span>
+                @endif
+              </td>
+              <td>
+                @if (!$user->email_verified_at)
+                <span class="badge bg-warning">Not Verified</span>
+                @else
+                {{ $user->email_verified_at }}
                 @endif
               </td>
               <td>{{ $user->updated_at }}</td>
