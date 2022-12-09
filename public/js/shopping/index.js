@@ -225,12 +225,11 @@ function purchase(dataSet) {
         icon: 'success',
         title: title
       }).then(function (result) {
+        window.open("/invoices/download/" + response.data.id, "_blank");
         window.location.href = "/shopping";
       });
     }
   }).fail(function (response) {
-    console.log(response);
-    var timerInterval = 2000;
     sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire({
       icon: 'failed',
       title: 'Purchasing failed. Something went wrong !'

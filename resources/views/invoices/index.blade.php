@@ -54,12 +54,9 @@
               <td>{{ $invoice->updated_at }}</td>
               <td>
                 <div class="d-grid gap-2 d-md-flex">
-                  <form action="{{ route('invoices.downloadInvoice', $invoice->id) }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-success">
-                      <i class="fa-solid fa-download"></i> Download
-                    </button>
-                  </form>
+                  <a href="{{ route('invoices.downloadInvoice', $invoice->id) }}" class="btn btn-success">
+                    <i class="fa-solid fa-download"></i> Download
+                  </a>
 
                   @if (!$invoice->is_paid_off)
                   <a href="{{ route('payments.createByInvoiceId', $invoice->id) }}" class="btn btn-primary">Add Payment</a>

@@ -31,6 +31,6 @@ class InvoiceController extends Controller
        
         $pdf = Pdf::loadView("PDF.invoice", $invoice);
         $pdf->set_paper("A5", 'landscape');
-        return $pdf->stream($invoice["invoice"]->code.".pdf");
+        return $pdf->download($invoice["invoice"]->code.".pdf");
     }
 }
