@@ -26,12 +26,11 @@ function purchase(dataSet){
         icon: 'success',
         title: title,
       }).then((result) => {
+        window.open("/invoices/stream/" + response.data.id, "_blank");
         window.location.href = `/shopping`;
       })
     }
   }).fail(function(response){
-    console.log(response);
-    let timerInterval = 2000;
     Swal.fire({
       icon: 'failed',
       title: 'Purchasing failed. Something went wrong !',

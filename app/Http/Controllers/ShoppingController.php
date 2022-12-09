@@ -22,7 +22,7 @@ class ShoppingController extends Controller
                 "status" => JsonResponse::HTTP_OK,
                 "message"=> "Purchasing successfully",
                 "error" => false,
-                "request" => $stored
+                "data" => $stored
             ]);
         }else{
             return response()->json([

@@ -19,6 +19,7 @@ use App\Http\Controllers\SearchRollController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\WhatsappMessagingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -79,6 +80,15 @@ Route::controller(VerificationController::class)
     });
 Route::middleware(["auth", "verified"])
     ->group(function (){
+
+        Route::controller(WhatsappMessagingController::class)
+            ->name("whatsapp.messaging.")
+            ->prefix("/whatsapp-messaging")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+                Route::post("/", "store")->name("store");
+            });
+
         Route::controller(SearchRollController::class)
             ->name("search-roll.")
             ->prefix("/search-roll")
@@ -166,6 +176,8 @@ Route::middleware(["auth", "verified"])
                 Route::post("/", "store")->name("store");
                 Route::get("/edit/{id}", "edit")->name("edit");
                 Route::patch("/{id}", "update")->name("update");
+                Route::get("/download/{qrcode}", "downloadQrcode")->name("downloadQrcode");
+                Route::post("/print", "printQrcode")->name("printQrcode");
             });
         
         Route::controller(RollTransactionController::class)
@@ -190,6 +202,7 @@ Route::middleware(["auth", "verified"])
             ->prefix("/invoices")
             ->group(function (){
                 Route::get("/", "index")->name("index");
+                Route::get("/{type}/{id}", "invoicPdf")->name("invoicPdf");
             });
 
         Route::controller(PaymentController::class)
