@@ -2,6 +2,10 @@
 namespace App\Http\Traits;
 
 trait WablasTrait{
+  public static function sendMessage(){
+    
+  }
+
 
   public static function sendTextTest(){
     $curl = curl_init();
@@ -14,7 +18,7 @@ trait WablasTrait{
     echo "<pre>";
     print_r($result);
   }
-  public static function sendText(array $data = [])
+  public static function sendText2(array $data = [])
   {
     $curl = curl_init();
     $token = env('WABLAS_SECURITY_TOKEN');
