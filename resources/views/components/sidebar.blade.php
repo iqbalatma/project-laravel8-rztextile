@@ -53,6 +53,12 @@
                     </div>
                     Invoices
                 </a>
+                <a class="nav-link" href="{{ route('reports.index') }}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-solid fa-file-lines"></i>
+                    </div>
+                    Reports
+                </a>
                 <a class="nav-link" href="{{ route('payments.index') }}">
                     <div class="sb-nav-link-icon">
                         <i class="fa-solid fa-money-check-dollar"></i>

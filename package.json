@@ -24,6 +24,7 @@
         "bootstrap": "^5.2.2",
         "chart.js": "^3.9.1",
         "jquery": "^3.6.1",
+        "jquery-ui": "^1.13.2",
         "sweetalert2": "^11.6.10"
     }
 }

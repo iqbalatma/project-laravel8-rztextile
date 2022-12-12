@@ -14,6 +14,7 @@ use App\Http\Controllers\RestockController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
 use App\Http\Controllers\RegistrationCredentialController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RollTransactionController;
 use App\Http\Controllers\SearchRollController;
 use App\Http\Controllers\ShoppingController;
@@ -37,8 +38,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-
 
 Route::middleware("guest")
     ->group(function (){
@@ -80,7 +79,14 @@ Route::controller(VerificationController::class)
     });
 Route::middleware(["auth", "verified"])
     ->group(function (){
-
+        
+        Route::controller(ReportController::class)
+            ->name("reports.")
+            ->prefix("/reports")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+                Route::post("/download", "download")->name("download");
+            });
         Route::controller(WhatsappMessagingController::class)
             ->name("whatsapp.messaging.")
             ->prefix("/whatsapp-messaging")

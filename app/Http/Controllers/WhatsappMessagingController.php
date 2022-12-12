@@ -18,8 +18,8 @@ class WhatsappMessagingController extends Controller
     {
         $curl = curl_init();
         $token = "bLxBueXyQcKoJbTR1L5HR7Q05AGORzumIpoXukfUhxjzm8LkbHmSDJLPQ0FVxhMm";
-        $phone = "6289678475252";
-        $message = "test-message-from-api-wablas";
+        $phone = "6282117416500";
+        $message = "test_chat_api_to_dito";
         curl_setopt($curl, CURLOPT_URL, "https://jogja.wablas.com/api/send-message?phone=$phone&message=$message&token=$token");
 
         $result = curl_exec($curl);

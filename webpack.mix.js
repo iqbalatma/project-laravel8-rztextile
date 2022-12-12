@@ -19,6 +19,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js("resources/js/application/shopping/index.js", "public/js/shopping")
     .js("resources/js/application/payments/create.js", "public/js/payments")
     .js("resources/js/application/units/index.js", "public/js/units")
+    .js("resources/js/application/reports/index.js", "public/js/reports")
     .js("resources/js/application/rolls/create.js", "public/js/rolls")
     .js("resources/js/application/rolls/index.js", "public/js/rolls")
     .sass('resources/sass/app.scss', 'public/css');
