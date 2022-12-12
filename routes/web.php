@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PromotionMessageController;
 use App\Http\Controllers\RestockController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
@@ -79,7 +80,14 @@ Route::controller(VerificationController::class)
     });
 Route::middleware(["auth", "verified"])
     ->group(function (){
-        
+        Route::controller(PromotionMessageController::class)
+            ->name("promotion.messages.")
+            ->prefix("/promotion-messages")
+            ->group(function (){
+                Route::get("/", "index")->name("index");
+                Route::get("/create", "create")->name("create");
+                Route::post("/", "store")->name("store");
+            });
         Route::controller(ReportController::class)
             ->name("reports.")
             ->prefix("/reports")
