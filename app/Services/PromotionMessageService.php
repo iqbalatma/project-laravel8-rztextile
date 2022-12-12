@@ -32,6 +32,17 @@ class PromotionMessageService{
       "cardTitle" => "Promotion Messages",
     ];
   }
+
+
+  /**
+   * Description : use to add new data 
+   * 
+   * @param array $requestedData
+   */
+  public function storeNewData(array $requestedData):?object
+  {
+    return (new PromotionMessageRepository())->addNewDataPromotionMessage($requestedData);
+  }
 }
 
 ?>

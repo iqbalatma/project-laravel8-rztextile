@@ -13,7 +13,7 @@
         </div>
         <div class="col-md-12">
           <label for="message" class="form-label">Message</label>
-          <input type="text" class="form-control" id="message" mes="message" placeholder="Enter message" required>
+          <x-forms.tinymce-editor />
         </div>
         <div class="col-12">
           <a href="{{ route('promotion.messages.index') }}" class="btn btn-danger">Cancel</a>
@@ -23,7 +23,8 @@
     </div>
   </div>
 
-  @section("custom-scripts")
-  <script src="{{ asset('js/rolls/create.js') }}"></script>
+
+  @section("custom-heads")
+  <x-head.tinymce-config />
   @endsection
 </x-app-layout>

@@ -12,8 +12,10 @@ class PromotionMessageRepository{
       ->paginate($perPage);
   }
 
-
-
+  public function addNewDataPromotionMessage(array $requestedData)
+  {
+    return PromotionMessage::create($requestedData);
+  }
 }
 
 ?>
