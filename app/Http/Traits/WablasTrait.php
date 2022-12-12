@@ -1,13 +1,36 @@
-<?php 
+<?php
+
 namespace App\Http\Traits;
 
-trait WablasTrait{
-  public static function sendMessage(){
-    
+use GuzzleHttp\Client;
+
+trait WablasTrait
+{
+  public static function sendMessage($payload)
+  {
+    $token = config("wablas.token");
+    $baseUrl = config("wablas.base_url");
+    $client = new Client([
+      "base_uri" => $baseUrl,
+      "timeout" => 5,
+      "headers" => [
+        "Authorization" => $token,
+        "Content-Type" => "application/json"
+      ],
+
+    ]);
+
+
+  
+
+    $response = $client->post("/api/v2/send-message",  ["body" => json_encode($payload)]);
+    echo $response->getBody();
+ 
   }
 
 
-  public static function sendTextTest(){
+  public static function sendTextTest()
+  {
     $curl = curl_init();
     $token = env('WABLAS_SECURITY_TOKEN');
     $phone = "6282117416500";
@@ -24,14 +47,14 @@ trait WablasTrait{
     $token = env('WABLAS_SECURITY_TOKEN');
     $payload = [
       "data" => $data
-    ];  
+    ];
 
     curl_setopt(
       $curl,
       CURLOPT_HTTPHEADER,
       array(
-          "Authorization: $token",
-          "Content-Type: application/json"
+        "Authorization: $token",
+        "Content-Type: application/json"
       )
     );
 
@@ -46,6 +69,3 @@ trait WablasTrait{
     print_r($result);
   }
 }
-
-
-?>
