@@ -25,13 +25,14 @@
             <tr>
               <td>{{ $promotionMessages->firstItem() + $key }}</td>
               <td>{{ $message->name }}</td>
-              <td>{{ $message->message }}</td>
+              <td>{!! $message->message !!}</td>
               <td>{{ $message->updated_at }}</td>
             </tr>
             @endforeach
-
           </tbody>
         </table>
+
+        {{ $promotionMessages->links() }}
       </div>
     </div>
   </div>
