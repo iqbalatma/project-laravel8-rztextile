@@ -6,8 +6,8 @@ trait WablasTrait{
   public static function sendTextTest(){
     $curl = curl_init();
     $token = env('WABLAS_SECURITY_TOKEN');
-    $phone = "6282121438835";
-    $message = "test get wa blas api";
+    $phone = "6282117416500";
+    $message = "chat_dito_api";
     curl_setopt($curl, CURLOPT_URL, "https://jogja.wablas.com/api/send-message?phone=$phone&message=$message&token=$token");
     $result = curl_exec($curl);
     curl_close($curl);

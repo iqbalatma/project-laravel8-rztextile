@@ -8,7 +8,7 @@ import Chart from "chart.js/auto"
 
 window.Swal = Swal;
 window.Chart = Chart;
-window.$ = jQuery;
+window.$ = window.jQuery = jQuery;
 
 
 
