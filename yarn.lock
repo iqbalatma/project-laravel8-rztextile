@@ -4915,6 +4915,11 @@
   dependencies:
     "setimmediate" "^1.0.4"
 
+"tinymce@^6.3.1":
+  "integrity" "sha512-+oCwXuTxAdJXVJ0130OxQz0JDNsqg3deuzgeUo8X5Vb27EzCJgXwO5eWvCxvkxpQo4oiHMVlM4tUIpTUHufHGQ=="
+  "resolved" "https://registry.npmjs.org/tinymce/-/tinymce-6.3.1.tgz"
+  "version" "6.3.1"
+
 "to-arraybuffer@^1.0.0":
   "integrity" "sha512-okFlQcoGTi4LQBG/PgSYblw9VOyptsz2KJZqc6qtgGdes8VktzUQkj4BI2blit072iS8VODNcMA+tvnS9dnuMA=="
   "resolved" "https://registry.npmjs.org/to-arraybuffer/-/to-arraybuffer-1.0.1.tgz"

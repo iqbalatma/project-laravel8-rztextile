@@ -9,6 +9,7 @@
 	<meta name="author" content="" />
 	<title>{{ $title }}</title>
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+	@yield("custom-heads")
 </head>
 
 <body class="sb-nav-fixed">
