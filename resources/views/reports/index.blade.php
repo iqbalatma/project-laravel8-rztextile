@@ -33,7 +33,7 @@
               </div>
             </div>
 
-            <div class="col-12 mx-2">
+            {{-- <div class="col-12 mx-2">
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" id="sales-report" name="sales_report">
                 <label class="form-check-label" for="sales-report">Sales Report</label>
@@ -50,7 +50,7 @@
                 <input class="form-check-input" type="checkbox" id="customer-report" name="customer_report">
                 <label class="form-check-label" for="customer-report">Customer Report</label>
               </div>
-            </div>
+            </div> --}}
 
 
             <div class="col-12">

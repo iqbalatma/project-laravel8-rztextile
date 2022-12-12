@@ -39,8 +39,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
 Route::middleware("guest")
     ->group(function (){
         Route::controller(RegistrationController::class)

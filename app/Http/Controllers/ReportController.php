@@ -28,8 +28,7 @@ class ReportController extends Controller
     public function download(ReportService $service, ReportDownloadRequest $request)
     {
         $data = $service->downloadReport($request->validated());
-        // dd($data);
         $pdf = Pdf::loadView("PDF.report", $data);
-        return $pdf->stream();
+        return $pdf->download();
     }
 }
