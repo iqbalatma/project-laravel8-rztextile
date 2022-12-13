@@ -1,5 +1,14 @@
 $(document).ready(function () {
-    $("#promotion").on("change", function () {
+  function escape(htmlStr) {
+    return htmlStr.replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");        
+ 
+ }  
+  
+  $("#promotion").on("change", function () {
         const promotionId = $(this).val();
 
           $.ajax({
@@ -7,10 +16,9 @@ $(document).ready(function () {
             url : `/ajax/promotion-messages/${promotionId}`
           })
             .done(function (response) {
-              console.log(response);
+              $("#message").html((response.data.message));
             })
             .fail();
 
-        $("#message").text(promotionId);
     });
 });

@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\AppData;
 use App\Http\Traits\WablasTrait;
+use App\Repositories\CustomerRepository;
 use App\Repositories\PromotionMessageRepository;
 
 class WhatsappMessagingService{
@@ -16,6 +17,7 @@ class WhatsappMessagingService{
     return [
       "title" => "Whatsapp Messaging",
       "cardTitle" => "Whatsapp Messaging",
+      "customers" =>(new CustomerRepository())->getAllDataCustomer(),
       "promotionMessages" => (new PromotionMessageRepository())->getAllDataPromotionMessage(self::GET_ALL_PROMOTION_MESSAGE_COLUMN)
     ];
   }
@@ -34,4 +36,3 @@ class WhatsappMessagingService{
     WablasTrait::sendTextTest();
   }
 }
-?>
