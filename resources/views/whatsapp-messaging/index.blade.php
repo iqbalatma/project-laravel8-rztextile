@@ -13,9 +13,9 @@
             <input type="text" class="form-control" id="phone" name="phone" aria-describedby="emailHelp">
           </div>
           <div class="mb-3">
-            <label for="message" class="form-label">Promotion Message Name</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Open this select menu</option>
+            <label for="promotion" class="form-label">Promotion Message Name</label>
+            <select class="form-select" id="promotion" aria-label="Default select example">
+              <option selected disabled>Open this select menu</option>
               @foreach ($promotionMessages as $promotion)
               <option value="{{ $promotion->id }}">{{ $promotion->name }}</option>
               @endforeach
@@ -32,5 +32,8 @@
   </div>
 
 
+  @section("custom-scripts")
+  <script src="{{ asset('js/whatsapp-messaging/index.js') }}"></script>
+  @endsection
 
 </x-app-layout>
