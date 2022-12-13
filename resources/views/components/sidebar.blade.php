@@ -77,6 +77,12 @@
                     </div>
                     Whatsapp Messaging
                 </a>
+                <a class="nav-link" href="{{ route('promotion.messages.index') }}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-solid fa-tags"></i>
+                    </div>
+                    Promotion Messages
+                </a>
                 <a class="nav-link" href="{{ route('roll.transactions.index') }}">
                     <div class="sb-nav-link-icon">
                         <i class="fa-solid fa-right-left"></i>
