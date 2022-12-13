@@ -15,6 +15,7 @@ class AppData {
 
   public const TABLE_ROLL = "rolls";
   public const TABLE_USER = "users";
+  public const TABLE_PROMOTION_MESSAGE = "promotion_messages";
 
 }
 

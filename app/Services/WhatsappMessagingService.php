@@ -1,14 +1,22 @@
 <?php 
 namespace App\Services;
 
+use App\AppData;
 use App\Http\Traits\WablasTrait;
+use App\Repositories\PromotionMessageRepository;
 
 class WhatsappMessagingService{
+  private const GET_ALL_PROMOTION_MESSAGE_COLUMN = [
+    AppData::TABLE_PROMOTION_MESSAGE.".id",
+    AppData::TABLE_PROMOTION_MESSAGE.".name",
+  ];
+
   public function getAllData():array
   {
     return [
       "title" => "Whatsapp Messaging",
-      "cardTitle" => "Whatsapp Messaging"
+      "cardTitle" => "Whatsapp Messaging",
+      "promotionMessages" => (new PromotionMessageRepository())->getAllDataPromotionMessage(self::GET_ALL_PROMOTION_MESSAGE_COLUMN)
     ];
   }
 

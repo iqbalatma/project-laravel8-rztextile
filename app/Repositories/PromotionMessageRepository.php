@@ -12,6 +12,11 @@ class PromotionMessageRepository{
       ->paginate($perPage);
   }
 
+  public function getAllDataPromotionMessage(array $columns = ["*"]):?object
+  {
+    return PromotionMessage::select($columns)->get();
+  }
+
   public function addNewDataPromotionMessage(array $requestedData)
   {
     return PromotionMessage::create($requestedData);

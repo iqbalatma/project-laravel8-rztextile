@@ -13,6 +13,15 @@
             <input type="text" class="form-control" id="phone" name="phone" aria-describedby="emailHelp">
           </div>
           <div class="mb-3">
+            <label for="message" class="form-label">Promotion Message Name</label>
+            <select class="form-select" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              @foreach ($promotionMessages as $promotion)
+              <option value="{{ $promotion->id }}">{{ $promotion->name }}</option>
+              @endforeach
+            </select>
+          </div>
+          <div class="mb-3">
             <label for="message" class="form-label">Message</label>
             <textarea class="form-control" id="message" name="message" rows="3"></textarea>
           </div>
