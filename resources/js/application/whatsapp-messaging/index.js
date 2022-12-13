@@ -17,6 +17,7 @@ $(document).ready(function () {
           })
             .done(function (response) {
               $("#message").html((response.data.message));
+              $("#message-input").val((response.data.message));
             })
             .fail();
 

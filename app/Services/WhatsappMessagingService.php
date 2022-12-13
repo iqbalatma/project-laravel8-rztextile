@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace App\Services;
 
 use App\AppData;
@@ -6,33 +7,48 @@ use App\Http\Traits\WablasTrait;
 use App\Repositories\CustomerRepository;
 use App\Repositories\PromotionMessageRepository;
 
-class WhatsappMessagingService{
+class WhatsappMessagingService
+{
   private const GET_ALL_PROMOTION_MESSAGE_COLUMN = [
-    AppData::TABLE_PROMOTION_MESSAGE.".id",
-    AppData::TABLE_PROMOTION_MESSAGE.".name",
+    AppData::TABLE_PROMOTION_MESSAGE . ".id",
+    AppData::TABLE_PROMOTION_MESSAGE . ".name",
   ];
 
-  public function getAllData():array
+  private const GET_CUSTOMER_BY_IDS_COLUMN = [
+    AppData::TABLE_USER . ".phone",
+  ];
+
+  public function getAllData(): array
   {
     return [
       "title" => "Whatsapp Messaging",
       "cardTitle" => "Whatsapp Messaging",
-      "customers" =>(new CustomerRepository())->getAllDataCustomer(),
+      "customers" => (new CustomerRepository())->getAllDataCustomer(),
       "promotionMessages" => (new PromotionMessageRepository())->getAllDataPromotionMessage(self::GET_ALL_PROMOTION_MESSAGE_COLUMN)
     ];
   }
 
   public function sendMessage(array $requestedData)
   {
-    // $dataset = [];
-    // $data['phone'] = $requestedData['phone'];
-    // $data['message'] = $requestedData['message'];
-    // $data['secret'] = false;
-    // $data['retry'] = false;
-    // $data['isGroup'] = false;
-    // array_push($dataset, $data);
+    $payloads = $this->getDataPayload($requestedData);
+    return WablasTrait::sendMessage($payloads);
+  }
 
-    dd("tes");
-    WablasTrait::sendTextTest();
+  private function getDataPayload(array $requestedData): array
+  {
+    $customers = (new CustomerRepository())->getCustomerByIds($requestedData["customer"], self::GET_CUSTOMER_BY_IDS_COLUMN);
+
+    $message = preg_replace('/<strong>|<\/strong>/', '*', $requestedData["message"]);
+    $message = preg_replace('/&nbsp;/', '', $message);
+    $message = preg_replace('/<em>|<\/em>/', '_', $message);
+    $message = preg_replace('/<p>|<\/p>/', '', $message);
+    $payload = collect($customers)->map(function ($item) use ($message) {
+
+      return [
+        "phone" => preg_replace('/[^0-9]/', '', $item->phone),
+        "message" => $message
+      ];
+    })->toArray();
+    return ["data" => $payload];
   }
 }

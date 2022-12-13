@@ -13,6 +13,7 @@
         </div>
         <div class="col-md-12">
           <label for="message" class="form-label">Message</label>
+          {{-- <textarea class="form-control" id="message" name="message" rows="3"></textarea> --}}
           <x-forms.tinymce-editor />
         </div>
         <div class="col-12">

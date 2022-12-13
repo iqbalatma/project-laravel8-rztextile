@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\WhatsappMessaging\WhatsappMessagingStoreRequest;
 use App\Services\WhatsappMessagingService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,18 +15,18 @@ class WhatsappMessagingController extends Controller
     return response()->view("whatsapp-messaging.index", $service->getAllData());
   }
 
-  public function store(WhatsappMessagingService $service, Request $request)
+  public function store(WhatsappMessagingService $service, WhatsappMessagingStoreRequest $request)
   {
 
-    // $payload =  [
-    //     "data" => [
-    //       [
-    //         "phone" => "6282121438835",
-    //         "message" => "test send \n ini adalah pesan dengan line break"
-    //       ],
-    //     ]
-    //   ];
+    $sent = $service->sendMessage($request->validated());
 
-    // WablasTrait::sendMessage($payload);
+    $redirect = redirect()
+      ->route("whatsapp.messaging.index");
+
+    $sent ?
+      $redirect->with("success", "Send whatsapp message successfully") :
+      $redirect->with("failed", "Send whatsapp message failed");
+
+    return $redirect;
   }
 }

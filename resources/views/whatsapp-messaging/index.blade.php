@@ -59,6 +59,7 @@
             <label for="message" class="form-label">Message</label>
             <div class="card">
               <div class="card-body">
+                <input type="hidden" name="message" id="message-input">
                 <div id="message"></div>
               </div>
             </div>

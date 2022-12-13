@@ -14,6 +14,7 @@ $(document).ready(function () {
       url: "/ajax/promotion-messages/".concat(promotionId)
     }).done(function (response) {
       $("#message").html(response.data.message);
+      $("#message-input").val(response.data.message);
     }).fail();
   });
 });

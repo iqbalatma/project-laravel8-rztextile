@@ -1,8 +1,15 @@
 <script src="{{ asset('js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
 <script>
-    tinymce.init({
+  tinymce.init({
     selector: 'textarea#myeditorinstance', // Replace this CSS selector to match the placeholder element for TinyMCE
-    plugins: 'code table lists',
-    toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table'
+    toolbar: 'undo redo  | bold italic',
+    menubar: false,
+    forced_root_block : false,
+    setup: function (ed) {
+    ed.on('keydown',function(e) {
+        if(e.keyCode == 13){
+        }
+    });
+  }
   });
 </script>
