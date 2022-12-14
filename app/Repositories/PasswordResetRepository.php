@@ -1,17 +1,20 @@
-<?php 
+<?php
 namespace App\Repositories;
 
 use App\Models\PasswordReset;
+use Illuminate\Support\Facades\DB;
 
-class PasswordResetRepository{
-  public function addNewDataPasswordReset(array $requestedData):?object
+class PasswordResetRepository
+{
+  public function addNewDataPasswordReset(array $requestedData)
   {
-    return PasswordReset::create($requestedData);
+    DB::table("password_resets")->insert($requestedData);
+    return DB::table("password_resets")->where("email", $requestedData["email"])->first();
   }
 
   public function deleteDataPasswordResetByEmail(string $email)
   {
-    return PasswordReset::where("email", $email)->delete();
+    return DB::table('password_resets')->where("email", $email)->delete();
   }
 
   public function getDataPasswordResetByEmailToken(array $whereClause)

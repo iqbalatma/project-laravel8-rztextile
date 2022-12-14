@@ -12,6 +12,7 @@ class ResetPasswordMail extends Mailable
     use Queueable, SerializesModels;
 
     public $url;
+    public $email;
     /**
      * Create a new message instance.
      *
@@ -21,8 +22,9 @@ class ResetPasswordMail extends Mailable
     {
         $this->url = route("forgot.password.reset", [
             "token" => $reset->token,
-            "email"=>$reset->email
+            "email" => $reset->email
         ]);
+        $this->email = $reset->email;
     }
 
     /**
