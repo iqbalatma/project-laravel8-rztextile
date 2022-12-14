@@ -1,21 +1,19 @@
-<?php 
+<?php
 namespace App\Services;
 
-use App\Mail\OrderShipped;
-use App\Notifications\WelcomeEmailNotification;
+use App\Jobs\SendVerificationEmailJob;
 use App\Repositories\UserRepository;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 
-class RegistrationService{
+class RegistrationService
+{
 
   /**
    * Description : use to get all data for index controller
    * 
    * @return array
    */
-  public function getAllData():array
+  public function getAllData(): array
   {
     return [
       "title" => "Registration",
@@ -32,7 +30,7 @@ class RegistrationService{
   {
     $role_id = (new RegistrationCredentialService())->checkIsCredentialValid($requestedData["registration_credential"]);
 
-    if(!$role_id){
+    if (!$role_id) {
       return false;
     }
 
@@ -40,7 +38,7 @@ class RegistrationService{
     $requestedData["password"] = Hash::make($requestedData["password"]);
     $user = (new UserRepository())->addNewDataUser($requestedData);
 
-    event(new Registered($user));
+    dispatch(new SendVerificationEmailJob($user));
     auth()->login($user);
 
     return $user;

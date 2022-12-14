@@ -67,10 +67,7 @@ class ForgotPasswordService
 
             $reset = $passwordRepository->addNewDataPasswordReset($resetData);
 
-            // Mail::to($reset->email)->send(new ResetPasswordMail($reset));
-
             dispatch(new SendForgotPasswordMailJob($reset));
-
             DB::commit();
         } catch (Exception $e) {
             dd($e);
