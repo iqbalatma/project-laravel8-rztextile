@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Customers\CustomerStoreRequest;
 use App\Http\Requests\Customers\CustomerUpdateRequest;
 use App\Services\CustomerService;
+use App\Services\RFMService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
@@ -19,6 +20,7 @@ class CustomerController extends Controller
      */
     public function index(CustomerService $service): Response
     {
+        (new RFMService())->getRFM();
         return response()->view("customers.index", $service->getAllData());
     }
 
@@ -48,8 +50,8 @@ class CustomerController extends Controller
             ->route("customers.index");
 
         $stored ?
-        $redirect->with("success", "Add new data customer successfully") :
-        $redirect->with("failed", "Add new data customer failed");
+            $redirect->with("success", "Add new data customer successfully") :
+            $redirect->with("failed", "Add new data customer failed");
 
         return $redirect;
     }
@@ -82,8 +84,8 @@ class CustomerController extends Controller
             ->route("customers.index");
 
         $updated ?
-        $redirect->with("success", "Update data customer successfully") :
-        $redirect->with("failed", "Update data customer failed");
+            $redirect->with("success", "Update data customer successfully") :
+            $redirect->with("failed", "Update data customer failed");
 
         return $redirect;
     }
@@ -103,8 +105,8 @@ class CustomerController extends Controller
             ->route("customers.index");
 
         $deleted ?
-        $redirect->with("success", "Delete data customer successfully") :
-        $redirect->with("failed", "Delete data customer failed");
+            $redirect->with("success", "Delete data customer successfully") :
+            $redirect->with("failed", "Delete data customer failed");
 
         return $redirect;
     }
