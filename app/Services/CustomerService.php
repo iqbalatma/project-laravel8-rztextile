@@ -24,7 +24,9 @@ class CustomerService
      */
     public function getAllData(): array
     {
-        $customer = (new CustomerRepository())->getAllDataCustomerPaginated(self::ALL_CUSTOMER_SELECT_COLUMN);
+        $customer = (new RFMService())->getRFM();
+
+        // dd($customer);
         return [
             "title"     => "Customer",
             "cardTitle" => "Customers",

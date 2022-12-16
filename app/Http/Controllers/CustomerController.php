@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Customers\CustomerStoreRequest;
 use App\Http\Requests\Customers\CustomerUpdateRequest;
 use App\Services\CustomerService;
-use App\Services\RFMService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
@@ -20,7 +19,6 @@ class CustomerController extends Controller
      */
     public function index(CustomerService $service): Response
     {
-        (new RFMService())->getRFM();
         return response()->view("customers.index", $service->getAllData());
     }
 
