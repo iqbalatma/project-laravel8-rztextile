@@ -21,15 +21,15 @@ class AuthService
   }
 
 
-
   public function authenticate(array $requestedData): bool
   {
     $rememberme = false;
-    if(isset($requestedData["rememberme"])){
+    if (isset($requestedData["rememberme"])) {
       $rememberme = $requestedData["rememberme"];
 
       unset($requestedData["rememberme"]);
     }
+    $requestedData["is_active"] = true;
     if (Auth::attempt($requestedData, $rememberme)) {
       return true;
     }

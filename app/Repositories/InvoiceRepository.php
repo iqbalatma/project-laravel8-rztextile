@@ -146,6 +146,11 @@ class InvoiceRepository{
       ->groupBy("date")
       ->get();
   }
+
+  public function getDataInvoiceReport(array $period = [])
+  {
+    return Invoice::whereBetween("created_at", $period)->get();
+  }
 }
 
 ?>

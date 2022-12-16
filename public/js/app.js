@@ -9848,7 +9848,7 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 window.Swal = (sweetalert2__WEBPACK_IMPORTED_MODULE_3___default());
 window.Chart = chart_js_auto__WEBPACK_IMPORTED_MODULE_5__["default"];
-window.$ = (jquery__WEBPACK_IMPORTED_MODULE_1___default());
+window.$ = window.jQuery = (jquery__WEBPACK_IMPORTED_MODULE_1___default());
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

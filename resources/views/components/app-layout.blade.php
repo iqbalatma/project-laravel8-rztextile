@@ -9,6 +9,7 @@
 	<meta name="author" content="" />
 	<title>{{ $title }}</title>
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+	@yield("custom-heads")
 </head>
 
 <body class="sb-nav-fixed">
@@ -33,9 +34,7 @@
 	</div>
 	<script src="{{ asset('js/app.js') }}"></script>
 	<script src="{{ asset('js/app-layout.js') }}"></script>
-
 	@yield("custom-scripts")
-
 </body>
 
 </html>

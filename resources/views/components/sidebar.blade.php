@@ -53,6 +53,12 @@
                     </div>
                     Invoices
                 </a>
+                <a class="nav-link" href="{{ route('reports.index') }}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-solid fa-file-lines"></i>
+                    </div>
+                    Reports
+                </a>
                 <a class="nav-link" href="{{ route('payments.index') }}">
                     <div class="sb-nav-link-icon">
                         <i class="fa-solid fa-money-check-dollar"></i>
@@ -70,6 +76,12 @@
                         <i class="fa-solid fa-comments"></i>
                     </div>
                     Whatsapp Messaging
+                </a>
+                <a class="nav-link" href="{{ route('promotion.messages.index') }}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-solid fa-tags"></i>
+                    </div>
+                    Promotion Messages
                 </a>
                 <a class="nav-link" href="{{ route('roll.transactions.index') }}">
                     <div class="sb-nav-link-icon">
