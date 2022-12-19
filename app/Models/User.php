@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, HasFactory;
     /**
      * The attributes that are mass assignable.
      *
@@ -49,5 +50,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function invoiceCustomer()
+    {
+        return $this->hasMany(Invoice::class, "customer_id", "id");
+    }
+
+    public function latestInvoiceCustomer()
+    {
+        return $this->hasOne(Invoice::class, "customer_id", "id")->latest();
     }
 }
