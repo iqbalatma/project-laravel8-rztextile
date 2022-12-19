@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Auth;
 
 class UserRepository
 {
+    private User $model;
+    public function __construct()
+    {
+        $this->model = new User();
+    }
 
     public function getAllDataUserPaginated(array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE): ?object
     {
@@ -40,6 +45,16 @@ class UserRepository
     public function updateDataUserByEmail(string $email, array $requestedData)
     {
         return User::where("email", $email)->update($requestedData);
+    }
+
+    public function deleteDataUserById(int $id)
+    {
+        return $this->model->destroy($id);
+    }
+
+    public function suspendUserById(int $id)
+    {
+        return $this->model->where("id", $id)->update(["is_active" => false]);
     }
 }
 

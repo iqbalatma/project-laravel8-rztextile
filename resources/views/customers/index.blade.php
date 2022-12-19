@@ -31,21 +31,21 @@
                         <tr>
                             {{-- <td>{{ $customers->firstItem()+$key }}</td> --}}
                             <td>{{ $key+1 }}</td>
-                            <td>{{ $customer->customer->id_number }}</td>
-                            <td>{{ $customer->customer->name }}</td>
-                            <td>{{ $customer->customer->phone }}</td>
-                            <td>{{ $customer->customer->address }}</td>
-                            <td>{{ $customer->total_invoices }}</td>
+                            <td>{{ $customer->customer->id_number ?? "-" }}</td>
+                            <td>{{ $customer->customer->name  ?? "-"}}</td>
+                            <td>{{ $customer->customer->phone ?? "-" }}</td>
+                            <td>{{ $customer->customer->address ?? "-"}}</td>
+                            <td>{{ $customer->total_invoices ?? "-" }}</td>
                             <td>{{ formatToRupiah($customer->total_bill) }}</td>
                             <td>{{ $customer->recency . " hari" }}</td>
                             <td>{{ $customer->total_rfm }}</td>
-                            <td>{{ $customer->customer->updated_at }}</td>
+                            <td>{{ $customer->customer->updated_at ?? "-" }}</td>
                             <td class="text-center">
                                 <form action="{{ route('customers.destroy', $customer->customer->id) }}" method="POST">
                                     @csrf
                                     @method("DELETE")
                                     <div class="d-grid gap-2 d-md-flex">
-                                        <a href="{{ route('customers.edit', $customer->customer->id) }}" class="btn btn-success">
+                                        <a href="{{ route('customers.edit', $customer->customer->id ) }}" class="btn btn-success">
                                             <i data-feather="edit"></i> Edit
                                         </a>
                                         <a class="btn btn-danger btn-delete">
