@@ -29,8 +29,9 @@ class UnitService
     public function getCreateData(): array
     {
         return [
-            "title"     => "Unit",
-            "cardTitle" => "Units",
+            "title"       => "Unit",
+            "description" => "Form for add new data unit",
+            "cardTitle"   => "Units",
         ];
     }
 
@@ -44,9 +45,10 @@ class UnitService
     {
         $unit = (new UnitRepository())->getDataUnitById($id);
         return [
-            "title"     => "Edit Unit",
-            "cardTitle" => "Edit Unit",
-            "unit"      => $unit
+            "title"       => "Edit Unit",
+            "description" => "Form for edit data unit",
+            "cardTitle"   => "Edit Unit",
+            "unit"        => $unit
         ];
     }
 
