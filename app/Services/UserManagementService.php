@@ -83,6 +83,16 @@ class UserManagementService
     {
         return (new UserRepository())->updateDataUserById($id, $requestedData);
     }
+
+    /**
+     * Delete data user by id
+     * @param int $id
+     * @return bool
+     */
+    public function suspendUserById(int $id): bool
+    {
+        return (new UserRepository())->suspendUserById($id);
+    }
 }
 
 ?>
