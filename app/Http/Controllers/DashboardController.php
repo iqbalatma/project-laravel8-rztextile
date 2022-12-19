@@ -7,7 +7,12 @@ use Illuminate\Http\Response;
 
 class DashboardController extends Controller
 {
-    public function index(DashboardService $service):Response
+    /**
+     * Show dashboard summary for transaction and finance
+     * @param DashboardService $service
+     * @return Response
+     */
+    public function index(DashboardService $service): Response
     {
         return response()->view("dashboard.index", $service->getAllData());
     }
