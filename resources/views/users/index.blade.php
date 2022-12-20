@@ -1,4 +1,4 @@
-<x-app-layout :title="$title">
+<x-app-layout title="{{ $title }}" description="{{ $description }}">
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-users-gear"></i>
@@ -74,7 +74,7 @@
                                     <form action="{{ route('users.suspend', $user->id) }}" method="POST">
                                         @csrf
                                         @method("DELETE")
-                                        <button type="submit" class="btn btn-sm btn-danger btn-delete">
+                                        <button type="submit" class="btn btn-sm btn-warning btn-delete">
                                             <i class="fa-solid fa-x"></i>
                                         </button>
                                     </form>

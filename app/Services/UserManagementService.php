@@ -18,9 +18,10 @@ class UserManagementService
     public function getAllData(): array
     {
         return [
-            "title"     => "User Management",
-            "cardTitle" => "User Management",
-            "users"     => (new UserRepository())->getAllDataUserPaginated()
+            "title"       => "User Management",
+            "description" => "Data user of this application",
+            "cardTitle"   => "User Management",
+            "users"       => (new UserRepository())->getAllDataUserPaginated()
         ];
     }
 
@@ -33,9 +34,10 @@ class UserManagementService
     public function getCreateData(): array
     {
         return [
-            "title"     => "User Management",
-            "cardTitle" => "Add New User",
-            "roles"     => (new RoleRepository())->getAllDataRole()->except([AppData::ROLE_ID_CUSTOMER, AppData::ROLE_ID_SUPERADMIN])
+            "title"       => "User Management",
+            "description" => "Form for add new data user",
+            "cardTitle"   => "Add New User",
+            "roles"       => (new RoleRepository())->getAllDataRole()->except([AppData::ROLE_ID_CUSTOMER, AppData::ROLE_ID_SUPERADMIN])
         ];
     }
 
@@ -49,10 +51,11 @@ class UserManagementService
     public function getEditData(int $id): array
     {
         return [
-            "title"     => "User Management",
-            "cardTitle" => "Edit User",
-            "roles"     => (new RoleRepository())->getAllDataRole(),
-            "user"      => (new UserRepository())->getDataUserById($id)
+            "title"       => "User Management",
+            "description" => "Form for edit data user",
+            "cardTitle"   => "Edit User",
+            "roles"       => (new RoleRepository())->getAllDataRole(),
+            "user"        => (new UserRepository())->getDataUserById($id)
         ];
     }
 
