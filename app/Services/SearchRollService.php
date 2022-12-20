@@ -14,9 +14,10 @@ class SearchRollService
     public function getAllData()
     {
         return [
-            "title"     => "Search Roll",
-            "cardTitle" => "Search Roll",
-            "rolls"     => (new RollRepository())->getAllDataRoll()
+            "title"       => "Search Roll",
+            "description" => "Form search roll",
+            "cardTitle"   => "Search Roll",
+            "rolls"       => (new RollRepository())->getAllDataRoll()
         ];
     }
 }
