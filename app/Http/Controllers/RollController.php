@@ -11,11 +11,12 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+
 class RollController extends Controller
 {
     /**
      * Description : use to show all data rolls
-     * 
+     *
      * @param RollService $service dependency injection
      * @return Response
      */
@@ -27,7 +28,7 @@ class RollController extends Controller
 
     /**
      * Description : use to show form for add new roll
-     * 
+     *
      * @param RollService $service dependency injection
      * @return Response
      */
@@ -39,11 +40,11 @@ class RollController extends Controller
 
     /**
      * Description : use to show form for edit roll
-     * 
+     *
      * @param RollService $service dependency injection
      * @return Response
      */
-    public function edit(RollService $service, int $id):Response
+    public function edit(RollService $service, int $id): Response
     {
         return response()->view("rolls.edit", $service->getEditData($id));
     }
@@ -51,17 +52,17 @@ class RollController extends Controller
 
     /**
      * Description : use to update data roll
-     * 
+     *
      * @param RollService $service
      */
-    public function update(RollService $service, RollUpdateRequest $request,int $id)
+    public function update(RollService $service, RollUpdateRequest $request, int $id)
     {
         $updated = $service->updateData($id, $request->validated());
         $redirect = redirect()
             ->route("rolls.index");
-            
-        $updated?
-            $redirect->with("success", "Update data roll successfully"):
+
+        $updated ?
+            $redirect->with("success", "Update data roll successfully") :
             $redirect->with("failed", "Update data roll failed");
 
         return $redirect;
@@ -70,7 +71,7 @@ class RollController extends Controller
 
     /**
      * Description : use to add new roll data
-     * 
+     *
      * @param RollService $service dependency injection
      * @return RedirectResponse
      */
@@ -90,11 +91,11 @@ class RollController extends Controller
 
     /**
      * Description : use to download qrcode file
-     * 
+     *
      * @param string $qrcode
      * @return
      */
-    public function downloadQrcode(string $qrcode):StreamedResponse
+    public function downloadQrcode(string $qrcode): StreamedResponse
     {
         $headers = ['Content-Type: image/jpeg'];
         return Storage::download("public/images/qrcode/$qrcode", "qrcode.png", $headers);
@@ -102,12 +103,12 @@ class RollController extends Controller
 
     public function printQrcode(RollService $service, RollPrintRequest $request)
     {
-      
+
         $data = [
             "copies" => $request->only("copies")["copies"]
         ];
         $pdf = Pdf::loadView("PDF/qrcode", $data);
-        $customPaper = array(0,0,302,302);
+        $customPaper = array(0, 0, 302, 302);
         $pdf->set_paper($customPaper);
         return $pdf->stream("itsolutionstuff.pdf");
     }
