@@ -38,9 +38,9 @@ class RFMService
         $maxF = $customer->max("total_invoices");
         $maxM = $customer->max("total_bill");
 
-        $recencyPoint = $this->getRFMPoint($maxR);
-        $frequencyPoint = $this->getRFMPoint($maxF);
-        $moneteryPoint = $this->getRFMPoint($maxM);
+        $recencyPoint = $this->getRangePoint($maxR);
+        $frequencyPoint = $this->getRangePoint($maxF);
+        $moneteryPoint = $this->getRangePoint($maxM);
 
         $customer = $customer->map(function ($item) use ($recencyPoint, $frequencyPoint, $moneteryPoint) {
             $item["total_rfm"] = 0;
@@ -62,17 +62,31 @@ class RFMService
             return $item;
         });
 
-        return $customer;
+        $maxRFM = $customer->max("total_rfm");
+        $rfmPoint = $this->getRangePoint($maxRFM, 4);
+        $maping = ["bz", "m", "mgc", "mvc"];
+        $customerDistribution = ["bz"  => [], "m"   => [], "mgc" => [], "mvc" => []];
+
+        foreach ($customer as $key => $value) {
+            foreach ($rfmPoint as $subKey => $subValue) {
+                if ($value["total_rfm"] > $subValue["lower_threshold"] && $value["total_rfm"] <= $subValue["upper_threshold"]) {
+                    array_push($customerDistribution[$maping[$subKey]], $value);
+                }
+            }
+        }
+
+
+        return $customerDistribution;
     }
 
-    private function getRFMPoint($maxRFM): array
+    private function getRangePoint(int $maxValue, int $divider = 5): array
     {
-        $rfmPoint = [];
+        $rangePoint = [];
 
         for ($i = 1; $i <= 5; $i++) {
-            array_push($rfmPoint, ["lower_threshold" => $maxRFM / 5 * ($i - 1), "upper_threshold" => $maxRFM / 5 * $i]);
+            array_push($rangePoint, ["lower_threshold" => $maxValue / $divider * ($i - 1), "upper_threshold" => $maxValue / $divider * $i]);
         }
-        return $rfmPoint;
+        return $rangePoint;
     }
 
 }

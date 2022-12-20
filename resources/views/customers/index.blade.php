@@ -1,8 +1,9 @@
 <x-app-layout title="{{ $title }}" description="{{ $description }}">
+
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-users-between-lines"></i>
-            {{ $cardTitle }}
+            {{ $cardTitleMVC }}
         </div>
         <div class="card-body">
             <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
@@ -27,7 +28,181 @@
                         <th class="text-center">Action</th>
                     </thead>
                     <tbody>
-                        @foreach ($customers as $key => $customer)
+                        @foreach ($customers["mvc"] as $key => $customer)
+                        <tr>
+                            {{-- <td>{{ $customers->firstItem()+$key }}</td> --}}
+                            <td>{{ $key+1 }}</td>
+                            <td>{{ $customer->customer->id_number ?? "-" }}</td>
+                            <td>{{ $customer->customer->name  ?? "-"}}</td>
+                            <td>{{ $customer->customer->phone ?? "-" }}</td>
+                            <td>{{ $customer->customer->address ?? "-"}}</td>
+                            <td>{{ $customer->total_invoices ?? "-" }}</td>
+                            <td>{{ formatToRupiah($customer->total_bill) }}</td>
+                            <td>{{ $customer->recency . " hari" }}</td>
+                            <td>{{ $customer->total_rfm }}</td>
+                            <td>{{ $customer->customer->updated_at ?? "-" }}</td>
+                            <td class="text-center">
+                                <form action="{{ route('customers.destroy', $customer->customer->id) }}" method="POST">
+                                    @csrf
+                                    @method("DELETE")
+                                    <div class="d-grid gap-2 d-md-flex">
+                                        <a href="{{ route('customers.edit', $customer->customer->id ) }}" class="btn btn-success">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-delete">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </a>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                {{-- {{ $customers->links() }} --}}
+            </div>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fa-solid fa-users-between-lines"></i>
+            {{ $cardTitleMGC }}
+        </div>
+        <div class="card-body">
+            <div class="table-responsive mt-4">
+                <table class="table align-middle">
+                    <thead>
+                        <th>No</th>
+                        <th>Id Number</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Total Invoice</th>
+                        <th>Total Bill</th>
+                        <th>Total Recency</th>
+                        <th>RFM Point</th>
+                        <th>Last Updated Time</th>
+                        <th class="text-center">Action</th>
+                    </thead>
+                    <tbody>
+                        @foreach ($customers["mgc"] as $key => $customer)
+                        <tr>
+                            {{-- <td>{{ $customers->firstItem()+$key }}</td> --}}
+                            <td>{{ $key+1 }}</td>
+                            <td>{{ $customer->customer->id_number ?? "-" }}</td>
+                            <td>{{ $customer->customer->name  ?? "-"}}</td>
+                            <td>{{ $customer->customer->phone ?? "-" }}</td>
+                            <td>{{ $customer->customer->address ?? "-"}}</td>
+                            <td>{{ $customer->total_invoices ?? "-" }}</td>
+                            <td>{{ formatToRupiah($customer->total_bill) }}</td>
+                            <td>{{ $customer->recency . " hari" }}</td>
+                            <td>{{ $customer->total_rfm }}</td>
+                            <td>{{ $customer->customer->updated_at ?? "-" }}</td>
+                            <td class="text-center">
+                                <form action="{{ route('customers.destroy', $customer->customer->id) }}" method="POST">
+                                    @csrf
+                                    @method("DELETE")
+                                    <div class="d-grid gap-2 d-md-flex">
+                                        <a href="{{ route('customers.edit', $customer->customer->id ) }}" class="btn btn-success">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-delete">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </a>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                {{-- {{ $customers->links() }} --}}
+            </div>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fa-solid fa-users-between-lines"></i>
+            {{ $cardTitleM }}
+        </div>
+        <div class="card-body">
+            <div class="table-responsive mt-4">
+                <table class="table align-middle">
+                    <thead>
+                        <th>No</th>
+                        <th>Id Number</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Total Invoice</th>
+                        <th>Total Bill</th>
+                        <th>Total Recency</th>
+                        <th>RFM Point</th>
+                        <th>Last Updated Time</th>
+                        <th class="text-center">Action</th>
+                    </thead>
+                    <tbody>
+                        @foreach ($customers["m"] as $key => $customer)
+                        <tr>
+                            {{-- <td>{{ $customers->firstItem()+$key }}</td> --}}
+                            <td>{{ $key+1 }}</td>
+                            <td>{{ $customer->customer->id_number ?? "-" }}</td>
+                            <td>{{ $customer->customer->name  ?? "-"}}</td>
+                            <td>{{ $customer->customer->phone ?? "-" }}</td>
+                            <td>{{ $customer->customer->address ?? "-"}}</td>
+                            <td>{{ $customer->total_invoices ?? "-" }}</td>
+                            <td>{{ formatToRupiah($customer->total_bill) }}</td>
+                            <td>{{ $customer->recency . " hari" }}</td>
+                            <td>{{ $customer->total_rfm }}</td>
+                            <td>{{ $customer->customer->updated_at ?? "-" }}</td>
+                            <td class="text-center">
+                                <form action="{{ route('customers.destroy', $customer->customer->id) }}" method="POST">
+                                    @csrf
+                                    @method("DELETE")
+                                    <div class="d-grid gap-2 d-md-flex">
+                                        <a href="{{ route('customers.edit', $customer->customer->id ) }}" class="btn btn-success">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-delete">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </a>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                {{-- {{ $customers->links() }} --}}
+            </div>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fa-solid fa-users-between-lines"></i>
+            {{ $cardTitleBZ }}
+        </div>
+        <div class="card-body">
+            <div class="table-responsive mt-4">
+                <table class="table align-middle">
+                    <thead>
+                        <th>No</th>
+                        <th>Id Number</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Total Invoice</th>
+                        <th>Total Bill</th>
+                        <th>Total Recency</th>
+                        <th>RFM Point</th>
+                        <th>Last Updated Time</th>
+                        <th class="text-center">Action</th>
+                    </thead>
+                    <tbody>
+                        @foreach ($customers["bz"] as $key => $customer)
                         <tr>
                             {{-- <td>{{ $customers->firstItem()+$key }}</td> --}}
                             <td>{{ $key+1 }}</td>
