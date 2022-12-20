@@ -1,5 +1,5 @@
-<x-app-layout :title="$title">
-    <div class="card mb-4">
+<x-app-layout title="{{ $title }}" description="{{ $description }}">
+    <div class=" card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-users-between-lines"></i>
             {{ $cardTitle }}
@@ -24,8 +24,8 @@
                     <textarea class="form-control" id="address" name="address" rows="3"></textarea>
                 </div>
                 <div class="col-12">
-                    <a href="{{ route('customers.index') }}" class="btn btn-danger">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a href="{{ route('customers.index') }}" class="btn btn-danger"><i class="fa-solid fa-square-xmark"></i> Cancel</a>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                 </div>
             </form>
         </div>

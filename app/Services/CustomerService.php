@@ -26,11 +26,11 @@ class CustomerService
     {
         $customer = (new RFMService())->getRFM();
 
-        // dd($customer);
         return [
-            "title"     => "Customer",
-            "cardTitle" => "Customers",
-            "customers" => $customer
+            "title"       => "Customer",
+            "cardTitle"   => "Customers",
+            "description" => "Data customer with rfm point",
+            "customers"   => $customer
         ];
     }
 
@@ -43,8 +43,9 @@ class CustomerService
     public function getCreateData(): array
     {
         return [
-            "title"     => "Customer",
-            "cardTitle" => "Customers",
+            "title"       => "Customer",
+            "description" => "Form for add new data customer",
+            "cardTitle"   => "Customers",
         ];
     }
 
@@ -69,9 +70,10 @@ class CustomerService
     public function getEditData(int $id): array
     {
         return [
-            "title"     => "Customer",
-            "cardTitle" => "Customers",
-            "customer"  => (new CustomerRepository())->getCustomerById($id, self::ALL_CUSTOMER_SELECT_COLUMN)
+            "title"       => "Customer",
+            "description" => "Form for edit data customer",
+            "cardTitle"   => "Customers",
+            "customer"    => (new CustomerRepository())->getCustomerById($id, self::ALL_CUSTOMER_SELECT_COLUMN)
         ];
     }
 

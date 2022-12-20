@@ -1,4 +1,4 @@
-<x-app-layout :title="$title">
+<x-app-layout title="{{ $title }}" description="{{ $description }}">
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-users-between-lines"></i>
@@ -46,10 +46,10 @@
                                     @method("DELETE")
                                     <div class="d-grid gap-2 d-md-flex">
                                         <a href="{{ route('customers.edit', $customer->customer->id ) }}" class="btn btn-success">
-                                            <i data-feather="edit"></i> Edit
+                                            <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
                                         <a class="btn btn-danger btn-delete">
-                                            <i data-feather="edit"></i> Delete
+                                            <i class="fa-solid fa-trash-can"></i>
                                         </a>
                                     </div>
                                 </form>
