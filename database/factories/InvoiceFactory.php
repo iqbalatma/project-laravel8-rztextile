@@ -15,11 +15,11 @@ class InvoiceFactory extends Factory
     {
         return [
             "code"              => "",
-            "total_capital"     => $this->faker->numberBetween(100, 1000000),
-            "total_bill"        => $this->faker->numberBetween(100, 1000000),
-            "total_profit"      => $this->faker->numberBetween(100, 1000000),
-            "total_paid_amount" => $this->faker->numberBetween(100, 1000000),
-            "bill_left"         => $this->faker->numberBetween(100, 1000000),
+            "total_capital"     => $this->faker->numberBetween(100, 100000),
+            "total_bill"        => $this->faker->numberBetween(100, 100000),
+            "total_profit"      => $this->faker->numberBetween(100, 100000),
+            "total_paid_amount" => $this->faker->numberBetween(100, 100000),
+            "bill_left"         => $this->faker->numberBetween(100, 100000),
             "is_paid_off"       => $this->faker->boolean(),
             "customer_id"       => $this->faker->numberBetween(86, 115),
             "user_id"           => 1,
