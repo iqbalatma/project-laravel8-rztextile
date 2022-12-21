@@ -20,6 +20,14 @@ class PaymentService
     {
         $type = request()->input("type", "all");
         $search = request()->input("search", false) ?? false;
+        $monthYear = request()->input("month_year", false) ?? false;
+        $month = false;
+        $year = false;
+        if ($monthYear) {
+            $monthYear = explode("-", $monthYear);
+            $month = $monthYear[1];
+            $year = $monthYear[0];
+        }
 
 
         return [
@@ -27,7 +35,7 @@ class PaymentService
             "description" => "Data payment by invoice",
             "cardTitle"   => "Payments",
             "type"        => $type,
-            "payments"    => (new PaymentRepository())->getAllDataPaymentPaginated($type, $search)
+            "payments"    => (new PaymentRepository())->getAllDataPaymentPaginated($type, $search, $year, $month)
         ];
     }
 

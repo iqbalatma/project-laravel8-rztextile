@@ -11,6 +11,8 @@ class PaymentRepository
     public function getAllDataPaymentPaginated(
         string $type = "all",
         string|bool $search = false,
+        string|bool $year = false,
+        string|bool $month = false,
         array $columns = ["*"],
         int $perPage = AppData::DEFAULT_PERPAGE
     ): ?object
@@ -21,6 +23,11 @@ class PaymentRepository
 
         if ($type !== "all") {
             $payments->where("payment_type", $type);
+        }
+
+
+        if ($year && $month) {
+            $payments->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
         }
 
         if ($search) {
@@ -35,6 +42,7 @@ class PaymentRepository
                     return $query->where("name", "LIKE", "%$search%");
                 });
         }
+
 
         $payments = $payments->paginate($perPage)
             ->appends(request()->query());
