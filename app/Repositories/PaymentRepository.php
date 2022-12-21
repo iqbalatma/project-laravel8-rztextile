@@ -15,7 +15,7 @@ class PaymentRepository
         int $perPage = AppData::DEFAULT_PERPAGE
     ): ?object
     {
-        $payments = Payment::with("user", "invoice")
+        $payments = Payment::with("user", "invoice.customer")
             ->select($columns)
             ->orderBy("created_at", "DESC");
 
@@ -26,6 +26,9 @@ class PaymentRepository
         if ($search) {
             $payments->where("code", "LIKE", "%$search%")
                 ->orWhereHas("user", function ($query) use ($search) {
+                    return $query->where("name", "LIKE", "%$search%");
+                })
+                ->orWhereHas("invoice.customer", function ($query) use ($search) {
                     return $query->where("name", "LIKE", "%$search%");
                 });
         }

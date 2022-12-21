@@ -21,6 +21,7 @@ class PaymentService
         $type = request()->input("type", "all");
         $search = request()->input("search", false) ?? false;
 
+
         return [
             "title"       => "Payment",
             "description" => "Data payment by invoice",

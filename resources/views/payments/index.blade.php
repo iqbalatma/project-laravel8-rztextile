@@ -41,6 +41,7 @@
                         <th>Payment Code</th>
                         <th>Paid Amount</th>
                         <th>Payment Type</th>
+                        <th>Customer</th>
                         <th>Admin</th>
                         <th>Payment Date Time</th>
                     </thead>
@@ -58,6 +59,7 @@
                                 <span class="badge rounded-pill bg-primary">{{ ucfirst($payment->payment_type) }}</span>
                                 @endif
                             </td>
+                            <td>{{ $payment->invoice->customer->name??"-" }}</td>
                             <td>{{ $payment->user->name??"-" }}</td>
                             <td>{{ $payment->created_at }}</td>
                         </tr>
