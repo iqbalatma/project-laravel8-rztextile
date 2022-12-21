@@ -12,10 +12,6 @@ use Illuminate\Support\Facades\DB;
 class RFMService
 {
 
-
-
-
-
     /**
      * Summary of getRFM
      * NOTES : this can be improved by add summary transaction invoice and amount of bill every new transaction
@@ -25,7 +21,7 @@ class RFMService
      * and then you can get their latest transaction
      * @return
      */
-    public function getRFM()
+    public function getRFM(): array
     {
         $now = Carbon::now();
         $customer = collect((new InvoiceRepository())->getDataInvoiceForRFM())->map(function ($item) use ($now) {
@@ -75,15 +71,20 @@ class RFMService
             }
         }
 
-
-        return $customerDistribution;
+        return [
+            "customers"      => $customerDistribution,
+            "recencyPoint"   => $recencyPoint,
+            "frequencyPoint" => $frequencyPoint,
+            "moneteryPoint"  => $moneteryPoint,
+            "rfmPoint"       => $rfmPoint,
+        ];
     }
 
     private function getRangePoint(int $maxValue, int $divider = 5): array
     {
         $rangePoint = [];
 
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= $divider; $i++) {
             array_push($rangePoint, ["lower_threshold" => $maxValue / $divider * ($i - 1), "upper_threshold" => $maxValue / $divider * $i]);
         }
         return $rangePoint;
