@@ -12,13 +12,30 @@
             </div>
 
             {{-- Search Form --}}
-            <form action="{{ route('payments.index') }}">
-                <div class="input-group mb-3">
-                    <input type="hidden" name="type" value="{{ request()->input('type')??'all' }}">
-                    <input type="text" class="form-control" placeholder="What are you looking for ?" name="search" value="{{ request()->input('search')??'' }}">
-                    <span class="input-group-text"><button class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Search</button></span>
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="{{ route('payments.index') }}">
+                        <div class="input-group mb-3">
+                            <input type="hidden" name="type" value="{{ request()->input('type')??'all' }}">
+                            <input type="text" class="form-control" placeholder="What are you looking for ?" name="search" value="{{ request()->input('search')??'' }}">
+                            <button class="btn btn-primary">
+                                <i class="fa-solid fa-magnifying-glass"></i> Search
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+
+                <div class="col-md-6">
+                    <form action="{{ route('payments.index') }}">
+                        <div class="input-group mb-3">
+                            <button class="btn btn-primary">
+                                <i class="fa-solid fa-arrows-rotate"></i> Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
 
             {{-- Nav Tabs --}}
             <ul class="nav nav-tabs">
