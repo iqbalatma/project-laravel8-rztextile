@@ -24,7 +24,10 @@ class PaymentRepository
         }
 
         if ($search) {
-            $payments->where("code", "LIKE", "%$search%");
+            $payments->where("code", "LIKE", "%$search%")
+                ->orWhereHas("user", function ($query) use ($search) {
+                    return $query->where("name", "LIKE", "%$search%");
+                });
         }
 
         $payments = $payments->paginate($perPage)
