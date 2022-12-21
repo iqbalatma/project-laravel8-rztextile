@@ -11,6 +11,16 @@
                     Add New Payment</a>
             </div>
 
+            {{-- Search Form --}}
+            <form action="{{ route('payments.index') }}">
+                <div class="input-group mb-3">
+                    <input type="hidden" name="type" value="{{ request()->input('type')??'all' }}">
+                    <input type="text" class="form-control" placeholder="What are you looking for ?" name="search" value="{{ request()->input('search')??'' }}">
+                    <span class="input-group-text"><button class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Search</button></span>
+                </div>
+            </form>
+
+            {{-- Nav Tabs --}}
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                     <a class="nav-link @if ($type=='all') active @endif" aria-current="page" href="{{ route('payments.index',['type'=>'all']) }}">All</a>
