@@ -5,15 +5,24 @@
             {{ $cardTitle }}
         </div>
         <div class="card-body">
+            <form action="{{ route('invoices.index') }}">
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <input type="hidden" name="type" value="{{ request()->input('type') }}">
+                        <input type="text" name="search" class="form-control" placeholder="What are you looking for ?" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <button class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </form>
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link @if ($type=='all') active @endif" aria-current="page" href="{{ route('invoices.index',['type'=>'all']) }}">All</a>
+                    <a class="nav-link @if (request()->input('type')=='all' || is_null(request()->input('type')) ) active @endif" aria-current="page" href="{{ route('invoices.index',['type'=>'all']) }}">All</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link @if ($type=='not-paid-off') active @endif" href="{{ route('invoices.index',['type'=>'not-paid-off']) }}">Not Paid Off</a>
+                    <a class="nav-link @if (request()->input('type')=='not-paid-off') active @endif" href="{{ route('invoices.index',['type'=>'not-paid-off']) }}">Not Paid Off</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link @if ($type=='paid-off') active @endif" href="{{ route('invoices.index',['type'=>'paid-off']) }}">Paid Off</a>
+                    <a class="nav-link @if (request()->input('type')=='paid-off') active @endif" href="{{ route('invoices.index',['type'=>'paid-off']) }}">Paid Off</a>
                 </li>
             </ul>
             <div class="table-responsive mt-4">
