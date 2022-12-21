@@ -26,6 +26,35 @@ class InvoiceRepository
             ->appends(request()->query());
         ;
     }
+    public function getAllDataInvoicePaginated2(
+        string $type = "all",
+        string|bool $search = false,
+        array $columns = ["*"],
+        $perPage = AppData::DEFAULT_PERPAGE
+    ): ?object
+    {
+        $invoice = Invoice::with(["customer", "user"])
+            ->select($columns)
+            ->orderBy("created_at", "DESC");
+
+        if ($type == "paid-off") {
+            $invoice->where("is_paid_off", true);
+        } elseif ($type == "not-paid-off") {
+            $invoice->where("is_paid_off", false)
+                ->where("bill_left", ">", 0);
+        }
+
+        if ($search) {
+            $invoice->where("code", "=", $search);
+        }
+
+
+        $invoice = $invoice
+            ->paginate($perPage)
+            ->appends(request()->query());
+
+        return $invoice;
+    }
 
     public function getPaidOffDataInvoicePaginated(array $columns = ["*"], $perPage = AppData::DEFAULT_PERPAGE): ?object
     {

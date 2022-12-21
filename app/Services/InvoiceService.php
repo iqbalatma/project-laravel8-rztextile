@@ -15,26 +15,17 @@ class InvoiceService
     public function getAllData(): array
     {
         $type = request()->input("type", "all");
+        $search = request()->input("search", false);
         $invoiceRepository = new InvoiceRepository();
 
-        $invoices = null;
-
-        switch ($type) {
-            case "paid-off":
-                $invoices = $invoiceRepository->getPaidOffDataInvoicePaginated();
-                break;
-            case "not-paid-off":
-                $invoices = $invoiceRepository->getNotPaidOffDataInvoicePaginated();
-                break;
-            default:
-                $invoices = $invoiceRepository->getAllDataInvoicePaginated();
-        }
+        $invoices = $invoiceRepository->getAllDataInvoicePaginated2(type: $type, search: $search);
 
         return [
             "title"       => "Invoice",
             "description" => "Invoice transaction list",
             "cardTitle"   => "Invoices",
             "type"        => $type,
+            "search"      => $search,
             "invoices"    => $invoices
         ];
     }

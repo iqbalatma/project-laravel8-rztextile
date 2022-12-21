@@ -5,15 +5,24 @@
             {{ $cardTitle }}
         </div>
         <div class="card-body">
-            <form action="{{ route('invoices.index') }}">
+            <div class="row">
                 <div class="col-md-6">
-                    <div class="input-group mb-3">
-                        <input type="hidden" name="type" value="{{ request()->input('type') }}">
-                        <input type="text" name="search" class="form-control" placeholder="What are you looking for ?" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                        <button class="btn btn-primary">Search</button>
-                    </div>
+                    <form action="{{ route('invoices.index') }}">
+                        <div class="input-group mb-3">
+                            <input type="hidden" name="type" value="{{ request()->input('type', 'all') }}">
+                            <input type="text" name="search" class="form-control" placeholder="What are you looking for ?" aria-label="Recipient's username" aria-describedby="basic-addon2" value="{{ request()->input('search', '')}}" required>
+                            <button class="btn btn-primary">Search</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+                <div class="col-md-6">
+                    <form action="{{ route('invoices.index') }}">
+                        <input type="hidden" name="type" value="{{ request()->input('type', 'all') }}">
+                        <button class="btn btn-primary">Reset</button>
+                    </form>
+                </div>
+            </div>
+
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                     <a class="nav-link @if (request()->input('type')=='all' || is_null(request()->input('type')) ) active @endif" aria-current="page" href="{{ route('invoices.index',['type'=>'all']) }}">All</a>
