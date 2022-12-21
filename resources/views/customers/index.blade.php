@@ -1,5 +1,6 @@
 <x-app-layout title="{{ $title }}" description="{{ $description }}">
 
+    @if (isset($customer))
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-users-between-lines"></i>
@@ -76,6 +77,7 @@
             </div>
         </div>
     </div>
+
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-users-between-lines"></i>
@@ -308,6 +310,18 @@
             </div>
         </div>
     </div>
+    @else
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fa-solid fa-users-between-lines"></i>
+            Summary
+        </div>
+        <div class="card-body">
+            There is no customer transaction and rfm point
+        </div>
+    </div>
+    @endif
+
 
     @section("custom-scripts")
     <script src="{{ asset('js/customers/index.js') }}"></script>

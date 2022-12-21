@@ -25,7 +25,6 @@ class CustomerService
     {
         $customer = (new RFMService())->getRFM();
 
-        // dd($customer);
         return array_merge([
             "title"        => "Customer",
             "cardTitleMVC" => "Most valueable customer",
