@@ -6,7 +6,6 @@ use App\Repositories\CustomerRepository;
 
 class CustomerService
 {
-
     private const ALL_CUSTOMER_SELECT_COLUMN = [
         "id",
         "name",
@@ -26,12 +25,15 @@ class CustomerService
     {
         $customer = (new RFMService())->getRFM();
 
-        return [
-            "title"       => "Customer",
-            "cardTitle"   => "Customers",
-            "description" => "Data customer with rfm point",
-            "customers"   => $customer
-        ];
+        // dd($customer);
+        return array_merge([
+            "title"        => "Customer",
+            "cardTitleMVC" => "Most valueable customer",
+            "cardTitleMGC" => "Most growable customer",
+            "cardTitleM"   => "Migration customer",
+            "cardTitleBZ"  => "Below zero customer",
+            "description"  => "Data customer with rfm point",
+        ], $customer);
     }
 
 
