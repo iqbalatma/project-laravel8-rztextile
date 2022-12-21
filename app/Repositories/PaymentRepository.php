@@ -28,6 +28,9 @@ class PaymentRepository
                 ->orWhereHas("user", function ($query) use ($search) {
                     return $query->where("name", "LIKE", "%$search%");
                 })
+                ->orWhereHas("invoice", function ($query) use ($search) {
+                    return $query->where("code", "LIKE", "%$search%");
+                })
                 ->orWhereHas("invoice.customer", function ($query) use ($search) {
                     return $query->where("name", "LIKE", "%$search%");
                 });
