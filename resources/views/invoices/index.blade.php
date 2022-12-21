@@ -54,12 +54,12 @@
                         @foreach ($invoices as $key => $invoice)
                         <tr>
                             <td>{{ $invoices->firstItem()+$key }}</td>
-                            <td>{{ $invoice->code }}</td>
-                            <td>{{ formatToRupiah($invoice->total_capital) }}</td>
-                            <td>{{ formatToRupiah($invoice->total_bill) }}</td>
-                            <td>{{ formatToRupiah($invoice->total_profit) }}</td>
-                            <td>{{ formatToRupiah($invoice->total_paid_amount) }}</td>
-                            <td>{{ formatToRupiah($invoice->bill_left) }}</td>
+                            <td class="text-nowrap">{{ $invoice->code }}</td>
+                            <td class="text-nowrap">{{ formatToRupiah($invoice->total_capital) }}</td>
+                            <td class="text-nowrap">{{ formatToRupiah($invoice->total_bill) }}</td>
+                            <td class="text-nowrap">{{ formatToRupiah($invoice->total_profit) }}</td>
+                            <td class="text-nowrap">{{ formatToRupiah($invoice->total_paid_amount) }}</td>
+                            <td class="text-nowrap">{{ formatToRupiah($invoice->bill_left) }}</td>
                             <td>{{ $invoice->customer->name??"-" }}</td>
                             <td>{{ $invoice->user->name??"-" }}</td>
                             <td>
