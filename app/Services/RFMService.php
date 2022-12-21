@@ -2,12 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Invoice;
-use App\Models\User;
-use App\Repositories\CustomerRepository;
 use App\Repositories\InvoiceRepository;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class RFMService
 {

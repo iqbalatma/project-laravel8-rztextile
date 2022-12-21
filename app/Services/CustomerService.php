@@ -23,16 +23,21 @@ class CustomerService
      */
     public function getAllData(): array
     {
-        $customer = (new RFMService())->getRFM();
-
-        return array_merge([
+        $data = [
             "title"        => "Customer",
             "cardTitleMVC" => "Most valueable customer",
             "cardTitleMGC" => "Most growable customer",
             "cardTitleM"   => "Migration customer",
             "cardTitleBZ"  => "Below zero customer",
             "description"  => "Data customer with rfm point",
-        ], $customer);
+        ];
+        if (request()->input("type") == "rfm") {
+            $customer = (new RFMService())->getRFM();
+            return array_merge($data, $customer);
+        } else {
+            $data["customers"] = (new CustomerRepository())->getAllDataCustomerPaginated();
+            return $data;
+        }
     }
 
 

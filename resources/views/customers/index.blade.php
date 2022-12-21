@@ -1,4 +1,66 @@
 <x-app-layout title="{{ $title }}" description="{{ $description }}">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link @if (Request::input('type')=='all' || is_null(Request::input('type'))) active @endif" aria-current="page" href="{{ route('customers.index',['type'=>'all']) }}">All</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @if (Request::input('type')=='rfm')active @endif" href="{{ route('customers.index',['type'=>'rfm']) }}">RFM Point</a>
+        </li>
+    </ul>
+
+    @if (Request::input('type')=='all' || is_null(Request::input('type')))
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fa-solid fa-users-between-lines"></i>
+            {{ $title }}
+        </div>
+        <div class="card-body">
+            <div class="table-responsive mt-4">
+                <table class="table align-middle">
+                    <thead>
+                        <th>No</th>
+                        <th>Id Number</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Total Invoice</th>
+                        <th>Last Updated Time</th>
+                        <th class="text-center">Action</th>
+                    </thead>
+                    <tbody>
+                        @foreach ($customers as $key => $customer)
+                        <tr>
+                            <td>{{ $customers->firstItem()+$key }}</td>
+                            <td>{{ $customer->id_number ?? "-" }}</td>
+                            <td>{{ $customer->name  ?? "-"}}</td>
+                            <td>{{ $customer->phone ?? "-" }}</td>
+                            <td>{{ $customer->address ?? "-"}}</td>
+                            <td>{{ $customer->total_invoices ?? "-" }}</td>
+                            <td>{{ $customer->updated_at ?? "-" }}</td>
+                            <td class="text-center">
+                                <form action="{{ route('customers.destroy', $customer->id) }}" method="POST">
+                                    @csrf
+                                    @method("DELETE")
+                                    <div class="d-grid gap-2 d-md-flex">
+                                        <a href="{{ route('customers.edit', $customer->id ) }}" class="btn btn-success">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-delete">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </a>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                {{ $customers->links() }}
+            </div>
+        </div>
+    </div>
+    @else
 
     @if (isset($customer))
     <div class="card mb-4">
@@ -97,7 +159,6 @@
                         <th>Total Recency</th>
                         <th>RFM Point</th>
                         <th>Last Updated Time</th>
-                        <th class="text-center">Action</th>
                     </thead>
                     <tbody>
                         @foreach ($customers["mvc"] as $key => $customer)
@@ -113,26 +174,10 @@
                             <td>{{ $customer->recency . " hari" }}</td>
                             <td>{{ $customer->total_rfm }}</td>
                             <td>{{ $customer->customer->updated_at ?? "-" }}</td>
-                            <td class="text-center">
-                                <form action="{{ route('customers.destroy', $customer->customer->id) }}" method="POST">
-                                    @csrf
-                                    @method("DELETE")
-                                    <div class="d-grid gap-2 d-md-flex">
-                                        <a href="{{ route('customers.edit', $customer->customer->id ) }}" class="btn btn-success">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
-                                        <a class="btn btn-danger btn-delete">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </a>
-                                    </div>
-                                </form>
-                            </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-
-                {{-- {{ $customers->links() }} --}}
             </div>
         </div>
     </div>
@@ -155,12 +200,10 @@
                         <th>Total Recency</th>
                         <th>RFM Point</th>
                         <th>Last Updated Time</th>
-                        <th class="text-center">Action</th>
                     </thead>
                     <tbody>
                         @foreach ($customers["mgc"] as $key => $customer)
                         <tr>
-                            {{-- <td>{{ $customers->firstItem()+$key }}</td> --}}
                             <td>{{ $key+1 }}</td>
                             <td>{{ $customer->customer->id_number ?? "-" }}</td>
                             <td>{{ $customer->customer->name  ?? "-"}}</td>
@@ -171,26 +214,11 @@
                             <td>{{ $customer->recency . " hari" }}</td>
                             <td>{{ $customer->total_rfm }}</td>
                             <td>{{ $customer->customer->updated_at ?? "-" }}</td>
-                            <td class="text-center">
-                                <form action="{{ route('customers.destroy', $customer->customer->id) }}" method="POST">
-                                    @csrf
-                                    @method("DELETE")
-                                    <div class="d-grid gap-2 d-md-flex">
-                                        <a href="{{ route('customers.edit', $customer->customer->id ) }}" class="btn btn-success">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
-                                        <a class="btn btn-danger btn-delete">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </a>
-                                    </div>
-                                </form>
-                            </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
 
-                {{-- {{ $customers->links() }} --}}
             </div>
         </div>
     </div>
@@ -213,12 +241,10 @@
                         <th>Total Recency</th>
                         <th>RFM Point</th>
                         <th>Last Updated Time</th>
-                        <th class="text-center">Action</th>
                     </thead>
                     <tbody>
                         @foreach ($customers["m"] as $key => $customer)
                         <tr>
-                            {{-- <td>{{ $customers->firstItem()+$key }}</td> --}}
                             <td>{{ $key+1 }}</td>
                             <td>{{ $customer->customer->id_number ?? "-" }}</td>
                             <td>{{ $customer->customer->name  ?? "-"}}</td>
@@ -229,26 +255,12 @@
                             <td>{{ $customer->recency . " hari" }}</td>
                             <td>{{ $customer->total_rfm }}</td>
                             <td>{{ $customer->customer->updated_at ?? "-" }}</td>
-                            <td class="text-center">
-                                <form action="{{ route('customers.destroy', $customer->customer->id) }}" method="POST">
-                                    @csrf
-                                    @method("DELETE")
-                                    <div class="d-grid gap-2 d-md-flex">
-                                        <a href="{{ route('customers.edit', $customer->customer->id ) }}" class="btn btn-success">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
-                                        <a class="btn btn-danger btn-delete">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </a>
-                                    </div>
-                                </form>
-                            </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
 
-                {{-- {{ $customers->links() }} --}}
+                {{ $customers->links() }}
             </div>
         </div>
     </div>
@@ -271,12 +283,10 @@
                         <th>Total Recency</th>
                         <th>RFM Point</th>
                         <th>Last Updated Time</th>
-                        <th class="text-center">Action</th>
                     </thead>
                     <tbody>
                         @foreach ($customers["bz"] as $key => $customer)
                         <tr>
-                            {{-- <td>{{ $customers->firstItem()+$key }}</td> --}}
                             <td>{{ $key+1 }}</td>
                             <td>{{ $customer->customer->id_number ?? "-" }}</td>
                             <td>{{ $customer->customer->name  ?? "-"}}</td>
@@ -287,26 +297,12 @@
                             <td>{{ $customer->recency . " hari" }}</td>
                             <td>{{ $customer->total_rfm }}</td>
                             <td>{{ $customer->customer->updated_at ?? "-" }}</td>
-                            <td class="text-center">
-                                <form action="{{ route('customers.destroy', $customer->customer->id) }}" method="POST">
-                                    @csrf
-                                    @method("DELETE")
-                                    <div class="d-grid gap-2 d-md-flex">
-                                        <a href="{{ route('customers.edit', $customer->customer->id ) }}" class="btn btn-success">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
-                                        <a class="btn btn-danger btn-delete">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </a>
-                                    </div>
-                                </form>
-                            </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
 
-                {{-- {{ $customers->links() }} --}}
+                {{ $customers->links() }}
             </div>
         </div>
     </div>
@@ -320,6 +316,8 @@
             There is no customer transaction and rfm point
         </div>
     </div>
+    @endif
+
     @endif
 
 
