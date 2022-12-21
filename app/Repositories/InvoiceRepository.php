@@ -17,18 +17,11 @@ class InvoiceRepository
     }
 
 
-    public function getAllDataInvoicePaginated(array $columns = ["*"], $perPage = AppData::DEFAULT_PERPAGE): ?object
-    {
-        return Invoice::with(["customer", "user"])
-            ->select($columns)
-            ->orderBy("created_at", "DESC")
-            ->paginate($perPage)
-            ->appends(request()->query());
-        ;
-    }
-    public function getAllDataInvoicePaginated2(
+    public function getAllDataInvoicePaginated(
         string $type = "all",
         string|bool $search = false,
+        string|bool $year = false,
+        string|bool $month = false,
         array $columns = ["*"],
         $perPage = AppData::DEFAULT_PERPAGE
     ): ?object
@@ -44,10 +37,16 @@ class InvoiceRepository
                 ->where("bill_left", ">", 0);
         }
 
-        if ($search) {
-            $invoice->where("code", "=", $search);
+        if ($year && $month) {
+            $invoice->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
         }
 
+        if ($search) {
+            $invoice->where("code", "LIKE", "%$search%")
+                ->orWhereHas("customer", function ($query) use ($search) {
+                    $query->where("name", "LIKE", "%$search%");
+                });
+        }
 
         $invoice = $invoice
             ->paginate($perPage)
@@ -56,29 +55,6 @@ class InvoiceRepository
         return $invoice;
     }
 
-    public function getPaidOffDataInvoicePaginated(array $columns = ["*"], $perPage = AppData::DEFAULT_PERPAGE): ?object
-    {
-        return Invoice::with(["customer", "user"])
-            ->select($columns)
-            ->where("is_paid_off", true)
-            ->where("bill_left", "=", 0)
-            ->orderBy("created_at", "DESC")
-            ->paginate($perPage)
-            ->appends(request()->query());
-        ;
-    }
-
-    public function getNotPaidOffDataInvoicePaginated(array $columns = ["*"], $perPage = AppData::DEFAULT_PERPAGE): ?object
-    {
-        return Invoice::with(["customer", "user"])
-            ->select($columns)
-            ->where("is_paid_off", false)
-            ->where("bill_left", ">", 0)
-            ->orderBy("created_at", "DESC")
-            ->paginate($perPage)
-            ->appends(request()->query());
-        ;
-    }
 
     public function addNewDataRepository(array $requestedData): object
     {
