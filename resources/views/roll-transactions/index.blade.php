@@ -31,6 +31,11 @@
                 </li>
             </ul>
 
+
+            @if ($rollTransactions->count() == 0)
+            <x-data-not-found></x-data-not-found>
+            @else
+            {{-- Data Table Roll Transaction --}}
             <div class="table-responsive mt-4">
                 <table class="table align-middle">
                     <thead>
@@ -72,6 +77,7 @@
                 {{ $rollTransactions->links() }}
 
             </div>
+            @endif
         </div>
     </div>
 </x-app-layout>
