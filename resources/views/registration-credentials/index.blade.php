@@ -11,6 +11,12 @@
                     Add New Credentials</a>
             </div>
 
+
+
+            @if ($registrationCredentials->count() == 0)
+            <x-data-not-found></x-data-not-found>
+            @else
+            {{-- Data Table Credentials --}}
             <div class="table-responsive mt-4">
                 <table class="table align-middle">
                     <thead>
@@ -58,6 +64,8 @@
                     </tbody>
                 </table>
             </div>
+            @endif
+
         </div>
     </div>
 

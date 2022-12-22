@@ -5,6 +5,12 @@
             {{ $cardTitle }}
         </div>
         <div class="card-body">
+
+
+            @if (count($roles)==0)
+            <x-data-not-found></x-data-not-found>
+            @else
+            {{-- Table Data Roles --}}
             <div class="table-responsive mt-4">
                 <table class="table align-middle">
                     <thead>
@@ -25,6 +31,7 @@
                     </tbody>
                 </table>
             </div>
+            @endif
         </div>
     </div>
 </x-app-layout>
