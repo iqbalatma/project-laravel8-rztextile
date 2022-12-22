@@ -58,7 +58,8 @@
                     </div>
                 </div>
             </div>
-
+            @if (count($rolls)!=0)
+            {{-- Table Data Roll --}}
             <div class="table-responsive mt-4">
                 <table class="table align-middle">
                     <thead>
@@ -105,6 +106,10 @@
                 </table>
                 {{ ($rolls->links()) }}
             </div>
+            @else
+            <x-data-not-found></x-data-not-found>
+            @endif
+
         </div>
     </div>
 
