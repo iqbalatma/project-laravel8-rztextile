@@ -18,23 +18,24 @@ class PaymentService
      */
     public function getAllData(): array
     {
-        $type = request("type") ?? "all";
-        switch ($type) {
-            case "cash":
-                $payments = (new PaymentRepository())->getDataPaymentCashPaginated();
-                break;
-            case "transfer":
-                $payments = (new PaymentRepository())->getDataPaymentTransferPaginated();
-                break;
-            default:
-                $payments = (new PaymentRepository())->getAllDataPaymentPaginated();
+        $type = request()->input("type", "all");
+        $search = request()->input("search", false) ?? false;
+        $monthYear = request()->input("month_year", false) ?? false;
+        $month = false;
+        $year = false;
+        if ($monthYear) {
+            $monthYear = explode("-", $monthYear);
+            $month = $monthYear[1];
+            $year = $monthYear[0];
         }
+
+
         return [
             "title"       => "Payment",
             "description" => "Data payment by invoice",
             "cardTitle"   => "Payments",
             "type"        => $type,
-            "payments"    => $payments
+            "payments"    => (new PaymentRepository())->getAllDataPaymentPaginated($type, $search, $year, $month)
         ];
     }
 

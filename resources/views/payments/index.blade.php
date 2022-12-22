@@ -11,6 +11,59 @@
                     Add New Payment</a>
             </div>
 
+            {{-- Search Form --}}
+            <div class="row">
+                <div class="col-md-4">
+                    <form action="{{ route('payments.index') }}">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input id="bday-month" class="form-control" type="month" name="month_year" value="{{ request()->input('month_year') ??'' }}" required />
+                            </div>
+                            <div class="col-md-4">
+                                <input type="hidden" name="type" value="{{ request()->input('type', 'all') }}">
+                                @if (request()->input('search'))
+                                <input type="hidden" name="search" value="{{ request()->input('search') }}">
+                                @endif
+                                <button class="btn btn-primary"><i class="fa-solid fa-filter"></i> Filter</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <form action="{{ route('payments.index') }}">
+                                <div class="input-group mb-3">
+                                    <input type="hidden" name="type" value="{{ request()->input('type')??'all' }}">
+                                    @if (request()->input('month_year'))
+                                    <input type="hidden" name="month_year" value="{{ request()->input('month_year')??'' }}">
+                                    @endif
+                                    <input type="text" class="form-control" placeholder="What are you looking for ?" name="search" value="{{ request()->input('search')??'' }}">
+                                    <button class="btn btn-primary">
+                                        <i class="fa-solid fa-magnifying-glass"></i> Search
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-md-2">
+                            <form action="{{ route('payments.index') }}">
+                                <input type="hidden" name="type" value="{{ request()->input('type')??'all' }}">
+                                <div class="input-group mb-3">
+                                    <button class="btn btn-primary">
+                                        <i class="fa-solid fa-arrows-rotate"></i> Reset
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            {{-- Nav Tabs --}}
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                     <a class="nav-link @if ($type=='all') active @endif" aria-current="page" href="{{ route('payments.index',['type'=>'all']) }}">All</a>
@@ -31,6 +84,7 @@
                         <th>Payment Code</th>
                         <th>Paid Amount</th>
                         <th>Payment Type</th>
+                        <th>Customer</th>
                         <th>Admin</th>
                         <th>Payment Date Time</th>
                     </thead>
@@ -48,6 +102,7 @@
                                 <span class="badge rounded-pill bg-primary">{{ ucfirst($payment->payment_type) }}</span>
                                 @endif
                             </td>
+                            <td>{{ $payment->invoice->customer->name??"-" }}</td>
                             <td>{{ $payment->user->name??"-" }}</td>
                             <td>{{ $payment->created_at }}</td>
                         </tr>
