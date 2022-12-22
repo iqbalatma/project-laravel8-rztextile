@@ -21,25 +21,28 @@ class RollTransactionService
     {
         $type = request("type", "all");
 
-        switch ($type) {
-            case "broken":
-                $rollTransactions = (new RollTransactionRepository())->getDataRollTransactionBrokenPaginated();
-                break;
-            case "sold":
-                $rollTransactions = (new RollTransactionRepository())->getDataRollTransactionSoldPaginated();
-                break;
-            case "restock":
-                $rollTransactions = (new RollTransactionRepository())->getDataRollTransactionRestockPaginated();
-                break;
-            default:
-                $rollTransactions = (new RollTransactionRepository())->getAllDataRollTransactionPaginated();
-        }
+        // switch ($type) {
+        //     case "broken":
+        //         $rollTransactions = (new RollTransactionRepository())->getDataRollTransactionBrokenPaginated();
+        //         break;
+        //     case "sold":
+        //         $rollTransactions = (new RollTransactionRepository())->getDataRollTransactionSoldPaginated();
+        //         break;
+        //     case "restock":
+        //         $rollTransactions = (new RollTransactionRepository())->getDataRollTransactionRestockPaginated();
+        //         break;
+        //     default:
+        //         $rollTransactions =
+        // }
+
+        $search = request()->input("search", false) ?? false;
+
         return [
             "title"            => "Roll Transaction",
             "description"      => "Transaction roll in or out",
             "cardTitle"        => "Roll Transactions",
             "type"             => $type,
-            "rollTransactions" => $rollTransactions
+            "rollTransactions" => (new RollTransactionRepository())->getAllDataRollTransactionPaginated($type, $search)
         ];
     }
 

@@ -16,6 +16,48 @@
                 </a>
             </div>
 
+            <div class="row">
+                <div class="col-md-4">
+                    <form action="{{ route('roll.transactions.index') }}">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input id="bday-month" class="form-control" type="month" name="month_year" value="{{ request()->input('month_year') ??'' }}" required />
+                            </div>
+                            <div class="col-md-4">
+                                <input type="hidden" name="type" value="{{ request()->input('type', 'all') }}">
+                                @if (request()->input('search'))
+                                <input type="hidden" name="search" value="{{ request()->input('search') }}">
+                                @endif
+                                <button class="btn btn-primary"><i class="fa-solid fa-filter"></i> Filter</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <form action="{{ route('roll.transactions.index') }}">
+                                <div class="input-group mb-3">
+                                    <input type="hidden" name="type" value="{{ request()->input('type', 'all') }}">
+                                    @if (request()->input('month_year'))
+                                    <input type="hidden" name="month_year" value="{{ request()->input('month_year') }}">
+                                    @endif
+                                    <input type="text" name="search" class="form-control" placeholder="What are you looking for ?" aria-label="Recipient's username" aria-describedby="basic-addon2" value="{{ request()->input('search') ?? ''}}" required>
+                                    <button class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-2">
+                            <form action="{{ route('roll.transactions.index') }}">
+                                <input type="hidden" name="type" value="{{ request()->input('type', 'all') }}">
+                                <button class="btn btn-primary">Reset</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                     <a class="nav-link @if ($type=='all') active @endif" aria-current="page" href="{{ route('roll.transactions.index',['type'=>'all']) }}">All</a>
@@ -57,7 +99,7 @@
                             <td>{{ $transaction->roll->name??"-" }}</td>
                             <td>{{ $transaction->roll->code??"-" }}</td>
                             <td>{{ $transaction->quantity_roll??0 }}</td>
-                            <td>{{ ($transaction->quantity_unit??0) . " " . $transaction->roll->unit->name }}</td>
+                            <td>{{ ($transaction->quantity_unit??0) . " " . ($transaction->roll->unit->name ??"") }}</td>
                             <td>
                                 @if ($transaction->type=="restock")
                                 <span class="badge rounded-pill bg-success">{{ $transaction->type }}</span>
