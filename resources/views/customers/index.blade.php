@@ -1,5 +1,5 @@
 <x-app-layout title="{{ $title }}" description="{{ $description }}">
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs mb-4">
         <li class="nav-item">
             <a class="nav-link @if (Request::input('type')=='all' || is_null(Request::input('type'))) active @endif" aria-current="page" href="{{ route('customers.index',['type'=>'all']) }}">All</a>
         </li>
@@ -15,6 +15,34 @@
             {{ $title }}
         </div>
         <div class="card-body">
+            {{-- Form Filter and Search --}}
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <form action="{{ route('customers.index') }}">
+                                <div class="input-group mb-3">
+                                    <input type="hidden" name="type" value="{{ request()->input('type', 'all') }}">
+                                    <input type="text" name="search" class="form-control" placeholder="What are you looking for ?" aria-label="Recipient's username" aria-describedby="basic-addon2" value="{{ request()->input('search') ?? ''}}" required>
+                                    <button class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-2">
+                            <form action="{{ route('customers.index') }}">
+                                <input type="hidden" name="type" value="{{ request()->input('type', 'all') }}">
+                                <button class="btn btn-primary">Reset</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @if ($customers->count() == 0)
+            <x-data-not-found></x-data-not-found>
+            @else
+            {{-- Table Data Customer --}}
             <div class="table-responsive mt-4">
                 <table class="table align-middle">
                     <thead>
@@ -58,6 +86,7 @@
 
                 {{ $customers->links() }}
             </div>
+            @endif
         </div>
     </div>
     @else
@@ -307,15 +336,7 @@
         </div>
     </div>
     @else
-    <div class="card mb-4">
-        <div class="card-header">
-            <i class="fa-solid fa-users-between-lines"></i>
-            Summary
-        </div>
-        <div class="card-body">
-            There is no customer transaction and rfm point
-        </div>
-    </div>
+    <x-data-not-found></x-data-not-found>
     @endif
 
     @endif
