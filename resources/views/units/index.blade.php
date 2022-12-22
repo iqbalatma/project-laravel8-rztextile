@@ -11,6 +11,11 @@
                     Add New Unit</a>
             </div>
 
+
+            @if (count($units) == 0)
+            <x-data-not-found></x-data-not-found>
+            @else
+            {{-- Table Data Unit --}}
             <div class="table-responsive mt-4">
                 <table class="table align-middle">
                     <thead>
@@ -47,6 +52,7 @@
                 </table>
                 {{ ($units->links()) }}
             </div>
+            @endif
         </div>
     </div>
 

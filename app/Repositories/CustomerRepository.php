@@ -8,12 +8,23 @@ use App\Models\User;
 class CustomerRepository
 {
 
-    public function getAllDataCustomerPaginated(array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE): ?object
+    public function getAllDataCustomerPaginated(string|bool $search = false, array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE): ?object
     {
-        return User::with("role")
+        $users = User::with("role")
             ->select($columns)
-            ->where("role_id", AppData::ROLE_ID_CUSTOMER)
-            ->paginate($perPage);
+            ->where("role_id", AppData::ROLE_ID_CUSTOMER);
+
+        if ($search) {
+            $users->where("id_number", "LIKE", "%$search%")
+                ->orWhere("name", "LIKE", "%$search%")
+                ->orWhere("email", "LIKE", "%$search%")
+                ->orWhere("address", "LIKE", "%$search%")
+                ->orWhere("phone", "LIKE", "%$search%");
+        }
+
+        $users = $users->paginate($perPage)->appends(request()->query());
+
+        return $users;
     }
 
     public function getAllDataCustomer(array $columns = ["*"])

@@ -35,7 +35,8 @@ class CustomerService
             $customer = (new RFMService())->getRFM();
             return array_merge($data, $customer);
         } else {
-            $data["customers"] = (new CustomerRepository())->getAllDataCustomerPaginated();
+            $search = request()->input("search", false) ?? false;
+            $data["customers"] = (new CustomerRepository())->getAllDataCustomerPaginated($search);
             return $data;
         }
     }

@@ -57,6 +57,13 @@
                     <a class="nav-link @if (request()->input('type')=='paid-off') active @endif" href="{{ route('invoices.index',['type'=>'paid-off']) }}">Paid Off</a>
                 </li>
             </ul>
+
+
+
+            @if (count($invoices) == 0)
+            <x-data-not-found></x-data-not-found>
+            @else
+            {{-- Table Data Invoice --}}
             <div class="table-responsive mt-4">
                 <table class="table align-middle">
                     <thead>
@@ -110,6 +117,7 @@
                 </table>
                 {{ $invoices->links() }}
             </div>
+            @endif
         </div>
     </div>
 </x-app-layout>
