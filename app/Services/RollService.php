@@ -19,11 +19,21 @@ class RollService
      */
     public function getAllData(): array
     {
+        $search = request()->input("search", false) ?? false;
+        $monthYear = request()->input("month_year") ?? false;
+        $year = false;
+        $month = false;
+        if ($monthYear) {
+            $monthYear = explode("-", $monthYear);
+            $year = $monthYear[0];
+            $month = $monthYear[1];
+        }
+
         return [
             "title"       => "Roll",
             "description" => "Roll data stock quantity, QR code, and roll name",
             "cardTitle"   => "Rolls",
-            "rolls"       => (new RollRepository())->getAllDataRollPaginated()
+            "rolls"       => (new RollRepository())->getAllDataRollPaginated($search, $year, $month)
         ];
     }
 

@@ -11,7 +11,7 @@
                     Add New Payment</a>
             </div>
 
-            {{-- Search Form --}}
+            {{-- Search and filter Form --}}
             <div class="row">
                 <div class="col-md-4">
                     <form action="{{ route('payments.index') }}">
@@ -59,7 +59,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
 
