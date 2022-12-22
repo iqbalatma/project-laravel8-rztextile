@@ -75,6 +75,11 @@
                 </li>
             </ul>
 
+
+            @if (count($payments) == 0)
+            <x-data-not-found></x-data-not-found>
+            @else
+            {{-- Table Data Payments --}}
             <div class="table-responsive mt-4">
                 <table class="table align-middle">
                     <thead>
@@ -110,6 +115,7 @@
                 </table>
                 {{ $payments->links() }}
             </div>
+            @endif
         </div>
     </div>
 
