@@ -10,6 +10,8 @@ class RollTransactionRepository
     public function getAllDataRollTransactionPaginated(
         string|bool $type = "all",
         string|bool $search = false,
+        string|bool $year = false,
+        string|bool $month = false,
         array $columns = ["*"],
         int $perPage = AppData::DEFAULT_PERPAGE
     ): ?object
@@ -22,22 +24,46 @@ class RollTransactionRepository
             $rollTransactions->where("type", "=", $type);
         }
 
+
         if ($search) {
-            $rollTransactions->whereHas("invoice", function ($query) use ($search) {
-                return $query->where("code", "LIKE", "%$search%");
-            })->orWhereHas("roll", function ($query) use ($search) {
-                return $query->where("code", "LIKE", "%$search%")
-                    ->orWhere("name", "LIKE", "%$search%")
-                    ->orWhereHas(
-                        "unit",
-                        function ($subQuery) use ($search) {
-                            return $subQuery->where("name", "LIKE", "%$search%");
-                        }
+            $rollTransactions->orWhereHas("invoice", function ($query) use ($search, $year, $month) {
+                return $query->where("code", "LIKE", "%$search%")->whereHas(
+                    "roll_transaction",
+                    function ($subQuery) use ($year, $month) {
+                        return $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
+                    }
+                );
+            })
+                ->orWhereHas("roll", function ($query) use ($search, $year, $month) {
+                    return $query->where("code", "LIKE", "%$search%")
+                        ->where("name", "LIKE", "%$search%")
+                        ->orWhereHas(
+                            "unit",
+                            function ($subQuery) use ($search) {
+                                    return $subQuery->where("name", "LIKE", "%$search%");
+                                }
+                        )->whereHas(
+                            "roll_transaction",
+                            function ($subQuery) use ($year, $month) {
+                                    return $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
+                                }
+                        );
+                    ;
+                })
+                ->orWhereHas("user", function ($query) use ($search, $year, $month) {
+                    return $query->where("name", "LIKE", "%$search%")->whereHas(
+                        "roll_transaction",
+                        function ($subQuery) use ($year, $month) {
+                                return $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
+                            }
                     );
-            })->orWhereHas("user", function ($query) use ($search) {
-                return $query->where("name", "LIKE", "%$search%");
-            });
+                });
         }
+
+        if ($year && $month) {
+            $rollTransactions->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
+        }
+
 
 
         $rollTransactions = $rollTransactions->paginate($perPage)->appends(request()->query());

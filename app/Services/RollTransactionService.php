@@ -36,13 +36,21 @@ class RollTransactionService
         // }
 
         $search = request()->input("search", false) ?? false;
+        $monthYear = request()->input("month_year", false) ?? false;
+        $month = false;
+        $year = false;
+        if ($monthYear) {
+            $monthYear = explode("-", $monthYear);
+            $year = $monthYear[0];
+            $month = $monthYear[1];
+        }
 
         return [
             "title"            => "Roll Transaction",
             "description"      => "Transaction roll in or out",
             "cardTitle"        => "Roll Transactions",
             "type"             => $type,
-            "rollTransactions" => (new RollTransactionRepository())->getAllDataRollTransactionPaginated($type, $search)
+            "rollTransactions" => (new RollTransactionRepository())->getAllDataRollTransactionPaginated($type, $search, $year, $month)
         ];
     }
 
