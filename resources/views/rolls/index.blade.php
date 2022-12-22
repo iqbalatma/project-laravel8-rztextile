@@ -11,6 +11,54 @@
                     Add New Roll</a>
             </div>
 
+
+            {{-- Search and filter Form --}}
+            <div class="row  mt-4">
+                <div class="col-md-4">
+                    <form action="{{ route('rolls.index') }}">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input id="bday-month" class="form-control" type="month" name="month_year" value="{{ request()->input('month_year') ??'' }}" required />
+                            </div>
+                            <div class="col-md-4">
+                                @if (request()->input('search'))
+                                <input type="hidden" name="search" value="{{ request()->input('search') }}">
+                                @endif
+                                <button class="btn btn-primary"><i class="fa-solid fa-filter"></i> Filter</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <form action="{{ route('rolls.index') }}">
+                                <div class="input-group mb-3">
+                                    @if (request()->input('month_year'))
+                                    <input type="hidden" name="month_year" value="{{ request()->input('month_year')??'' }}">
+                                    @endif
+                                    <input type="text" class="form-control" placeholder="What are you looking for ?" name="search" value="{{ request()->input('search')??'' }}">
+                                    <button class="btn btn-primary">
+                                        <i class="fa-solid fa-magnifying-glass"></i> Search
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-md-2">
+                            <form action="{{ route('rolls.index') }}">
+                                <div class="input-group mb-3">
+                                    <button class="btn btn-primary">
+                                        <i class="fa-solid fa-arrows-rotate"></i> Reset
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="table-responsive mt-4">
                 <table class="table align-middle">
                     <thead>
