@@ -26,8 +26,17 @@ class RollRepository
             $rolls->where("name", "LIKE", "%$search%")
                 ->orWhere("code", "LIKE", "%$search%")
                 ->orWhere("qrcode", "LIKE", "%$search%")
-                ->orWhereHas("unit", function ($query) use ($search) {
-                    return $query->where("name", "LIKE", "%$search%");
+                ->orWhereHas("unit", function ($query) use ($search, $year, $month) {
+                    $query->where("name", "LIKE", "%$search%");
+
+                    if ($year && $month) {
+                        $query->whereHas(
+                            "roll",
+                            function ($subquery) use ($year, $month) {
+                                    $subquery->whereYear("updated_at", "=", $year)->whereMonth("updated_at", "=", $month);
+                                }
+                        );
+                    }
                 });
         }
 

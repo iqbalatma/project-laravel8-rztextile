@@ -10,9 +10,15 @@ class Unit extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    
+
     protected $fillable = [
-        "name", "shortname"
+        "name",
+        "shortname"
     ];
 
+
+    public function roll()
+    {
+        return $this->hasMany(Roll::class);
+    }
 }
