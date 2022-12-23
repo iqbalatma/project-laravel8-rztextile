@@ -43,7 +43,7 @@ class InvoiceRepository
 
         if ($search) {
             $invoice->where("code", "LIKE", "%$search%")
-                ->orWhereHas("customer", function ($query) use ($search) {
+                ->orWhereHas("customer", function ($query) use ($search, $year, $month) {
                     $query->where("name", "LIKE", "%$search%");
                 });
         }
