@@ -1,4 +1,4 @@
-<x-app-layout title="{{ $title }}" description="{{ $description }}">
+<x-dashboard.layout title="{{ $title }}" description="{{ $description }}">
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-tags"></i>
@@ -36,4 +36,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-dashboard.layout>

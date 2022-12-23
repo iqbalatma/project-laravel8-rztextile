@@ -1,4 +1,4 @@
-<x-app-layout title="{{ $title }}" description="{{ $description }}">
+<x-dashboard.layout title="{{ $title }}" description="{{ $description }}">
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-comments"></i>
@@ -75,4 +75,4 @@
     <script src="{{ asset('js/whatsapp-messaging/index.js') }}"></script>
     @endsection
 
-</x-app-layout>
+</x-dashboard.layout>

@@ -1,4 +1,4 @@
-<x-app-layout title="{{ $title }}" description="{{ $description }}">
+<x-dashboard.layout title="{{ $title }}" description="{{ $description }}">
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-code"></i>
@@ -31,4 +31,4 @@
     @section("custom-scripts")
     <script src="{{ asset('js/payments/create.js') }}"></script>
     @endsection
-</x-app-layout>
+</x-dashboard.layout>

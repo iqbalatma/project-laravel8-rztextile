@@ -20,6 +20,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RollTransactionController;
 use App\Http\Controllers\SearchRollController;
 use App\Http\Controllers\ShoppingController;
+use App\Http\Controllers\Test;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\WhatsappMessagingController;
@@ -37,9 +38,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return view("welcome");
-});
+Route::get('/', [Test::class, "index"]);
+
+
 
 Route::middleware("guest")
     ->group(function () {

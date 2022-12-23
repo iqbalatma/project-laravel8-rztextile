@@ -1,4 +1,4 @@
-<x-app-layout title="{{ $title }}" description="{{ $description }}">
+<x-dashboard.layout title="{{ $title }}" description="{{ $description }}">
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-users-gear"></i>
@@ -14,7 +14,7 @@
 
 
 
-            @if (count($users)==0)
+            @if ($users->count()==0)
             <x-data-not-found></x-data-not-found>
             @else
             {{-- Table Users --}}
@@ -98,4 +98,4 @@
     <script src="{{ asset('js/user-managements/index.js') }}"></script>
     @endsection
 
-</x-app-layout>
+</x-dashboard.layout>

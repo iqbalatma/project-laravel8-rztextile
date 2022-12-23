@@ -10,23 +10,23 @@ use App\Http\Traits\WablasTrait;
 
 class WhatsappMessagingController extends Controller
 {
-  public function index(WhatsappMessagingService $service): Response
-  {
-    return response()->view("whatsapp-messaging.index", $service->getAllData());
-  }
+    public function index(WhatsappMessagingService $service): Response
+    {
+        return response()->view("whatsapp-messaging.index", $service->getAllData());
+    }
 
-  public function store(WhatsappMessagingService $service, WhatsappMessagingStoreRequest $request)
-  {
+    public function store(WhatsappMessagingService $service, WhatsappMessagingStoreRequest $request)
+    {
 
-    $sent = $service->sendMessage($request->validated());
+        $sent = $service->sendMessage($request->validated());
 
-    $redirect = redirect()
-      ->route("whatsapp.messaging.index");
+        $redirect = redirect()
+            ->route("whatsapp.messaging.index");
 
-    $sent ?
-      $redirect->with("success", "Send whatsapp message successfully") :
-      $redirect->with("failed", "Send whatsapp message failed");
+        $sent ?
+            $redirect->with("success", "Send whatsapp message successfully") :
+            $redirect->with("failed", "Send whatsapp message failed");
 
-    return $redirect;
-  }
+        return $redirect;
+    }
 }

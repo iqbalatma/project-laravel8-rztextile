@@ -1,4 +1,4 @@
-<x-app-layout title="{{ $title }}" description="{{ $description }}">
+<x-dashboard.layout title="{{ $title }}" description="{{ $description }}">
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-tags"></i>
@@ -28,4 +28,4 @@
     @section("custom-heads")
     <x-head.tinymce-config />
     @endsection
-</x-app-layout>
+</x-dashboard.layout>

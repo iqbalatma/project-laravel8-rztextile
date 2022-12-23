@@ -1,4 +1,4 @@
-<x-app-layout title="{{ $title }}" description="{{ $description }}">
+<x-dashboard.layout title="{{ $title }}" description="{{ $description }}">
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-file-lines"></i>
@@ -130,4 +130,4 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="{{ asset('js/reports/index.js') }}"></script>
     @endsection
-</x-app-layout>
+</x-dashboard.layout>

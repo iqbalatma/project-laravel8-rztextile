@@ -1,4 +1,4 @@
-<x-app-layout title="{{ $title }}" description="{{ $description }}">
+<x-dashboard.layout title="{{ $title }}" description="{{ $description }}">
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-boxes-stacked"></i>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            @if (count($rolls)!=0)
+            @if ($rolls->count()!=0)
             {{-- Table Data Roll --}}
             <div class="table-responsive mt-4">
                 <table class="table align-middle">
@@ -175,4 +175,4 @@
     @section("custom-scripts")
     <script src="{{ asset('js/rolls/index.js') }}"></script>
     @endsection
-</x-app-layout>
+</x-dashboard.layout>

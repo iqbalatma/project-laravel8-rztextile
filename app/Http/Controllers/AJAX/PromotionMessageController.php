@@ -14,9 +14,9 @@ class PromotionMessageController extends Controller
         $data = $service->getShowData($id);
         return response()->json([
             "message" => "Get promotion message by id successfully",
-            "status" => JsonResponse::HTTP_OK,
-            "error" => 0,
-            "data" => $data
+            "status"  => JsonResponse::HTTP_OK,
+            "error"   => 0,
+            "data"    => $data
         ]);
     }
 }

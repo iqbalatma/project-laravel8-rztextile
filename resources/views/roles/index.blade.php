@@ -1,4 +1,4 @@
-<x-app-layout title="{{ $title}}" description="{{ $description }}">
+<x-dashboard.layout title="{{ $title}}" description="{{ $description }}">
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-user-tag"></i>
@@ -7,7 +7,7 @@
         <div class="card-body">
 
 
-            @if (count($roles)==0)
+            @if ($roles->count()==0)
             <x-data-not-found></x-data-not-found>
             @else
             {{-- Table Data Roles --}}
@@ -34,4 +34,4 @@
             @endif
         </div>
     </div>
-</x-app-layout>
+</x-dashboard.layout>

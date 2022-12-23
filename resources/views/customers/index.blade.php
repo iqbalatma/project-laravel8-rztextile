@@ -1,4 +1,4 @@
-<x-app-layout title="{{ $title }}" description="{{ $description }}">
+<x-dashboard.layout title="{{ $title }}" description="{{ $description }}">
     <ul class="nav nav-tabs mb-4">
         <li class="nav-item">
             <a class="nav-link @if (Request::input('type')=='all' || is_null(Request::input('type'))) active @endif" aria-current="page" href="{{ route('customers.index',['type'=>'all']) }}">All</a>
@@ -345,4 +345,4 @@
     @section("custom-scripts")
     <script src="{{ asset('js/customers/index.js') }}"></script>
     @endsection
-</x-app-layout>
+</x-dashboard.layout>
