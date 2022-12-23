@@ -45,6 +45,14 @@ class InvoiceRepository
             $invoice->where("code", "LIKE", "%$search%")
                 ->orWhereHas("customer", function ($query) use ($search, $year, $month) {
                     $query->where("name", "LIKE", "%$search%");
+                    if ($year && $month) {
+                        $query->whereHas(
+                            "invoiceCustomer",
+                            function ($subQuery) use ($year, $month) {
+                                    $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
+                                }
+                        );
+                    }
                 });
         }
 
