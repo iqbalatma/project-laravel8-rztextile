@@ -32,15 +32,44 @@ class PaymentRepository
 
         if ($search) {
             $payments->where("code", "LIKE", "%$search%")
-                ->orWhereHas("user", function ($query) use ($search) {
-                    return $query->where("name", "LIKE", "%$search%");
+                ->orWhereHas("user", function ($query) use ($search, $year, $month) {
+                    $query->where("name", "LIKE", "%$search%");
+                    if ($year && $month) {
+                        $query->whereHas(
+                            "payment",
+                            function ($subQuery) use ($year, $month) {
+                                    $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
+                                }
+                        );
+                    }
                 })
-                ->orWhereHas("invoice", function ($query) use ($search) {
-                    return $query->where("code", "LIKE", "%$search%");
-                })
-                ->orWhereHas("invoice.customer", function ($query) use ($search) {
-                    return $query->where("name", "LIKE", "%$search%");
-                });
+                ->orWhereHas("invoice", function ($query) use ($search, $year, $month) {
+                    $query->where("code", "LIKE", "%$search%");
+
+                    if ($year && $month) {
+                        $query->whereHas(
+                            "payment",
+                            function ($subQuery) use ($year, $month) {
+                                    $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
+                                }
+                        );
+                    }
+                })->orWhereHas(
+                    "invoice.customer",
+                    function ($query) use ($search, $year, $month) {
+                        $query->where("name", "LIKE", "%$search%");
+
+                        if ($year && $month) {
+                            $query->whereHas(
+                                "payment",
+                                function ($subQuery) use ($year, $month) {
+                                            $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
+                                        }
+                            );
+                        }
+                    }
+                );
+
         }
 
 

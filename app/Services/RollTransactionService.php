@@ -21,25 +21,36 @@ class RollTransactionService
     {
         $type = request("type", "all");
 
-        switch ($type) {
-            case "broken":
-                $rollTransactions = (new RollTransactionRepository())->getDataRollTransactionBrokenPaginated();
-                break;
-            case "sold":
-                $rollTransactions = (new RollTransactionRepository())->getDataRollTransactionSoldPaginated();
-                break;
-            case "restock":
-                $rollTransactions = (new RollTransactionRepository())->getDataRollTransactionRestockPaginated();
-                break;
-            default:
-                $rollTransactions = (new RollTransactionRepository())->getAllDataRollTransactionPaginated();
+        // switch ($type) {
+        //     case "broken":
+        //         $rollTransactions = (new RollTransactionRepository())->getDataRollTransactionBrokenPaginated();
+        //         break;
+        //     case "sold":
+        //         $rollTransactions = (new RollTransactionRepository())->getDataRollTransactionSoldPaginated();
+        //         break;
+        //     case "restock":
+        //         $rollTransactions = (new RollTransactionRepository())->getDataRollTransactionRestockPaginated();
+        //         break;
+        //     default:
+        //         $rollTransactions =
+        // }
+
+        $search = request()->input("search", false) ?? false;
+        $monthYear = request()->input("month_year", false) ?? false;
+        $month = false;
+        $year = false;
+        if ($monthYear) {
+            $monthYear = explode("-", $monthYear);
+            $year = $monthYear[0];
+            $month = $monthYear[1];
         }
+
         return [
             "title"            => "Roll Transaction",
             "description"      => "Transaction roll in or out",
             "cardTitle"        => "Roll Transactions",
             "type"             => $type,
-            "rollTransactions" => $rollTransactions
+            "rollTransactions" => (new RollTransactionRepository())->getAllDataRollTransactionPaginated($type, $search, $year, $month)
         ];
     }
 
