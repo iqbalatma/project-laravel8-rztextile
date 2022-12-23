@@ -20,6 +20,7 @@
 
 <body>
     <script src="assets/js/initTheme.js"></script>
+    @include('sweetalert::alert')
     <div id="app">
 
         <x-dashboard.sidebar></x-dashboard.sidebar>
@@ -35,6 +36,8 @@
             <div class="page-heading">
                 <h3>{{ $title }}</h3>
             </div>
+
+            <x-alert></x-alert>
 
 
 
