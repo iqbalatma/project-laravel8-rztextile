@@ -39,7 +39,6 @@ class RegistrationService
         $user = (new UserRepository())->addNewDataUser($requestedData);
 
         dispatch(new SendVerificationEmailJob($user));
-        auth()->login($user);
 
         return $user;
     }

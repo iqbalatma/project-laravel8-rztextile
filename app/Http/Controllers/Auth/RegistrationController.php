@@ -32,7 +32,7 @@ class RegistrationController extends Controller
     {
         $stored = $service->storeNewData($request->validated());
         $redirect = redirect()
-            ->route("dashboard.index");
+            ->route("auth.login");
 
         $stored ?
             $redirect->with("success", "Register successfully") :

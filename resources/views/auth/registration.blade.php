@@ -2,122 +2,94 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <title>{{ $title }}</title>
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $title }}</title>
+    <link rel="stylesheet" href="{{ asset('mazer/assets/css/main/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('mazer/assets/css/pages/auth.css') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/images/logo/favicon.svg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/images/logo/favicon.png') }}" type="image/png">
 </head>
 
-<body class="bg-primary">
-  @include('sweetalert::alert')
-  <div id="layoutAuthentication">
-    <div id="layoutAuthentication_content">
-      <main>
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-7">
-              <div class="card shadow-lg border-0 rounded-lg mt-5">
-                <div class="card-header">
-                  <h3 class="text-center font-weight-light my-4">Create Account for RZ Textile System</h3>
+<body>
+    @include('sweetalert::alert')
+    <div id="auth">
+        <div class="row h-100">
+            <div class="col-lg-5 col-12">
+                <div id="auth-left">
+                    <div class="auth-logo">
+                        <a href="index.html"><img src="{{ asset('mazer/assets/images/logo/logo.svg') }}" alt="Logo"></a>
+                    </div>
+                    <h1 class="auth-title">Sign Up</h1>
+                    <p class="auth-subtitle mb-5">Input your data to register to our website.</p>
+
+                    <form action="{{ route('registration.store') }}" method="POST">
+                        @csrf
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" class="form-control form-control-xl" placeholder="ID Number" name="id_number">
+                            <div class="form-control-icon">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" class="form-control form-control-xl" placeholder="Enter your fullname" name="name">
+                            <div class="form-control-icon">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" class="form-control form-control-xl" placeholder="Enter your registration credential" name="registration_credential">
+                            <div class="form-control-icon">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="email" class="form-control form-control-xl" placeholder="Email" name="email">
+                            <div class="form-control-icon">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="password" class="form-control form-control-xl" placeholder="Password" name="password">
+                            <div class="form-control-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="password" class="form-control form-control-xl" placeholder="Confirm Password" name="password_confirmation">
+                            <div class="form-control-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" class="form-control form-control-xl" placeholder="Phone number" name="phone">
+                            <div class="form-control-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <textarea class="form-control form-control-xl" placeholder="Address" name="address"></textarea>
+                            <div class="form-control-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Sign Up</button>
+                    </form>
+                    <div class="text-center mt-5 text-lg fs-4">
+                        <p class='text-gray-600'>Already have an account? <a href="{{ route('auth.login') }}" class="font-bold">Log
+                                in</a>.</p>
+                    </div>
                 </div>
-                <div class="card-body">
-                  <form method="POST" action="{{ route('registration.store') }}">
-                    @csrf
-                    <div class="row mb-3">
-                      <div class="col-md-6">
-                        <div class="form-floating mb-3 mb-md-0">
-                          <input class="form-control" id="id_number" type="text" placeholder="Enter your ID Number" name="id_number" />
-                          <label for="id_number">ID Number</label>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-floating">
-                          <input class="form-control" id="name" type="text" placeholder="Enter your full name" name="name" />
-                          <label for="name">Full Name</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <div class="col-md-12">
-                        <div class="form-floating mb-3 mb-md-0">
-                          <input class="form-control" id="registration_credential" name="registration_credential" type="text" placeholder="Registration credential" />
-                          <label for="registration_credential">Registration Credential</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-floating mb-3">
-                      <input class="form-control" id="email" name="email" type="email" placeholder="name@example.com" />
-                      <label for="email">Email address</label>
-                    </div>
-                    <div class="row mb-3">
-                      <div class="col-md-6">
-                        <div class="form-floating mb-3 mb-md-0">
-                          <input class="form-control" id="password" name="password" type="password" placeholder="Create a password" />
-                          <label for="password">Password</label>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-floating mb-3 mb-md-0">
-                          <input class="form-control" id="password_confirmation" name="password_confirmation" type="password" placeholder="Confirm password" />
-                          <label for="password_confirmation">Confirm Password</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <div class="col-md-12">
-                        <div class="form-floating mb-3 mb-md-0">
-                          <input class="form-control" id="phone" name="phone" type="text" placeholder="Phone number" />
-                          <label for="phone">Phone Number</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <div class="col-md-12">
-                        <div class="form-floating mb-3 mb-md-0">
-                          <input class="form-control" id="address" name="address" type="text" placeholder="Address" />
-                          <label for="address">Address</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="mt-4 mb-0">
-                      <div class="d-grid">
-                        <button type="submit" class="btn btn-primary btn-block">
-                          Create Account
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <div class="card-footer text-center py-3">
-                  <div class="small"><a href="{{ route('auth.login') }}">Have an account? Go to login</a></div>
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </main>
-    </div>
-    <div id="layoutAuthentication_footer">
-      <footer class="py-4 bg-light mt-auto">
-        <div class="container-fluid px-4">
-          <div class="d-flex align-items-center justify-content-between small">
-            <div class="text-muted">Copyright &copy; RZ Textile 2022</div>
-            <div>
-              <a href="#">Privacy Policy</a>
-              &middot;
-              <a href="#">Terms &amp; Conditions</a>
+            <div class="col-lg-7 d-none d-lg-block">
+                <div id="auth-right">
+
+                </div>
             </div>
-          </div>
         </div>
-      </footer>
     </div>
-  </div>
-  <script src="{{ asset('js/app.js') }}"></script>
-  <script src="{{ asset('js/app-layout.js') }}"></script>
+    <script src="{{ asset('mazer/assets/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('mazer/assets/js/app.js') }}"></script>
 </body>
 
 </html>

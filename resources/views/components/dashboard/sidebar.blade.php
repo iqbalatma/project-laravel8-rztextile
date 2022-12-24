@@ -29,17 +29,18 @@
                 </div>
             </div>
         </div>
-        <div class="sidebar-menu">
+        <div class="sidebar-menu" id="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
 
-                <li class="sidebar-item active">
+
+                @canany(['isSuperAdmin', 'isAdmin'])
+                <li class="sidebar-item">
                     <a href="index.html" class="sidebar-link">
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
-
                 <li class="sidebar-item has-sub">
                     <a href="#" class="sidebar-link">
                         <i class="fa-solid fa-database"></i>
@@ -58,12 +59,14 @@
                                 <span>Roles</span>
                             </a>
                         </li>
+                        @can('isSuperAdmin')
                         <li class="submenu-item">
                             <a href="{{ route('registration.credentials.index') }}" class="sidebar-link">
                                 <i class="fa-solid fa-code"></i>
                                 <span>Registration Credential</span>
                             </a>
                         </li>
+                        @endcan
                         <li class="submenu-item">
                             <a href=" {{ route('rolls.index') }}" class="sidebar-link">
                                 <i class="fa-solid fa-boxes-stacked"></i>
@@ -72,10 +75,11 @@
                         </li>
                     </ul>
                 </li>
+                @endcanany
 
 
 
-
+                @canany(['isSuperAdmin', 'isAdmin', 'isCashier'])
                 <li class="sidebar-title">User And Customer</li>
                 <li class="sidebar-item">
                     <a href="{{ route('customers.index') }}" class="sidebar-link">
@@ -83,37 +87,48 @@
                         <span>Customer</span>
                     </a>
                 </li>
-
+                @can('isSuperAdmin')
                 <li class="sidebar-item">
                     <a href="{{ route('users.index') }}" class="sidebar-link">
                         <i class="fa-solid fa-users-gear"></i>
                         <span>User Management</span>
                     </a>
                 </li>
+                @endcan
+
 
                 <li class="sidebar-title">Transaction</li>
+                <li class="sidebar-item">
+                    <a href="{{ route('shopping.index') }}" class="sidebar-link">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span>Shopping</span>
+                    </a>
+                </li>
                 <li class="sidebar-item">
                     <a href="{{ route('invoices.index') }}" class="sidebar-link">
                         <i class="fa-solid fa-file-invoice-dollar"></i>
                         <span>Invoices</span>
                     </a>
                 </li>
-
+                @cannot('isCashier')
                 <li class="sidebar-item">
                     <a href="{{ route('reports.index') }}" class="sidebar-link">
                         <i class="fa-solid fa-file-lines"></i>
                         <span>Report</span>
                     </a>
                 </li>
-
+                @endcannot
                 <li class="sidebar-item">
                     <a href="{{ route('payments.index') }}" class="sidebar-link">
                         <i class="fa-solid fa-money-check-dollar"></i>
                         <span>Payments</span>
                     </a>
                 </li>
+                @endcanany
 
 
+
+                @canany(['isSuperAdmin', 'isAdmin', 'isCashier', 'isWarehouseKeeper'])
                 <li class="sidebar-title">Stock</li>
                 <li class="sidebar-item">
                     <a href="{{ route('search-roll.index') }}" class="sidebar-link">
@@ -121,6 +136,7 @@
                         <span>Search Roll</span>
                     </a>
                 </li>
+                @cannot('isCashier')
                 <li class="sidebar-item">
                     <a href="{{ route('roll.transactions.index') }}" class="sidebar-link">
                         <i class="fa-solid fa-right-left"></i>
@@ -139,7 +155,11 @@
                         <span>Put Away</span>
                     </a>
                 </li>
+                @endcannot
+                @endcanany
 
+
+                @canany(['isSuperAdmin', 'isAdmin'])
                 <li class="sidebar-title">Promotion</li>
                 <li class="sidebar-item">
                     <a href="{{ route('whatsapp.messaging.index') }}" class="sidebar-link">
@@ -153,6 +173,7 @@
                         <span>Promotion Message</span>
                     </a>
                 </li>
+                @endcanany
             </ul>
         </div>
     </div>

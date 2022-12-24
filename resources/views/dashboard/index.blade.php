@@ -1,4 +1,4 @@
-<x-app-layout title="{{ $title }}" description="{{ $description }}">
+<x-dashboard.layout title="{{ $title }}" description="{{ $description }}">
     <div class="row">
         <div class="col-xl-3 col-md-6">
             <div class="card bg-primary text-white mb-4">
@@ -179,4 +179,4 @@
     @section("custom-scripts")
     <script src="{{ asset('js/dashboard/index.js') }}"></script>
     @endsection
-</x-app-layout>
+</x-dashboard.layout>

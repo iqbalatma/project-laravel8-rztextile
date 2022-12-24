@@ -1,5 +1,4 @@
 window._ = require("lodash");
-import "bootstrap";
 import jQuery from "jquery";
 import "./../sbadmin/src/js/scripts";
 import Swal from "sweetalert2";
