@@ -23,8 +23,10 @@
         "@selectize/selectize": "^0.15.2",
         "bootstrap": "^5.2.2",
         "chart.js": "^3.9.1",
+        "datatables.net": "^1.13.1",
+        "datatables.net-bs5": "^1.13.1",
         "feather-icons": "^4.29.0",
-        "jquery": "^3.6.1",
+        "jquery": "^3.6.3",
         "jquery-ui": "^1.13.2",
         "sweetalert2": "^11.6.10",
         "tinymce": "^6.3.1"

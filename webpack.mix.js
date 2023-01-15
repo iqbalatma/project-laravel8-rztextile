@@ -33,4 +33,9 @@ mix.js("resources/js/app.js", "public/js")
     .js("resources/js/application/reports/index.js", "public/js/reports")
     .js("resources/js/application/rolls/create.js", "public/js/rolls")
     .js("resources/js/application/rolls/index.js", "public/js/rolls")
-    .sass("resources/sass/app.scss", "public/css");
+    .js(
+        "resources/js/pages/segmented-customers/index.js",
+        "public/js/segmented-customers"
+    )
+    .sass("resources/sass/app.scss", "public/css")
+    .sass("resources/sass/pages/segmented-customers.scss", "public/css/pages");

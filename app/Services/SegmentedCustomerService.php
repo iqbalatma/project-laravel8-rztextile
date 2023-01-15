@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\AppData;
+
 class SegmentedCustomerService
 {
 
@@ -9,11 +11,8 @@ class SegmentedCustomerService
     {
         $data = [
             "title"        => "Segmented Customer",
-            "cardTitleMVC" => "Most valueable customer",
-            "cardTitleMGC" => "Most growable customer",
-            "cardTitleM"   => "Migration customer",
-            "cardTitleBZ"  => "Below zero customer",
             "description"  => "Data customer with rfm point",
+            "segments" => AppData::CUSTOMER_SEGMENTS,
             "customers"      => [],
             "recencyPoint"   => [],
             "frequencyPoint" => [],

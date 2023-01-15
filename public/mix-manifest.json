@@ -12,5 +12,7 @@
     "/js/reports/index.js": "/js/reports/index.js",
     "/js/rolls/create.js": "/js/rolls/create.js",
     "/js/rolls/index.js": "/js/rolls/index.js",
-    "/css/app.css": "/css/app.css"
+    "/js/segmented-customers/index.js": "/js/segmented-customers/index.js",
+    "/css/app.css": "/css/app.css",
+    "/css/pages/segmented-customers.css": "/css/pages/segmented-customers.css"
 }

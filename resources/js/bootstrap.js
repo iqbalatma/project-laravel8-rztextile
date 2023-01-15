@@ -1,9 +1,9 @@
-window._ = require("lodash");
 import jQuery from "jquery";
 import Swal from "sweetalert2";
 import "@selectize/selectize";
 import Chart from "chart.js/auto";
 
+window._ = require("lodash");
 window.Swal = Swal;
 window.Chart = Chart;
 window.$ = window.jQuery = jQuery;

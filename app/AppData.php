@@ -20,9 +20,21 @@ class AppData
     public const TABLE_PROMOTION_MESSAGE = "promotion_messages";
 
     public const CUSTOMER_SEGMENTS = [
-        "mvc" => "Most Valueable Customers",
-        "mgc" => "Most Growthable Customers",
-        "m" => "Migration Customer",
-        "bz" => "Bellow Zero Customer"
+        [
+            "key" => "mvc",
+            "name" => "Most Valueable Customers",
+        ],
+        [
+            "key" => "mgc",
+            "name" => "Most Growthable Customers",
+        ],
+        [
+            "key" => "m",
+            "name" => "Migration Customer",
+        ],
+        [
+            "key" => "bz",
+            "name" => "Bellow Zero Customer"
+        ]
     ];
 }

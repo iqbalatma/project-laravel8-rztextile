@@ -1,16 +1,4 @@
 <x-dashboard.layout title="{{ $title }}" description="{{ $description }}">
-    {{-- <ul class="nav nav-tabs mb-4">
-        <li class="nav-item">
-            <a class="nav-link @if (Request::input('type')=='all' || is_null(Request::input('type'))) active @endif" aria-current="page" href="{{ route('customers.index',['type'=>'all']) }}">All</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link @if (Request::input('type')=='rfm')active @endif" href="{{ route('customers.index',['type'=>'rfm']) }}">RFM Point</a>
-    </li>
-    </ul> --}}
-
-
-
-    {{-- @if (isset($customer)) --}}
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-users-between-lines"></i>
@@ -20,11 +8,11 @@
             <div class="accordion mt-4" id="accordionExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                             Retency Point
                         </button>
                     </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                             <ul class="list-group">
                                 @foreach ($recencyPoint as $key => $point)
@@ -82,73 +70,32 @@
         </div>
     </div>
 
+    @foreach ($segments as $segment)
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-users-between-lines"></i>
-            {{ $cardTitleMVC }}
+            {{ $segment["name"] }}
         </div>
         <div class="card-body">
+            @if (isset($customers[$segment["key"]]) && count($customers[$segment["key"]])>0)
             <div class="table-responsive mt-4">
-                <table class="table align-middle">
+                <table class="table align-middle" id="table-{{ $segment['key'] }}">
                     <thead>
-                        <th>No</th>
-                        <th>Id Number</th>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Total Invoice</th>
-                        <th>Total Bill</th>
-                        <th>Total Recency</th>
-                        <th>RFM Point</th>
-                        <th>Last Updated Time</th>
-                    </thead>
-                    <tbody>
-                        @if (isset($customers["mvc"]))
-                        @foreach ($customers["mvc"] as $key => $customer)
                         <tr>
-                            {{-- <td>{{ $customers->firstItem()+$key }}</td> --}}
-                            <td>{{ $key+1 }}</td>
-                            <td>{{ $customer->customer->id_number ?? "-" }}</td>
-                            <td>{{ $customer->customer->name  ?? "-"}}</td>
-                            <td>{{ $customer->customer->phone ?? "-" }}</td>
-                            <td>{{ $customer->customer->address ?? "-"}}</td>
-                            <td>{{ $customer->total_invoices ?? "-" }}</td>
-                            <td class="text-nowrap">{{ formatToRupiah($customer->total_bill) }}</td>
-                            <td>{{ $customer->recency . " hari" }}</td>
-                            <td>{{ $customer->total_rfm }}</td>
-                            <td>{{ $customer->customer->updated_at ?? "-" }}</td>
+                            <th>No</th>
+                            <th>Id Number</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Total Invoice</th>
+                            <th>Total Bill</th>
+                            <th>Total Recency</th>
+                            <th>RFM Point</th>
+                            <th>Last Updated Time</th>
                         </tr>
-                        @endforeach
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="card mb-4">
-        <div class="card-header">
-            <i class="fa-solid fa-users-between-lines"></i>
-            {{ $cardTitleMGC }}
-        </div>
-        <div class="card-body">
-            <div class="table-responsive mt-4">
-                <table class="table align-middle">
-                    <thead>
-                        <th>No</th>
-                        <th>Id Number</th>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Total Invoice</th>
-                        <th>Total Bill</th>
-                        <th>Total Recency</th>
-                        <th>RFM Point</th>
-                        <th>Last Updated Time</th>
                     </thead>
                     <tbody>
-                        @if (isset($customers["mgc"]))
-                        @foreach ($customers["mgc"] as $key => $customer)
+                        @foreach ($customers[$segment["key"]] as $key => $customer)
                         <tr>
                             <td>{{ $key+1 }}</td>
                             <td>{{ $customer->customer->id_number ?? "-" }}</td>
@@ -162,108 +109,19 @@
                             <td>{{ $customer->customer->updated_at ?? "-" }}</td>
                         </tr>
                         @endforeach
-                        @endif
                     </tbody>
                 </table>
-
             </div>
+            @else
+            <x-data-not-found></x-data-not-found>
+            @endif
         </div>
     </div>
-
-    <div class="card mb-4">
-        <div class="card-header">
-            <i class="fa-solid fa-users-between-lines"></i>
-            {{ $cardTitleM }}
-        </div>
-        <div class="card-body">
-            <div class="table-responsive mt-4">
-                <table class="table align-middle">
-                    <thead>
-                        <th>No</th>
-                        <th>Id Number</th>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Total Invoice</th>
-                        <th>Total Bill</th>
-                        <th>Total Recency</th>
-                        <th>RFM Point</th>
-                        <th>Last Updated Time</th>
-                    </thead>
-                    <tbody>
-                        @if (isset($customers["m"]))
-                        @foreach ($customers["m"] as $key => $customer)
-                        <tr>
-                            <td>{{ $key+1 }}</td>
-                            <td>{{ $customer->customer->id_number ?? "-" }}</td>
-                            <td>{{ $customer->customer->name  ?? "-"}}</td>
-                            <td>{{ $customer->customer->phone ?? "-" }}</td>
-                            <td>{{ $customer->customer->address ?? "-"}}</td>
-                            <td>{{ $customer->total_invoices ?? "-" }}</td>
-                            <td class="text-nowrap">{{ formatToRupiah($customer->total_bill) }}</td>
-                            <td>{{ $customer->recency . " hari" }}</td>
-                            <td>{{ $customer->total_rfm }}</td>
-                            <td>{{ $customer->customer->updated_at ?? "-" }}</td>
-                        </tr>
-                        @endforeach
-                        @endif
-                    </tbody>
-                </table>
-
-                {{-- {{ $customers->links() }} --}}
-            </div>
-        </div>
-    </div>
-
-    <div class="card mb-4">
-        <div class="card-header">
-            <i class="fa-solid fa-users-between-lines"></i>
-            {{ $cardTitleBZ }}
-        </div>
-        <div class="card-body">
-            <div class="table-responsive mt-4">
-                <table class="table align-middle">
-                    <thead>
-                        <th>No</th>
-                        <th>Id Number</th>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Total Invoice</th>
-                        <th>Total Bill</th>
-                        <th>Total Recency</th>
-                        <th>RFM Point</th>
-                        <th>Last Updated Time</th>
-                    </thead>
-                    <tbody>
-                        @if (isset($customers["bz"]))
-                        @foreach ($customers["bz"] as $key => $customer)
-                        <tr>
-                            <td>{{ $key+1 }}</td>
-                            <td>{{ $customer->customer->id_number ?? "-" }}</td>
-                            <td>{{ $customer->customer->name  ?? "-"}}</td>
-                            <td>{{ $customer->customer->phone ?? "-" }}</td>
-                            <td>{{ $customer->customer->address ?? "-"}}</td>
-                            <td>{{ $customer->total_invoices ?? "-" }}</td>
-                            <td class="text-nowrap">{{ formatToRupiah($customer->total_bill) }}</td>
-                            <td>{{ $customer->recency . " hari" }}</td>
-                            <td>{{ $customer->total_rfm }}</td>
-                            <td>{{ $customer->customer->updated_at ?? "-" }}</td>
-                        </tr>
-                        @endforeach
-                        @endif
-                    </tbody>
-                </table>
-
-                {{-- {{ $customers->links() }} --}}
-            </div>
-        </div>
-    </div>
-    {{-- @else
-    <x-data-not-found></x-data-not-found>
-    @endif --}}
-
+    @endforeach
+    @section("custom-heads")
+    <link rel="stylesheet" href="{{ asset('css/pages/segmented-customers.css') }}" />
+    @endsection()
     @section("custom-scripts")
-    <script src="{{ asset('js/customers/index.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/segmented-customers/index.js') }}"></script>
     @endsection
 </x-dashboard.layout>
