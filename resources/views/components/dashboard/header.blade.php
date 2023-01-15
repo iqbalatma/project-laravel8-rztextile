@@ -66,7 +66,7 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src="{{ asset('mazer/assets/images/faces/1.jpg') }}">
+                                    <img src="{{ asset('build/images/faces/1.jpg') }}">
                                 </div>
                             </div>
                         </div>

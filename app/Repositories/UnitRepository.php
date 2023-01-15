@@ -1,41 +1,49 @@
-<?php 
+<?php
 namespace App\Repositories;
 
 use App\AppData;
 use App\Models\Unit;
 
-class UnitRepository{
+class UnitRepository
+{
 
-  public function getAllDataUnitPaginated(array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE):?object
-  {
-    return Unit::select($columns)
-      ->paginate($perPage);
-  }
+    private Unit $modal;
 
-  public function getAllDataUnit(array $columns = ["*"])
-  {
-    return Unit::select($columns)->get();
-  }
+    public function __construct()
+    {
+        $this->modal = new Unit();
+    }
+    public function getAllDataUnitPaginated(array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE): ?object
+    {
+        return $this->modal
+            ->select($columns)
+            ->paginate($perPage);
+    }
 
-  public function getDataUnitById(int $id, $columns = ["*"]):?object
-  {
-    return Unit::find($id, $columns);
-  }
+    public function getAllDataUnit(array $columns = ["*"])
+    {
+        return $this->modal->select($columns)->get();
+    }
 
-  public function updateDataUnitById(int $id, array $requestedData):bool
-  {
-    return Unit::where("id", $id)->update($requestedData);
-  }
+    public function getDataUnitById(int $id, $columns = ["*"]): ?object
+    {
+        return $this->modal->find($id, $columns);
+    }
 
-  public function addNewDataUnit(array $requestedData):?object
-  {
-    return Unit::create($requestedData);
-  }
+    public function updateDataUnitById(int $id, array $requestedData): bool
+    {
+        return $this->modal->where("id", $id)->update($requestedData);
+    }
 
-  public function deleteDataUnitById(int $id):bool
-  {
-    return Unit::destroy($id);
-  }
+    public function addNewDataUnit(array $requestedData): ?object
+    {
+        return $this->modal->create($requestedData);
+    }
+
+    public function deleteDataUnitById(int $id): bool
+    {
+        return Unit::destroy($id);
+    }
 }
 
 ?>
