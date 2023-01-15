@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\AppData;
@@ -25,20 +26,13 @@ class CustomerService
     {
         $data = [
             "title"        => "Customer",
-            "cardTitleMVC" => "Most valueable customer",
-            "cardTitleMGC" => "Most growable customer",
-            "cardTitleM"   => "Migration customer",
-            "cardTitleBZ"  => "Below zero customer",
             "description"  => "Data customer with rfm point",
+            "customers"      => [],
         ];
-        if (request()->input("type") == "rfm") {
-            $customer = (new RFMService())->getRFM();
-            return array_merge($data, $customer);
-        } else {
-            $search = request()->input("search", false) ?? false;
-            $data["customers"] = (new CustomerRepository())->getAllDataCustomerPaginated($search);
-            return $data;
-        }
+
+        $search = request()->input("search", false) ?? false;
+        $data["customers"] = (new CustomerRepository())->getAllDataCustomerPaginated($search);
+        return $data;
     }
 
 
@@ -93,8 +87,4 @@ class CustomerService
     {
         return (new CustomerRepository())->deleteCustomerById($id);
     }
-
-
 }
-
-?>

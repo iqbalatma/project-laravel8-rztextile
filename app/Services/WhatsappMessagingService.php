@@ -25,7 +25,8 @@ class WhatsappMessagingService
             "description"       => "Send promotion broadcast message to customer",
             "cardTitle"         => "Whatsapp Messaging",
             "customers"         => (new CustomerRepository())->getAllDataCustomer(),
-            "promotionMessages" => (new PromotionMessageRepository())->getAllDataPromotionMessage(self::GET_ALL_PROMOTION_MESSAGE_COLUMN)
+            "promotionMessages" => (new PromotionMessageRepository())->getAllDataPromotionMessage(self::GET_ALL_PROMOTION_MESSAGE_COLUMN),
+            "dataRFM" => (new RFMService())->getRFM()
         ];
     }
 
@@ -33,6 +34,21 @@ class WhatsappMessagingService
     {
         $payloads = $this->getDataPayload($requestedData);
         return WablasTrait::sendMessage($payloads);
+    }
+
+    public function sendBlast(array $requestedData)
+    {
+        $dataRFM = (new RFMService())->getRFM();
+        if (isset($dataRFM["customers"][$requestedData["segmentation"]])) {
+            $dataSet = collect($dataRFM["customers"][$requestedData["segmentation"]])->map(function ($item) use ($requestedData) {
+                return [
+                    "phone"   => $item["customer"]["phone"],
+                    "message" => $requestedData["message"]
+                ];
+            });
+
+            return WablasTrait::sendBlast(["data" => $dataSet]);
+        }
     }
 
     private function getDataPayload(array $requestedData): array
