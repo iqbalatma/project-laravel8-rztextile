@@ -19,6 +19,7 @@
                         <th>Name</th>
                         <th>Message</th>
                         <th>Last Updated Time</th>
+                        <th>Action</th>
                     </thead>
                     <tbody>
                         @foreach ($promotionMessages as $key => $message)
@@ -27,6 +28,13 @@
                             <td>{{ $message->name }}</td>
                             <td>{!! $message->message !!}</td>
                             <td>{{ $message->updated_at }}</td>
+                            <td>
+                                <div class="d-grid gap-2 d-md-block">
+                                    <a href="{{ route('promotion.messages.edit', $message->id) }}" class="btn btn-success">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                </div>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

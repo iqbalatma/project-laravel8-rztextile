@@ -7,11 +7,11 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\CRM\PromotionMessageController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PromotionMessageController;
 use App\Http\Controllers\RestockController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
@@ -228,16 +228,20 @@ Route::middleware(["auth", "verified"])
                         }
                     );
 
-                Route::controller(PromotionMessageController::class)
-                    ->name("promotion.messages.")
-                    ->prefix("/promotion-messages")
-                    ->group(
-                        function () {
-                            Route::get("/", "index")->name("index");
-                            Route::get("/create", "create")->name("create");
-                            Route::post("/", "store")->name("store");
-                        }
-                    );
+                Route::group(
+                    [
+                        "controller" => PromotionMessageController::class,
+                        "prefix" => "/promotion-messages",
+                        "as" => "promotion.messages."
+                    ],
+                    function () {
+                        Route::get("/", "index")->name("index");
+                        Route::get("/create", "create")->name("create");
+                        Route::post("/", "store")->name("store");
+                        Route::get("/{id}", "edit")->name("edit");
+                        Route::put("/", "update")->name("update");
+                    }
+                );
 
                 Route::controller(AJAXPromotionMessageController::class)
                     ->name("ajax.promotion.messages.")
