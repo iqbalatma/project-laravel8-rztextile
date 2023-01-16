@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Repositories\PromotionMessageRepository;
@@ -46,6 +47,24 @@ class PromotionMessageService
     {
         return (new PromotionMessageRepository())->addNewDataPromotionMessage($requestedData);
     }
-}
 
-?>
+    public function getEditData(int $id)
+    {
+        return [
+            "title"       => "Promotion Messages",
+            "description" => "Edit promotion message template",
+            "cardTitle"   => "Promotion Messages",
+            "message" => (new PromotionMessageRepository())->getDataPromotionMessageById($id)
+        ];
+    }
+
+    public function updateData(array $requestedData)
+    {
+        return (new PromotionMessageRepository())->updateDataPromotionMessageById($requestedData["id"], $requestedData);
+    }
+
+    public function deleteDataById(int $id)
+    {
+        return (new PromotionMessageRepository())->deleteDataById($id);
+    }
+}

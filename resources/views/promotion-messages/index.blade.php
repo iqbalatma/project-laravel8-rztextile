@@ -19,6 +19,7 @@
                         <th>Name</th>
                         <th>Message</th>
                         <th>Last Updated Time</th>
+                        <th>Action</th>
                     </thead>
                     <tbody>
                         @foreach ($promotionMessages as $key => $message)
@@ -27,6 +28,20 @@
                             <td>{{ $message->name }}</td>
                             <td>{!! $message->message !!}</td>
                             <td>{{ $message->updated_at }}</td>
+                            <td>
+                                <div class="d-grid gap-2 d-md-flex">
+                                    <a href="{{ route('promotion.messages.edit', $message->id) }}" class="btn btn-success btn-sm">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <form action="{{ route('promotion.messages.destroy', $message->id) }}" method="POST">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" class="btn btn-sm btn-danger btn-delete">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -36,4 +51,8 @@
             </div>
         </div>
     </div>
+
+    @section("custom-scripts")
+    <script src="{{ asset('js/pages/promotion-messages/index.js') }}"></script>
+    @endsection
 </x-dashboard.layout>

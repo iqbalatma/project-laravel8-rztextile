@@ -1,1 +1,1 @@
-<textarea id="myeditorinstance" name="message"></textarea>
+<textarea id="myeditorinstance" name="message">{{ $message }}</textarea>
