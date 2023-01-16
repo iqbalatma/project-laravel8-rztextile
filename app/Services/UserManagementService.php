@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\AppData;
@@ -92,10 +93,8 @@ class UserManagementService
      * @param int $id
      * @return bool
      */
-    public function suspendUserById(int $id): bool
+    public function changeStatusById(int $id)
     {
-        return (new UserRepository())->suspendUserById($id);
+        return (new UserRepository())->changeStatusById($id);
     }
 }
-
-?>

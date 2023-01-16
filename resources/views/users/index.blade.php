@@ -75,12 +75,18 @@
                                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-success">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-                                    <form action="{{ route('users.suspend', $user->id) }}" method="POST">
+                                    <form action="{{ route('users.change.status.active', $user->id) }}" method="POST">
                                         @csrf
-                                        @method("DELETE")
-                                        <button type="submit" class="btn btn-sm btn-warning btn-delete">
+                                        @method("PUT")
+                                        @if ($user->is_active)
+                                        <button type="submit" class="btn btn-sm btn-warning btn-change-status">
                                             <i class="fa-solid fa-x"></i>
                                         </button>
+                                        @else
+                                        <button type="submit" class="btn btn-sm btn-primary btn-change-status">
+                                            <i class="fa-solid fa-square-check"></i>
+                                        </button>
+                                        @endif
                                     </form>
                                 </div>
                             </td>

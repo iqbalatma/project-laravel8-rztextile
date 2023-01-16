@@ -114,7 +114,7 @@ Route::middleware(["auth", "verified"])
             );
 
 
-        Route::middleware("role:superadmin,admin,warehouse keeper")->group(
+        Route::middleware("role:administrator,administrasi")->group(
             function () {
                 Route::controller(RollTransactionController::class)
                     ->name("roll.transactions.")
@@ -139,7 +139,7 @@ Route::middleware(["auth", "verified"])
         );
 
 
-        Route::middleware("role:superadmin,admin,cashier")->group(
+        Route::middleware("role:administrator,administrasi,kasir")->group(
             function () {
                 Route::controller(ShoppingController::class)
                     ->name("shopping.")
@@ -197,7 +197,7 @@ Route::middleware(["auth", "verified"])
             }
         );
 
-        Route::middleware("role:superadmin,admin")->group(
+        Route::middleware("role:administrator,administrasi")->group(
             function () {
                 Route::controller(DashboardController::class)
                     ->name("dashboard.")
@@ -303,21 +303,23 @@ Route::middleware(["auth", "verified"])
             }
         );
 
-        Route::middleware("role:superadmin")->group(
+        Route::middleware("role:administrator")->group(
             function () {
-                Route::controller(UserManagementController::class)
-                    ->name("users.")
-                    ->prefix("/users")
-                    ->group(
-                        function () {
-                            Route::get("/", "index")->name("index");
-                            Route::get("/create", "create")->name("create");
-                            Route::post("/", "store")->name("store");
-                            Route::get("/edit/{id}", "edit")->name("edit");
-                            Route::patch("/{id}", "update")->name("update");
-                            Route::delete("/{id}", "suspend")->name("suspend");
-                        }
-                    );
+                Route::group(
+                    [
+                        "controller" => UserManagementController::class,
+                        "prefix" => "/users",
+                        "as" => "users."
+                    ],
+                    function () {
+                        Route::get("/", "index")->name("index");
+                        Route::get("/create", "create")->name("create");
+                        Route::post("/", "store")->name("store");
+                        Route::get("/edit/{id}", "edit")->name("edit");
+                        Route::patch("/{id}", "update")->name("update");
+                        Route::put("/{id}", "changeStatusActive")->name("change.status.active");
+                    }
+                );
 
                 Route::controller(RegistrationCredentialController::class)
                     ->name("registration.credentials.")

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\AppData;
@@ -52,10 +53,15 @@ class UserRepository
         return $this->model->destroy($id);
     }
 
-    public function suspendUserById(int $id)
+    public function changeStatusById(int $id)
     {
-        return $this->model->where("id", $id)->update(["is_active" => false]);
+        $user = $this->getDataUserById($id);
+        if ($user->is_active) {
+            $user->is_active = false;
+        } else {
+            $user->is_active = true;
+        }
+        $user->save();
+        return $user;
     }
 }
-
-?>

@@ -99,16 +99,16 @@ class UserManagementController extends Controller
      * @param int $id
      * @return RedirectResponse
      */
-    public function suspend(UserManagementService $service, int $id): RedirectResponse
+    public function changeStatusActive(UserManagementService $service, int $id): RedirectResponse
     {
-        $deleted = $service->suspendUserById($id);
+        $deleted = $service->changeStatusById($id);
 
         $redirect = redirect()
             ->route("users.index");
 
         $deleted ?
-            $redirect->with("success", "Suspend user successfully") :
-            $redirect->with("failed", "Suspend user failed");
+            $redirect->with("success", "Change status active user successfully") :
+            $redirect->with("failed", "Change status active user failed");
 
         return $redirect;
     }
