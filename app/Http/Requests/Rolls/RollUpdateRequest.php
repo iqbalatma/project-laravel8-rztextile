@@ -26,8 +26,6 @@ class RollUpdateRequest extends BaseFormRequest
         return [
             "name" => "required|max:64",
             "code" => "required|max:64",
-            "quantity_roll" => "required|numeric",
-            "quantity_unit" => "required|numeric",
             "basic_price" => "required|numeric",
             "selling_price" => "required|numeric",
             "unit_id" => "required|numeric"
