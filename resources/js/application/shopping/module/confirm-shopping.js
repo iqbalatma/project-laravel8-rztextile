@@ -15,6 +15,8 @@ function purchase(dataSet) {
         method: "POST",
     })
         .done(function (response) {
+            console.log(response);
+
             if (response.status == 200) {
                 let title = "Purchasing successfully!";
                 if (
@@ -39,6 +41,8 @@ function purchase(dataSet) {
             }
         })
         .fail(function (response) {
+            console.log(response);
+
             Swal.fire({
                 icon: "failed",
                 title: "Purchasing failed. Something went wrong !",
