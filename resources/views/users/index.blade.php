@@ -95,7 +95,7 @@
     </div>
 
     @section("custom-scripts")
-    <script src="{{ asset('js/user-managements/index.js') }}"></script>
+    <script src="{{ asset('js/pages/user-managements/index.js') }}"></script>
     @endsection
 
 </x-dashboard.layout>

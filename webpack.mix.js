@@ -25,8 +25,8 @@ mix.js("resources/js/app.js", "public/js")
     .js("resources/js/application/customers/index.js", "public/js/customers")
     .js("resources/js/application/shopping/index.js", "public/js/shopping")
     .js(
-        "resources/js/application/user-managements/index.js",
-        "public/js/user-managements"
+        "resources/js/pages/user-managements/index.js",
+        "public/js/pages/user-managements"
     )
     .js("resources/js/application/payments/create.js", "public/js/payments")
     .js("resources/js/application/units/index.js", "public/js/units")
@@ -35,7 +35,7 @@ mix.js("resources/js/app.js", "public/js")
     .js("resources/js/application/rolls/index.js", "public/js/rolls")
     .js(
         "resources/js/pages/segmented-customers/index.js",
-        "public/js/segmented-customers"
+        "public/js/pages/segmented-customers"
     )
     .sass("resources/sass/app.scss", "public/css")
     .sass("resources/sass/pages/segmented-customers.scss", "public/css/pages");

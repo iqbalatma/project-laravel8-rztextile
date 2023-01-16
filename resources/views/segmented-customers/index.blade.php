@@ -122,6 +122,6 @@
     <link rel="stylesheet" href="{{ asset('css/pages/segmented-customers.css') }}" />
     @endsection()
     @section("custom-scripts")
-    <script type="text/javascript" src="{{ asset('js/segmented-customers/index.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/segmented-customers/index.js') }}"></script>
     @endsection
 </x-dashboard.layout>
