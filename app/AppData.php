@@ -10,7 +10,7 @@ class AppData
     public const COMPANY_PHONE = "+62895123123";
     public const DEFAULT_PERPAGE = 10;
 
-    public const ROLE_ID_CUSTOMER = 5;
+    public const ROLE_ID_CUSTOMER = 4;
     public const ROLE_ID_SUPERADMIN = 1;
 
     public const BARCODE_LENGTH = 8;

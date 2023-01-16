@@ -16,25 +16,21 @@ class RoleSeeder extends Seeder
     {
         $data = [
             [
-                "name" => "superadmin",
+                "name" => "administrator",
                 "description" => "user that has all access"
             ],
             [
-                "name" => "admin",
-                "description" => "user that has administrator access"
+                "name" => "administrasi",
+                "description" => "user that act as stock checking"
             ],
             [
-                "name" => "cashier",
-                "description" => "user that responsible on transaction item"
-            ],
-            [
-                "name" => "warehouse keeper",
-                "description" => "user that responsible on warehouse transaction item"
+                "name" => "kasir",
+                "description" => "user that act as cashier"
             ],
             [
                 "name" => "customer",
                 "description" => "user that act as buyer items"
-            ]
+            ],
         ];
 
         foreach ($data as $key => $item) {

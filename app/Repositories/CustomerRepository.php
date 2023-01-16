@@ -67,7 +67,7 @@ class CustomerRepository
             ->withCount("invoiceCustomer")
             ->withMax("invoiceCustomer", "total_bill")
             ->withMax("invoiceCustomer", "created_at")
-            ->where("role_id", 5)
+            ->where("role_id", AppData::ROLE_ID_CUSTOMER)
             ->get();
     }
 }
