@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "24b58eedb324b3c3d3add96eb3a1c0b9",
+    "content-hash": "a2a6d49ade2ccd5beda773728b664940",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1539,6 +1539,44 @@
                 }
             ],
             "time": "2022-10-26T14:07:24+00:00"
+        },
+        {
+            "name": "iqbalatma/laravel-extend",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/iqbalatma/laravel-extend.git",
+                "reference": "01c5e03e38a111166c0454f1bff2580a95ee2ab1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/iqbalatma/laravel-extend/zipball/01c5e03e38a111166c0454f1bff2580a95ee2ab1",
+                "reference": "01c5e03e38a111166c0454f1bff2580a95ee2ab1",
+                "shasum": ""
+            },
+            "require": {
+                "monolog/monolog": "^2.8",
+                "php": ">=8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Iqbalatma\\LaravelExtend\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "iqbalatma",
+                    "email": "iqbalatma@gmail.com"
+                }
+            ],
+            "description": "Project for extend base class on laracel",
+            "support": {
+                "issues": "https://github.com/iqbalatma/laravel-extend/issues",
+                "source": "https://github.com/iqbalatma/laravel-extend/tree/1.0.1"
+            },
+            "time": "2023-01-14T14:41:06+00:00"
         },
         {
             "name": "laravel/framework",

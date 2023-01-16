@@ -8,16 +8,17 @@ use App\Services\AuthService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     /**
      * Description : use to show form login
-     * 
+     *
      * @param AuthService $service dependency injection
      * @return Response
      */
-    public function login(AuthService $service):Response
+    public function login(AuthService $service): Response
     {
         return response()->view("auth.login", $service->getLoginData());
     }
@@ -25,14 +26,17 @@ class AuthController extends Controller
 
     /**
      * Description : use to check is user authenticate or not
-     * 
+     *
      * @param AuthService $service dependency injection
      * @param AuthenticateRequest $request dependency injection
      * @return RedirectResponse
      */
-    public function authenticate(AuthService $service, AuthenticateRequest $request):RedirectResponse
+    public function authenticate(AuthService $service, AuthenticateRequest $request): RedirectResponse
     {
-        if($service->authenticate($request->validated())){
+        if ($service->authenticate($request->validated())) {
+            if (Auth::user()->role->id == 3) {
+                return redirect()->intended(route("shopping.index"));
+            }
             return redirect()->intended(route("dashboard.index"));
         }
 
@@ -42,16 +46,14 @@ class AuthController extends Controller
 
     /**
      * Description : use to logout account
-     * 
+     *
      * @param AuthService $service dependency injection
      * @param Request $request
      * @return RedirectResponse
      */
-    public function logout(AuthService $service, Request $request):RedirectResponse
+    public function logout(AuthService $service, Request $request): RedirectResponse
     {
         $service->logout($request);
         return redirect('/');
     }
-
-
 }

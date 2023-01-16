@@ -44,48 +44,58 @@ Route::get('/', function () {
 
 Route::middleware("guest")
     ->group(function () {
-        Route::controller(RegistrationController::class)
-            ->name("registration.")
-            ->prefix("/registration")
-            ->group(
-                function () {
-                    Route::get("/", "index")->name("index");
-                    Route::post("/", "store")->name("store");
-                }
-            );
+        // REGISTRATION
+        Route::group(
+            [
+                "controller" => RegistrationController::class,
+                "prefix" => "/registration",
+                "as" => "registration."
+            ],
+            function () {
+                Route::get("/", "index")->name("index");
+                Route::post("/", "store")->name("store");
+            }
+        );
 
-        Route::controller(ForgotPasswordController::class)
-            ->prefix("/forgot-password")
-            ->name("forgot.password.")
-            ->group(
-                function () {
-                    Route::get("/", "forgot")->name("forgot");
-                    Route::get("/reset/{token}/{email}", "reset")->name("reset");
-                    Route::post("/", "sendResetLink")->name("sendResetLink");
-                    Route::post("/reset-password", "resetPassword")->name("resetPassword");
-                }
-            );
+        // FORGOT PASSWORd
+        Route::group(
+            [
+                "controller" => ForgotPasswordController::class,
+                "prefix" => "/forgot-password",
+                "as" => "forgot.password."
+            ],
+            function () {
+                Route::get("/", "forgot")->name("forgot");
+                Route::get("/reset/{token}/{email}", "reset")->name("reset");
+                Route::post("/", "sendResetLink")->name("sendResetLink");
+                Route::post("/reset-password", "resetPassword")->name("resetPassword");
+            }
+        );
 
-        Route::controller(AuthController::class)
-            ->name("auth.")
-            ->group(
-                function () {
-                    Route::get("/login", "login")->name("login");
-                    Route::post("/authenticate", "authenticate")->name("authenticate");
-                    Route::post("/logout", "logout")->name("logout")->middleware("auth")->withoutMiddleware("guest");
-                }
-            );
+        // AUTH
+        Route::group(
+            [
+                "controller" => AuthController::class,
+                "as" => "auth."
+            ],
+            function () {
+                Route::get("/login", "login")->name("login");
+                Route::post("/authenticate", "authenticate")->name("authenticate");
+                Route::post("/logout", "logout")->name("logout")->middleware("auth")->withoutMiddleware("guest");
+            }
+        );
     });
 
 
-Route::controller(VerificationController::class)
-    ->name("verification.")
-    ->prefix("/email")
-    ->group(function () {
-        Route::get("/verify", "show")->name("notice")->middleware("auth");
-        Route::get("/verify/{id}/{hash}", "verify")->name("verify");
-        Route::post("/resend", "resend")->name("resend")->middleware("auth");
-    });
+Route::group([
+    "controller" => VerificationController::class,
+    "prefix" => "/email",
+    "as" => "verification."
+], function () {
+    Route::get("/verify", "show")->name("notice")->middleware("auth");
+    Route::get("/verify/{id}/{hash}", "verify")->name("verify");
+    Route::post("/resend", "resend")->name("resend")->middleware("auth");
+});
 
 
 Route::middleware(["auth", "verified"])

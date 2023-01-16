@@ -105,7 +105,7 @@
                         <span>Search Roll</span>
                     </a>
                 </li>
-                @canany(['isAdministrator', 'isAdmin', 'isCashier'])
+                @canany(['isAdministrator', 'isAdmin'])
                 <li class="sidebar-item">
                     <a href="{{ route('roll.transactions.create') }}" class="sidebar-link">
                         <i class="fa-solid fa-truck-ramp-box"></i>

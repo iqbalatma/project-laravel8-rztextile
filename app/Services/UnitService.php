@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Repositories\UnitRepository;
@@ -6,8 +7,15 @@ use App\Repositories\UnitRepository;
 class UnitService
 {
 
+    private $repository;
+
+    public function __construct()
+    {
+        $this->repository = new UnitRepository();
+    }
+
     /**
-     * Description : use to get all data for index controller
+     * Description : use to get all data unit paginated
      *
      * @return array
      */
@@ -17,7 +25,7 @@ class UnitService
             "title"       => "Unit",
             "description" => "Data unit of every roll",
             "cardTitle"   => "Units",
-            "units"       => (new UnitRepository())->getAllDataUnitPaginated(),
+            "units"       => $this->repository->getAllDataPaginated()
         ];
     }
 
@@ -43,12 +51,11 @@ class UnitService
      */
     public function getEditData(int $id): array
     {
-        $unit = (new UnitRepository())->getDataUnitById($id);
         return [
             "title"       => "Edit Unit",
             "description" => "Form for edit data unit",
             "cardTitle"   => "Edit Unit",
-            "unit"        => $unit
+            "unit"        => $this->repository->getDataById($id)
         ];
     }
 
@@ -57,9 +64,9 @@ class UnitService
      *
      * @return bool status update success or not
      */
-    public function updateData(int $id, array $requestedData): bool
+    public function updateData(int $id, array $requestedData): object
     {
-        return (new UnitRepository())->updateDataUnitById($id, $requestedData);
+        return $this->repository->updateDataById($id, $requestedData);
     }
 
     /**
@@ -69,7 +76,7 @@ class UnitService
      */
     public function storeNewData(array $requestedData): object
     {
-        return (new UnitRepository())->addNewDataUnit($requestedData);
+        return $this->repository->addNewData($requestedData);
     }
 
 
@@ -81,8 +88,6 @@ class UnitService
      */
     public function deleteData(int $id): bool
     {
-        return (new UnitRepository())->deleteDataUnitById($id);
+        return $this->repository->deleteDataById($id);
     }
 }
-
-?>

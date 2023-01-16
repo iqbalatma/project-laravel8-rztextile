@@ -11,6 +11,7 @@ class AppData
     public const DEFAULT_PERPAGE = 10;
 
     public const ROLE_ID_CUSTOMER = 4;
+    public const ROLE_ID_CASHIER = 3;
     public const ROLE_ID_SUPERADMIN = 1;
 
     public const BARCODE_LENGTH = 8;
