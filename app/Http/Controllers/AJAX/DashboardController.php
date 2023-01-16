@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function salesSummary(AjaxDashboardService $service):JsonResponse
+    public function __invoke(AjaxDashboardService $service): JsonResponse
     {
         $data = $service->getSummarySalesData();
         return response()->json([

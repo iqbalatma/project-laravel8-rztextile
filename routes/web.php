@@ -11,21 +11,17 @@ use App\Http\Controllers\CRM\PromotionMessageController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RestockController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RollController;
 use App\Http\Controllers\RegistrationCredentialController;
-use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RollTransactionController;
 use App\Http\Controllers\SearchRollController;
 use App\Http\Controllers\ShoppingController;
-use App\Http\Controllers\Test;
 use App\Http\Controllers\Transactions\SegmentedCustomerController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\WhatsappMessagingController;
-use App\Models\RollTransaction;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -94,217 +90,9 @@ Route::controller(VerificationController::class)
 
 Route::middleware(["auth", "verified"])
     ->group(function () {
-        Route::get("segmented-customers", SegmentedCustomerController::class)->name("segmendted.customers.index");
-
-        Route::controller(SearchRollController::class)
-            ->name("search-roll.")
-            ->prefix("/search-roll")
-            ->group(
-                function () {
-                    Route::get("/", "index")->name("index");
-                }
-            );
-        Route::controller(AJAXSearchRollController::class)
-            ->name("ajax.search.roll")
-            ->prefix("/ajax/search-roll")
-            ->group(
-                function () {
-                    Route::get("/{id}", "show")->name("show");
-                }
-            );
-
-
-        Route::middleware("role:administrator,administrasi")->group(
-            function () {
-                Route::controller(RollTransactionController::class)
-                    ->name("roll.transactions.")
-                    ->prefix("/roll-transactions")
-                    ->group(
-                        function () {
-                            Route::get("/put-away", "putAway")->name("putAway");
-                            Route::post("/put-away", "putAwayTransaction")->name("putAwayTransaction");
-                        }
-                    );
-
-                Route::controller(RestockController::class)
-                    ->name("restock.")
-                    ->prefix("/restock")
-                    ->group(
-                        function () {
-                            Route::get("/create", "create")->name("create");
-                            Route::post("/", "store")->name("store");
-                        }
-                    );
-            }
-        );
-
-
-        Route::middleware("role:administrator,administrasi,kasir")->group(
-            function () {
-                Route::controller(ShoppingController::class)
-                    ->name("shopping.")
-                    ->prefix("/shopping")
-                    ->group(
-                        function () {
-                            Route::get("/", "index")->name("index");
-                            Route::post("/purchase", "purchase")->name("purchase");
-                        }
-                    );
-
-                Route::group(
-                    [
-                        "controller" => InvoiceController::class,
-                        "prefix" => "/report/invoices",
-                        "as" => "report.invoices."
-                    ],
-                    function () {
-                        Route::get("/", "index")->name("index");
-                        Route::get("/{type}/{id}", "invoicPdf")->name("invoicPdf");
-                    }
-                );
-
-                Route::get("/report/roll-trannsactions", [RollTransactionController::class, "index"])->name("report.roll.transactions.index");
-
-
-
-
-
-                // Route::controller(PaymentController::class)
-                //     ->name("payments.")
-                //     ->prefix("/payments")
-                //     ->group(
-                //         function () {
-                //             Route::get("/", "index")->name("index");
-                //             Route::get("/create/{id}", "createByInvoiceId")->name("createByInvoiceId");
-                //             Route::get("/create", "create")->name("create");
-                //             Route::post("/", "store")->name("store");
-                //         }
-                //     );
-
-                Route::controller(CustomerController::class)
-                    ->name("customers.")
-                    ->prefix("/customers")
-                    ->group(
-                        function () {
-                            Route::get("/", "index")->name("index");
-                            Route::get("/create", "create")->name("create");
-                            Route::get("/edit/{id}", "edit")->name("edit");
-                            Route::post("/", "store")->name("store");
-                            Route::patch("/{id}", "update")->name("update");
-                            Route::delete("/{id}", "destroy")->name("destroy");
-                        }
-                    );
-            }
-        );
-
-        Route::middleware("role:administrator,administrasi")->group(
-            function () {
-                Route::controller(DashboardController::class)
-                    ->name("dashboard.")
-                    ->prefix("/dashboard")
-                    ->group(
-                        function () {
-                            Route::get("/", "index")->name("index");
-                        }
-                    );
-
-                Route::controller(AJAXDashboardController::class)
-                    ->name("ajax.dashboard.")
-                    ->prefix("/ajax/dashboard")
-                    ->group(
-                        function () {
-                            Route::get("/sales-summary", "salesSummary")->name("sales.summary");
-                        }
-                    );
-
-
-                Route::controller(WhatsappMessagingController::class)
-                    ->name("whatsapp.messaging.")
-                    ->prefix("/whatsapp-messaging")
-                    ->group(
-                        function () {
-                            Route::get("/", "index")->name("index");
-                            Route::post("/", "store")->name("store");
-                        }
-                    );
-
-                Route::group(
-                    [
-                        "controller" => PromotionMessageController::class,
-                        "prefix" => "/promotion-messages",
-                        "as" => "promotion.messages."
-                    ],
-                    function () {
-                        Route::get("/", "index")->name("index");
-                        Route::get("/create", "create")->name("create");
-                        Route::post("/", "store")->name("store");
-                        Route::get("/{id}", "edit")->name("edit");
-                        Route::put("/", "update")->name("update");
-                        Route::delete("/{id}", "destroy")->name("destroy");
-                    }
-                );
-
-                Route::controller(AJAXPromotionMessageController::class)
-                    ->name("ajax.promotion.messages.")
-                    ->prefix("/ajax/promotion-messages")
-                    ->group(
-                        function () {
-                            Route::get("/{id}", "show")->name("show");
-                        }
-                    );
-
-                // Route::controller(ReportController::class)
-                //     ->name("reports.")
-                //     ->prefix("/reports")
-                //     ->group(
-                //         function () {
-                //                         Route::get("/", "index")->name("index");
-                //                         Route::post("/download", "download")->name("download");
-                //                     }
-                //     );
-
-                Route::controller(RoleController::class)
-                    ->name("roles.")
-                    ->prefix("/roles")
-                    ->group(
-                        function () {
-                            Route::get("/", "index")->name("index");
-                        }
-                    );
-
-                Route::controller(UnitController::class)
-                    ->name("units.")
-                    ->prefix("/units")
-                    ->group(
-                        function () {
-                            Route::get("/", "index")->name("index");
-                            Route::get("/edit/{id}", "edit")->name("edit");
-                            Route::get("/create", "create")->name("create");
-                            Route::patch("/{id}", "update")->name("update");
-                            Route::post("/", "store")->name("store");
-                            Route::delete("/{id}", "destroy")->name("destroy");
-                        }
-                    );
-
-                Route::controller(RollController::class)
-                    ->name("rolls.")
-                    ->prefix("/rolls")
-                    ->group(
-                        function () {
-                            Route::get("/", "index")->name("index");
-                            Route::get("/create", "create")->name("create");
-                            Route::post("/", "store")->name("store");
-                            Route::get("/edit/{id}", "edit")->name("edit");
-                            Route::patch("/{id}", "update")->name("update");
-                            Route::get("/download/{qrcode}", "downloadQrcode")->name("downloadQrcode");
-                            Route::post("/print", "printQrcode")->name("printQrcode");
-                        }
-                    );
-            }
-        );
-
         Route::middleware("role:administrator")->group(
             function () {
+                // USER MANAGEMENT CONTROLLER
                 Route::group(
                     [
                         "controller" => UserManagementController::class,
@@ -321,18 +109,191 @@ Route::middleware(["auth", "verified"])
                     }
                 );
 
-                Route::controller(RegistrationCredentialController::class)
-                    ->name("registration.credentials.")
-                    ->prefix("/registration-credentials")
-                    ->group(
-                        function () {
-                            Route::get("/", "index")->name("index");
-                            Route::get("/create", "create")->name("create");
-                            Route::post("/", "store")->name("store");
-                            Route::delete("/{id}", "destroy")->name("destroy");
-                            Route::put("/{id}", "update")->name("update");
-                        }
-                    );
+                // // REGISTRATION CREDENTIAL
+                // Route::group(
+                //     [
+                //         "controller" => RegistrationCredentialController::class,
+                //         "prefix" => "/registration-credentials",
+                //         "as" => "registration.credentials."
+                //     ],
+                //     function () {
+                //         Route::get("/", "index")->name("index");
+                //         Route::get("/create", "create")->name("create");
+                //         Route::post("/", "store")->name("store");
+                //         Route::delete("/{id}", "destroy")->name("destroy");
+                //         Route::put("/{id}", "update")->name("update");
+                //     }
+                // );
+            }
+        );
+
+
+        Route::middleware("role:administrator,administrasi")->group(
+            function () {
+                // DASHBOARD
+                Route::get("/dashboard", DashboardController::class)->name("dashboard.index");
+                Route::get("/ajax/dashboard/sales-summary", AJAXDashboardController::class)->name("ajax.dashboard.sales.summary");
+
+                // Roll Transaction
+                Route::group(
+                    [
+                        "controller" => RollTransactionController::class,
+                        "prefix" => "/roll-transactions",
+                        "as" => "roll.transactions."
+                    ],
+                    function () {
+                        Route::get("/put-away", "putAway")->name("putAway");
+                        Route::post("/put-away", "putAwayTransaction")->name("putAwayTransaction");
+                    }
+                );
+
+                // Restock
+                Route::group(
+                    [
+                        "controller" => RestockController::class,
+                        "prefix" => "/restock",
+                        "as" => "restock."
+                    ],
+                    function () {
+                        Route::get("/create", "create")->name("create");
+                        Route::post("/", "store")->name("store");
+                    }
+                );
+
+                // PROMOTION MESSAGE
+                Route::group(
+                    [
+                        "controller" => PromotionMessageController::class,
+                        "prefix" => "/promotion-messages",
+                        "as" => "promotion.messages."
+                    ],
+                    function () {
+                        Route::get("/", "index")->name("index");
+                        Route::get("/create", "create")->name("create");
+                        Route::post("/", "store")->name("store");
+                        Route::get("/{id}", "edit")->name("edit");
+                        Route::put("/", "update")->name("update");
+                        Route::delete("/{id}", "destroy")->name("destroy");
+                    }
+                );
+                Route::get("/ajax/promotion-messages/{id}", AJAXPromotionMessageController::class)->name("ajax.promotion.messages.show");
+
+                // ROLE CONTROLLER
+                Route::get("/roles", RoleController::class)->name("roles.index");
+
+                // UNIT
+                Route::group(
+                    [
+                        "controller" => UnitController::class,
+                        "prefix" => "/units",
+                        "as" => "units."
+                    ],
+                    function () {
+                        Route::get("/", "index")->name("index");
+                        Route::get("/edit/{id}", "edit")->name("edit");
+                        Route::get("/create", "create")->name("create");
+                        Route::patch("/{id}", "update")->name("update");
+                        Route::post("/", "store")->name("store");
+                        Route::delete("/{id}", "destroy")->name("destroy");
+                    }
+                );
+
+                // ROLL
+                Route::group(
+                    [
+                        "controller" => RollController::class,
+                        "prefix" => "/rolls",
+                        "as" => "rolls."
+                    ],
+                    function () {
+                        Route::get("/", "index")->name("index");
+                        Route::get("/create", "create")->name("create");
+                        Route::post("/", "store")->name("store");
+                        Route::get("/edit/{id}", "edit")->name("edit");
+                        Route::patch("/{id}", "update")->name("update");
+                        Route::get("/download/{qrcode}", "downloadQrcode")->name("downloadQrcode");
+                        Route::post("/print", "printQrcode")->name("printQrcode");
+                    }
+                );
+
+                Route::group(
+                    [
+                        "controller" => WhatsappMessagingController::class,
+                        "prefix" => "/whatsapp-messaging",
+                        "as" => "whatsapp.messaging."
+                    ],
+                    function () {
+                        Route::get("/", "index")->name("index");
+                        Route::post("/", "store")->name("store");
+                    }
+                );
+
+                // Route::controller(ReportController::class)
+                //     ->name("reports.")
+                //     ->prefix("/reports")
+                //     ->group(
+                //         function () {
+                //                         Route::get("/", "index")->name("index");
+                //                         Route::post("/download", "download")->name("download");
+                //                     }
+                //     );
+            }
+        );
+
+
+
+        Route::get("/segmented-customers", SegmentedCustomerController::class)->name("segmendted.customers.index");
+        Route::get("/search-roll", SearchRollController::class)->name("search.roll.index");
+        Route::get("/ajax/search-roll/{id}", AJAXSearchRollController::class)->name("ajax.search.roll.show");
+
+        Route::controller(ShoppingController::class)
+            ->name("shopping.")
+            ->prefix("/shopping")
+            ->group(
+                function () {
+                    Route::get("/", "index")->name("index");
+                    Route::post("/purchase", "purchase")->name("purchase");
+                }
+            );
+
+        Route::group(
+            [
+                "controller" => InvoiceController::class,
+                "prefix" => "/report/invoices",
+                "as" => "report.invoices."
+            ],
+            function () {
+                Route::get("/", "index")->name("index");
+                Route::get("/{type}/{id}", "invoicPdf")->name("invoicPdf");
+            }
+        );
+
+        Route::get("/report/roll-trannsactions", [RollTransactionController::class, "index"])->name("report.roll.transactions.index");
+        // Route::controller(PaymentController::class)
+        //     ->name("payments.")
+        //     ->prefix("/payments")
+        //     ->group(
+        //         function () {
+        //             Route::get("/", "index")->name("index");
+        //             Route::get("/create/{id}", "createByInvoiceId")->name("createByInvoiceId");
+        //             Route::get("/create", "create")->name("create");
+        //             Route::post("/", "store")->name("store");
+        //         }
+        //     );
+
+        Route::group(
+            [
+                "controller" => CustomerController::class,
+                "prefix" => "/customers",
+                "as" => "customers."
+            ],
+            function () {
+                Route::get("/", "index")->name("index");
+                Route::get("/create", "create")->name("create");
+                Route::get("/edit/{id}", "edit")->name("edit");
+                Route::post("/", "store")->name("store");
+                Route::patch("/{id}", "update")->name("update");
+                Route::delete("/{id}", "destroy")->name("destroy");
             }
         );
     });

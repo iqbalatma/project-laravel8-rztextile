@@ -12,7 +12,7 @@ class DashboardController extends Controller
      * @param DashboardService $service
      * @return Response
      */
-    public function index(DashboardService $service): Response
+    public function __invoke(DashboardService $service): Response
     {
         return response()->view("dashboard.index", $service->getAllData());
     }

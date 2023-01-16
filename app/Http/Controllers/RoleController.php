@@ -14,7 +14,7 @@ class RoleController extends Controller
      *
      * @param RoleService $service dependency injection
      */
-    public function index(RoleService $service): Response
+    public function __invoke(RoleService $service): Response
     {
         return response()->view("roles.index", $service->getAllData());
     }

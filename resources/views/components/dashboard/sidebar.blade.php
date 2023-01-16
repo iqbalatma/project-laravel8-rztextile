@@ -37,7 +37,7 @@
                 <li class="sidebar-title">Menu</li>
 
 
-                @canany(['isSuperAdmin', 'isAdmin'])
+                @canany(['isAdministrator', 'isAdmin'])
                 <li class="sidebar-item">
                     <a href="{{ route('dashboard.index') }}" class="sidebar-link">
                         <i class="bi bi-grid-fill"></i>
@@ -74,7 +74,7 @@
                                 <span>Roles</span>
                             </a>
                         </li>
-                        {{-- @can('isSuperAdmin')
+                        {{-- @can('isAdministrator')
                         <li class="submenu-item">
                             <a href="{{ route('registration.credentials.index') }}" class="sidebar-link">
                         <i class="fa-solid fa-code"></i>
@@ -92,7 +92,7 @@
             </li>
             @endcanany
 
-            @canany(['isSuperAdmin', 'isAdmin', 'isCashier'])
+            @canany(['isAdministrator', 'isAdmin', 'isCashier'])
             <li class="sidebar-title">Transaction</li>
             <li class="sidebar-item">
                 <a href="{{ route('shopping.index') }}" class="sidebar-link">
@@ -124,10 +124,10 @@
 
 
 
-            @canany(['isSuperAdmin', 'isAdmin', 'isCashier', 'isWarehouseKeeper'])
+            @canany(['isAdministrator', 'isAdmin', 'isCashier', 'isWarehouseKeeper'])
             <li class="sidebar-title">Stock</li>
             <li class="sidebar-item">
-                <a href="{{ route('search-roll.index') }}" class="sidebar-link">
+                <a href="{{ route('search.roll.index') }}" class="sidebar-link">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <span>Search Roll</span>
                 </a>
@@ -149,7 +149,7 @@
             @endcanany
 
 
-            @canany(['isSuperAdmin', 'isAdmin'])
+            @canany(['isAdministrator', 'isAdmin'])
             <li class="sidebar-title">Promotion</li>
             <li class="sidebar-item">
                 <a href="{{ route('segmendted.customers.index') }}" class="sidebar-link">

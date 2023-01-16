@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 
 class SearchRollController extends Controller
 {
-    public function show(AjaxSearchRollService $service, int $id):JsonResponse
+    public function __invoke(AjaxSearchRollService $service, int $id): JsonResponse
     {
         $data = $service->getShowData($id);
         return response()->json([
