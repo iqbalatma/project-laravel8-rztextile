@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\AppData;
 use App\Models\User;
 use Carbon\Carbon;
 use Database\Factories\CustomerFactory;
