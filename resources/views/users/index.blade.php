@@ -50,8 +50,6 @@
                 bg-warning
                 @elseif($user->role->id==3)
                 bg-success
-                @else
-                bg-primary
                 @endif
                ">{{ ucfirst($user->role->name) }}</span>
                             </td>

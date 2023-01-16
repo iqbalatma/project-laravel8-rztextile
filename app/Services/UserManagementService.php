@@ -38,7 +38,7 @@ class UserManagementService
             "title"       => "User Management",
             "description" => "Form for add new data user",
             "cardTitle"   => "Add New User",
-            "roles"       => (new RoleRepository())->getAllDataRole()->except([AppData::ROLE_ID_CUSTOMER, AppData::ROLE_ID_SUPERADMIN])
+            "roles"       => (new RoleRepository())->getAllDataRole()->except([AppData::ROLE_ID_CUSTOMER])
         ];
     }
 
