@@ -32,4 +32,9 @@ class PromotionMessageRepository
     {
         return PromotionMessage::select($columns)->find($id);
     }
+
+    public function deleteDataById(int $id)
+    {
+        return PromotionMessage::where("id", $id)->delete();
+    }
 }

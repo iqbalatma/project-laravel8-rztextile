@@ -34,6 +34,10 @@ mix.js("resources/js/app.js", "public/js")
     .js("resources/js/application/rolls/create.js", "public/js/rolls")
     .js("resources/js/application/rolls/index.js", "public/js/rolls")
     .js(
+        "resources/js/pages/promotion-messages/index.js",
+        "public/js/pages/promotion-messages"
+    )
+    .js(
         "resources/js/pages/segmented-customers/index.js",
         "public/js/pages/segmented-customers"
     )

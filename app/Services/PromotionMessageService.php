@@ -62,4 +62,9 @@ class PromotionMessageService
     {
         return (new PromotionMessageRepository())->updateDataPromotionMessageById($requestedData["id"], $requestedData);
     }
+
+    public function deleteDataById(int $id)
+    {
+        return (new PromotionMessageRepository())->deleteDataById($id);
+    }
 }

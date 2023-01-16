@@ -73,4 +73,17 @@ class PromotionMessageController extends Controller
 
         return $redirect;
     }
+
+    public function destroy(PromotionMessageService $service, int $id)
+    {
+        $updated = $service->deleteDataById($id);
+        $redirect = redirect()
+            ->route("promotion.messages.index");
+
+        $updated ?
+            $redirect->with("success", "Delete data promotion message successfully") :
+            $redirect->with("failed", "Delete data promotion message failed");
+
+        return $redirect;
+    }
 }

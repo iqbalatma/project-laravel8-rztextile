@@ -240,6 +240,7 @@ Route::middleware(["auth", "verified"])
                         Route::post("/", "store")->name("store");
                         Route::get("/{id}", "edit")->name("edit");
                         Route::put("/", "update")->name("update");
+                        Route::delete("/{id}", "destroy")->name("destroy");
                     }
                 );
 

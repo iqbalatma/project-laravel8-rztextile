@@ -29,10 +29,17 @@
                             <td>{!! $message->message !!}</td>
                             <td>{{ $message->updated_at }}</td>
                             <td>
-                                <div class="d-grid gap-2 d-md-block">
-                                    <a href="{{ route('promotion.messages.edit', $message->id) }}" class="btn btn-success">
+                                <div class="d-grid gap-2 d-md-flex">
+                                    <a href="{{ route('promotion.messages.edit', $message->id) }}" class="btn btn-success btn-sm">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
+                                    <form action="{{ route('promotion.messages.destroy', $message->id) }}" method="POST">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" class="btn btn-sm btn-danger btn-delete">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
@@ -44,4 +51,8 @@
             </div>
         </div>
     </div>
+
+    @section("custom-scripts")
+    <script src="{{ asset('js/pages/promotion-messages/index.js') }}"></script>
+    @endsection
 </x-dashboard.layout>
