@@ -44,16 +44,16 @@
                             <td>{{ $user->phone }}</td>
                             <td>
                                 <span class="badge rounded-pill
-                @if ($user->role->id==1)
-                bg-danger
-                @elseif($user->role->id==2)
-                bg-warning
-                @elseif($user->role->id==3)
-                bg-success
-                @else
-                bg-primary
-                @endif
-               ">{{ ucfirst($user->role->name) }}</span>
+                                    @if ($user->role->id==1)
+                                    bg-danger
+                                    @elseif($user->role->id==2)
+                                    bg-warning
+                                    @elseif($user->role->id==3)
+                                    bg-success
+                                    @endif
+                                ">
+                                    {{ ucfirst($user->role->name) }}
+                                </span>
                             </td>
                             <td>
                                 @if ($user->is_active)
