@@ -17,6 +17,7 @@ class ShoppingController extends Controller
     public function purchase(ShoppingService $service, PurchaseRequest $request): JsonResponse
     {
         $stored = $service->purchase($request->validated());
+
         if ($stored) {
             return response()->json([
                 "status"  => JsonResponse::HTTP_OK,

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\AppData;
@@ -68,7 +69,6 @@ class ShoppingService
             DB::beginTransaction();
 
             $storedInvoice = $this->addNewInvoice($requestedData, $rolls);
-
 
             if ($requestedData["paid_amount"] > 0) {
                 #to add data payment
@@ -243,5 +243,3 @@ class ShoppingService
         return $totalCapital;
     }
 }
-
-?>
