@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Transactions;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Shopping\PurchaseRequest;
 use App\Services\ShoppingService;
 use Illuminate\Http\JsonResponse;

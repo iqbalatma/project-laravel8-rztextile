@@ -5,17 +5,6 @@
             {{ $cardTitle }}
         </div>
         <div class="card-body">
-            <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4">
-                <a href="{{ route('roll.transactions.putAway') }}" type="button" class="btn btn-danger">
-                    <i class="fa-solid fa-square-minus"></i>
-                    Put Away
-                </a>
-                <a href="{{ route('restock.create') }}" type="button" class="btn btn-primary">
-                    <i class="fa-solid fa-square-plus"></i>
-                    Restock
-                </a>
-            </div>
-
             <div class="row">
                 <div class="col-md-4">
                     <form action="{{ route('report.roll.transactions.index') }}">
@@ -139,6 +128,14 @@
 
             </div>
             @endif
+        </div>
+        <div class="card-footer">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <a href="{{ route('roll.transactions.create') }}" type="button" class="btn btn-sm btn-primary">
+                    <i class="fa-solid fa-square-plus"></i>
+                    Restock
+                </a>
+            </div>
         </div>
     </div>
 </x-dashboard.layout>

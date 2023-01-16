@@ -107,15 +107,9 @@
                 </li>
                 @canany(['isAdministrator', 'isAdmin', 'isCashier'])
                 <li class="sidebar-item">
-                    <a href="{{ route('restock.create') }}" class="sidebar-link">
+                    <a href="{{ route('roll.transactions.create') }}" class="sidebar-link">
                         <i class="fa-solid fa-truck-ramp-box"></i>
-                        <span>Restock</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('roll.transactions.putAway') }}" class="sidebar-link">
-                        <i class="fa-solid fa-circle-xmark"></i>
-                        <span>Put Away</span>
+                        <span>Restock & Deadstock</span>
                     </a>
                 </li>
                 @endcanany

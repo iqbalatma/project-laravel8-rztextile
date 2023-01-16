@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Transactions;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Reports\ReportDownloadRequest;
 use App\Services\ReportService;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -11,9 +12,9 @@ class ReportController extends Controller
 {
     /**
      * Description : use to show view report
-     * 
+     *
      */
-    public function index(ReportService $service):Response
+    public function index(ReportService $service): Response
     {
         return response()->view("reports.index", $service->getAllData());
     }
@@ -21,7 +22,7 @@ class ReportController extends Controller
 
     /**
      * Description : use to download report
-     * 
+     *
      * @param ReportService
      * @
      */

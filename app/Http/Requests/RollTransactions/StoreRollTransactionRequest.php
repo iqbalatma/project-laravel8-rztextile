@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\RollTransactions;
 
-use App\Http\Requests\BaseFormRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
-class PutAwayRequest extends BaseFormRequest
+class StoreRollTransactionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,6 +27,7 @@ class PutAwayRequest extends BaseFormRequest
             "roll_id" => "required|numeric",
             "quantity_roll" => "required|numeric",
             "quantity_unit" => "required|numeric",
+            "type" => "required|in:restock,broken"
         ];
     }
 }

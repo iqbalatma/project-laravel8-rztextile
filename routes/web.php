@@ -8,20 +8,20 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\CRM\PromotionMessageController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\RestockController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\RollController;
-use App\Http\Controllers\RegistrationCredentialController;
-use App\Http\Controllers\RollTransactionController;
-use App\Http\Controllers\SearchRollController;
-use App\Http\Controllers\ShoppingController;
-use App\Http\Controllers\Transactions\SegmentedCustomerController;
-use App\Http\Controllers\UnitController;
-use App\Http\Controllers\UserManagementController;
-use App\Http\Controllers\WhatsappMessagingController;
+use App\Http\Controllers\DataMaster\CustomerController;
+use App\Http\Controllers\Transactions\DashboardController;
+use App\Http\Controllers\Transactions\InvoiceController;
+use App\Http\Controllers\DataMaster\RoleController;
+use App\Http\Controllers\DataMaster\RollController;
+use App\Http\Controllers\DataMaster\RegistrationCredentialController;
+
+use App\Http\Controllers\Stock\SearchRollController;
+use App\Http\Controllers\Transactions\ShoppingController;
+use App\Http\Controllers\Stock\RollTransactionController;
+use App\Http\Controllers\CRM\SegmentedCustomerController;
+use App\Http\Controllers\DataMaster\UnitController;
+use App\Http\Controllers\DataMaster\UserManagementController;
+use App\Http\Controllers\CRM\WhatsappMessagingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -142,23 +142,11 @@ Route::middleware(["auth", "verified"])
                         "as" => "roll.transactions."
                     ],
                     function () {
-                        Route::get("/put-away", "putAway")->name("putAway");
-                        Route::post("/put-away", "putAwayTransaction")->name("putAwayTransaction");
-                    }
-                );
-
-                // Restock
-                Route::group(
-                    [
-                        "controller" => RestockController::class,
-                        "prefix" => "/restock",
-                        "as" => "restock."
-                    ],
-                    function () {
                         Route::get("/create", "create")->name("create");
                         Route::post("/", "store")->name("store");
                     }
                 );
+
 
                 // PROMOTION MESSAGE
                 Route::group(

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\DataMaster;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationCredentials\RegistrationCredentialStoreRequest;
 use App\Http\Requests\RegistrationCredentials\RegistrationCredentialUpdateRequest;
 use App\Services\RegistrationCredentialService;
@@ -11,11 +12,11 @@ class RegistrationCredentialController extends Controller
 {
     /**
      * Desription : use to show index view
-     * 
+     *
      * @param RegistrationCredentialService $servcice dependency injection
      * @return Response
      */
-    public function index(RegistrationCredentialService $service):Response
+    public function index(RegistrationCredentialService $service): Response
     {
         return response()->view("registration-credentials.index", $service->getAllData());
     }
@@ -31,9 +32,9 @@ class RegistrationCredentialController extends Controller
 
         $redirect = redirect()
             ->route("registration.credentials.index");
-            
-        $stored?
-            $redirect->with("success", "Add new registration credential successfully"):
+
+        $stored ?
+            $redirect->with("success", "Add new registration credential successfully") :
             $redirect->with("failed", "Add new registration credential failed");
 
         return $redirect;
@@ -45,24 +46,24 @@ class RegistrationCredentialController extends Controller
 
         $redirect = redirect()
             ->route("registration.credentials.index");
-            
-        $deleted?
-            $redirect->with("success", "Delete registration credential successfully"):
+
+        $deleted ?
+            $redirect->with("success", "Delete registration credential successfully") :
             $redirect->with("failed", "Delete registration credential failed");
 
         return $redirect;
     }
 
 
-    public function update(RegistrationCredentialService $service, RegistrationCredentialUpdateRequest $request,int $credentialId)
+    public function update(RegistrationCredentialService $service, RegistrationCredentialUpdateRequest $request, int $credentialId)
     {
         $updated = $service->updateData($credentialId, $request->validated());
 
         $redirect = redirect()
             ->route("registration.credentials.index");
-            
-        $updated?
-            $redirect->with("success", "Update registration credential successfully"):
+
+        $updated ?
+            $redirect->with("success", "Update registration credential successfully") :
             $redirect->with("failed", "Update registration credential failed");
 
         return $redirect;

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\DataMaster;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Rolls\RollPrintRequest;
 use App\Http\Requests\Rolls\RollStoreRequest;
 use App\Http\Requests\Rolls\RollUpdateRequest;

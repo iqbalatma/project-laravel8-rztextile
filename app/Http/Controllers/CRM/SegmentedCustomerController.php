@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Transactions;
+namespace App\Http\Controllers\CRM;
 
 use App\Http\Controllers\Controller;
 use App\Services\SegmentedCustomerService;

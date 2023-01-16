@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Stock;
 
+use App\Http\Controllers\Controller;
 use App\Services\SearchRollService;
 use Illuminate\Http\Response;
 

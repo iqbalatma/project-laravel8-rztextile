@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\DataMaster;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Units\UnitStoreRequest;
 use App\Http\Requests\Units\UnitUpdateRequest;
 use App\Services\UnitService;

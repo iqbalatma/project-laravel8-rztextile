@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Transactions;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\PaymentStoreRequest;
 use App\Services\PaymentService;
 use Illuminate\Http\RedirectResponse;
@@ -11,11 +12,11 @@ class PaymentController extends Controller
 {
     /**
      * Description : use to show list of payments
-     * 
+     *
      * @param PaymentService $service for execute business logic
-     * @return Response 
+     * @return Response
      */
-    public function index(PaymentService $service):Response
+    public function index(PaymentService $service): Response
     {
         return response()->view("payments.index", $service->getAllData());
     }
@@ -23,8 +24,8 @@ class PaymentController extends Controller
 
     /**
      * Description : use to show create form for payment
-     * 
-     * @param 
+     *
+     * @param
      */
     public function create(PaymentService $service)
     {
@@ -32,7 +33,7 @@ class PaymentController extends Controller
     }
 
 
-    public function createByInvoiceId(PaymentService $service, int $invoiceId):Response
+    public function createByInvoiceId(PaymentService $service, int $invoiceId): Response
     {
         return response()->view("payments.create-by-invoice-id", $service->getDataCreateByInvoiceId($invoiceId));
     }
@@ -40,12 +41,12 @@ class PaymentController extends Controller
 
     /**
      * Description : use to add new payment
-     * 
+     *
      * @param PaymentService $service
      * @param PaymentStoreRequest to validation
      * @return RedirectResponse
      */
-    public function store(PaymentService $service, PaymentStoreRequest $request):RedirectResponse
+    public function store(PaymentService $service, PaymentStoreRequest $request): RedirectResponse
     {
         $change = $service->storeNewData($request->validated());
 

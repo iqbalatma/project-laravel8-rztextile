@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CRM;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\WhatsappMessaging\WhatsappMessagingStoreRequest;
 use App\Services\WhatsappMessagingService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Http\Traits\WablasTrait;
 
 class WhatsappMessagingController extends Controller
 {
