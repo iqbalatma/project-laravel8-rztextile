@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\DataMaster;
 
 use App\AppData;
 use App\Jobs\SendVerificationEmailJob;
@@ -83,7 +83,7 @@ class UserManagementService extends BaseService
      * Description : use to add new data user
      *
      * @param array $requestedDatata
-     * @return ?object of new eloquent instance
+     * @return object of new eloquent instance
      */
     public function storeNewData(array $requestedData): object
     {
@@ -99,7 +99,7 @@ class UserManagementService extends BaseService
      *
      * @param int $id of user that want to be updated
      * @param array $requestedData request from client
-     * @return bool status of update data success or fail
+     * @return array
      */
     public function updateData(int $id, array $requestedData): array
     {
@@ -122,7 +122,7 @@ class UserManagementService extends BaseService
     /**
      * Delete data user by id
      * @param int $id
-     * @return bool
+     * @return array
      */
     public function changeStatusById(int $id): array
     {

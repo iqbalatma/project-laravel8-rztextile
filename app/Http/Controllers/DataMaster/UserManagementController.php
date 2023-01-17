@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\StoreUserRequest;
 use App\Http\Requests\Users\UserStoreRequest;
 use App\Http\Requests\Users\UserUpdateRequest;
-use App\Services\UserManagementService;
+use App\Services\DataMaster\UserManagementService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 

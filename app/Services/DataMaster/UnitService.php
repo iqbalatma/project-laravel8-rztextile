@@ -72,12 +72,15 @@ class UnitService extends BaseService
     }
 
     /**
-     * Description : use to update new data by id
+     * Use to update data unit
      *
-     * @return bool status update success or not
+     * @param int $id
+     * @param array $requestedData
+     * @return array for data response
      */
     public function updateData(int $id, array $requestedData): array
     {
+        $response = [];
         try {
             $this->checkData($id);
             $data = $this->repository->updateDataById($id, $requestedData, isReturnObject: false);
@@ -95,9 +98,10 @@ class UnitService extends BaseService
     }
 
     /**
-     * Description : use to add new data unit
+     * Use to add new data uni
      *
-     * @param array $requestedData validated data from form
+     * @param array $requestedData
+     * @return object
      */
     public function storeNewData(array $requestedData): object
     {
@@ -109,7 +113,7 @@ class UnitService extends BaseService
      * Description : use to delete data by id
      *
      * @param int $id
-     * @return bool status of delete data success or not
+     * @return array for data response
      */
     public function deleteData(int $id): array
     {
