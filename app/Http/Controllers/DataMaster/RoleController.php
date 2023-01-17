@@ -8,9 +8,8 @@ use Illuminate\Http\Response;
 
 class RoleController extends Controller
 {
-
     /**
-     * Description : use to show all data role
+     * Description : use to show all data roles
      *
      * @param RoleService $service dependency injection
      */

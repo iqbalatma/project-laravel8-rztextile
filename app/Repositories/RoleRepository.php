@@ -1,25 +1,17 @@
-<?php 
+<?php
+
 namespace App\Repositories;
 
 use App\AppData;
 use App\Models\Role;
+use Iqbalatma\LaravelExtend\BaseRepository;
 
-class RoleRepository{
+class RoleRepository extends BaseRepository
+{
+    protected $model;
 
-  public function getAllDataRolePaginated(array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE):?object
-  {
-    return Role::select($columns)
-      ->paginate($perPage);
-  }
-
-  public function getAllDataRole(array $columns = ["*"])
-  {
-    return Role::select($columns)
-      ->get();
-  }
-
-
-
+    public function __construct()
+    {
+        $this->model = new Role();
+    }
 }
-
-?>

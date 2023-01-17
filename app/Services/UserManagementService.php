@@ -7,10 +7,18 @@ use App\Jobs\SendVerificationEmailJob;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
+use Iqbalatma\LaravelExtend\BaseService;
 
-class UserManagementService
+class UserManagementService extends BaseService
 {
 
+    protected $repository;
+    private $roleRepo;
+    public function __construct()
+    {
+        $this->repository = new UserRepository();
+        $this->roleRepo = new RoleRepository();
+    }
     /**
      * Description : use to get all data for index controller
      *
@@ -22,7 +30,7 @@ class UserManagementService
             "title"       => "User Management",
             "description" => "Data user of this application",
             "cardTitle"   => "User Management",
-            "users"       => (new UserRepository())->getAllDataUserPaginated()
+            "users"       => $this->repository->getAllDataUserPaginated()
         ];
     }
 
@@ -38,7 +46,7 @@ class UserManagementService
             "title"       => "User Management",
             "description" => "Form for add new data user",
             "cardTitle"   => "Add New User",
-            "roles"       => (new RoleRepository())->getAllDataRole()->except([AppData::ROLE_ID_CUSTOMER])
+            "roles"       => $this->roleRepo->getAllData()->except([AppData::ROLE_ID_CUSTOMER])
         ];
     }
 
@@ -55,8 +63,8 @@ class UserManagementService
             "title"       => "User Management",
             "description" => "Form for edit data user",
             "cardTitle"   => "Edit User",
-            "roles"       => (new RoleRepository())->getAllDataRole(),
-            "user"        => (new UserRepository())->getDataUserById($id)
+            "roles"       => $this->roleRepo->getAllData(),
+            "user"        => $this->repository->getDataUserById($id)
         ];
     }
 
@@ -70,7 +78,7 @@ class UserManagementService
     public function storeNewData(array $requestedData)
     {
         $requestedData["password"] = Hash::make($requestedData["password"]);
-        $user = (new UserRepository())->addNewDataUser($requestedData);
+        $user = $this->repository->addNewDataUser($requestedData);
         dispatch(new SendVerificationEmailJob($user));
         return $user;
     }
@@ -85,7 +93,7 @@ class UserManagementService
      */
     public function updateData(int $id, array $requestedData): bool
     {
-        return (new UserRepository())->updateDataUserById($id, $requestedData);
+        return $this->repository->updateDataUserById($id, $requestedData);
     }
 
     /**
@@ -95,6 +103,6 @@ class UserManagementService
      */
     public function changeStatusById(int $id)
     {
-        return (new UserRepository())->changeStatusById($id);
+        return $this->repository->changeStatusById($id);
     }
 }

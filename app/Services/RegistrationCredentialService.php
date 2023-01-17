@@ -1,14 +1,21 @@
 <?php
+
 namespace App\Services;
 
 use App\Repositories\RegistrationCredentialRepository;
 use App\Repositories\RoleRepository;
 use Illuminate\Support\Str;
+use Iqbalatma\LaravelExtend\BaseService;
 
-class RegistrationCredentialService
+class RegistrationCredentialService extends BaseService
 {
-
-
+    protected $repository;
+    private $roleRepo;
+    public function __construct()
+    {
+        $this->repository = new RegistrationCredentialRepository();
+        $this->roleRepo = new RoleRepository();
+    }
     /**
      * Descriptioon : use to get all data for view index
      *
@@ -20,7 +27,7 @@ class RegistrationCredentialService
             "title"                   => "Registration Credentials",
             "description"             => "Registration credential for register from outside of admin system",
             "cardTitle"               => "Registration Credentials",
-            "registrationCredentials" => (new RegistrationCredentialRepository())->getAllDataRegistrationCredentialPaginated()
+            "registrationCredentials" => $this->repository->getAllDataRegistrationCredentialPaginated()
         ];
     }
 
@@ -31,29 +38,29 @@ class RegistrationCredentialService
             "title"       => "Registration Credentials",
             "description" => "Form for add new registration credential",
             "cardTitle"   => "Registration Credentials",
-            "roles"       => (new RoleRepository())->getAllDataRole(),
+            "roles"       => $this->roleRepo->getAllData(),
             "credential"  => Str::random(16)
         ];
     }
 
     public function storeNewData(array $requestedData)
     {
-        return (new RegistrationCredentialRepository())->addNewDataRegistrationCredential($requestedData);
+        return $this->repository->addNewDataRegistrationCredential($requestedData);
     }
 
     public function destroyData(int $id)
     {
-        return (new RegistrationCredentialRepository())->deleteDataRegistrationCredentialById($id);
+        return $this->repository->deleteDataRegistrationCredentialById($id);
     }
 
     public function updateData(int $id, array $requestedData): bool
     {
-        return (new RegistrationCredentialRepository())->updateDataRegistrationCredentialById($id, $requestedData);
+        return $this->repository->updateDataRegistrationCredentialById($id, $requestedData);
     }
 
     public function checkIsCredentialValid(string $credential): ?int
     {
-        $credential = (new RegistrationCredentialRepository())->getDataRegistrationCredentialByCredential($credential);
+        $credential = $this->repository->getDataRegistrationCredentialByCredential($credential);
 
         if ($credential) {
             return $credential->role_id;
@@ -62,5 +69,3 @@ class RegistrationCredentialService
         return null;
     }
 }
-
-?>

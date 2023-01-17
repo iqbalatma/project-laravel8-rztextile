@@ -1,11 +1,17 @@
 <?php
+
 namespace App\Services;
 
 use App\Repositories\RoleRepository;
+use Iqbalatma\LaravelExtend\BaseService;
 
-class RoleService
+class RoleService extends BaseService
 {
-
+    protected $repository;
+    public function __construct()
+    {
+        $this->repository = new RoleRepository();
+    }
     /**
      * Description : use to get all data for index controller
      *
@@ -17,9 +23,7 @@ class RoleService
             "title"       => "Role",
             "description" => "Role of every user to differentiate their access right",
             "cardTitle"   => "Roles",
-            "roles"       => (new RoleRepository())->getAllDataRolePaginated()
+            "roles"       => $this->repository->getAllDataPaginated()
         ];
     }
 }
-
-?>
