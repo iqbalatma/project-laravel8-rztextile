@@ -48,7 +48,7 @@ class ShoppingService
             "description" => "For transaction with customer and purchasing",
             "cardTitle"   => "Shopping",
             "rolls"       => (new RollRepository())->getAllDataRoll(self::ALL_ROLL_SELECT_COLUMN),
-            "customers"   => (new CustomerRepository())->getAllDataCustomer(self::ALL_CUSTOMER_SELECT_COLUMN)
+            "customers"   => (new CustomerRepository())->getAllData(self::ALL_CUSTOMER_SELECT_COLUMN)
         ];
     }
 

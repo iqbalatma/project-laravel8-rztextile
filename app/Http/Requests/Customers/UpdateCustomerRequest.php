@@ -4,7 +4,7 @@ namespace App\Http\Requests\Customers;
 
 use App\Http\Requests\BaseFormRequest;
 
-class CustomerUpdateRequest extends BaseFormRequest
+class UpdateCustomerRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,9 @@ class CustomerUpdateRequest extends BaseFormRequest
     {
         return [
             "name" => "required|max:32",
-            "phone" => "required|max:32",
-            "address" => "required|max:128",
-            "id_number" => "required|numeric"
+            "phone" => "max:32",
+            "address" => "max:128",
+            "id_number" => "numeric|nullable"
         ];
     }
 }

@@ -17,7 +17,7 @@ class DashboardService
             "title"           => "Dashboard",
             "description"     => "Transaction and finance summary chart and table",
             "total_invoices"  => $invoiceRepository->getTotalInvoiceMonthly(),
-            "total_customer" =>  collect((new CustomerRepository())->getAllDataCustomer())->count(),
+            "total_customer" =>  collect((new CustomerRepository())->getAllData())->count(),
             "total_bill_left" => formatToRupiah($invoiceRepository->getTotalBillLeftMonthly()),
             "total_profit"    => formatToRupiah($invoiceRepository->getTotalProfitMonthly()),
             "total_capital"   => formatToRupiah($invoiceRepository->getTotalCapitalMonthly()),

@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\AppData;
 use App\Models\Role;
 use Iqbalatma\LaravelExtend\BaseRepository;
 

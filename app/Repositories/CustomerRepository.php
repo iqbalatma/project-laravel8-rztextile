@@ -4,15 +4,27 @@ namespace App\Repositories;
 
 use App\AppData;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Iqbalatma\LaravelExtend\BaseRepository;
 
-class CustomerRepository
+class CustomerRepository extends BaseRepository
 {
+    protected $model;
 
-    public function getAllDataCustomerPaginated(string|bool $search = false, array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE): ?object
+    public function __construct()
     {
-        $users = User::with("role")
+        $this->model = new User();
+    }
+
+    public function getAllDataPaginatedWithSearch(string|bool $search = false, array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE): ?object
+    {
+        $columns = array_merge($columns, [DB::raw("count(*) as total_invoices")]);
+        $users = $this->model
+            ->with("role")
             ->select($columns)
-            ->where("role_id", AppData::ROLE_ID_CUSTOMER);
+            ->join("invoices", "invoices.customer_id", "users.id")
+            ->where("role_id", AppData::ROLE_ID_CUSTOMER)
+            ->groupBy("invoices.customer_id");
 
         if ($search) {
             $users->where("id_number", "LIKE", "%$search%")
@@ -27,47 +39,18 @@ class CustomerRepository
         return $users;
     }
 
-    public function getAllDataCustomer(array $columns = ["*"])
+
+    public function getAllData(array $columns = ["*"]): ?object
     {
-        return User::with("role")
+        return $this->model
+            ->with("role")
             ->select($columns)
             ->where("role_id", AppData::ROLE_ID_CUSTOMER)
             ->get();
     }
 
-
-    public function addNewDataCustomer(array $requestedData): ?object
-    {
-        return User::create($requestedData);
-    }
-
-    public function getCustomerById(int $id, array $columns = ["*"])
-    {
-        return User::find($id, $columns);
-    }
-
     public function getCustomerByIds(array $ids, array $columns = ["*"])
     {
-        return User::select($columns)->find($ids);
-    }
-
-    public function updateCustomerById(int $id, array $requestedData): bool
-    {
-        return User::where("id", $id)->update($requestedData);
-    }
-
-    public function deleteCustomerById(int $id): bool
-    {
-        return User::destroy($id);
-    }
-
-    public function getDataCustomerForRFM()
-    {
-        return User::select("id", "name")
-            ->withCount("invoiceCustomer")
-            ->withMax("invoiceCustomer", "total_bill")
-            ->withMax("invoiceCustomer", "created_at")
-            ->where("role_id", AppData::ROLE_ID_CUSTOMER)
-            ->get();
+        return $this->model->select($columns)->find($ids);
     }
 }

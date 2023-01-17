@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\DataMaster;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Customers\CustomerStoreRequest;
-use App\Http\Requests\Customers\CustomerUpdateRequest;
-use App\Services\CustomerService;
+use App\Http\Requests\Customers\StoreCustomerRequest;
+use App\Http\Requests\Customers\UpdateCustomerRequest;
+use App\Services\DataMaster\CustomerService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
@@ -38,10 +38,10 @@ class CustomerController extends Controller
      * Description : use to update data customer
      *
      * @param CustomerService $service dependency injection
-     * @param CustomerStoreRequest $request dependency injection
+     * @param StoreCustomerRequest $request dependency injection
      * @return RedirectResponse
      */
-    public function store(CustomerService $service, CustomerStoreRequest $request): RedirectResponse
+    public function store(CustomerService $service, StoreCustomerRequest $request): RedirectResponse
     {
         $stored = $service->storeNewData($request->validated());
 
@@ -64,29 +64,34 @@ class CustomerController extends Controller
      */
     public function edit(CustomerService $service, int $id): Response
     {
-        return response()->view("customers.edit", $service->getEditData($id));
+        $response = $service->getEditData($id);
+
+        if ($this->isError($response)) {
+            return $this->getErrorResponse();
+        }
+
+        return response()->view("customers.edit", $response);
     }
 
     /**
      * Description : use to update data into new data
      *
      * @param CustomerService $service dependency injection
-     * @param CustomerUpdateRequest $request dependency injection
+     * @param UpdateCustomerRequest $request dependency injection
      * @param int $id of customer that want to update
      * @return RedirectResponse
      */
-    public function update(CustomerService $service, CustomerUpdateRequest $request, int $id): RedirectResponse
+    public function update(CustomerService $service, UpdateCustomerRequest $request, int $id): RedirectResponse
     {
-        $updated = $service->updateData($id, $request->validated());
+        $response = $service->updateData($id, $request->validated());
 
-        $redirect = redirect()
-            ->route("customers.index");
+        if ($this->isError($response)) {
+            return $this->getErrorResponse();
+        }
 
-        $updated ?
-            $redirect->with("success", "Update data customer successfully") :
-            $redirect->with("failed", "Update data customer failed");
-
-        return $redirect;
+        return redirect()
+            ->route("customers.index")
+            ->with("success", "Update data customer successfully");
     }
 
     /**
@@ -98,15 +103,14 @@ class CustomerController extends Controller
      */
     public function destroy(CustomerService $service, int $id): RedirectResponse
     {
-        $deleted = $service->deleteData($id);
+        $response = $service->deleteData($id);
 
-        $redirect = redirect()
-            ->route("customers.index");
+        if ($this->isError($response)) {
+            return $this->getErrorResponse();
+        }
 
-        $deleted ?
-            $redirect->with("success", "Delete data customer successfully") :
-            $redirect->with("failed", "Delete data customer failed");
-
-        return $redirect;
+        return redirect()
+            ->route("customers.index")
+            ->with("success", "Delete data customer successfully");
     }
 }
