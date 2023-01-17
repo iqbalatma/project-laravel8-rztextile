@@ -22,6 +22,7 @@ use App\Http\Controllers\CRM\SegmentedCustomerController;
 use App\Http\Controllers\DataMaster\UnitController;
 use App\Http\Controllers\DataMaster\UserManagementController;
 use App\Http\Controllers\CRM\WhatsappMessagingController;
+use App\Http\Controllers\DataMaster\CustomerSegmentationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -178,6 +179,7 @@ Route::middleware(["auth", "verified"])
 
                 // ROLE CONTROLLER
                 Route::get("/roles", RoleController::class)->name("roles.index");
+                Route::get("/customer-segmentations", CustomerSegmentationController::class)->name("customer.segmentations.index");
 
                 // UNIT
                 Route::group(

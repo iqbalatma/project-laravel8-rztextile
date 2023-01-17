@@ -73,6 +73,12 @@
                             </a>
                         </li>
                         <li class="submenu-item">
+                            <a href="{{ route('customer.segmentations.index') }}" class="sidebar-link">
+                                <i class="fa-solid fa-user-tag"></i>
+                                <span>Customer Segmentations</span>
+                            </a>
+                        </li>
+                        <li class="submenu-item">
                             <a href=" {{ route('rolls.index') }}" class="sidebar-link">
                                 <i class="fa-solid fa-boxes-stacked"></i>
                                 <span>Rolls</span>
