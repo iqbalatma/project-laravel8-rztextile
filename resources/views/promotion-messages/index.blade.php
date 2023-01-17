@@ -12,6 +12,9 @@
                 </a>
             </div>
 
+            @if ($promotionMessages->count() == 0)
+            <x-data-not-found></x-data-not-found>
+            @else
             <div class="table-responsive mt-4">
                 <table class="table align-middle">
                     <thead>
@@ -49,6 +52,8 @@
 
                 {{ $promotionMessages->links() }}
             </div>
+            @endif
+
         </div>
     </div>
 
