@@ -5,7 +5,7 @@ namespace App\Http\Requests\Units;
 use App\Http\Requests\BaseFormRequest;
 use Illuminate\Validation\Rule;
 
-class UnitUpdateRequest extends BaseFormRequest
+class UpdateUnitRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

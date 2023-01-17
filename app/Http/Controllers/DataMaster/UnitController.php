@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\DataMaster;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Units\UnitStoreRequest;
-use App\Http\Requests\Units\UnitUpdateRequest;
-use App\Services\UnitService;
+use App\Http\Requests\Units\StoreUnitRequest;
+use App\Http\Requests\Units\UpdateUnitRequest;
+use App\Services\DataMaster\UnitService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
@@ -38,9 +38,9 @@ class UnitController extends Controller
      * Description : use to add new unit
      *
      * @param UnitService $service dependency injection
-     * @param UnitStoreRequest $request dependency injection
+     * @param StoreUnitRequest $request dependency injection
      */
-    public function store(UnitService $service, UnitStoreRequest $request)
+    public function store(UnitService $service, StoreUnitRequest $request)
     {
         $stored = $service->storeNewData($request->validated());
 
@@ -75,10 +75,10 @@ class UnitController extends Controller
      * Description : use to update data unit with requested data
      *
      * @param UnitService $service dependency injection
-     * @param UnitUpdateRequest $request dependency injection
+     * @param UpdateUnitRequest $request dependency injection
      * @param int $id of unit that want to update
      */
-    public function update(UnitService $service, UnitUpdateRequest $request, int $id): RedirectResponse
+    public function update(UnitService $service, UpdateUnitRequest $request, int $id): RedirectResponse
     {
         $response = $service->updateData($id, $request->validated());
         if (!$response["success"]) {
