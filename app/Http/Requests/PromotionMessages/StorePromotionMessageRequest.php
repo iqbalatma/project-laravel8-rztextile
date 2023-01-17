@@ -5,7 +5,7 @@ namespace App\Http\Requests\PromotionMessages;
 use App\Http\Requests\BaseFormRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PromotionMessageStoreRequest extends BaseFormRequest
+class StorePromotionMessageRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,8 @@ class PromotionMessageStoreRequest extends BaseFormRequest
     {
         return [
             "name" => "required",
-            "message" => "required"
+            "message" => "required",
+            "customer_segmentation_id" => "numeric|required"
         ];
     }
 }
