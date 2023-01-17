@@ -44,7 +44,9 @@ abstract class BaseRFMCalculation
             ]);
         }
 
-        $isReverse ?? $rangePoint = array_reverse($rangePoint);
+        if ($isReverse) {
+            $rangePoint =  array_reverse($rangePoint);
+        }
         return $rangePoint;
     }
 

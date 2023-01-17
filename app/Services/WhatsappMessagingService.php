@@ -25,7 +25,7 @@ class WhatsappMessagingService
             "description"       => "Send promotion broadcast message to customer",
             "cardTitle"         => "Whatsapp Messaging",
             "customers"         => (new CustomerRepository())->getAllData(),
-            "promotionMessages" => (new PromotionMessageRepository())->getAllDataPromotionMessage(self::GET_ALL_PROMOTION_MESSAGE_COLUMN),
+            "promotionMessages" => (new PromotionMessageRepository())->getAllData(self::GET_ALL_PROMOTION_MESSAGE_COLUMN),
             "dataRFM" => (new RFMService())->getRFM()
         ];
     }

@@ -110,7 +110,7 @@ class ShoppingService
         if ($requestedData["paid_amount"] >= $requestedData["total_bill"]) {
             $dataPayment["paid_amount"] = $requestedData["total_bill"];
         }
-        return (new PaymentRepository())->addNewDataPayment($dataPayment);
+        return (new PaymentRepository())->addNewData($dataPayment);
     }
 
     /**
@@ -141,7 +141,7 @@ class ShoppingService
         }
 
 
-        return (new InvoiceRepository())->addNewDataRepository($dataInvoice);
+        return (new InvoiceRepository())->addNewData($dataInvoice);
     }
 
 

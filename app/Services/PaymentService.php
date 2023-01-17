@@ -91,7 +91,7 @@ class PaymentService
         try {
             DB::beginTransaction();
             (new InvoiceService())->reduceBill($requestedData["invoice_id"], $requestedData["paid_amount"]);
-            (new PaymentRepository())->addNewDataPayment($requestedData);
+            (new PaymentRepository())->addNewData($requestedData);
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
@@ -121,4 +121,3 @@ class PaymentService
         return $newCode;
     }
 }
-?>

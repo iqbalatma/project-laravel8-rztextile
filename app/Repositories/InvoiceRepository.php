@@ -6,15 +6,18 @@ use App\AppData;
 use App\Models\Invoice;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Iqbalatma\LaravelExtend\BaseRepository;
 
-class InvoiceRepository
+class InvoiceRepository extends BaseRepository
 {
 
     private $month, $year;
+    protected $model;
     public function __construct()
     {
         $this->month = Carbon::now()->format("m");
         $this->year = Carbon::now()->format("Y");
+        $this->model = new Invoice();
     }
 
 
@@ -26,7 +29,7 @@ class InvoiceRepository
         array $columns = ["*"],
         $perPage = AppData::DEFAULT_PERPAGE
     ): ?object {
-        $invoice = Invoice::with(["customer", "user"])
+        $invoice = $this->model->with(["customer", "user"])
             ->select($columns)
             ->orderBy("created_at", "DESC");
 
@@ -64,17 +67,12 @@ class InvoiceRepository
     }
 
 
-    public function addNewDataRepository(array $requestedData): object
-    {
-        return Invoice::create($requestedData);
-    }
-
     public function getLatestDataInvoiceThisMonth()
     {
         $now = Carbon::now();
         $year = $now->year;
         $month = $now->month;
-        return Invoice::whereYear("created_at", "=", $year)
+        return $this->model->whereYear("created_at", "=", $year)
             ->whereMonth("created_at", "=", $month)
             ->orderBy("created_at", "DESC")
             ->first();
@@ -82,7 +80,7 @@ class InvoiceRepository
 
     public function getDataUnpaidInvoice(array $columns = ["*"])
     {
-        return Invoice::select($columns)
+        return $this->model->select($columns)
             ->where("is_paid_off", 0)
             ->where("bill_left", ">", 0)
             ->get();
@@ -90,14 +88,14 @@ class InvoiceRepository
 
     public function getDataInvoiceById(int $id, $columns = ["*"])
     {
-        return Invoice::with(["customer", "user", "roll_transaction.roll.unit", "payment"])
+        return $this->model->with(["customer", "user", "roll_transaction.roll.unit", "payment"])
             ->select($columns)
             ->find($id);
     }
 
     public function getAllDataInvoiceTotalBillThisMonth()
     {
-        return Invoice::selectRaw("DATE_FORMAT(created_at,'%d') date, SUM(total_bill) as total")
+        return $this->model->selectRaw("DATE_FORMAT(created_at,'%d') date, SUM(total_bill) as total")
             ->whereYear("created_at", "=", Carbon::now()->format("Y"))
             ->whereMonth("created_at", "=", Carbon::now()->format("m"))
             ->groupBy("date")
@@ -106,7 +104,7 @@ class InvoiceRepository
 
     public function getAllDataInvoiceTotalCapitalThisMonth()
     {
-        return Invoice::selectRaw("DATE_FORMAT(created_at,'%d') date, SUM(total_capital) as total")
+        return $this->model->selectRaw("DATE_FORMAT(created_at,'%d') date, SUM(total_capital) as total")
             ->whereYear("created_at", "=", Carbon::now()->format("Y"))
             ->whereMonth("created_at", "=", Carbon::now()->format("m"))
             ->groupBy("date")
@@ -117,7 +115,7 @@ class InvoiceRepository
     {
         $month = $month ?? $this->month;
         $year = $year ?? $this->year;
-        return Invoice::whereYear("created_at", "=", $year)
+        return $this->model->whereYear("created_at", "=", $year)
             ->whereMonth("created_at", "=", $month)
             ->count();
     }
@@ -126,14 +124,14 @@ class InvoiceRepository
     {
         $month = $month ?? $this->month;
         $year = $year ?? $this->year;
-        return Invoice::whereYear("created_at", "=", $year)
+        return $this->model->whereYear("created_at", "=", $year)
             ->whereMonth("created_at", "=", $month)
             ->sum("total_profit");
     }
 
     public function getDataLatestInvoice($limit = 5, $columns = ["*"])
     {
-        return Invoice::with("customer")
+        return $this->model->with("customer")
             ->orderBy("created_at", "DESC")
             ->limit($limit)
             ->get($columns);
@@ -143,7 +141,7 @@ class InvoiceRepository
     {
         $month = $month ?? $this->month;
         $year = $year ?? $this->year;
-        return Invoice::whereYear("created_at", "=", $year)
+        return $this->model->whereYear("created_at", "=", $year)
             ->whereMonth("created_at", "=", $month)
             ->sum("total_capital");
     }
@@ -152,14 +150,14 @@ class InvoiceRepository
     {
         $month = $month ?? $this->month;
         $year = $year ?? $this->year;
-        return Invoice::whereYear("created_at", "=", $year)
+        return $this->model->whereYear("created_at", "=", $year)
             ->whereMonth("created_at", "=", $month)
             ->sum("bill_left");
     }
 
     public function getAllDataInvoiceTotalProfitThisMonth()
     {
-        return Invoice::selectRaw("DATE_FORMAT(created_at,'%d') date, SUM(total_profit) as total")
+        return $this->model->selectRaw("DATE_FORMAT(created_at,'%d') date, SUM(total_profit) as total")
             ->whereYear("created_at", "=", Carbon::now()->format("Y"))
             ->whereMonth("created_at", "=", Carbon::now()->format("m"))
             ->groupBy("date")
@@ -168,12 +166,12 @@ class InvoiceRepository
 
     public function getDataInvoiceReport(array $period = [])
     {
-        return Invoice::whereBetween("created_at", $period)->get();
+        return $this->model->whereBetween("created_at", $period)->get();
     }
 
     public function getDataInvoiceForRFM()
     {
-        return Invoice::select("customer_id", DB::raw("count(*) as total_invoices"), DB::raw("sum(total_bill) as total_bill"), DB::raw("max(created_at) as latest_invoice_date"))
+        return $this->model->select("customer_id", DB::raw("count(*) as total_invoices"), DB::raw("sum(total_bill) as total_bill"), DB::raw("max(created_at) as latest_invoice_date"))
             ->with("customer")
             ->whereNotNull("customer_id")
             ->groupBy("customer_id")

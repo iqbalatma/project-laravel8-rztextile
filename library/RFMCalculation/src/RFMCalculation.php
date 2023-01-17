@@ -33,8 +33,18 @@ class RFMCalculation extends BaseRFMCalculation implements IRFMCalculation
         $this->setRFMPointRange();
 
         $rfmPoint = $this->getRFMPointRange();
-        $maping = ["bz", "m", "mgc", "mvc"];
-        $customerDistribution = ["bz"  => [], "m"   => [], "mgc" => [], "mvc" => []];
+        $maping = [
+            "bz",
+            "m",
+            "mgc",
+            "mvc"
+        ];
+        $customerDistribution = [
+            "bz"  => [],
+            "m"   => [],
+            "mgc" => [],
+            "mvc" => []
+        ];
         foreach ($this->datasetCustomer as $key => $value) {
             foreach ($rfmPoint as $subKey => $subValue) {
                 if (count($rfmPoint) - 1 == $subKey) {
@@ -48,6 +58,7 @@ class RFMCalculation extends BaseRFMCalculation implements IRFMCalculation
                 }
             }
         }
+
 
         return [
             "customers"      => $customerDistribution,

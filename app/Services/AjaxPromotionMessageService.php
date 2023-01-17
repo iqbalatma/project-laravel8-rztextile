@@ -8,14 +8,14 @@ class AjaxPromotionMessageService
 {
 
 
-  /**
-   * Description : use to get data by id
-   * 
-   * @param int $id
-   * @return ?object eloquent model
-   */
-  public function getShowData(int $id): ?object
-  {
-    return (new PromotionMessageRepository())->getDataPromotionMessageById($id);
-  }
+    /**
+     * Description : use to get data by id
+     *
+     * @param int $id
+     * @return ?object eloquent model
+     */
+    public function getShowData(int $id): ?object
+    {
+        return (new PromotionMessageRepository())->getDataById($id);
+    }
 }

@@ -27,7 +27,7 @@ class RegistrationCredentialService extends BaseService
             "title"                   => "Registration Credentials",
             "description"             => "Registration credential for register from outside of admin system",
             "cardTitle"               => "Registration Credentials",
-            "registrationCredentials" => $this->repository->getAllDataRegistrationCredentialPaginated()
+            "registrationCredentials" => $this->repository->getAllDataPaginated()
         ];
     }
 
@@ -45,22 +45,22 @@ class RegistrationCredentialService extends BaseService
 
     public function storeNewData(array $requestedData)
     {
-        return $this->repository->addNewDataRegistrationCredential($requestedData);
+        return $this->repository->addNewData($requestedData);
     }
 
     public function destroyData(int $id)
     {
-        return $this->repository->deleteDataRegistrationCredentialById($id);
+        return $this->repository->deleteDataById($id);
     }
 
     public function updateData(int $id, array $requestedData): bool
     {
-        return $this->repository->updateDataRegistrationCredentialById($id, $requestedData);
+        return $this->repository->updateDataById($id, $requestedData);
     }
 
     public function checkIsCredentialValid(string $credential): ?int
     {
-        $credential = $this->repository->getDataRegistrationCredentialByCredential($credential);
+        $credential = $this->repository->getDataByCredential($credential);
 
         if ($credential) {
             return $credential->role_id;

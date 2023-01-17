@@ -18,7 +18,7 @@ class PromotionMessageService
             "title"             => "Promotion Messages",
             "description"       => "Data template promotion message",
             "cardTitle"         => "Promotion Messages",
-            "promotionMessages" => (new PromotionMessageRepository())->getAllDataPromotionMessagePaginated()
+            "promotionMessages" => (new PromotionMessageRepository())->getAllDataPaginated()
         ];
     }
 
@@ -45,7 +45,7 @@ class PromotionMessageService
      */
     public function storeNewData(array $requestedData): ?object
     {
-        return (new PromotionMessageRepository())->addNewDataPromotionMessage($requestedData);
+        return (new PromotionMessageRepository())->addNewData($requestedData);
     }
 
     public function getEditData(int $id)
@@ -54,13 +54,13 @@ class PromotionMessageService
             "title"       => "Promotion Messages",
             "description" => "Edit promotion message template",
             "cardTitle"   => "Promotion Messages",
-            "message" => (new PromotionMessageRepository())->getDataPromotionMessageById($id)
+            "message" => (new PromotionMessageRepository())->getDataById($id)
         ];
     }
 
     public function updateData(array $requestedData)
     {
-        return (new PromotionMessageRepository())->updateDataPromotionMessageById($requestedData["id"], $requestedData);
+        return (new PromotionMessageRepository())->updateDataById($requestedData["id"], $requestedData);
     }
 
     public function deleteDataById(int $id)

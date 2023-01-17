@@ -12,7 +12,6 @@ class RFMService
 {
     private $dataCustomer;
     private $dataRFM = [];
-    private $isDataExists;
     public function __construct()
     {
         $this->dataCustomer = (new InvoiceRepository())->getDataInvoiceForRFM();

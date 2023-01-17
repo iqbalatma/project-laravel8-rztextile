@@ -1,12 +1,20 @@
 <?php
+
 namespace App\Repositories;
 
 use App\AppData;
 use App\Models\Payment;
 use Carbon\Carbon;
+use Iqbalatma\LaravelExtend\BaseRepository;
 
-class PaymentRepository
+class PaymentRepository extends BaseRepository
 {
+    protected $model;
+
+    public function __construct()
+    {
+        $this->model = new Payment();
+    }
 
     public function getAllDataPaymentPaginated(
         string $type = "all",
@@ -15,9 +23,8 @@ class PaymentRepository
         string|bool $month = false,
         array $columns = ["*"],
         int $perPage = AppData::DEFAULT_PERPAGE
-    ): ?object
-    {
-        $payments = Payment::with("user", "invoice.customer")
+    ): ?object {
+        $payments = $this->model->with("user", "invoice.customer")
             ->select($columns)
             ->orderBy("created_at", "DESC");
 
@@ -38,8 +45,8 @@ class PaymentRepository
                         $query->whereHas(
                             "payment",
                             function ($subQuery) use ($year, $month) {
-                                    $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
-                                }
+                                $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
+                            }
                         );
                     }
                 })
@@ -50,8 +57,8 @@ class PaymentRepository
                         $query->whereHas(
                             "payment",
                             function ($subQuery) use ($year, $month) {
-                                    $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
-                                }
+                                $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
+                            }
                         );
                     }
                 })->orWhereHas(
@@ -63,13 +70,12 @@ class PaymentRepository
                             $query->whereHas(
                                 "payment",
                                 function ($subQuery) use ($year, $month) {
-                                            $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
-                                        }
+                                    $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
+                                }
                             );
                         }
                     }
                 );
-
         }
 
 
@@ -81,7 +87,7 @@ class PaymentRepository
 
     public function getDataLatestPayment(int $limit = 5, array $columns = ["*"])
     {
-        return Payment::with("user")
+        return $this->model->with("user")
             ->orderBy("created_at", "DESC")
             ->limit($limit)
             ->get($columns);
@@ -90,18 +96,10 @@ class PaymentRepository
     public function getLatestDataPaymentThisMonth(array $columns = ["*"]): ?object
     {
         $now = Carbon::now();
-        return Payment::select($columns)
+        return $this->model->select($columns)
             ->whereYear("created_at", "=", $now->year)
             ->whereMonth("created_at", "=", $now->month)
             ->orderBy("created_at", "DESC")
             ->first();
     }
-
-    public function addNewDataPayment(array $requestedData): ?object
-    {
-        return Payment::create($requestedData);
-    }
-
 }
-
-?>
