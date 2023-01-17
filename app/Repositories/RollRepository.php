@@ -79,7 +79,6 @@ class RollRepository extends BaseRepository
         return $this->model->with("unit")->select($columns)->find($id);
     }
 
-
     public function increaseQuantityRollAndUnit(int $id, int $quantityRoll = 0, int $quantityUnit = 0)
     {
         return $this->model->where("id", $id)->update([

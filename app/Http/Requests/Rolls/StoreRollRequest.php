@@ -4,7 +4,7 @@ namespace App\Http\Requests\Rolls;
 
 use App\Http\Requests\BaseFormRequest;
 
-class RollStoreRequest extends BaseFormRequest
+class StoreRollRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

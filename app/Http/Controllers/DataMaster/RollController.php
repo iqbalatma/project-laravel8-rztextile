@@ -4,7 +4,7 @@ namespace App\Http\Controllers\DataMaster;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Rolls\RollPrintRequest;
-use App\Http\Requests\Rolls\RollStoreRequest;
+use App\Http\Requests\Rolls\StoreRollRequest;
 use App\Http\Requests\Rolls\UpdateRollRequest;
 use App\Services\DataMaster\RollService;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -81,7 +81,7 @@ class RollController extends Controller
      * @param RollService $service dependency injection
      * @return RedirectResponse
      */
-    public function store(RollService $service, RollStoreRequest $request): RedirectResponse
+    public function store(RollService $service, StoreRollRequest $request): RedirectResponse
     {
         $stored = $service->storeNewData($request->validated());
 
