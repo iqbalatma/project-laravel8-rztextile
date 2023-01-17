@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\DataMaster;
 
 use App\Repositories\RegistrationCredentialRepository;
 use App\Repositories\RoleRepository;

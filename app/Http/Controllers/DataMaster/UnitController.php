@@ -40,7 +40,7 @@ class UnitController extends Controller
      * @param UnitService $service dependency injection
      * @param StoreUnitRequest $request dependency injection
      */
-    public function store(UnitService $service, StoreUnitRequest $request)
+    public function store(UnitService $service, StoreUnitRequest $request): RedirectResponse
     {
         $stored = $service->storeNewData($request->validated());
 
@@ -60,7 +60,7 @@ class UnitController extends Controller
      * @param UnitService $service dependency injection
      * @param int $id of unit that want to edit
      */
-    public function edit(UnitService $service, int $id)
+    public function edit(UnitService $service, int $id): Response|RedirectResponse
     {
         $response = $service->getEditData($id);
         if ($this->isError($response)) {

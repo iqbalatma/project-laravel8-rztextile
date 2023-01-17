@@ -1,12 +1,19 @@
 <?php
+
 namespace App\Repositories;
 
 use App\AppData;
 use App\Models\Roll;
 use Illuminate\Support\Facades\DB;
+use Iqbalatma\LaravelExtend\BaseRepository;
 
-class RollRepository
+class RollRepository extends BaseRepository
 {
+    protected $model;
+    public function __construct()
+    {
+        $this->model = new Roll();
+    }
 
     public function getAllDataRollPaginated(
         string|bool $search = false,
@@ -14,9 +21,8 @@ class RollRepository
         string|bool $month = false,
         array $columns = ["*"],
         int $perPage = AppData::DEFAULT_PERPAGE
-    ): ?object
-    {
-        $rolls = Roll::select($columns);
+    ): ?object {
+        $rolls = $this->model->select($columns);
 
         if ($year && $month) {
             $rolls->whereYear("updated_at", "=", $year)->whereMonth("updated_at", "=", $month);
@@ -33,8 +39,8 @@ class RollRepository
                         $query->whereHas(
                             "roll",
                             function ($subquery) use ($year, $month) {
-                                    $subquery->whereYear("updated_at", "=", $year)->whereMonth("updated_at", "=", $month);
-                                }
+                                $subquery->whereYear("updated_at", "=", $year)->whereMonth("updated_at", "=", $month);
+                            }
                         );
                     }
                 });
@@ -47,15 +53,16 @@ class RollRepository
 
     public function getAllDataRoll(array $columns = ["*"])
     {
-        return Roll::with([
+        return $this->model->with([
             "unit" => function ($query) {
                 $query->select(["id", "name"]);
-            }])->select($columns)->get();
+            }
+        ])->select($columns)->get();
     }
 
     public function getLeastRoll(int $limit = 5, array $columns = ["*"])
     {
-        return Roll::with("unit")
+        return $this->model->with("unit")
             ->orderBy("quantity_unit", "ASC")
             ->limit($limit)
             ->get($columns);
@@ -63,27 +70,19 @@ class RollRepository
 
     public function getDataRollByIds(array $ids, array $columns = ["*"])
     {
-        return Roll::select($columns)->whereIn("id", $ids)->get();
+        return $this->model->select($columns)->whereIn("id", $ids)->get();
     }
 
-    public function addNewDataRoll(array $requestedData): object
+
+    public function getDataById(int $id, array $columns = ["*"]): ?object
     {
-        return Roll::create($requestedData);
+        return $this->model->with("unit")->select($columns)->find($id);
     }
 
-    public function getDataRollById(int $id, array $columns = ["*"]): ?object
-    {
-        return Roll::with("unit")->select($columns)->find($id);
-    }
-
-    public function updateDataRollById(int $id, array $requestedData): bool
-    {
-        return Roll::where("id", $id)->update($requestedData);
-    }
 
     public function increaseQuantityRollAndUnit(int $id, int $quantityRoll = 0, int $quantityUnit = 0)
     {
-        return Roll::where("id", $id)->update([
+        return $this->model->where("id", $id)->update([
             "quantity_roll" => DB::raw("quantity_roll+$quantityRoll"),
             "quantity_unit" => DB::raw("quantity_unit+$quantityUnit"),
         ]);
@@ -91,11 +90,9 @@ class RollRepository
 
     public function decreaseQuantityRollAndUnit(int $id, int $quantityRoll = 0, int $quantityUnit = 0)
     {
-        return Roll::where("id", $id)->update([
+        return $this->model->where("id", $id)->update([
             "quantity_roll" => DB::raw("quantity_roll-$quantityRoll"),
             "quantity_unit" => DB::raw("quantity_unit-$quantityUnit"),
         ]);
     }
 }
-
-?>

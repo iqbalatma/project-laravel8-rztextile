@@ -4,7 +4,7 @@ namespace App\Http\Requests\Rolls;
 
 use App\Http\Requests\BaseFormRequest;
 
-class RollUpdateRequest extends BaseFormRequest
+class UpdateRollRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

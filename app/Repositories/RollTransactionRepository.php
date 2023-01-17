@@ -1,11 +1,18 @@
 <?php
+
 namespace App\Repositories;
 
 use App\AppData;
 use App\Models\RollTransaction;
+use Iqbalatma\LaravelExtend\BaseRepository;
 
-class RollTransactionRepository
+class RollTransactionRepository extends BaseRepository
 {
+    protected $model;
+    public function __construct()
+    {
+        $this->model = new RollTransaction();
+    }
 
     public function getAllDataRollTransactionPaginated(
         string|bool $type = "all",
@@ -14,9 +21,8 @@ class RollTransactionRepository
         string|bool $month = false,
         array $columns = ["*"],
         int $perPage = AppData::DEFAULT_PERPAGE
-    ): ?object
-    {
-        $rollTransactions = RollTransaction::with("invoice")
+    ): ?object {
+        $rollTransactions = $this->model->with("invoice")
             ->select($columns)
             ->orderBy("created_at", "DESC");
 
@@ -40,22 +46,21 @@ class RollTransactionRepository
                         ->orWhereHas(
                             "unit",
                             function ($subQuery) use ($search) {
-                                    return $subQuery->where("name", "LIKE", "%$search%");
-                                }
+                                return $subQuery->where("name", "LIKE", "%$search%");
+                            }
                         )->whereHas(
                             "roll_transaction",
                             function ($subQuery) use ($year, $month) {
-                                    return $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
-                                }
-                        );
-                    ;
+                                return $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
+                            }
+                        );;
                 })
                 ->orWhereHas("user", function ($query) use ($search, $year, $month) {
                     return $query->where("name", "LIKE", "%$search%")->whereHas(
                         "roll_transaction",
                         function ($subQuery) use ($year, $month) {
-                                return $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
-                            }
+                            return $subQuery->whereYear("created_at", "=", $year)->whereMonth("created_at", "=", $month);
+                        }
                     );
                 });
         }
@@ -73,7 +78,7 @@ class RollTransactionRepository
 
     public function getDataRollTransactionRestockPaginated(array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE): ?object
     {
-        return RollTransaction::with("invoice")
+        return $this->model->with("invoice")
             ->select($columns)
             ->where("type", "restock")
             ->orderBy("created_at", "DESC")
@@ -84,7 +89,7 @@ class RollTransactionRepository
 
     public function getDataRollTransactionSoldPaginated(array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE): ?object
     {
-        return RollTransaction::with("invoice")
+        return $this->model->with("invoice")
             ->select($columns)
             ->where("type", "sold")
             ->orderBy("created_at", "DESC")
@@ -95,18 +100,11 @@ class RollTransactionRepository
 
     public function getDataRollTransactionBrokenPaginated(array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE): ?object
     {
-        return RollTransaction::with("invoice")
+        return $this->model->with("invoice")
             ->select($columns)
             ->where("type", "broken")
             ->orderBy("created_at", "DESC")
             ->paginate($perPage)
             ->appends(request()->query());
     }
-
-    public function addNewDataRollTransaction(array $requestedData): ?object
-    {
-        return RollTransaction::create($requestedData);
-    }
 }
-
-?>

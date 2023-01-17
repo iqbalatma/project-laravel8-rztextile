@@ -5,7 +5,7 @@ namespace App\Http\Controllers\DataMaster;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationCredentials\RegistrationCredentialStoreRequest;
 use App\Http\Requests\RegistrationCredentials\RegistrationCredentialUpdateRequest;
-use App\Services\RegistrationCredentialService;
+use App\Services\DataMaster\RegistrationCredentialService;
 use Illuminate\Http\Response;
 
 class RegistrationCredentialController extends Controller

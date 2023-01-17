@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\DataMaster;
 
 use App\Http\Controllers\Controller;
-use App\Services\RoleService;
+use App\Services\DataMaster\RoleService;
 use Illuminate\Http\Response;
 
 class RoleController extends Controller

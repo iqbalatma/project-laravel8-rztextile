@@ -5,8 +5,8 @@ namespace App\Http\Controllers\DataMaster;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Rolls\RollPrintRequest;
 use App\Http\Requests\Rolls\RollStoreRequest;
-use App\Http\Requests\Rolls\RollUpdateRequest;
-use App\Services\RollService;
+use App\Http\Requests\Rolls\UpdateRollRequest;
+use App\Services\DataMaster\RollService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
@@ -45,9 +45,15 @@ class RollController extends Controller
      * @param RollService $service dependency injection
      * @return Response
      */
-    public function edit(RollService $service, int $id): Response
+    public function edit(RollService $service, int $id): Response|RedirectResponse
     {
-        return response()->view("rolls.edit", $service->getEditData($id));
+        $response = $service->getEditData($id);
+
+        if ($this->isError($response)) {
+            return $this->getErrorResponse();
+        }
+
+        return response()->view("rolls.edit", $response);
     }
 
 
@@ -56,17 +62,16 @@ class RollController extends Controller
      *
      * @param RollService $service
      */
-    public function update(RollService $service, RollUpdateRequest $request, int $id)
+    public function update(RollService $service, UpdateRollRequest $request, int $id): RedirectResponse
     {
-        $updated = $service->updateData($id, $request->validated());
-        $redirect = redirect()
-            ->route("rolls.index");
+        $response = $service->updateData($id, $request->validated());
 
-        $updated ?
-            $redirect->with("success", "Update data roll successfully") :
-            $redirect->with("failed", "Update data roll failed");
-
-        return $redirect;
+        if ($this->isError($response)) {
+            return $this->getErrorResponse();
+        }
+        return redirect()
+            ->route("rolls.index")
+            ->with("success", "Update data roll successfully");
     }
 
 

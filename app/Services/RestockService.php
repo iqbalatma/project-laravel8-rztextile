@@ -45,7 +45,7 @@ class RestockService
                 $requestedData["quantity_unit"]
             );
 
-            $rollTransaction = (new RollTransactionRepository())->addNewDataRollTransaction($requestedData);
+            $rollTransaction = (new RollTransactionRepository())->addNewData($requestedData);
 
             DB::commit();
         } catch (Exception $e) {
@@ -55,5 +55,3 @@ class RestockService
     }
 
 }
-
-?>

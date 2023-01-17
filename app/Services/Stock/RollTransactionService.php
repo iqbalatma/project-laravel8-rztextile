@@ -94,13 +94,13 @@ class RollTransactionService
             $requestedData["quantity_unit"]
         );
 
-        return (new RollTransactionRepository())->addNewDataRollTransaction($requestedData);
+        return (new RollTransactionRepository())->addNewData($requestedData);
     }
 
     private function deadstock(array $requestedData): object
     {
         $rollRepository = new RollRepository();
-        $roll = $rollRepository->getDataRollById($requestedData["roll_id"]);
+        $roll = $rollRepository->getDataById($requestedData["roll_id"]);
 
         if ($requestedData["quantity_roll"] > $roll->quantity_roll || $requestedData["quantity_unit"] > $roll->quantity_unit) {
             throw new InvalidActionException("Roll quantity or quantity unit cannot bigger than stock on warehouse");
@@ -112,6 +112,6 @@ class RollTransactionService
             $requestedData["quantity_unit"]
         );
 
-        return (new RollTransactionRepository())->addNewDataRollTransaction($requestedData);
+        return (new RollTransactionRepository())->addNewData($requestedData);
     }
 }
