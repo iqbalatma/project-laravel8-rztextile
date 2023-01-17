@@ -60,9 +60,14 @@ class UnitController extends Controller
      * @param UnitService $service dependency injection
      * @param int $id of unit that want to edit
      */
-    public function edit(UnitService $service, int $id): Response
+    public function edit(UnitService $service, int $id)
     {
-        return response()->view("units.edit", $service->getEditData($id));
+        $response = $service->getEditData($id);
+        if (!$response["success"]) {
+            return redirect()->back()->withErrors($response["message"])->withInput();
+        }
+
+        return response()->view("units.edit", $response);
     }
 
 
@@ -75,15 +80,12 @@ class UnitController extends Controller
      */
     public function update(UnitService $service, UnitUpdateRequest $request, int $id): RedirectResponse
     {
-        $updated = $service->updateData($id, $request->validated());
-        $redirect = redirect()
-            ->route("units.index");
+        $response = $service->updateData($id, $request->validated());
+        if (!$response["success"]) {
+            return redirect()->back()->withErrors($response["message"])->withInput();
+        }
 
-        $updated ?
-            $redirect->with("success", "Update data unit successfully") :
-            $redirect->with("failed", "Update data unit failed");
-
-        return $redirect;
+        return redirect()->route("units.index")->with("success", "Update data unit success fully !");
     }
 
 
@@ -96,15 +98,13 @@ class UnitController extends Controller
      */
     public function destroy(UnitService $service, int $id): RedirectResponse
     {
-        $deleted = $service->deleteData($id);
+        $response = $service->deleteData($id);
+        if (!$response["success"]) {
+            return redirect()->back()->withErrors($response["message"])->withInput();
+        }
 
-        $redirect = redirect()
-            ->route("units.index");
-
-        $deleted ?
-            $redirect->with("success", "Delete data unit successfully") :
-            $redirect->with("failed", "Delete data unit failed");
-
-        return $redirect;
+        return redirect()
+            ->route("units.index")
+            ->with("success", "Delete data unit successfully");
     }
 }

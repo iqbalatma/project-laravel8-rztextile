@@ -14,7 +14,7 @@ class Controller extends BaseController
 
     public function __construct()
     {
-        $this->middleware(function($request,$next){
+        $this->middleware(function ($request, $next) {
             if (session('success')) {
                 Alert::success(session('success'));
             }
@@ -22,6 +22,17 @@ class Controller extends BaseController
             if (session('failed')) {
                 Alert::error(session('failed'));
             }
+
+            if (session("errors")) {
+
+                $html = "<ul style='list-style: none;'>";
+                foreach (session("errors")->getMessageBag()->getMessages() as $error) {
+                    $html .= "<li  style='list-style: none;'>$error[0]</li>";
+                }
+                $html .= "</ul>";
+                Alert::html('Error during action !', $html, 'error');
+            }
+
             return $next($request);
         });
     }

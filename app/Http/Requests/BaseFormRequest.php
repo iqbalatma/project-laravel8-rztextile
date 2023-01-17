@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
@@ -7,7 +7,7 @@ use Illuminate\Validation\ValidationException;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class BaseFormRequest extends FormRequest{
-  
+
   protected function failedValidation(Validator $validator)
   {
       $html = "<ul style='list-style: none;'>";
@@ -22,5 +22,3 @@ class BaseFormRequest extends FormRequest{
                   ->redirectTo($this->getRedirectUrl());
   }
 }
-
-?>

@@ -2,12 +2,16 @@
 
 namespace App\Services;
 
+use App\Exceptions\InvalidActionException;
+use App\Models\Unit;
 use App\Repositories\UnitRepository;
+use Exception;
+use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelExtend\Exceptions\EmptyDataException;
 
-class UnitService
+class UnitService extends BaseService
 {
-
-    private $repository;
+    protected $repository;
 
     public function __construct()
     {
@@ -51,12 +55,23 @@ class UnitService
      */
     public function getEditData(int $id): array
     {
-        return [
+        $response = [
+            "success"      => true,
             "title"       => "Edit Unit",
             "description" => "Form for edit data unit",
             "cardTitle"   => "Edit Unit",
-            "unit"        => $this->repository->getDataById($id)
         ];
+        try {
+            $this->checkData($id);
+            $response["unit"] = $this->getData();
+        } catch (Exception $e) {
+            $response =  [
+                "success" => false,
+                "message" => $e->getMessage(),
+            ];
+        }
+
+        return $response;
     }
 
     /**
@@ -64,9 +79,22 @@ class UnitService
      *
      * @return bool status update success or not
      */
-    public function updateData(int $id, array $requestedData): object
+    public function updateData(int $id, array $requestedData): array
     {
-        return $this->repository->updateDataById($id, $requestedData);
+        try {
+            $this->checkData($id);
+            $data = $this->repository->updateDataById($id, $requestedData, isReturnObject: false);
+            $response = [
+                "success" => true,
+                "data"    => $data,
+            ];
+        } catch (Exception $e) {
+            $response = [
+                "success" => false,
+                "message" => $e->getMessage(),
+            ];
+        }
+        return $response;
     }
 
     /**
@@ -86,8 +114,21 @@ class UnitService
      * @param int $id
      * @return bool status of delete data success or not
      */
-    public function deleteData(int $id): bool
+    public function deleteData(int $id): array
     {
-        return $this->repository->deleteDataById($id);
+        try {
+            $this->checkData($id);
+            $data = $this->repository->deleteDataById($id);
+            $response = [
+                "success" => true,
+                "data"    => $data,
+            ];
+        } catch (Exception $e) {
+            $response = [
+                "success" => false,
+                "message" => $e->getMessage(),
+            ];
+        }
+        return $response;
     }
 }
