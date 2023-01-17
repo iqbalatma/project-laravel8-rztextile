@@ -6,12 +6,12 @@ use App\AppData;
 use App\Jobs\SendVerificationEmailJob;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
+use Exception;
 use Illuminate\Support\Facades\Hash;
 use Iqbalatma\LaravelExtend\BaseService;
 
 class UserManagementService extends BaseService
 {
-
     protected $repository;
     private $roleRepo;
     public function __construct()
@@ -30,7 +30,7 @@ class UserManagementService extends BaseService
             "title"       => "User Management",
             "description" => "Data user of this application",
             "cardTitle"   => "User Management",
-            "users"       => $this->repository->getAllDataUserPaginated()
+            "users"       => $this->repository->getAllDataPaginated()
         ];
     }
 
@@ -59,13 +59,23 @@ class UserManagementService extends BaseService
      */
     public function getEditData(int $id): array
     {
-        return [
-            "title"       => "User Management",
-            "description" => "Form for edit data user",
-            "cardTitle"   => "Edit User",
-            "roles"       => $this->roleRepo->getAllData(),
-            "user"        => $this->repository->getDataUserById($id)
-        ];
+        try {
+            $this->checkData($id);
+            $response =  [
+                "success" => true,
+                "title"       => "User Management",
+                "description" => "Form for edit data user",
+                "cardTitle"   => "Edit User",
+                "roles"       => $this->roleRepo->getAllData(),
+                "user"        => $this->getData()
+            ];
+        } catch (Exception $e) {
+            $response = [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
+        }
+        return $response;
     }
 
 
@@ -75,10 +85,10 @@ class UserManagementService extends BaseService
      * @param array $requestedDatata
      * @return ?object of new eloquent instance
      */
-    public function storeNewData(array $requestedData)
+    public function storeNewData(array $requestedData): object
     {
         $requestedData["password"] = Hash::make($requestedData["password"]);
-        $user = $this->repository->addNewDataUser($requestedData);
+        $user = $this->repository->addNewData($requestedData);
         dispatch(new SendVerificationEmailJob($user));
         return $user;
     }
@@ -91,9 +101,22 @@ class UserManagementService extends BaseService
      * @param array $requestedData request from client
      * @return bool status of update data success or fail
      */
-    public function updateData(int $id, array $requestedData): bool
+    public function updateData(int $id, array $requestedData): array
     {
-        return $this->repository->updateDataUserById($id, $requestedData);
+        try {
+            $this->checkData($id);
+            $data = $this->repository->updateDataById($id, $requestedData, isReturnObject: false);
+            $response =  [
+                "success" => true,
+                "data" => $data
+            ];
+        } catch (Exception $e) {
+            $response = [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
+        }
+        return $response;
     }
 
     /**
@@ -101,8 +124,21 @@ class UserManagementService extends BaseService
      * @param int $id
      * @return bool
      */
-    public function changeStatusById(int $id)
+    public function changeStatusById(int $id): array
     {
-        return $this->repository->changeStatusById($id);
+        try {
+            $this->checkData($id);
+            $user = $this->repository->changeStatusById($id);
+            $response = [
+                "success" => true,
+                "data" => $user
+            ];
+        } catch (Exception $e) {
+            $response = [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
+        }
+        return $response;
     }
 }

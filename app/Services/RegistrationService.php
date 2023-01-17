@@ -36,12 +36,10 @@ class RegistrationService
 
         $requestedData["role_id"] = $role_id;
         $requestedData["password"] = Hash::make($requestedData["password"]);
-        $user = (new UserRepository())->addNewDataUser($requestedData);
+        $user = (new UserRepository())->addNewData($requestedData);
 
         dispatch(new SendVerificationEmailJob($user));
 
         return $user;
     }
 }
-
-?>

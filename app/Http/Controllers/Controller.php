@@ -12,6 +12,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    protected $errorResponse;
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
@@ -35,5 +36,24 @@ class Controller extends BaseController
 
             return $next($request);
         });
+    }
+
+    protected function isError(array $response): bool
+    {
+        if (!$response["success"]) {
+            $this->setErrorResponse(redirect()->back()->withErrors($response["message"])->withInput());
+            return true;
+        }
+        return false;
+    }
+
+    protected function getErrorResponse()
+    {
+        return $this->errorResponse;
+    }
+
+    protected function setErrorResponse($errorResponse): void
+    {
+        $this->errorResponse = $errorResponse;
     }
 }

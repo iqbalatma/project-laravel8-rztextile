@@ -66,8 +66,13 @@ class UserManagementController extends Controller
      * @param int $id of user
      * @return Response
      */
-    public function edit(UserManagementService $service, int $id): Response
+    public function edit(UserManagementService $service, int $id)
     {
+        $response = $service->getEditData($id);
+        if ($this->isError($response)) {
+            return $this->getErrorResponse();
+        }
+
         return response()->view("users.edit", $service->getEditData($id));
     }
 
@@ -82,16 +87,14 @@ class UserManagementController extends Controller
      */
     public function update(UserManagementService $service, UserUpdateRequest $request, int $id): RedirectResponse
     {
-        $updated = $service->updateData($id, $request->validated());
+        $response = $service->updateData($id, $request->validated());
 
-        $redirect = redirect()
-            ->route("users.index");
-
-        $updated ?
-            $redirect->with("success", "Update data user successfully") :
-            $redirect->with("failed", "Update data user failed");
-
-        return $redirect;
+        if ($this->isError($response)) {
+            return $this->getErrorResponse();
+        }
+        return redirect()
+            ->route("users.index")
+            ->with("success", "Update data user successfully");
     }
 
     /**
@@ -102,15 +105,14 @@ class UserManagementController extends Controller
      */
     public function changeStatusActive(UserManagementService $service, int $id): RedirectResponse
     {
-        $deleted = $service->changeStatusById($id);
+        $response = $service->changeStatusById($id);
 
-        $redirect = redirect()
-            ->route("users.index");
+        if ($this->isError($response)) {
+            return $this->getErrorResponse();
+        }
 
-        $deleted ?
-            $redirect->with("success", "Change status active user successfully") :
-            $redirect->with("failed", "Change status active user failed");
-
-        return $redirect;
+        return redirect()
+            ->route("users.index")
+            ->with("success", "Change status active user successfully");
     }
 }

@@ -63,8 +63,8 @@ class UnitController extends Controller
     public function edit(UnitService $service, int $id)
     {
         $response = $service->getEditData($id);
-        if (!$response["success"]) {
-            return redirect()->back()->withErrors($response["message"])->withInput();
+        if ($this->isError($response)) {
+            return $this->getErrorResponse();
         }
 
         return response()->view("units.edit", $response);
@@ -81,8 +81,8 @@ class UnitController extends Controller
     public function update(UnitService $service, UpdateUnitRequest $request, int $id): RedirectResponse
     {
         $response = $service->updateData($id, $request->validated());
-        if (!$response["success"]) {
-            return redirect()->back()->withErrors($response["message"])->withInput();
+        if ($this->isError($response)) {
+            return $this->getErrorResponse();
         }
 
         return redirect()->route("units.index")->with("success", "Update data unit success fully !");
@@ -99,8 +99,8 @@ class UnitController extends Controller
     public function destroy(UnitService $service, int $id): RedirectResponse
     {
         $response = $service->deleteData($id);
-        if (!$response["success"]) {
-            return redirect()->back()->withErrors($response["message"])->withInput();
+        if ($this->isError($response)) {
+            return $this->getErrorResponse();
         }
 
         return redirect()
