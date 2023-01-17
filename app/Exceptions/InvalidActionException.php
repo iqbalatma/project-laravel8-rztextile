@@ -6,6 +6,7 @@ use Exception;
 
 class InvalidActionException extends Exception
 {
+    public  $message;
     public function __construct(string $message = "Error ! Something went wrong !")
     {
         $this->message = $message;
