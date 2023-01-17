@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class DashboardService
 {
-    public function getAllData()
+    public function getAllData(): array
     {
         $invoiceRepository = (new InvoiceRepository());
         return [
