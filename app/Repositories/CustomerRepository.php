@@ -18,7 +18,7 @@ class CustomerRepository extends BaseRepository
 
     public function getAllDataPaginatedWithSearch(string|bool $search = false, array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE): ?object
     {
-        $columns = array_merge($columns, [DB::raw("COUNT(*) as total_invoices")]);
+        $columns = array_merge($columns, [DB::raw("count(users.id) as total_invoices")]);
         $users = $this->model
             ->with("role")
             ->select($columns)
