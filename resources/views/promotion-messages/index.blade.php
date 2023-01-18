@@ -12,12 +12,18 @@
                 </a>
             </div>
 
+            @if ($promotionMessages->count() == 0)
+            <x-data-not-found></x-data-not-found>
+            @else
             <div class="table-responsive mt-4">
                 <table class="table align-middle">
                     <thead>
                         <th>No</th>
                         <th>Name</th>
                         <th>Message</th>
+                        <th>Segmentation Key</th>
+                        <th>Segmentation Name</th>
+                        <th>Discount</th>
                         <th>Last Updated Time</th>
                         <th>Action</th>
                     </thead>
@@ -27,6 +33,9 @@
                             <td>{{ $promotionMessages->firstItem() + $key }}</td>
                             <td>{{ $message->name }}</td>
                             <td>{!! $message->message !!}</td>
+                            <td>{{ strtoupper($message->customer_segmentation->key) }}</td>
+                            <td>{{ ucfirst($message->customer_segmentation->name) }}</td>
+                            <td>{{ ucfirst($message->discount) }} %</td>
                             <td>{{ $message->updated_at }}</td>
                             <td>
                                 <div class="d-grid gap-2 d-md-flex">
@@ -49,6 +58,8 @@
 
                 {{ $promotionMessages->links() }}
             </div>
+            @endif
+
         </div>
     </div>
 

@@ -6,8 +6,6 @@ use App\Repositories\PromotionMessageRepository;
 
 class AjaxPromotionMessageService
 {
-
-
     /**
      * Description : use to get data by id
      *
@@ -17,5 +15,9 @@ class AjaxPromotionMessageService
     public function getShowData(int $id): ?object
     {
         return (new PromotionMessageRepository())->getDataById($id);
+    }
+    public function getDataByCustomerSegmentationId(int $id): ?object
+    {
+        return (new PromotionMessageRepository())->getDataByCustomerSegmentationId($id);
     }
 }

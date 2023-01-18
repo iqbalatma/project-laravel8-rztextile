@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\CRM;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PromotionMessages\PromotionMessageStoreRequest;
-use App\Http\Requests\PromotionMessages\PromotionMessageUpdateRequest;
-use App\Services\PromotionMessageService;
+use App\Http\Requests\PromotionMessages\StorePromotionMessageRequest;
+use App\Http\Requests\PromotionMessages\UpdatePromotionMessageRequest;
+use App\Services\CRM\PromotionMessageService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
@@ -41,7 +41,7 @@ class PromotionMessageController extends Controller
      *
      * @param PromotionMessageService $service
      */
-    public function store(PromotionMessageService $service, PromotionMessageStoreRequest $request)
+    public function store(PromotionMessageService $service, StorePromotionMessageRequest $request)
     {
         $stored = $service->storeNewData($request->validated());
 
@@ -56,34 +56,38 @@ class PromotionMessageController extends Controller
     }
 
 
-    public function edit(PromotionMessageService $service, int $id)
+    public function edit(PromotionMessageService $service, int $id): Response|RedirectResponse
     {
-        return response()->view("promotion-messages.edit", $service->getEditData($id));
+        $response = $service->getEditData($id);
+
+        if ($this->isError($response)) {
+            return $this->getErrorResponse();
+        }
+        return response()->view("promotion-messages.edit", $response);
     }
 
-    public function update(PromotionMessageService $service, PromotionMessageUpdateRequest $request)
+    public function update(PromotionMessageService $service, UpdatePromotionMessageRequest $request): RedirectResponse
     {
-        $updated = $service->updateData($request->validated());
-        $redirect = redirect()
-            ->route("promotion.messages.index");
+        $response = $service->updateData($request->validated());
 
-        $updated ?
-            $redirect->with("success", "Update data promotion message successfully") :
-            $redirect->with("failed", "Update data promotion message failed");
+        if ($this->isError($response)) {
+            return $this->getErrorResponse();
+        }
 
-        return $redirect;
+        return redirect()
+            ->route("promotion.messages.index")
+            ->with("success", "Update data promotion message successfully");
     }
 
-    public function destroy(PromotionMessageService $service, int $id)
+    public function destroy(PromotionMessageService $service, int $id): RedirectResponse
     {
-        $updated = $service->deleteDataById($id);
-        $redirect = redirect()
-            ->route("promotion.messages.index");
+        $response = $service->deleteDataById($id);
 
-        $updated ?
-            $redirect->with("success", "Delete data promotion message successfully") :
-            $redirect->with("failed", "Delete data promotion message failed");
-
-        return $redirect;
+        if ($this->isError($response)) {
+            return $this->getErrorResponse();
+        }
+        return redirect()
+            ->route("promotion.messages.index")
+            ->with("success", "Delete data promotion message successfully");
     }
 }

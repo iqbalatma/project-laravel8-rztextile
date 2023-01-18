@@ -18,8 +18,8 @@ mix.js("resources/js/app.js", "public/js")
         "public/js/search-roll"
     )
     .js(
-        "resources/js/application/whatsapp-messaging/index.js",
-        "public/js/whatsapp-messaging"
+        "resources/js/pages/whatsapp-messaging/index.js",
+        "public/js/pages/whatsapp-messaging"
     )
     .js("resources/js/application/dashboard/index.js", "public/js/dashboard")
     .js("resources/js/application/customers/index.js", "public/js/customers")

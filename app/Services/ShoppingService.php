@@ -128,18 +128,20 @@ class ShoppingService
             "is_paid_off"       => false,
             "total_capital"     => $totalCapital,
             "total_bill"        => $requestedData["total_bill"],
+            "final_bill"        => $requestedData["final_bill"],
+            "discount_amount" => $requestedData["total_bill"] - $requestedData["final_bill"],
+            "voucher_id" => $requestedData["voucher_id"] ?? null,
             "total_paid_amount" => $requestedData["paid_amount"],
-            "bill_left"         => $requestedData["total_bill"] - $requestedData["paid_amount"],
-            "total_profit"      => $requestedData["total_bill"] - $totalCapital,
+            "bill_left"         => $requestedData["final_bill"] - $requestedData["paid_amount"],
+            "total_profit"      => $requestedData["final_bill"] - $totalCapital,
             "customer_id"       => $requestedData["customer_id"],
             "user_id"           => Auth::user()->id
         ];
-        if ($requestedData["paid_amount"] >= $requestedData["total_bill"]) {
-            $dataInvoice["total_paid_amount"] = $requestedData["total_bill"];
+        if ($requestedData["paid_amount"] >= $requestedData["final_bill"]) {
+            $dataInvoice["total_paid_amount"] = $requestedData["final_bill"];
             $dataInvoice["bill_left"] = 0;
             $dataInvoice["is_paid_off"] = true;
         }
-
 
         return (new InvoiceRepository())->addNewData($dataInvoice);
     }

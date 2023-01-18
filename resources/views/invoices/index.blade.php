@@ -80,6 +80,7 @@
                         <th>Capital</th>
                         <th>Bill</th>
                         <th>Profit</th>
+                        <th>Discount Amount</th>
                         {{-- <th>Paid Amount</th> --}}
                         {{-- <th>Bill Left</th> --}}
                         <th>Customer</th>
@@ -94,8 +95,9 @@
                             <td>{{ $invoices->firstItem()+$key }}</td>
                             <td class="text-nowrap">{{ $invoice->code }}</td>
                             <td class="text-nowrap">{{ formatToRupiah($invoice->total_capital) }}</td>
-                            <td class="text-nowrap">{{ formatToRupiah($invoice->total_bill) }}</td>
+                            <td class="text-nowrap">{{ formatToRupiah($invoice->final_bill) }}</td>
                             <td class="text-nowrap">{{ formatToRupiah($invoice->total_profit) }}</td>
+                            <td class="text-nowrap">{{ formatToRupiah($invoice->discount_amount) ?? 0 }}</td>
                             {{-- <td class="text-nowrap">{{ formatToRupiah($invoice->total_paid_amount) }}</td> --}}
                             {{-- <td class="text-nowrap">{{ formatToRupiah($invoice->bill_left) }}</td> --}}
                             <td>{{ $invoice->customer->name??"-" }}</td>

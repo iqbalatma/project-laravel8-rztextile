@@ -42,7 +42,6 @@ function purchase(dataSet) {
         })
         .fail(function (response) {
             console.log(response);
-
             Swal.fire({
                 icon: "failed",
                 title: "Purchasing failed. Something went wrong !",
@@ -54,13 +53,24 @@ function purchase(dataSet) {
 
 export default {
     onClickConfirm() {
+        let totalBill = helper.formatRupiahToInt($("#total-bill").val());
+        let finalBill = totalBill;
+        const isHaveVoucher = $("#is-have-voucher").is(":checked");
+        let voucherId = null;
+        if (isHaveVoucher) {
+            finalBill = helper.formatRupiahToInt($("#final-bill").val());
+            voucherId = $("#voucher_id").val();
+        }
         let dataSet = {
             customer_id: null,
             payment_type: $("#payment-type").find("option:selected").val(),
-            total_bill: helper.formatRupiahToInt($("#total-bill").val()),
+            total_bill: totalBill,
+            final_bill: finalBill,
             paid_amount: $("#paid-amount").val(),
             rolls: [],
+            voucher_id: voucherId,
         };
+        console.log(dataSet);
 
         let isWithCustomer = $("#is-with-customer").is(":checked");
         let selectedCustomer = $("#select-customer")

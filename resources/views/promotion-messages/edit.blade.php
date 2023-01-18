@@ -14,6 +14,19 @@
                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter name of message promotion" value="{{ $message->name }}" required>
                 </div>
                 <div class="col-md-12">
+                    <label for="discount" class="form-label">Message Discount</label>
+                    <input type="number" class="form-control" id="discount" name="discount" placeholder="Enter discount of message promotion" value="{{ $message->discount }}">
+                </div>
+                <div class="col-md-12">
+                    <label for="discount" class="form-label">Customer Segmentation</label>
+                    <select class="form-control form-select mb-3" aria-label=".form-select-lg example" name="customer_segmentation_id">
+                        <option selected>Select Customer Segmentations</option>
+                        @foreach ($customerSegmentations as $segment)
+                        <option value="{{ $segment->id }}" @if ($segment->id == $message->customer_segmentation_id) selected @endif>{{ ucfirst($segment->name) }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-12">
                     <label for="message" class="form-label">Message</label>
                     {{-- <textarea class="form-control" id="message" name="message" rows="3"></textarea> --}}
                     <x-forms.tinymce-editor message="{!! $message->message !!}"></x-forms.tinymce-editor>

@@ -5,13 +5,28 @@ namespace App\Services;
 use App\AppData;
 use App\Http\Traits\WablasTrait;
 use App\Repositories\CustomerRepository;
+use App\Repositories\CustomerSegmentationRepository;
+use App\Repositories\DiscountVoucherRepository;
 use App\Repositories\PromotionMessageRepository;
+use Illuminate\Support\Str;
+use Iqbalatma\LaravelExtend\BaseService;
 
-class WhatsappMessagingService
+class WhatsappMessagingService extends BaseService
 {
+
+    protected $repository;
+    private $custRepo;
+
+    public function __construct()
+    {
+        $this->repository = new PromotionMessageRepository();
+        $this->custRepo = new CustomerRepository();
+    }
+
     private const GET_ALL_PROMOTION_MESSAGE_COLUMN = [
         AppData::TABLE_PROMOTION_MESSAGE . ".id",
         AppData::TABLE_PROMOTION_MESSAGE . ".name",
+        AppData::TABLE_PROMOTION_MESSAGE . ".message",
     ];
 
     private const GET_CUSTOMER_BY_IDS_COLUMN = [
@@ -24,8 +39,8 @@ class WhatsappMessagingService
             "title"             => "Whatsapp Messaging",
             "description"       => "Send promotion broadcast message to customer",
             "cardTitle"         => "Whatsapp Messaging",
-            "customers"         => (new CustomerRepository())->getAllData(),
-            "promotionMessages" => (new PromotionMessageRepository())->getAllData(self::GET_ALL_PROMOTION_MESSAGE_COLUMN),
+            "customers"         => $this->custRepo->getAllData(),
+            "promotionMessages" => $this->repository->getAllData(self::GET_ALL_PROMOTION_MESSAGE_COLUMN),
             "dataRFM" => (new RFMService())->getRFM()
         ];
     }
@@ -39,11 +54,19 @@ class WhatsappMessagingService
     public function sendBlast(array $requestedData)
     {
         $dataRFM = (new RFMService())->getRFM();
-        if (isset($dataRFM["customers"][$requestedData["segmentation"]])) {
-            $dataSet = collect($dataRFM["customers"][$requestedData["segmentation"]])->map(function ($item) use ($requestedData) {
+        $customerSegmentation = (new CustomerSegmentationRepository())->getDataById($requestedData["segmentation_id"]);
+        $promotionMessage = (new PromotionMessageRepository())->getDataById($requestedData["promotion_message_id"]);
+        if (isset($dataRFM["customers"][$customerSegmentation->key])) {
+            $dataSet = collect($dataRFM["customers"][$customerSegmentation->key])->map(function ($item) use ($requestedData, $customerSegmentation, $promotionMessage) {
+                $code = strtoupper(Str::random(8));
+                (new DiscountVoucherRepository())->addNewData([
+                    "code" => $code,
+                    "promotion_message_id" => $promotionMessage->id
+                ]);
+                $voucher = "<p>&nbsp;</p><p>Masukkan voucher <strong>$code</strong> untuk mendapatkan discount $promotionMessage->discount %</p>";
                 return [
                     "phone"   => $item["customer"]["phone"],
-                    "message" => $requestedData["message"]
+                    "message" => $promotionMessage->message . $voucher
                 ];
             });
 
@@ -53,14 +76,13 @@ class WhatsappMessagingService
 
     private function getDataPayload(array $requestedData): array
     {
-        $customers = (new CustomerRepository())->getCustomerByIds($requestedData["customer"], self::GET_CUSTOMER_BY_IDS_COLUMN);
+        $customers = $this->custRepo->getCustomerByIds($requestedData["customer"], self::GET_CUSTOMER_BY_IDS_COLUMN);
 
         $message = preg_replace('/<strong>|<\/strong>/', '*', $requestedData["message"]);
         $message = preg_replace('/&nbsp;/', '', $message);
         $message = preg_replace('/<em>|<\/em>/', '_', $message);
         $message = preg_replace('/<p>|<\/p>/', '', $message);
         $payload = collect($customers)->map(function ($item) use ($message) {
-
             return [
                 "phone"   => preg_replace('/[^0-9]/', '', $item->phone),
                 "message" => $message
