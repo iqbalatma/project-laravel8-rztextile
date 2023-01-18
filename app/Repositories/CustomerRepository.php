@@ -23,8 +23,8 @@ class CustomerRepository extends BaseRepository
             ->with("role")
             ->select($columns)
             ->join("invoices", "invoices.customer_id", "users.id")
-            ->where("role_id", AppData::ROLE_ID_CUSTOMER)
-            ->groupBy("invoices.customer_id");
+            ->where("users.role_id", AppData::ROLE_ID_CUSTOMER)
+            ->groupBy("users.id");
 
         if ($search) {
             $users->where("id_number", "LIKE", "%$search%")

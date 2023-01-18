@@ -28,7 +28,6 @@ class CustomerService extends BaseService
         "users.role_id",
         "users.id_number",
         "users.updated_at",
-        "invoices.customer_id",
     ];
 
     public function __construct()
@@ -50,7 +49,6 @@ class CustomerService extends BaseService
             "customers"      => $this->repository->getAllDataPaginatedWithSearch($search, self::ALL_CUSTOMER_SELECT_COLUMN)
         ];
 
-        // dd($data);
 
         return $data;
     }
