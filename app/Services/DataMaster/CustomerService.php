@@ -22,11 +22,11 @@ class CustomerService extends BaseService
     ];
     private const ALL_CUSTOMER_SELECT_COLUMN = [
         "users.id",
-        "name",
-        "address",
-        "phone",
-        "role_id",
-        "id_number",
+        "users.name",
+        "users.address",
+        "users.phone",
+        "users.role_id",
+        "users.id_number",
         "users.updated_at",
         "invoices.customer_id",
     ];
@@ -49,6 +49,8 @@ class CustomerService extends BaseService
             "description"  => "Data customer",
             "customers"      => $this->repository->getAllDataPaginatedWithSearch($search, self::ALL_CUSTOMER_SELECT_COLUMN)
         ];
+
+        // dd($data);
 
         return $data;
     }
