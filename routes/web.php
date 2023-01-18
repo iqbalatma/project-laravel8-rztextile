@@ -175,7 +175,8 @@ Route::middleware(["auth", "verified"])
                         Route::delete("/{id}", "destroy")->name("destroy");
                     }
                 );
-                Route::get("/ajax/promotion-messages/{id}", AJAXPromotionMessageController::class)->name("ajax.promotion.messages.show");
+                Route::get("/ajax/promotion-messages/{id}", [AJAXPromotionMessageController::class, "show"])->name("ajax.promotion.messages.show");
+                Route::get("/ajax/promotion-messages/customer-segmentations/{id}", [AJAXPromotionMessageController::class, "getByCustomerSegmentation"])->name("ajax.promotion.messages.customer.segmentations");
 
                 // ROLE CONTROLLER
                 Route::get("/roles", RoleController::class)->name("roles.index");

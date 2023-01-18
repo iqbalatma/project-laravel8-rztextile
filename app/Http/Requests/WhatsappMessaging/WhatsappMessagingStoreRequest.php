@@ -25,9 +25,9 @@ class WhatsappMessagingStoreRequest extends FormRequest
     {
         return [
             "customer" => "",
-            "message" => "required",
+            "promotion_message_id" => "required",
             "type" => "",
-            "segmentation" => "required_if:type,blast"
+            "segmentation_id" => "required_if:type,blast"
         ];
     }
 }

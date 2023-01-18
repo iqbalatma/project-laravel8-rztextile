@@ -5,13 +5,17 @@ namespace App\Services;
 use App\AppData;
 use App\Http\Traits\WablasTrait;
 use App\Repositories\CustomerRepository;
+use App\Repositories\CustomerSegmentationRepository;
+use App\Repositories\DiscountVoucerRepository;
 use App\Repositories\PromotionMessageRepository;
+use Illuminate\Support\Str;
 
 class WhatsappMessagingService
 {
     private const GET_ALL_PROMOTION_MESSAGE_COLUMN = [
         AppData::TABLE_PROMOTION_MESSAGE . ".id",
         AppData::TABLE_PROMOTION_MESSAGE . ".name",
+        AppData::TABLE_PROMOTION_MESSAGE . ".message",
     ];
 
     private const GET_CUSTOMER_BY_IDS_COLUMN = [
@@ -39,15 +43,24 @@ class WhatsappMessagingService
     public function sendBlast(array $requestedData)
     {
         $dataRFM = (new RFMService())->getRFM();
-        if (isset($dataRFM["customers"][$requestedData["segmentation"]])) {
-            $dataSet = collect($dataRFM["customers"][$requestedData["segmentation"]])->map(function ($item) use ($requestedData) {
+        $customerSegmentation = (new CustomerSegmentationRepository())->getDataById($requestedData["segmentation_id"]);
+        $promotionMessage = (new PromotionMessageRepository())->getDataById($requestedData["promotion_message_id"]);
+        if (isset($dataRFM["customers"][$customerSegmentation->key])) {
+            $dataSet = collect($dataRFM["customers"][$customerSegmentation->key])->map(function ($item) use ($requestedData, $customerSegmentation, $promotionMessage) {
+                $code = strtoupper(Str::random(8));
+                (new DiscountVoucerRepository())->addNewData([
+                    "code" => $code,
+                    "promotion_message_id" => $promotionMessage->id
+                ]);
+                $voucher = "<p>&nbsp;</p><p>Masukkan voucher <strong>$code</strong> untuk mendapatkan discount $promotionMessage->discount %</p>";
                 return [
                     "phone"   => $item["customer"]["phone"],
-                    "message" => $requestedData["message"]
+                    "message" => $promotionMessage->message . $voucher
                 ];
             });
 
-            return WablasTrait::sendBlast(["data" => $dataSet]);
+            dd($dataSet);
+            // return WablasTrait::sendBlast(["data" => $dataSet]);
         }
     }
 

@@ -1,1 +1,6 @@
-$(document).ready((function(){$(".promotion").on("change",(function(){var a=$(this).val();$.ajax({method:"GET",url:"/ajax/promotion-messages/".concat(a)}).done((function(a){$(".message").html(a.data.message),$(".message-input").val(a.data.message)})).fail()}))}));
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	
+/******/ 	
+/******/ })()
+;

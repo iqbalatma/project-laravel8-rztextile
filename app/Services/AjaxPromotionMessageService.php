@@ -18,4 +18,8 @@ class AjaxPromotionMessageService
     {
         return (new PromotionMessageRepository())->getDataById($id);
     }
+    public function getDataByCustomerSegmentationId(int $id): ?object
+    {
+        return (new PromotionMessageRepository())->getDataByCustomerSegmentationId($id);
+    }
 }
