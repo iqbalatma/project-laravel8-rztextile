@@ -28,7 +28,10 @@ class PurchaseRequest extends FormRequest
             "payment_type" => "required|in:cash,transfer",
             "rolls" => "required",
             "total_bill" => "required|numeric",
-            "paid_amount" => "required|numeric"
+            "paid_amount" => "required|numeric",
+            "voucher_id" => "numeric|nullable",
+            "discount_amount" => "",
+            "final_bill" => ""
         ];
     }
 }

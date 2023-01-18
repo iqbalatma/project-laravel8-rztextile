@@ -6,8 +6,6 @@ use App\Repositories\PromotionMessageRepository;
 
 class AjaxPromotionMessageService
 {
-
-
     /**
      * Description : use to get data by id
      *

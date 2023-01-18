@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import helper from "../../module/helper";
 import button from "./module/button";
 import confirmShopping from "./module/confirm-shopping";
@@ -250,6 +251,13 @@ $(document).ready(function () {
             $("#customer-container-modal").addClass("d-none");
         }
     });
+    $("#is-have-voucher").on("change", function () {
+        if (this.checked) {
+            $("#voucher-container").removeClass("d-none");
+        } else {
+            $("#voucher-container").addClass("d-none");
+        }
+    });
 
     $("#select-customer").on("change", function () {
         let dataCustomer = $(this).find("option:selected").data("json");
@@ -260,9 +268,69 @@ $(document).ready(function () {
         $("#phone").val(dataCustomer["phone"]);
     });
 
-    $("#btn-confirm-shopping").on("click", function () {
-        console.log("triggered");
+    $("#check-voucher").on("click", function () {
+        const voucherCode = $("#voucher").val();
+        $.ajax({
+            url: "/ajax/discount-vouchers/" + voucherCode ?? "",
+        })
+            .done(function (response) {
+                console.log(response.data.promotion_message.discount);
+                $("#voucher").removeClass("is-invalid");
+                $("#discount").val(
+                    response.data.promotion_message.discount + " %"
+                );
+                let totalBill = helper.formatRupiahToInt(
+                    $("#total-bill").val()
+                );
 
+                $("#voucher_id").val(response.data.id);
+
+                let finalBill =
+                    parseFloat(totalBill) -
+                    (parseFloat(response.data.promotion_message.discount) /
+                        100) *
+                        parseFloat(totalBill);
+
+                $("#discount_amount").val(
+                    (parseFloat(response.data.promotion_message.discount) /
+                        100) *
+                        parseFloat(totalBill)
+                );
+                $("#final-bill").val(
+                    helper.formatIntToRupiah(Math.ceil(finalBill))
+                );
+            })
+            .fail(function (response) {
+                if (response.status == 404) {
+                    $("#voucher").addClass("is-invalid");
+                    return Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Your voucher is invalid, please try again!",
+                    });
+                }
+            });
+    });
+    $("#btn-confirm-shopping").on("click", function () {
+        const isHaveVoucher = $("#is-have-voucher").is(":checked");
+        if (isHaveVoucher) {
+            const voucherCode = $("#voucher").val();
+            $.ajax({
+                url: "/ajax/discount-vouchers/" + voucherCode ?? "",
+            })
+                .done(function (response) {
+                    $("#voucher_id").val(response.data.id);
+                })
+                .fail(function (response) {
+                    if (response.status == 404) {
+                        return Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Your voucher is invalid, please try again!",
+                        });
+                    }
+                });
+        }
         confirmShopping.onClickConfirm();
     });
 });

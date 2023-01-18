@@ -242,13 +242,24 @@ function purchase(dataSet) {
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   onClickConfirm: function onClickConfirm() {
+    var totalBill = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($("#total-bill").val());
+    var finalBill = totalBill;
+    var isHaveVoucher = $("#is-have-voucher").is(":checked");
+    var voucherId = null;
+    if (isHaveVoucher) {
+      finalBill = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($("#final-bill").val());
+      voucherId = $("#voucher_id").val();
+    }
     var dataSet = {
       customer_id: null,
       payment_type: $("#payment-type").find("option:selected").val(),
-      total_bill: _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($("#total-bill").val()),
+      total_bill: totalBill,
+      final_bill: finalBill,
       paid_amount: $("#paid-amount").val(),
-      rolls: []
+      rolls: [],
+      voucher_id: voucherId
     };
+    console.log(dataSet);
     var isWithCustomer = $("#is-with-customer").is(":checked");
     var selectedCustomer = $("#select-customer").find("option:selected").val();
     if (isWithCustomer && selectedCustomer != "") {
@@ -4617,12 +4628,15 @@ var __webpack_exports__ = {};
   !*** ./resources/js/application/shopping/index.js ***!
   \****************************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../module/helper */ "./resources/js/module/helper.js");
-/* harmony import */ var _module_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/button */ "./resources/js/application/shopping/module/button.js");
-/* harmony import */ var _module_confirm_shopping__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/confirm-shopping */ "./resources/js/application/shopping/module/confirm-shopping.js");
-/* harmony import */ var _module_quantity_roll__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/quantity-roll */ "./resources/js/application/shopping/module/quantity-roll.js");
-/* harmony import */ var _module_selling_price__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/selling-price */ "./resources/js/application/shopping/module/selling-price.js");
-/* harmony import */ var _module_unit_per_roll__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/unit-per-roll */ "./resources/js/application/shopping/module/unit-per-roll.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../module/helper */ "./resources/js/module/helper.js");
+/* harmony import */ var _module_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/button */ "./resources/js/application/shopping/module/button.js");
+/* harmony import */ var _module_confirm_shopping__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/confirm-shopping */ "./resources/js/application/shopping/module/confirm-shopping.js");
+/* harmony import */ var _module_quantity_roll__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/quantity-roll */ "./resources/js/application/shopping/module/quantity-roll.js");
+/* harmony import */ var _module_selling_price__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/selling-price */ "./resources/js/application/shopping/module/selling-price.js");
+/* harmony import */ var _module_unit_per_roll__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./module/unit-per-roll */ "./resources/js/application/shopping/module/unit-per-roll.js");
+
 
 
 
@@ -4752,7 +4766,7 @@ $(document).ready(function () {
    * @param {object} dataSet
    */
   function setSelectedOptionToTableRow(dataSet) {
-    _module_button__WEBPACK_IMPORTED_MODULE_1__["default"].showButtonSummaryPayment();
+    _module_button__WEBPACK_IMPORTED_MODULE_2__["default"].showButtonSummaryPayment();
     var table = $("#table-product");
     var tbody = $(table).find("tbody");
     var totalUnitOnTable = getCurrentTotalUnitOnTable(dataSet.code);
@@ -4763,22 +4777,22 @@ $(document).ready(function () {
     tr.append($("<td>".concat(dataSet.id, "</td>")));
     tr.append($("<td>".concat(dataSet.code, "</td>")));
     tr.append($("<td>".concat(dataSet.name, "</td>")));
-    tr.append(_module_quantity_roll__WEBPACK_IMPORTED_MODULE_3__["default"].getQuantityRollElement(dataSet.unit.name));
-    tr.append(_module_unit_per_roll__WEBPACK_IMPORTED_MODULE_5__["default"].getUnitPerRollElement(dataSet.unit.name));
+    tr.append(_module_quantity_roll__WEBPACK_IMPORTED_MODULE_4__["default"].getQuantityRollElement(dataSet.unit.name));
+    tr.append(_module_unit_per_roll__WEBPACK_IMPORTED_MODULE_6__["default"].getUnitPerRollElement(dataSet.unit.name));
     tr.append($("<td>", {
       text: "1 ".concat(dataSet.unit.name),
       "class": "text-nowrap quantity-unit"
     }));
-    tr.append(_module_selling_price__WEBPACK_IMPORTED_MODULE_4__["default"].getSellingPriceElement(parseInt(dataSet.selling_price)));
+    tr.append(_module_selling_price__WEBPACK_IMPORTED_MODULE_5__["default"].getSellingPriceElement(parseInt(dataSet.selling_price)));
     tr.append($("<td>", {
-      text: _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(parseInt(dataSet.selling_price)),
+      text: _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(parseInt(dataSet.selling_price)),
       "class": "text-nowrap sub-total"
     }));
     tr.append($("<td>", {
       "class": "text-nowrap action-roll"
     }).append($("<div>", {
       "class": "d-grid gap-2 d-md-block"
-    }).append(_module_button__WEBPACK_IMPORTED_MODULE_1__["default"].getButtonPlusElement()).append(_module_button__WEBPACK_IMPORTED_MODULE_1__["default"].getButtonMinusElement()).append(_module_button__WEBPACK_IMPORTED_MODULE_1__["default"].getButtonRemoveElement())));
+    }).append(_module_button__WEBPACK_IMPORTED_MODULE_2__["default"].getButtonPlusElement()).append(_module_button__WEBPACK_IMPORTED_MODULE_2__["default"].getButtonMinusElement()).append(_module_button__WEBPACK_IMPORTED_MODULE_2__["default"].getButtonRemoveElement())));
     tr.append($("<td>", {
       text: "".concat(dataSet.quantity_roll, " rolls"),
       "class": "text-nowrap available-quantity-roll"
@@ -4798,16 +4812,23 @@ $(document).ready(function () {
     $("#table-product").clone().appendTo($(summaryPaymentContainer)).attr("id", "table-summary-product").find(".action-roll, .action-roll-header").remove();
     var totalBill = 0;
     $("#table-summary-product").find(".sub-total").each(function () {
-      var subTotal = _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatRupiahToInt($(this).text());
+      var subTotal = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($(this).text());
       totalBill += subTotal;
     });
-    $("#total-bill").val(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(totalBill));
+    $("#total-bill").val(_module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(totalBill));
   });
   $("#is-with-customer").on("change", function () {
     if (this.checked) {
       $("#customer-container-modal").removeClass("d-none");
     } else {
       $("#customer-container-modal").addClass("d-none");
+    }
+  });
+  $("#is-have-voucher").on("change", function () {
+    if (this.checked) {
+      $("#voucher-container").removeClass("d-none");
+    } else {
+      $("#voucher-container").addClass("d-none");
     }
   });
   $("#select-customer").on("change", function () {
@@ -4817,9 +4838,51 @@ $(document).ready(function () {
     $("#address").val(dataCustomer["address"]);
     $("#phone").val(dataCustomer["phone"]);
   });
+  $("#check-voucher").on("click", function () {
+    var _ref;
+    var voucherCode = $("#voucher").val();
+    $.ajax({
+      url: (_ref = "/ajax/discount-vouchers/" + voucherCode) !== null && _ref !== void 0 ? _ref : ""
+    }).done(function (response) {
+      console.log(response.data.promotion_message.discount);
+      $("#voucher").removeClass("is-invalid");
+      $("#discount").val(response.data.promotion_message.discount + " %");
+      var totalBill = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($("#total-bill").val());
+      $("#voucher_id").val(response.data.id);
+      var finalBill = parseFloat(totalBill) - parseFloat(response.data.promotion_message.discount) / 100 * parseFloat(totalBill);
+      $("#discount_amount").val(parseFloat(response.data.promotion_message.discount) / 100 * parseFloat(totalBill));
+      $("#final-bill").val(_module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(Math.ceil(finalBill)));
+    }).fail(function (response) {
+      if (response.status == 404) {
+        $("#voucher").addClass("is-invalid");
+        return sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Your voucher is invalid, please try again!"
+        });
+      }
+    });
+  });
   $("#btn-confirm-shopping").on("click", function () {
-    console.log("triggered");
-    _module_confirm_shopping__WEBPACK_IMPORTED_MODULE_2__["default"].onClickConfirm();
+    var isHaveVoucher = $("#is-have-voucher").is(":checked");
+    if (isHaveVoucher) {
+      var _ref2;
+      var voucherCode = $("#voucher").val();
+      $.ajax({
+        url: (_ref2 = "/ajax/discount-vouchers/" + voucherCode) !== null && _ref2 !== void 0 ? _ref2 : ""
+      }).done(function (response) {
+        $("#voucher_id").val(response.data.id);
+      }).fail(function (response) {
+        if (response.status == 404) {
+          return sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Your voucher is invalid, please try again!"
+          });
+        }
+      });
+    }
+    _module_confirm_shopping__WEBPACK_IMPORTED_MODULE_3__["default"].onClickConfirm();
   });
 });
 })();

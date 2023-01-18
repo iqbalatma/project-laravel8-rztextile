@@ -91,9 +91,11 @@
                                     <a href="{{ route('rolls.edit', $roll->id) }}" class="btn btn-success">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
+                                    @if (isset($roll->qrcode_image))
                                     <a href="{{ route('rolls.downloadQrcode', $roll->qrcode_image) }}" class="btn btn-primary">
                                         <i class="fa-solid fa-download"></i>
                                     </a>
+                                    @endif
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-warning btn-print-qrcode" data-bs-toggle="modal" data-name="{{ $roll->name }}" data-code="{{ $roll->code }}" data-qrcode="{{ $roll->qrcode }}" data-qrcode-image="{{ $roll->qrcode_image }}" data-id="{{ $roll->id }}" data-bs-target="#print-qrcode-modal">
                                         <i class="fa-solid fa-print"></i>

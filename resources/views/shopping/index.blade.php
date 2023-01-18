@@ -62,8 +62,41 @@
                                                     <option value="transfer">Transfer</option>
                                                 </select>
                                             </div>
-
                                         </div>
+
+                                        <div class="row g-3 mt-4">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="checkbox" class="btn-check" id="is-have-voucher" autocomplete="off">
+                                                <label class="btn btn-outline-primary" for="is-have-voucher">Have Voucher</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row d-none" id="voucher-container">
+                                            <input type="hidden" name="voucher_id" id="voucher_id">
+                                            <input type="hidden" name="discount_amount" id="discount_amount">
+                                            <div class="col-md-8">
+                                                <label for="voucher" class="form-label">Voucher Code</label>
+                                                <input type="text" class="form-control" id="voucher" name="voucher_code" oninput="this.value = this.value.toUpperCase()">
+                                                <div id="invalid-feedback-voucher" class="invalid-feedback">
+                                                    Your voucher is invalid
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="check-voucher" class="form-label">Check Voucher Code</label>
+                                                <button type="button" class="form-control btn btn-primary" id="check-voucher">Check Voucher</button>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="discount" class="form-label">Discount</label>
+                                                <input type="text" class="form-control" id="discount" name="discount" readonly>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="final-bill" class="form-label">Final Bill</label>
+                                                <input type="text" class="form-control" id="final-bill" name="final-bill" readonly>
+                                            </div>
+                                        </div>
+
+
+
                                         <div class="row g-3 mt-4">
                                             <div class="col-md-12 mb-4">
                                                 <input type="checkbox" class="btn-check" id="is-with-customer" autocomplete="off">

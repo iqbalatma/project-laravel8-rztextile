@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AJAX\DashboardController as AJAXDashboardController;
+use App\Http\Controllers\AJAX\DiscountVoucherController as AJAXDiscountVoucherController;
 use App\Http\Controllers\AJAX\PromotionMessageController as AJAXPromotionMessageController;
 use App\Http\Controllers\AJAX\SearchRollController as AJAXSearchRollController;
 use App\Http\Controllers\Auth\AuthController;
@@ -178,6 +179,7 @@ Route::middleware(["auth", "verified"])
                 );
                 Route::get("/ajax/promotion-messages/{id}", [AJAXPromotionMessageController::class, "show"])->name("ajax.promotion.messages.show");
                 Route::get("/ajax/promotion-messages/customer-segmentations/{id}", [AJAXPromotionMessageController::class, "getByCustomerSegmentation"])->name("ajax.promotion.messages.customer.segmentations");
+                Route::get("/ajax/discount-vouchers/{code}", AJAXDiscountVoucherController::class)->name("ajax.discount.vouchers");
 
                 // ROLE CONTROLLER
                 Route::get("/roles", RoleController::class)->name("roles.index");
