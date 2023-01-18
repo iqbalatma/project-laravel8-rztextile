@@ -18,13 +18,12 @@ class CustomerRepository extends BaseRepository
 
     public function getAllDataPaginatedWithSearch(string|bool $search = false, array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE): ?object
     {
-        $columns = array_merge($columns, [DB::raw("count(users.id) as total_invoices")]);
         $users = $this->model
             ->with("role")
-            ->select($columns)
+            ->select(array_merge($columns, [DB::raw("count(users.id) as total_invoices")]))
             ->join("invoices", "invoices.customer_id", "users.id")
             ->where("users.role_id", AppData::ROLE_ID_CUSTOMER)
-            ->groupBy("users.id");
+            ->groupBy($columns);
 
         if ($search) {
             $users->where("id_number", "LIKE", "%$search%")
