@@ -10,7 +10,7 @@ class PromotionMessage extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ["name", "message", "customer_segmentation_id"];
+    protected $fillable = ["name", "message", "customer_segmentation_id", "discount"];
 
     public function customer_segmentation()
     {

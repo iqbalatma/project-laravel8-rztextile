@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\CRM;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PromotionMessages\PromotionMessageStoreRequest;
-use App\Http\Requests\PromotionMessages\PromotionMessageUpdateRequest;
 use App\Http\Requests\PromotionMessages\StorePromotionMessageRequest;
+use App\Http\Requests\PromotionMessages\UpdatePromotionMessageRequest;
 use App\Services\CRM\PromotionMessageService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
@@ -67,7 +66,7 @@ class PromotionMessageController extends Controller
         return response()->view("promotion-messages.edit", $response);
     }
 
-    public function update(PromotionMessageService $service, PromotionMessageUpdateRequest $request): RedirectResponse
+    public function update(PromotionMessageService $service, UpdatePromotionMessageRequest $request): RedirectResponse
     {
         $response = $service->updateData($request->validated());
 

@@ -12,6 +12,11 @@
                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter name of message promotion" required>
                 </div>
                 <div class="col-md-12">
+                    <label for="discount" class="form-label">Message Discount</label>
+                    <input type="number" class="form-control" id="discount" name="discount" placeholder="Enter discount of message promotion">
+                </div>
+                <div class="col-md-12">
+                    <label for="discount" class="form-label">Customer Segmentation</label>
                     <select class="form-control form-select mb-3" aria-label=".form-select-lg example" name="customer_segmentation_id">
                         <option selected>Select Customer Segmentations</option>
                         @foreach ($customerSegmentations as $segment)

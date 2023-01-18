@@ -27,7 +27,8 @@ class StorePromotionMessageRequest extends BaseFormRequest
         return [
             "name" => "required",
             "message" => "required",
-            "customer_segmentation_id" => "numeric|required"
+            "customer_segmentation_id" => "numeric|required",
+            "discount" => ""
         ];
     }
 }
