@@ -23,6 +23,7 @@ use App\Http\Controllers\DataMaster\UnitController;
 use App\Http\Controllers\DataMaster\UserManagementController;
 use App\Http\Controllers\CRM\WhatsappMessagingController;
 use App\Http\Controllers\DataMaster\CustomerSegmentationController;
+use App\Http\Controllers\DataMaster\DiscountVoucherController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -180,6 +181,7 @@ Route::middleware(["auth", "verified"])
 
                 // ROLE CONTROLLER
                 Route::get("/roles", RoleController::class)->name("roles.index");
+                Route::get("/discount-vouchers", DiscountVoucherController::class)->name("discount.vouchers.index");
                 Route::get("/customer-segmentations", CustomerSegmentationController::class)->name("customer.segmentations.index");
 
                 // UNIT
