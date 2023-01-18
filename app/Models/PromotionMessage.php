@@ -11,4 +11,9 @@ class PromotionMessage extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ["name", "message", "customer_segmentation_id"];
+
+    public function customer_segmentation()
+    {
+        return $this->belongsTo(CustomerSegmentation::class);
+    }
 }

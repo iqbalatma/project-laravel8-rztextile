@@ -30,6 +30,8 @@
                             <td>{{ $promotionMessages->firstItem() + $key }}</td>
                             <td>{{ $message->name }}</td>
                             <td>{!! $message->message !!}</td>
+                            <td>{{ strtoupper($message->customer_segmentation->key) }}</td>
+                            <td>{{ ucfirst($message->customer_segmentation->name) }}</td>
                             <td>{{ $message->updated_at }}</td>
                             <td>
                                 <div class="d-grid gap-2 d-md-flex">

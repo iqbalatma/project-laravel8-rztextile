@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\PromotionMessages;
 
+use App\Http\Requests\BaseFormRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PromotionMessageUpdateRequest extends FormRequest
+class PromotionMessageUpdateRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +27,8 @@ class PromotionMessageUpdateRequest extends FormRequest
         return [
             "id" => "required|numeric",
             "name" => "required",
-            "message" => "required"
+            "message" => "required",
+            "customer_segmentation_id" => "required|numeric",
         ];
     }
 }

@@ -73,7 +73,8 @@ class PromotionMessageService extends BaseService
                 "title"       => "Promotion Messages",
                 "description" => "Edit promotion message template",
                 "cardTitle"   => "Promotion Messages",
-                "message" => $this->getData()
+                "message" => $this->getData(),
+                "customerSegmentations" => $this->cusSegRepo->getAllData()
             ];
         } catch (Exception $e) {
             $response = [

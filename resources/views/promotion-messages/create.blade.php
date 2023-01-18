@@ -12,6 +12,14 @@
                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter name of message promotion" required>
                 </div>
                 <div class="col-md-12">
+                    <select class="form-control form-select mb-3" aria-label=".form-select-lg example" name="customer_segmentation_id">
+                        <option selected>Select Customer Segmentations</option>
+                        @foreach ($customerSegmentations as $segment)
+                        <option value="{{ $segment->id }}">{{ ucfirst($segment->name) }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-12">
                     <label for="message" class="form-label">Message</label>
                     {{-- <textarea class="form-control" id="message" name="message" rows="3"></textarea> --}}
                     <x-forms.tinymce-editor message=""></x-forms.tinymce-editor>
