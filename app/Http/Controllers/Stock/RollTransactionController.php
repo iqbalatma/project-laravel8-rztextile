@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RollTransactions\StoreRollTransactionRequest;
 use App\Services\Stock\RollTransactionService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class RollTransactionController extends Controller

@@ -20,6 +20,10 @@ class AppData
     public const TABLE_USER = "users";
     public const TABLE_PROMOTION_MESSAGE = "promotion_messages";
 
+    public const TRANSACTION_TYPE_RESTOCK = "restock";
+    public const TRANSACTION_TYPE_SOLD = "sold";
+    public const TRANSACTION_TYPE_BROKEN = "broken";
+
     public const CUSTOMER_SEGMENTS = [
         [
             "key" => "mvc",

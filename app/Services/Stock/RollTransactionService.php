@@ -2,15 +2,26 @@
 
 namespace App\Services\Stock;
 
+use App\AppData;
 use App\Exceptions\InvalidActionException;
 use App\Repositories\RollRepository;
 use App\Repositories\RollTransactionRepository;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Iqbalatma\LaravelExtend\BaseService;
 
-class RollTransactionService
+class RollTransactionService extends BaseService
 {
+
+    protected $repository;
+    protected $rollRepo;
+
+    public function __construct()
+    {
+        $this->repository = new RollTransactionRepository();
+        $this->rollRepo = new RollRepository();
+    }
 
     /**
      * Description : use to get all data for index controller
@@ -50,7 +61,7 @@ class RollTransactionService
             "description"      => "Transaction roll in or out",
             "cardTitle"        => "Roll Transactions",
             "type"             => $type,
-            "rollTransactions" => (new RollTransactionRepository())->getAllDataRollTransactionPaginated($type, $search, $year, $month)
+            "rollTransactions" => $this->repository->getAllDataRollTransactionPaginated($type, $search, $year, $month)
         ];
     }
 
@@ -64,7 +75,7 @@ class RollTransactionService
             "title"       => "Restock & Deadstock",
             "description" => "Restock rolls into storage or take out of stock for broken item roll",
             "cardTitle"   => "Restock & Deadstock",
-            "rolls"       => (new RollRepository())->getAllDataRoll()
+            "rolls"       => $this->rollRepo->getAllDataRoll()
         ];
     }
 
@@ -73,7 +84,7 @@ class RollTransactionService
         $requestedData["user_id"] = Auth::user()->id;
         try {
             DB::beginTransaction();
-            if ($requestedData["type"] == "restock") {
+            if ($requestedData["type"] == AppData::TRANSACTION_TYPE_RESTOCK) {
                 $rollTransaction = $this->restock($requestedData);
             } else {
                 $rollTransaction = $this->deadstock($requestedData);
@@ -81,37 +92,48 @@ class RollTransactionService
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-            throw $e;
+            return false;
         }
         return $rollTransaction;
     }
 
+    /**
+     * Use to restock the roll
+     * @param array $requestedData
+     * @return object
+     */
     private function restock(array $requestedData): object
     {
-        (new RollRepository())->increaseQuantityRollAndUnit(
+        $this->rollRepo->increaseQuantityRollAndUnit(
             $requestedData["roll_id"],
             $requestedData["quantity_roll"],
             $requestedData["quantity_unit"]
         );
 
-        return (new RollTransactionRepository())->addNewData($requestedData);
+        return $this->repository->addNewData($requestedData);
     }
 
+    /**
+     * Use to deadstock the roll
+     * @param array $requestedData
+     * @throws InvalidActionException
+     * @return object
+     */
     private function deadstock(array $requestedData): object
     {
-        $rollRepository = new RollRepository();
-        $roll = $rollRepository->getDataById($requestedData["roll_id"]);
+        $roll = $this->rollRepo->getDataById($requestedData["roll_id"]);
 
+        // Check the quantity before deadstock
         if ($requestedData["quantity_roll"] > $roll->quantity_roll || $requestedData["quantity_unit"] > $roll->quantity_unit) {
             throw new InvalidActionException("Roll quantity or quantity unit cannot bigger than stock on warehouse");
         }
 
-        $rollRepository->decreaseQuantityRollAndUnit(
+        $this->rollRepo->decreaseQuantityRollAndUnit(
             $requestedData["roll_id"],
             $requestedData["quantity_roll"],
             $requestedData["quantity_unit"]
         );
 
-        return (new RollTransactionRepository())->addNewData($requestedData);
+        return $this->repository->addNewData($requestedData);
     }
 }

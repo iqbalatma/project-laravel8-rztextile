@@ -80,7 +80,7 @@ class RollTransactionRepository extends BaseRepository
     {
         return $this->model->with("invoice")
             ->select($columns)
-            ->where("type", "restock")
+            ->where("type", AppData::TRANSACTION_TYPE_RESTOCK)
             ->orderBy("created_at", "DESC")
             ->paginate($perPage)
             ->appends(request()->query());
@@ -91,7 +91,7 @@ class RollTransactionRepository extends BaseRepository
     {
         return $this->model->with("invoice")
             ->select($columns)
-            ->where("type", "sold")
+            ->where("type", AppData::TRANSACTION_TYPE_SOLD)
             ->orderBy("created_at", "DESC")
             ->paginate($perPage)
             ->appends(request()->query());
@@ -102,7 +102,7 @@ class RollTransactionRepository extends BaseRepository
     {
         return $this->model->with("invoice")
             ->select($columns)
-            ->where("type", "broken")
+            ->where("type", AppData::TRANSACTION_TYPE_BROKEN)
             ->orderBy("created_at", "DESC")
             ->paginate($perPage)
             ->appends(request()->query());
