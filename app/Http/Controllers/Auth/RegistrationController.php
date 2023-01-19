@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegistrationStoreRequest;
-use App\Services\RegistrationService;
+use App\Services\Auth\RegistrationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 

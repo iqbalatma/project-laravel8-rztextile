@@ -5,13 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Http\Requests\Auth\SendResetLinkRequest;
-use App\Services\ForgotPasswordService;
+use App\Services\Auth\ForgotPasswordService;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
 {
-    public function forgot(ForgotPasswordService $service):Response
+    public function forgot(ForgotPasswordService $service): Response
     {
         return response()->view("auth.forgot-password", $service->getForgotData());
     }
@@ -25,9 +24,9 @@ class ForgotPasswordController extends Controller
     {
         $status = $service->sendResetRequest($request->validated());
 
-        if($status){
+        if ($status) {
             return redirect()->route("forgot.password.forgot")->with("success", "Reset password link have been sent to your email !");
-        }else{
+        } else {
             return redirect()->route("forgot.password.forgot")->with("failed", "Something went wrong ! Please try again later ");
         }
     }
@@ -36,9 +35,9 @@ class ForgotPasswordController extends Controller
     {
         $updated = $service->resetPassword($request->validated());
 
-        if($updated){
+        if ($updated) {
             return redirect()->route("auth.login")->with("success", "Reset password successfully, login to continue !");
-        }else{
+        } else {
             return redirect()->route("auth.login")->with("failed", "Reset password failed, please try again later !");
         }
     }

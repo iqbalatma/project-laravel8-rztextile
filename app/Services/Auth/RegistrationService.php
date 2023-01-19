@@ -1,13 +1,21 @@
 <?php
-namespace App\Services;
+
+namespace App\Services\Auth;
 
 use App\Jobs\SendVerificationEmailJob;
 use App\Repositories\UserRepository;
+use App\Services\DataMaster\RegistrationCredentialService;
 use Illuminate\Support\Facades\Hash;
+use Iqbalatma\LaravelExtend\BaseService;
 
-class RegistrationService
+class RegistrationService extends BaseService
 {
+    protected $repository;
 
+    public function __construct()
+    {
+        $this->repository = new UserRepository();
+    }
     /**
      * Description : use to get all data for index controller
      *
@@ -26,7 +34,7 @@ class RegistrationService
      *
      * @param array $requestedData from clinet
      */
-    public function storeNewData(array $requestedData)
+    public function storeNewData(array $requestedData): bool|object
     {
         $role_id = (new RegistrationCredentialService())->checkIsCredentialValid($requestedData["registration_credential"]);
 
@@ -36,7 +44,7 @@ class RegistrationService
 
         $requestedData["role_id"] = $role_id;
         $requestedData["password"] = Hash::make($requestedData["password"]);
-        $user = (new UserRepository())->addNewData($requestedData);
+        $user = $this->repository->addNewData($requestedData);
 
         dispatch(new SendVerificationEmailJob($user));
 

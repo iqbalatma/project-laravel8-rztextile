@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Auth;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Iqbalatma\LaravelExtend\BaseService;
 
-class AuthService
+class AuthService extends BaseService
 {
 
     /**

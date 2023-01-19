@@ -1,22 +1,28 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Auth;
 
 use App\Jobs\SendForgotPasswordMailJob;
-use App\Mail\ResetPasswordMail;
-use App\Models\PasswordReset;
 use App\Repositories\PasswordResetRepository;
 use App\Repositories\UserRepository;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Iqbalatma\LaravelExtend\BaseService;
 
 
-class ForgotPasswordService
+class ForgotPasswordService extends BaseService
 {
+    protected $repository;
+    protected $userRepo;
+
+    public function __construct()
+    {
+        $this->repository = new PasswordResetRepository();
+        $this->userRepo = new UserRepository();
+    }
     /**
      * Description : use to get all data for forgot view
      *
@@ -48,7 +54,7 @@ class ForgotPasswordService
      *
      * @param array $requestedData email from reset password
      */
-    public function sendResetRequest(array $requestedData)
+    public function sendResetRequest(array $requestedData): bool
     {
         $resetData = [
             "email"      => $requestedData["email"],
@@ -56,46 +62,42 @@ class ForgotPasswordService
             "created_at" => Carbon::now(),
         ];
 
-        $passwordRepository = new PasswordResetRepository();
         try {
             DB::beginTransaction();
             $user = (new UserRepository())->getDataUserByEmail($requestedData["email"]);
             if (!$user) {
                 return false;
             }
-            $passwordRepository->deleteDataPasswordResetByEmail($requestedData["email"]);
+            $this->repository->deleteDataPasswordResetByEmail($requestedData["email"]);
 
-            $reset = $passwordRepository->addNewDataPasswordReset($resetData);
-
+            $reset = $this->repository->addNewDataPasswordReset($resetData);
             dispatch(new SendForgotPasswordMailJob($reset));
+
             DB::commit();
         } catch (Exception $e) {
-            dd($e);
             DB::rollback();
             return false;
         }
         return true;
     }
 
-    public function resetPassword(array $requestedData)
+    public function resetPassword(array $requestedData): bool
     {
         try {
             DB::beginTransaction();
-            $isTokenValid = (new PasswordResetRepository())->getDataPasswordResetByEmailToken(["email" => $requestedData["email"], "token" => $requestedData["token"]]);
+            $isTokenValid = $this->repository->getDataPasswordResetByEmailToken(["email" => $requestedData["email"], "token" => $requestedData["token"]]);
 
             if (!$isTokenValid) {
                 return false;
             }
 
-            $updated = (new UserRepository())->updateDataUserByEmail($requestedData["email"], ["password" => Hash::make($requestedData["password"])]);
+            $updated = $this->userRepo->updateDataUserByEmail($requestedData["email"], ["password" => Hash::make($requestedData["password"])]);
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-
             return false;
         }
 
         return $updated;
     }
-
 }
