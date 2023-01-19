@@ -1,12 +1,19 @@
 <?php
-namespace App\Services;
+
+namespace App\Services\Transactions;
 
 use App\AppData;
 use App\Repositories\InvoiceRepository;
+use Iqbalatma\LaravelExtend\BaseService;
 
-class InvoiceService
+class InvoiceService extends BaseService
 {
+    protected $repository;
 
+    public function __construct()
+    {
+        $this->repository = new InvoiceRepository();
+    }
     /**
      * Description : use to get all data for index controller
      *
@@ -24,37 +31,32 @@ class InvoiceService
             $month = $monthYear[1];
             $year = $monthYear[0];
         }
-        $invoiceRepository = new InvoiceRepository();
-
-        $invoices = $invoiceRepository->getAllDataInvoicePaginated(type: $type, search: $search, month: $month, year: $year);
 
         return [
             "title"       => "Invoice",
             "description" => "Invoice transaction list",
             "cardTitle"   => "Invoices",
-            "invoices"    => $invoices,
-
+            "invoices"    => $this->repository->getAllDataInvoicePaginated(type: $type, search: $search, month: $month, year: $year),
         ];
     }
 
-    public function reduceBill(int $invoiceId, int $paidAmount): void
-    {
-        $invoice = (new InvoiceRepository())->getDataInvoiceById($invoiceId);
+    // public function reduceBill(int $invoiceId, int $paidAmount): void
+    // {
+    //     $invoice = $this->repository->getDataInvoiceById($invoiceId);
 
-        if ($paidAmount >= $invoice->bill_left) {
-            $paidAmount = $invoice->bill_left;
-            $invoice->is_paid_off = true;
-        }
-        $invoice->bill_left -= $paidAmount;
-        $invoice->total_paid_amount += $paidAmount;
-        $invoice->save();
-    }
+    //     if ($paidAmount >= $invoice->bill_left) {
+    //         $paidAmount = $invoice->bill_left;
+    //         $invoice->is_paid_off = true;
+    //     }
+    //     $invoice->bill_left -= $paidAmount;
+    //     $invoice->total_paid_amount += $paidAmount;
+    //     $invoice->save();
+    // }
 
-    public function download(int $invoiceId)
+    public function download(int $id): array
     {
-        $invoice = (new InvoiceRepository())->getDataInvoiceById($invoiceId);
         return [
-            "invoice"        => $invoice,
+            "invoice"        => $this->repository->getDataInvoiceById($id),
             "companyName"    => AppData::COMPANY_NAME,
             "companyAddress" => AppData::COMPANY_ADDRESS,
             "companyPhone"   => AppData::COMPANY_PHONE,
@@ -62,5 +64,3 @@ class InvoiceService
         ];
     }
 }
-
-?>
