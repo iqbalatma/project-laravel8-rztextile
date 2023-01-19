@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Transactions;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\PaymentStoreRequest;
-use App\Services\PaymentService;
+use App\Services\Transactions\PaymentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 

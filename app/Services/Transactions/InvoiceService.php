@@ -40,18 +40,18 @@ class InvoiceService extends BaseService
         ];
     }
 
-    // public function reduceBill(int $invoiceId, int $paidAmount): void
-    // {
-    //     $invoice = $this->repository->getDataInvoiceById($invoiceId);
+    public function reduceBill(int $invoiceId, int $paidAmount): void
+    {
+        $invoice = $this->repository->getDataInvoiceById($invoiceId);
 
-    //     if ($paidAmount >= $invoice->bill_left) {
-    //         $paidAmount = $invoice->bill_left;
-    //         $invoice->is_paid_off = true;
-    //     }
-    //     $invoice->bill_left -= $paidAmount;
-    //     $invoice->total_paid_amount += $paidAmount;
-    //     $invoice->save();
-    // }
+        if ($paidAmount >= $invoice->bill_left) {
+            $paidAmount = $invoice->bill_left;
+            $invoice->is_paid_off = true;
+        }
+        $invoice->bill_left -= $paidAmount;
+        $invoice->total_paid_amount += $paidAmount;
+        $invoice->save();
+    }
 
     public function download(int $id): array
     {

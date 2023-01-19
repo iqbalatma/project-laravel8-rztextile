@@ -1,5 +1,6 @@
 <?php
-namespace App\Services;
+
+namespace App\Services\Transactions;
 
 use App\Repositories\InvoiceRepository;
 use App\Repositories\PaymentRepository;
@@ -7,9 +8,19 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Iqbalatma\LaravelExtend\BaseService;
 
-class PaymentService
+class PaymentService extends BaseService
 {
+    protected $repository;
+    private $invoiceRepo;
+    private $invoiceService;
+    public function __construct()
+    {
+        $this->repository = new PaymentRepository();
+        $this->invoiceRepo = new InvoiceRepository();
+        $this->invoiceService = new InvoiceService();
+    }
     private const PREFIX_CODE = "PYMNT-";
     /**
      * Description : use to get all data for index controller
@@ -35,7 +46,7 @@ class PaymentService
             "description" => "Data payment by invoice",
             "cardTitle"   => "Payments",
             "type"        => $type,
-            "payments"    => (new PaymentRepository())->getAllDataPaymentPaginated($type, $search, $year, $month)
+            "payments"    => $this->repository->getAllDataPaymentPaginated($type, $search, $year, $month)
         ];
     }
 
@@ -52,7 +63,7 @@ class PaymentService
             "title"       => "Payment",
             "description" => "Form for add new payment by invoice",
             "cardTitle"   => "Payments",
-            "invoice"     => (new InvoiceRepository())->getDataInvoiceById($invoiceId)
+            "invoice"     => $this->invoiceRepo->getDataInvoiceById($invoiceId)
         ];
     }
 
@@ -68,7 +79,7 @@ class PaymentService
             "title"       => "Payment",
             "description" => "Add new payment by invoice",
             "cardTitle"   => "Payments",
-            "invoices"    => (new InvoiceRepository())->getDataUnpaidInvoice()
+            "invoices"    => $this->invoiceRepo->getDataUnpaidInvoice()
         ];
     }
 
@@ -79,7 +90,7 @@ class PaymentService
      * @param array $requestedData from client
      * @return int total change
      */
-    public function storeNewData(array $requestedData): int
+    public function storeNewData(array $requestedData): bool|int
     {
         $change = 0;
         $requestedData["code"] = $this->getGeneratedPaymentCode();
@@ -90,11 +101,12 @@ class PaymentService
         }
         try {
             DB::beginTransaction();
-            (new InvoiceService())->reduceBill($requestedData["invoice_id"], $requestedData["paid_amount"]);
-            (new PaymentRepository())->addNewData($requestedData);
+            $this->invoiceService->reduceBill($requestedData["invoice_id"], $requestedData["paid_amount"]);
+            $this->repository->addNewData($requestedData);
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
+            return false;
         }
 
         return $change;
@@ -109,7 +121,7 @@ class PaymentService
     public function getGeneratedPaymentCode(): string
     {
         $newCode = self::PREFIX_CODE . Carbon::now()->format("Y-m") . "-"; #ex : PYMNT-2022-11-
-        $latestPaymentThisMonth = (new PaymentRepository())->getLatestDataPaymentThisMonth();
+        $latestPaymentThisMonth = $this->repository->getLatestDataPaymentThisMonth();
 
         if ($latestPaymentThisMonth) {
             $latestCode = explode('-', $latestPaymentThisMonth->code);
