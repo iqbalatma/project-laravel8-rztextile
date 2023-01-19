@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Transactions;
 
 use App\AppData;
 use App\Models\RollTransaction;
@@ -8,13 +8,28 @@ use App\Repositories\CustomerRepository;
 use App\Repositories\InvoiceRepository;
 use App\Repositories\PaymentRepository;
 use App\Repositories\RollRepository;
+use App\Services\Transactions\PaymentService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Iqbalatma\LaravelExtend\BaseService;
 
-class ShoppingService
+class ShoppingService extends BaseService
 {
+    private $rollRepo;
+    private $custRepo;
+    private $paymentRepo;
+    private $invoiceRepo;
+    private $paymentService;
+    public function __construct()
+    {
+        $this->rollRepo = new RollRepository();
+        $this->custRepo = new CustomerRepository();
+        $this->paymentRepo = new PaymentRepository();
+        $this->paymentService = new PaymentService();
+        $this->invoiceRepo = new InvoiceRepository();
+    }
     private const ALL_ROLL_SELECT_COLUMN = [
         AppData::TABLE_ROLL . ".id",
         AppData::TABLE_ROLL . ".name",
@@ -47,8 +62,8 @@ class ShoppingService
             "title"       => "Shopping",
             "description" => "For transaction with customer and purchasing",
             "cardTitle"   => "Shopping",
-            "rolls"       => (new RollRepository())->getAllDataRoll(self::ALL_ROLL_SELECT_COLUMN),
-            "customers"   => (new CustomerRepository())->getAllData(self::ALL_CUSTOMER_SELECT_COLUMN)
+            "rolls"       => $this->rollRepo->getAllDataRoll(self::ALL_ROLL_SELECT_COLUMN),
+            "customers"   => $this->custRepo->getAllData(self::ALL_CUSTOMER_SELECT_COLUMN)
         ];
     }
 
@@ -63,7 +78,7 @@ class ShoppingService
     {
         $requestedRolls = $requestedData["rolls"];
         $rollsId = array_column($requestedRolls, 'roll_id');
-        $rolls = (new RollRepository())->getDataRollByIds($rollsId);
+        $rolls = $this->rollRepo->getDataRollByIds($rollsId);
 
         try {
             DB::beginTransaction();
@@ -101,7 +116,7 @@ class ShoppingService
     private function addNewPayment(int $invoiceId, array $requestedData): ?object
     {
         $dataPayment = [
-            "code"         => (new PaymentService())->getGeneratedPaymentCode(),
+            "code"         => $this->paymentService->getGeneratedPaymentCode(),
             "paid_amount"  => $requestedData["paid_amount"],
             "payment_type" => $requestedData["payment_type"],
             "invoice_id"   => $invoiceId,
@@ -110,7 +125,7 @@ class ShoppingService
         if ($requestedData["paid_amount"] >= $requestedData["total_bill"]) {
             $dataPayment["paid_amount"] = $requestedData["total_bill"];
         }
-        return (new PaymentRepository())->addNewData($dataPayment);
+        return $this->paymentRepo->addNewData($dataPayment);
     }
 
     /**
@@ -143,7 +158,7 @@ class ShoppingService
             $dataInvoice["is_paid_off"] = true;
         }
 
-        return (new InvoiceRepository())->addNewData($dataInvoice);
+        return $this->invoiceRepo->addNewData($dataInvoice);
     }
 
 
@@ -155,17 +170,17 @@ class ShoppingService
     private function reduceQuantityRollAndUnit(array $requestedData): void
     {
         foreach ($requestedData as $roll) {
-            (new RollRepository())
-                ->decreaseQuantityRollAndUnit(
-                    $roll["roll_id"],
-                    $roll["quantity_roll"],
-                    $roll["quantity_unit"]
-                );
+            $this->rollRepo->decreaseQuantityRollAndUnit(
+                $roll["roll_id"],
+                $roll["quantity_roll"],
+                $roll["quantity_unit"]
+            );
         }
     }
 
 
     /**
+     * Description : use to generate invoice code with year, month, and
      * Description: use to add new data roll transaction
      *
      * @param array $requestedRolls data array rolls from client request
@@ -198,8 +213,7 @@ class ShoppingService
     }
 
 
-    /**
-     * Description : use to generate invoice code with year, month, and number
+    /** number
      *
      * @return string of generated invoice code
      */
@@ -209,7 +223,7 @@ class ShoppingService
         $month = $now->month;
         $year = $now->year;
         $newCode = "INV-$year-$month-";
-        $dataInvoice = (new InvoiceRepository())->getLatestDataInvoiceThisMonth();
+        $dataInvoice = $this->invoiceRepo->getLatestDataInvoiceThisMonth();
 
         if ($dataInvoice) {
             $code = $dataInvoice->code;
