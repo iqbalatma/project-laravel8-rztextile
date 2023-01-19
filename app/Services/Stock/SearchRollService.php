@@ -1,10 +1,19 @@
 <?php
-namespace App\Services;
+
+namespace App\Services\Stock;
 
 use App\Repositories\RollRepository;
+use Iqbalatma\LaravelExtend\BaseService;
 
-class SearchRollService
+class SearchRollService extends BaseService
 {
+    protected $repository;
+
+    public function __construct()
+    {
+        $this->repository = new RollRepository();
+    }
+
 
     /**
      * Description : use to get all data for index controller
@@ -17,9 +26,7 @@ class SearchRollService
             "title"       => "Search Roll",
             "description" => "Form search roll",
             "cardTitle"   => "Search Roll",
-            "rolls"       => (new RollRepository())->getAllDataRoll()
+            "rolls"       => $this->repository->getAllDataRoll()
         ];
     }
 }
-
-?>

@@ -14,8 +14,8 @@ const mix = require("laravel-mix");
 mix.js("resources/js/app.js", "public/js")
     .js("resources/js/application/app-layout.js", "public/js")
     .js(
-        "resources/js/application/search-roll/index.js",
-        "public/js/search-roll"
+        "resources/js/pages/search-roll/index.js",
+        "public/js/pages/search-roll"
     )
     .js(
         "resources/js/pages/whatsapp-messaging/index.js",

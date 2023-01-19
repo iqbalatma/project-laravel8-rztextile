@@ -71,6 +71,6 @@
     </div>
 
     @section("custom-scripts")
-    <script src="{{ asset('js/search-roll/index.js') }}"></script>
+    <script src="{{ asset('js/pages/search-roll/index.js') }}"></script>
     @endsection
 </x-dashboard.layout>
