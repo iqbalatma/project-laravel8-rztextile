@@ -1,12 +1,18 @@
 <?php
-namespace App\Services;
+
+namespace App\Services\Transactions;
 
 use App\AppData;
 use App\Repositories\InvoiceRepository;
+use Iqbalatma\LaravelExtend\BaseService;
 
-class ReportService
+class ReportService extends BaseService
 {
-
+    protected $invoiceRepo;
+    public function __construct()
+    {
+        $this->invoiceRepo = new InvoiceRepository();
+    }
     /**
      * Description : use to get all data for view index report
      *
@@ -39,7 +45,7 @@ class ReportService
 
 
         // }
-        $salesReport = (new InvoiceRepository())->getDataInvoiceReport(
+        $salesReport = $this->invoiceRepo->getDataInvoiceReport(
             [$startDate, $endDate]
         );
         $dataSet["sales_report"] = $this->getDataSummarySalesReport($salesReport);
@@ -84,9 +90,4 @@ class ReportService
             ],
         ];
     }
-
-
-
 }
-
-?>

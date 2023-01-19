@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Transactions;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Reports\ReportDownloadRequest;
-use App\Services\ReportService;
+use App\Services\Transactions\ReportService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Response;
 
