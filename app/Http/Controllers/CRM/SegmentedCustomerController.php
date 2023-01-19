@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\CRM;
 
 use App\Http\Controllers\Controller;
-use App\Services\SegmentedCustomerService;
+use App\Services\CRM\SegmentedCustomerService;
 use Illuminate\Http\Response;
 
 class SegmentedCustomerController extends Controller

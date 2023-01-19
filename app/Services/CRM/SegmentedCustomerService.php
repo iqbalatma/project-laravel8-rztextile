@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\CRM;
 
 use App\AppData;
+use Iqbalatma\LaravelExtend\BaseService;
 
-class SegmentedCustomerService
+class SegmentedCustomerService extends BaseService
 {
-
     public function getAllData(): array
     {
         $data = [

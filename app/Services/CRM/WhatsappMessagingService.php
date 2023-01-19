@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\CRM;
 
 use App\AppData;
 use App\Http\Traits\WablasTrait;

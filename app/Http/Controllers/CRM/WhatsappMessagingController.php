@@ -4,7 +4,7 @@ namespace App\Http\Controllers\CRM;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WhatsappMessaging\WhatsappMessagingStoreRequest;
-use App\Services\WhatsappMessagingService;
+use App\Services\CRM\WhatsappMessagingService;
 use Illuminate\Http\Response;
 
 class WhatsappMessagingController extends Controller

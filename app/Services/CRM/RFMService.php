@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\CRM;
 
 use App\Repositories\InvoiceRepository;
 use Carbon\Carbon;
+use Iqbalatma\LaravelExtend\BaseService;
 use Iqbalatma\RFMCalculation\RFMCalculation;
 
-class RFMService
+class RFMService extends BaseService
 {
     private $dataCustomer;
     private $dataRFM = [];
