@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Transactions;
 
 use App\Http\Controllers\Controller;
-use App\Services\DashboardService;
+use App\Services\Transactions\DashboardService;
 use Illuminate\Http\Response;
 
 class DashboardController extends Controller
