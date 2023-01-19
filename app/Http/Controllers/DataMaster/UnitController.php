@@ -11,10 +11,10 @@ use Illuminate\Http\Response;
 
 class UnitController extends Controller
 {
+
     /**
      * Description : use to show all data unit
      *
-     * @param UnitService $service dependency injection
      * @return Response for html view
      */
     public function index(UnitService $service): Response
@@ -25,7 +25,6 @@ class UnitController extends Controller
     /**
      * Description : use to show form to add new unit
      *
-     * @param UnitService $service dependency injection
      * @return Response
      */
     public function create(UnitService $service): Response
@@ -37,10 +36,9 @@ class UnitController extends Controller
     /**
      * Description : use to add new unit
      *
-     * @param UnitService $service dependency injection
      * @param StoreUnitRequest $request dependency injection
      */
-    public function store(UnitService $service, StoreUnitRequest $request): RedirectResponse
+    public function store(UnitService $service,  StoreUnitRequest $request): RedirectResponse
     {
         $stored = $service->storeNewData($request->validated());
 
@@ -57,7 +55,6 @@ class UnitController extends Controller
     /**
      * Description : use to show edit form for unit by id
      *
-     * @param UnitService $service dependency injection
      * @param int $id of unit that want to edit
      */
     public function edit(UnitService $service, int $id): Response|RedirectResponse
@@ -66,7 +63,6 @@ class UnitController extends Controller
         if ($this->isError($response)) {
             return $this->getErrorResponse();
         }
-
         return response()->view("units.edit", $response);
     }
 
@@ -74,7 +70,6 @@ class UnitController extends Controller
     /**
      * Description : use to update data unit with requested data
      *
-     * @param UnitService $service dependency injection
      * @param UpdateUnitRequest $request dependency injection
      * @param int $id of unit that want to update
      */
@@ -92,7 +87,6 @@ class UnitController extends Controller
     /**
      * Description : use to delete data unit by id
      *
-     * @param UnitService $service dependency injection
      * @param int $id of unit that want to delete
      * @return RedirectResponse
      */

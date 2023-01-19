@@ -101,7 +101,7 @@ class PaymentService extends BaseService
         }
         try {
             DB::beginTransaction();
-            $this->invoiceService->reduceBill($requestedData["invoice_id"], $requestedData["paid_amount"]);
+            $this->reduceBill($requestedData["invoice_id"], $requestedData["paid_amount"]);
             $this->repository->addNewData($requestedData);
             DB::commit();
         } catch (Exception $e) {
@@ -131,5 +131,18 @@ class PaymentService extends BaseService
         }
 
         return $newCode;
+    }
+
+    private function reduceBill(int $invoiceId, int $paidAmount): void
+    {
+        $invoice = $this->invoiceRepo->getDataInvoiceById($invoiceId);
+
+        if ($paidAmount >= $invoice->bill_left) {
+            $paidAmount = $invoice->bill_left;
+            $invoice->is_paid_off = true;
+        }
+        $invoice->bill_left -= $paidAmount;
+        $invoice->total_paid_amount += $paidAmount;
+        $invoice->save();
     }
 }
