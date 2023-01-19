@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\AJAX;
 
 use App\Http\Controllers\Controller;
-use App\Services\AjaxDiscountVoucherService;
+use App\Services\AJAX\AjaxDiscountVoucherService;
 use Illuminate\Http\JsonResponse;
 
 class DiscountVoucherController extends Controller

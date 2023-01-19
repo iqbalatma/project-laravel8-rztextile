@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\AJAX;
 
 use App\Http\Controllers\Controller;
-use App\Services\AjaxDashboardService;
+use App\Services\AJAX\AjaxDashboardService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {

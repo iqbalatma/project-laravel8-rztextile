@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\AJAX;
 
 use App\Repositories\DiscountVoucherRepository;
 use Iqbalatma\LaravelExtend\BaseService;

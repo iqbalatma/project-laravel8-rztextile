@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\AJAX;
 
 use App\Http\Controllers\Controller;
-use App\Services\AjaxDashboardService;
-use App\Services\AjaxPromotionMessageService;
+use App\Services\AJAX\AjaxPromotionMessageService;
 use Illuminate\Http\JsonResponse;
 
 class PromotionMessageController extends Controller

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\AJAX;
 
 use App\Http\Controllers\Controller;
-use App\Services\AjaxSearchRollService;
+use App\Services\AJAX\AjaxSearchRollService;
 use Illuminate\Http\JsonResponse;
 
 class SearchRollController extends Controller
