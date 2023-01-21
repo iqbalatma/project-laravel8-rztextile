@@ -1542,16 +1542,16 @@
         },
         {
             "name": "iqbalatma/laravel-extend",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/iqbalatma/laravel-extend.git",
-                "reference": "d00accca528714402329ff29fc003689cfe77b70"
+                "reference": "34a70b6643c7ced6d714f88aef75f93f02a11a00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/iqbalatma/laravel-extend/zipball/d00accca528714402329ff29fc003689cfe77b70",
-                "reference": "d00accca528714402329ff29fc003689cfe77b70",
+                "url": "https://api.github.com/repos/iqbalatma/laravel-extend/zipball/34a70b6643c7ced6d714f88aef75f93f02a11a00",
+                "reference": "34a70b6643c7ced6d714f88aef75f93f02a11a00",
                 "shasum": ""
             },
             "require": {
@@ -1574,9 +1574,9 @@
             "description": "Project for extend base class on laracel",
             "support": {
                 "issues": "https://github.com/iqbalatma/laravel-extend/issues",
-                "source": "https://github.com/iqbalatma/laravel-extend/tree/1.0.5"
+                "source": "https://github.com/iqbalatma/laravel-extend/tree/1.0.6"
             },
-            "time": "2023-01-17T08:18:30+00:00"
+            "time": "2023-01-19T15:14:13+00:00"
         },
         {
             "name": "laravel/framework",

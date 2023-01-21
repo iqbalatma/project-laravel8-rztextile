@@ -121,7 +121,7 @@ class RollTransactionService extends BaseService
      */
     private function deadstock(array $requestedData): object
     {
-        $roll = $this->rollRepo->getDataById($requestedData["roll_id"]);
+        $roll = $this->rollRepo->with(["unit"])->getDataById($requestedData["roll_id"]);
 
         // Check the quantity before deadstock
         if ($requestedData["quantity_roll"] > $roll->quantity_roll || $requestedData["quantity_unit"] > $roll->quantity_unit) {

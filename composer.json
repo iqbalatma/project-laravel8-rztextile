@@ -37,8 +37,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Iqbalatma\\RFMCalculation\\": "library/RFMCalculation/src/",
-            "Iqbalatma\\LaravelExtend\\": "library/laravel-extend/src/"
+            "Iqbalatma\\RFMCalculation\\": "library/RFMCalculation/src/"
         }
     },
     "autoload-dev": {

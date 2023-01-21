@@ -116,7 +116,7 @@ class RollService extends BaseService
                 "description" => "Form for edit roll",
                 "cardTitle"   => "Rolls",
                 "units"       => $this->unitRepo->getAllData(self::ALL_UNIT_SELECT_COLUMN),
-                "roll"        => $this->repository->getDataById($id)
+                "roll"        => $this->repository->with(["unit"])->getDataById($id)
             ];
         } catch (Exception $e) {
             $response = [
