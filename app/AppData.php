@@ -26,18 +26,22 @@ class AppData
 
     public const CUSTOMER_SEGMENTS = [
         [
+            "id" => 1,
             "key" => "mvc",
             "name" => "Most Valueable Customers",
         ],
         [
+            "id" => 2,
             "key" => "mgc",
             "name" => "Most Growthable Customers",
         ],
         [
+            "id" => 3,
             "key" => "m",
             "name" => "Migration Customer",
         ],
         [
+            "id" => 4,
             "key" => "bz",
             "name" => "Bellow Zero Customer"
         ]

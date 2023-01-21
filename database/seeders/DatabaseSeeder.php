@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             InvoiceSeeder::class,
             CustomerSegmentationSeeder::class,
             RollSeeder::class,
+            PromotionMessageSeeder::class,
         ]);
     }
 }
