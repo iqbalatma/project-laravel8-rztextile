@@ -8,19 +8,23 @@ use App\Repositories\CustomerRepository;
 use App\Repositories\CustomerSegmentationRepository;
 use App\Repositories\DiscountVoucherRepository;
 use App\Repositories\PromotionMessageRepository;
+use App\Services\Utils\TinyMCEToWhatsappService;
 use Illuminate\Support\Str;
 use Iqbalatma\LaravelExtend\BaseService;
 
 class WhatsappMessagingService extends BaseService
 {
-
     protected $repository;
     private $custRepo;
+    private $discRepo;
+    private $custSegRepo;
 
     public function __construct()
     {
         $this->repository = new PromotionMessageRepository();
         $this->custRepo = new CustomerRepository();
+        $this->discRepo = new DiscountVoucherRepository();
+        $this->custSegRepo = new CustomerSegmentationRepository();
     }
 
     private const GET_ALL_PROMOTION_MESSAGE_COLUMN = [
@@ -47,47 +51,35 @@ class WhatsappMessagingService extends BaseService
 
     public function sendMessage(array $requestedData)
     {
-        $payloads = $this->getDataPayload($requestedData);
-        return WablasTrait::sendMessage($payloads);
-    }
+        $promotionMessage = $this->repository->getDataById($requestedData["promotion_message_id"]);
 
-    public function sendBlast(array $requestedData)
-    {
-        $dataRFM = (new RFMService())->getRFM();
-        $customerSegmentation = (new CustomerSegmentationRepository())->getDataById($requestedData["segmentation_id"]);
-        $promotionMessage = (new PromotionMessageRepository())->getDataById($requestedData["promotion_message_id"]);
-        if (isset($dataRFM["customers"][$customerSegmentation->key])) {
-            $dataSet = collect($dataRFM["customers"][$customerSegmentation->key])->map(function ($item) use ($requestedData, $customerSegmentation, $promotionMessage) {
-                $code = strtoupper(Str::random(8));
-                (new DiscountVoucherRepository())->addNewData([
-                    "code" => $code,
-                    "promotion_message_id" => $promotionMessage->id
-                ]);
-                $voucher = "<p>&nbsp;</p><p>Masukkan voucher <strong>$code</strong> untuk mendapatkan discount $promotionMessage->discount %</p>";
-                return [
-                    "phone"   => $item["customer"]["phone"],
-                    "message" => $promotionMessage->message . $voucher
-                ];
-            });
-
-            return WablasTrait::sendBlast(["data" => $dataSet]);
+        if (isset($requestedData["type"]) && $requestedData["type"] == "blast") {
+            // the data came from RFM Service
+            $dataRFM = (new RFMService())->getRFM();
+            $customerSegmentation = $this->custSegRepo->getDataById($requestedData["segmentation_id"]);
+            if (isset($dataRFM["customers"][$customerSegmentation->key])) {
+                $customers = $dataRFM["customers"][$customerSegmentation->key];
+                $payload = $this->generatePayload($requestedData, $customers, $promotionMessage);
+            }
+        } else {
+            // The data came from customer repo
+            $customers = $this->custRepo->getDataById($requestedData["customer"], self::GET_CUSTOMER_BY_IDS_COLUMN);
+            $payload = $this->generatePayload($requestedData, $customers, $promotionMessage);
         }
+        return WablasTrait::sendBlast(["data" => $payload]);
     }
 
-    private function getDataPayload(array $requestedData): array
+    public function generatePayload(array $requestedData, object|array $customers, object $promotionMessage): array
     {
-        $customers = $this->custRepo->getCustomerByIds($requestedData["customer"], self::GET_CUSTOMER_BY_IDS_COLUMN);
-
-        $message = preg_replace('/<strong>|<\/strong>/', '*', $requestedData["message"]);
-        $message = preg_replace('/&nbsp;/', '', $message);
-        $message = preg_replace('/<em>|<\/em>/', '_', $message);
-        $message = preg_replace('/<p>|<\/p>/', '', $message);
-        $payload = collect($customers)->map(function ($item) use ($message) {
+        $message = TinyMCEToWhatsappService::translate($promotionMessage->message);
+        return collect($customers)->map(function ($item) use ($requestedData, $message, $promotionMessage) {
+            $code = strtoupper(Str::random(8));
+            $this->discRepo->addNewData(["code" => $code, "promotion_message_id" => $promotionMessage->id]);
+            $phone = (isset($requestedData["type"]) && $requestedData["type"] == "blast") ? $item->customer->phone : $item->phone;
             return [
-                "phone"   => preg_replace('/[^0-9]/', '', $item->phone),
-                "message" => $message
+                "phone"   => preg_replace('/[^0-9]/', '', $phone),
+                "message" => $message . "\nMasukkan voucher *$code* untuk mendapatkan discount $promotionMessage->discount %</p>"
             ];
         })->toArray();
-        return ["data" => $payload];
     }
 }

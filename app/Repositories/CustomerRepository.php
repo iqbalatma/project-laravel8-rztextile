@@ -47,9 +47,4 @@ class CustomerRepository extends BaseRepository
             ->where("role_id", AppData::ROLE_ID_CUSTOMER)
             ->get();
     }
-
-    public function getCustomerByIds(array $ids, array $columns = ["*"])
-    {
-        return $this->model->select($columns)->find($ids);
-    }
 }

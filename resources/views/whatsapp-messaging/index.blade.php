@@ -34,14 +34,9 @@
                                     </a>
                                 </li>
                                 @endforeach
-
-
-
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-
-
                                 <li>
                                     <a class="dropdown-item" href="#">
                                         <div class="form-check">
@@ -57,7 +52,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="promotion" class="form-label">Promotion Message Name</label>
-                        <select class="form-select promotion" id="promotion" aria-label="Default select example">
+                        <select class="form-select promotion" id="promotion" name="promotion_message_id" aria-label="Default select example">
                             <option selected disabled>Open this select menu</option>
                             @foreach ($promotionMessages as $promotion)
                             <option value="{{ $promotion->id }}" data-message="{{ $promotion->message }}">{{ $promotion->name }}
