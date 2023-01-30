@@ -18,7 +18,7 @@ class RFMService extends BaseService
 
         if ($this->dataCustomer->count()) {
             $this->dataCustomer = collect($this->dataCustomer)->map(function ($item) {
-                $item["recency"] = Carbon::parse($item["latest_invoice_date"])->diffInDays("2019-12-31 00.00.00");
+                $item["recency"] = Carbon::parse($item["latest_invoice_date"])->diffInDays(Carbon::now());
                 return $item;
             });
             $rfmCalculation = new RFMCalculation($this->dataCustomer);
