@@ -3,10 +3,16 @@
 namespace App\Services\AJAX;
 
 use App\Repositories\RollRepository;
+use Iqbalatma\LaravelExtend\BaseService;
 
-class AjaxSearchRollService
+class AjaxSearchRollService extends BaseService
 {
+    protected $repository;
 
+    public function __construct()
+    {
+        $this->repository = new RollRepository();
+    }
     /**
      * Description : use to get data roll by id
      *
@@ -15,6 +21,6 @@ class AjaxSearchRollService
      */
     public function getShowData(int $id): ?object
     {
-        return (new RollRepository())->getDataById($id);
+        return $this->repository->with(["unit"])->getDataById($id);
     }
 }

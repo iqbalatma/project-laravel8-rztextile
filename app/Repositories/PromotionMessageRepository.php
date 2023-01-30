@@ -18,7 +18,7 @@ class PromotionMessageRepository extends BaseRepository
 
     public function getDataByCustomerSegmentationId(int $id, array $columns = ["*"])
     {
-        return $this->model->select($columns)->where("customer_segmentation_id", $id)->get();
+        return $this->model->select($columns)->where("customer_segmentation_id", $id)->first();
     }
 
     public function getFirstOfAllDifferentByCustomerSegmentedId()
