@@ -94,11 +94,16 @@
                         </select>
                     </div>
                     <div class="d-none" id="blast-promotion-message-container">
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="promotion" class="form-label">Promotion Message Name</label>
                             <select class="form-select promotion" id="promotion-blast" name="promotion_message_id" aria-label="Default select example">
                             </select>
-                        </div>
+                        </div> --}}
+                        <p>
+                            <b id="discount-promo">
+                                Discount Promo
+                            </b>
+                        </p>
                         <div class="mb-3">
                             <label for="message" class="form-label">Message</label>
                             <div class="card">
@@ -108,6 +113,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                     <button type="submit" class="btn btn-primary"><i class="fa-sharp fa-solid fa-paper-plane"></i> Send</button>
