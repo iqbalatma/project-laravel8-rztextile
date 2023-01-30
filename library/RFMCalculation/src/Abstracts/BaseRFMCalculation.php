@@ -17,7 +17,6 @@ abstract class BaseRFMCalculation
     private string $moneteryKey;
     private string $rfmKey;
 
-
     public function __construct(
         Collection $datasetCustomer,
         string $recencyKey,

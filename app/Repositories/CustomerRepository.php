@@ -20,8 +20,8 @@ class CustomerRepository extends BaseRepository
     {
         $users = $this->model
             ->with("role")
-            ->select(array_merge($columns, [DB::raw("count(users.id) as total_invoices")]))
-            ->join("invoices", "invoices.customer_id", "users.id")
+            ->select(array_merge($columns, [DB::raw("count(invoices.customer_id) as total_invoices")]))
+            ->leftJoin("invoices", "invoices.customer_id", "users.id")
             ->where("users.role_id", AppData::ROLE_ID_CUSTOMER)
             ->groupBy($columns);
 

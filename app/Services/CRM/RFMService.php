@@ -14,6 +14,8 @@ class RFMService extends BaseService
     public function __construct()
     {
         $this->dataCustomer = (new InvoiceRepository())->getDataInvoiceForRFM();
+
+
         if ($this->dataCustomer->count()) {
             $this->dataCustomer = collect($this->dataCustomer)->map(function ($item) {
                 $item["recency"] = Carbon::parse($item["latest_invoice_date"])->diffInDays("2019-12-31 00.00.00");
