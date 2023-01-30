@@ -25,6 +25,7 @@ use App\Http\Controllers\DataMaster\UserManagementController;
 use App\Http\Controllers\CRM\WhatsappMessagingController;
 use App\Http\Controllers\DataMaster\CustomerSegmentationController;
 use App\Http\Controllers\DataMaster\DiscountVoucherController;
+use App\Repositories\RollRepository;
 use Illuminate\Support\Facades\Route;
 
 /*

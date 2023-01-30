@@ -14,7 +14,6 @@ class RollRepository extends BaseRepository
     {
         $this->model = new Roll();
     }
-
     public function getAllDataRollPaginated(
         string|bool $search = false,
         string|bool $year = false,
@@ -51,13 +50,14 @@ class RollRepository extends BaseRepository
         return $rolls;
     }
 
+
     public function getAllDataRoll(array $columns = ["*"])
     {
-        return $this->model->with([
+        return $this->model->select($columns)->with([
             "unit" => function ($query) {
                 $query->select(["id", "name"]);
             }
-        ])->select($columns)->get();
+        ])->get();
     }
 
     public function getLeastRoll(int $limit = 5, array $columns = ["*"])

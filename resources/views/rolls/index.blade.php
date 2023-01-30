@@ -69,7 +69,6 @@
                         <th>QR Code</th>
                         <th>Quantity Roll</th>
                         <th>Quantity Unit</th>
-                        <th>QR Code Image</th>
                         <th>Last Updated Time</th>
                         <th class="text-center">Action</th>
                     </thead>
@@ -82,9 +81,6 @@
                             <td>{{ $roll->qrcode }}</td>
                             <td>{{ $roll->quantity_roll . " rolls" }}</td>
                             <td>{{ $roll->quantity_unit . " " . ($roll->unit->name??"") }}</td>
-                            <td>
-                                <img src="storage/images/qrcode/{{ $roll->qrcode_image }}" alt="">
-                            </td>
                             <td>{{ $roll->updated_at??"-" }}</td>
                             <td class="text-center">
                                 <div class="d-grid gap-2 d-md-block">

@@ -74,7 +74,7 @@
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-users-between-lines"></i>
-            {{ $segment["name"] }}
+            {{ $segment["name"] }} Group
         </div>
         <div class="card-body">
             @if (isset($customers[$segment["key"]]) && count($customers[$segment["key"]])>0)
