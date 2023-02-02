@@ -47,7 +47,7 @@ class RFMCalculation extends BaseRFMCalculation implements IRFMCalculation
         ];
         foreach ($this->datasetCustomer as $key => $value) {
             foreach ($rfmPoint as $subKey => $subValue) {
-                if (count($rfmPoint) - 1 == $subKey) {
+                if (count($rfmPoint) - 1 == $subKey) { //last
                     if ($value["total_rfm"] >= $subValue["lower_threshold"] && $value["total_rfm"] <= $subValue["upper_threshold"]) {
                         array_push($customerDistribution[$maping[$subKey]], $value);
                     }
@@ -77,7 +77,7 @@ class RFMCalculation extends BaseRFMCalculation implements IRFMCalculation
                 $item["total_rfm"] += 1;
             } else {
                 foreach ($recencyPoint as $key => $value) {
-                    if (count($recencyPoint) - 1 == $key) {
+                    if (count($recencyPoint) - 1 == $key) { //last
                         if ($item["recency"] >= $value["lower_threshold"] && $item["recency"] <= $value["upper_threshold"]) {
                             $item["total_rfm"] += $key + 1;
                         }
@@ -93,7 +93,7 @@ class RFMCalculation extends BaseRFMCalculation implements IRFMCalculation
                 $item["total_rfm"] += 1;
             } else {
                 foreach ($frequencyPoint as $key => $value) {
-                    if (count($frequencyPoint) - 1 == $key) {
+                    if (count($frequencyPoint) - 1 == $key) { //last
                         if ($item["total_invoices"] >= $value["lower_threshold"] && $item["total_invoices"] <= $value["upper_threshold"]) {
                             $item["total_rfm"] += $key + 1;
                         }
@@ -109,7 +109,7 @@ class RFMCalculation extends BaseRFMCalculation implements IRFMCalculation
                 $item["total_rfm"] += 1;
             } else {
                 foreach ($moneteryPoint as $key => $value) {
-                    if (count($moneteryPoint) - 1 == $key) {
+                    if (count($moneteryPoint) - 1 == $key) { //last
                         if ($item["total_bill"] >= $value["lower_threshold"] && $item["total_bill"] <= $value["upper_threshold"]) {
                             $item["total_rfm"] += $key + 1;
                         }

@@ -64,6 +64,19 @@
                                             </div>
                                         </div>
 
+                                        <div class="row mt-4">
+                                            <div class="col-md-6">
+                                                <input type="checkbox" class="btn-check" id="btn-check-custom-date" name="is_custom_date" autocomplete="off">
+                                                <label class="btn btn-outline-primary" for="btn-check-custom-date">Custom Date</label><br>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-4">
+                                            <div class="col-md-6 d-none" id="custom-date-input">
+                                                <label for="custom-date" class="form-label">Custom Date</label>
+                                                <input type="date" class="form-control" name="custom-date" id="custom-date" disabled>
+                                            </div>
+                                        </div>
+
                                         <div class="row g-3 mt-4">
                                             <div class="col-md-12 mb-4">
                                                 <input type="checkbox" class="btn-check" id="is-have-voucher" autocomplete="off">
@@ -130,6 +143,8 @@
                                                 <input type="text" class="form-control" id="phone" readonly>
                                             </div>
                                         </div>
+
+
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

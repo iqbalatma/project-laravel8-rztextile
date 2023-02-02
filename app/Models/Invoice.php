@@ -23,6 +23,8 @@ class Invoice extends Model
         "discount_amount",
         "final_bill",
         "voucher_id",
+        "created_at",
+        "updated_at",
     ];
 
 

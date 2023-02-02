@@ -82,7 +82,6 @@ class ShoppingService extends BaseService
 
         try {
             DB::beginTransaction();
-
             $storedInvoice = $this->addNewInvoice($requestedData, $rolls);
 
             if ($requestedData["paid_amount"] > 0) {
@@ -150,8 +149,13 @@ class ShoppingService extends BaseService
             "bill_left"         => $requestedData["final_bill"] - $requestedData["paid_amount"],
             "total_profit"      => $requestedData["final_bill"] - $totalCapital,
             "customer_id"       => $requestedData["customer_id"],
-            "user_id"           => Auth::user()->id
+            "user_id"           => Auth::user()->id,
         ];
+
+        if($requestedData["custom_date"]){
+            $dataInvoice["created_at"] = $requestedData["custom_date"];
+            $dataInvoice["updated_at"] = $requestedData["custom_date"];
+        }
         if ($requestedData["paid_amount"] >= $requestedData["final_bill"]) {
             $dataInvoice["total_paid_amount"] = $requestedData["final_bill"];
             $dataInvoice["bill_left"] = 0;

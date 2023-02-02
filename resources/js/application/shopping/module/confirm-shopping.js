@@ -70,7 +70,16 @@ export default {
             rolls: [],
             voucher_id: voucherId,
         };
-        console.log(dataSet);
+
+        let isCustomDate = $("#btn-check-custom-date").is(":checked");
+
+        if(isCustomDate){
+            if($("#custom-date").val()==""){
+                return Swal.fire("Custom date is required");
+            }
+            dataSet.custom_date = $("#custom-date").val();
+
+        }
 
         let isWithCustomer = $("#is-with-customer").is(":checked");
         let selectedCustomer = $("#select-customer")

@@ -31,7 +31,8 @@ class PurchaseRequest extends FormRequest
             "paid_amount" => "required|numeric",
             "voucher_id" => "numeric|nullable",
             "discount_amount" => "",
-            "final_bill" => ""
+            "final_bill" => "",
+            "custom_date" => ""
         ];
     }
 }

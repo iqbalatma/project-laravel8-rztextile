@@ -333,4 +333,14 @@ $(document).ready(function () {
         }
         confirmShopping.onClickConfirm();
     });
+
+    $("#btn-check-custom-date").on("change", function(){
+        if (this.checked) {
+            $("#custom-date-input").removeClass("d-none");
+            $("#custom-date").prop("disabled", false)
+        } else {
+            $("#custom-date-input").addClass("d-none");
+            $("#custom-date").prop("disabled", true)
+        }
+    })
 });
