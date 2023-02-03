@@ -107,6 +107,7 @@ Route::group([
     "prefix" => "/suggestions",
     "as" => "suggestions."
 ], function () {
+    Route::get("/", "index")->name("index");
     Route::post("/", "store")->name("store");
 });
 

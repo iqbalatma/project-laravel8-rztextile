@@ -13,7 +13,7 @@ class StoreSuggestionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class StoreSuggestionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "name" => "",
+            "email" => "email|required",
+            "phone"=> "",
+            "suggest"=> ""
         ];
     }
 }
