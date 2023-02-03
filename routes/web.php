@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\CRM\PromotionMessageController;
+use App\Http\Controllers\CRM\SuggestionController;
 use App\Http\Controllers\DataMaster\CustomerController;
 use App\Http\Controllers\Transactions\DashboardController;
 use App\Http\Controllers\Transactions\InvoiceController;
@@ -99,6 +100,15 @@ Route::group([
     Route::get("/verify", "show")->name("notice")->middleware("auth");
     Route::get("/verify/{id}/{hash}", "verify")->name("verify");
     Route::post("/resend", "resend")->name("resend")->middleware("auth");
+});
+
+Route::group([
+    "controller" => SuggestionController::class,
+    "prefix" => "/suggestions",
+    "as" => "suggestions."
+], function () {
+    Route::get("/", "index")->name("index");
+    Route::post("/", "store")->name("store");
 });
 
 

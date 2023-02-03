@@ -130,6 +130,12 @@
                 @canany(['isAdministrator', 'isAdmin'])
                 <li class="sidebar-title">Promotion</li>
                 <li class="sidebar-item">
+                    <a href="{{ route('suggestions.index') }}" class="sidebar-link">
+                        <i class="fa-solid fa-headset"></i>
+                        <span>Customer Suggestions</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
                     <a href="{{ route('segmendted.customers.index') }}" class="sidebar-link">
                         <i class="fa-solid fa-users-line"></i>
                         <span>Segmented Customer</span>
