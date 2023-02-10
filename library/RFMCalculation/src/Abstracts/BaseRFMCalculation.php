@@ -52,6 +52,7 @@ abstract class BaseRFMCalculation
     protected function setRecencyPointRange(): void
     {
         $maxR = $this->datasetCustomer->max($this->recencyKey) - $this->datasetCustomer->min($this->recencyKey);
+
         $this->recencyPointRange = $this->getRangePoint($maxR, isReverse: true);
     }
     public function getRecencyPointRange(): array
@@ -61,6 +62,7 @@ abstract class BaseRFMCalculation
     protected function setFrequencyPointRange(): void
     {
         $maxF = $this->datasetCustomer->max($this->frequencyKey) - $this->datasetCustomer->min($this->frequencyKey);
+
         $this->frequencyPointRange = $this->getRangePoint($maxF);
     }
 

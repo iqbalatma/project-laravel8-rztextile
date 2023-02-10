@@ -15,7 +15,6 @@ class RFMService extends BaseService
     {
         $this->dataCustomer = (new InvoiceRepository())->getDataInvoiceForRFM();
 
-
         if ($this->dataCustomer->count()) {
             $this->dataCustomer = collect($this->dataCustomer)->map(function ($item) {
                 $item["recency"] = Carbon::parse($item["latest_invoice_date"])->diffInDays(Carbon::now());

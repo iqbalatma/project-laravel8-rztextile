@@ -29,6 +29,7 @@ class RFMCalculation extends BaseRFMCalculation implements IRFMCalculation
         $moneteryPoint = $this->getMoneteryPointRange();
 
 
+
         $this->setRFMToDataSet($recencyPoint, $frequencyPoint, $moneteryPoint);
         $this->setRFMPointRange();
 
@@ -78,7 +79,7 @@ class RFMCalculation extends BaseRFMCalculation implements IRFMCalculation
             } else {
                 foreach ($recencyPoint as $key => $value) {
                     if (count($recencyPoint) - 1 == $key) { //last
-                        if ($item["recency"] >= $value["lower_threshold"] && $item["recency"] <= $value["upper_threshold"]) {
+                        if ($item["recency"] >= $value["lower_threshold"]) {
                             $item["total_rfm"] += $key + 1;
                         }
                     } else {
@@ -94,7 +95,7 @@ class RFMCalculation extends BaseRFMCalculation implements IRFMCalculation
             } else {
                 foreach ($frequencyPoint as $key => $value) {
                     if (count($frequencyPoint) - 1 == $key) { //last
-                        if ($item["total_invoices"] >= $value["lower_threshold"] && $item["total_invoices"] <= $value["upper_threshold"]) {
+                        if ($item["total_invoices"] >= $value["lower_threshold"]) {
                             $item["total_rfm"] += $key + 1;
                         }
                     } else {
@@ -110,7 +111,7 @@ class RFMCalculation extends BaseRFMCalculation implements IRFMCalculation
             } else {
                 foreach ($moneteryPoint as $key => $value) {
                     if (count($moneteryPoint) - 1 == $key) { //last
-                        if ($item["total_bill"] >= $value["lower_threshold"] && $item["total_bill"] <= $value["upper_threshold"]) {
+                        if ($item["total_bill"] >= $value["lower_threshold"]) {
                             $item["total_rfm"] += $key + 1;
                         }
                     } else {
