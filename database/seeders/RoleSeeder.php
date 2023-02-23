@@ -31,6 +31,10 @@ class RoleSeeder extends Seeder
                 "name" => "customer",
                 "description" => "user that act as buyer items"
             ],
+            [
+                "name" => "owner",
+                "description" => "user that act as owner of the company"
+            ],
         ];
 
         foreach ($data as $key => $item) {

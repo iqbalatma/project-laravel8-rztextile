@@ -23,7 +23,7 @@ class PromotionMessageRepository extends BaseRepository
 
     public function getFirstOfAllDifferentByCustomerSegmentedId()
     {
-        return $this->model->select("promotion_messages.id", "promotion_messages.customer_segmentation_id", "promotion_messages.discount")
+        return $this->model->select("promotion_messages.id", "promotion_messages.customer_segmentation_id", "promotion_messages.discount", "promotion_messages.prize")
             ->join(DB::raw("(SELECT customer_segmentation_id, MIN(id) as min_id from promotion_messages GROUP BY customer_segmentation_id) j"), function ($join) {
                 $join->on("promotion_messages.customer_segmentation_id", "j.customer_segmentation_id")->on("promotion_messages.id", "j.min_id");
             })

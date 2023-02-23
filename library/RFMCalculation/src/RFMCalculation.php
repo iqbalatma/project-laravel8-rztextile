@@ -34,6 +34,7 @@ class RFMCalculation extends BaseRFMCalculation implements IRFMCalculation
         $this->setRFMPointRange();
 
         $rfmPoint = $this->getRFMPointRange();
+
         $maping = [
             "bz",
             "m",
@@ -49,7 +50,7 @@ class RFMCalculation extends BaseRFMCalculation implements IRFMCalculation
         foreach ($this->datasetCustomer as $key => $value) {
             foreach ($rfmPoint as $subKey => $subValue) {
                 if (count($rfmPoint) - 1 == $subKey) { //last
-                    if ($value["total_rfm"] >= $subValue["lower_threshold"] && $value["total_rfm"] <= $subValue["upper_threshold"]) {
+                    if ($value["total_rfm"] >= $subValue["lower_threshold"]) {
                         array_push($customerDistribution[$maping[$subKey]], $value);
                     }
                 } else {

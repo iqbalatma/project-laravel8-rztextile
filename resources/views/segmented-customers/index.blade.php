@@ -78,7 +78,7 @@
         </div>
         <div class="card-body">
             @if (isset($customers[$segment["key"]]) && count($customers[$segment["key"]])>0)
-            <h5>Promotion Discount : {{ $promotion_message_discount[$segment["id"]-1]["discount"]??0 }} %</h5>
+            <h5>Promotion Discount : {{ $promotion_message_discount[$segment["id"]-1]["discount"]??0 }} % / Prize : {{ $promotion_message_discount[$segment["id"]-1]["prize"] }}</h5>
             <div class="table-responsive mt-4">
                 <table class="table align-middle" id="table-{{ $segment['key'] }}">
                     <thead>

@@ -126,10 +126,10 @@ Route::middleware(["auth", "verified"])
                     function () {
                         Route::get("/", "index")->name("index");
                         Route::get("/create", "create")->name("create");
-                        Route::post("/", "store")->name("store");
-                        Route::get("/edit/{id}", "edit")->name("edit");
-                        Route::patch("/{id}", "update")->name("update");
-                        Route::put("/{id}", "changeStatusActive")->name("change.status.active");
+                        Route::post("/", "store")->name("store")->middleware("role.prohibitted:owner");
+                        Route::get("/edit/{id}", "edit")->name("edit")->middleware("role.prohibitted:owner");;
+                        Route::patch("/{id}", "update")->name("update")->middleware("role.prohibitted:owner");;
+                        Route::put("/{id}", "changeStatusActive")->name("change.status.active")->middleware("role.prohibitted:owner");;
                     }
                 );
 
@@ -152,7 +152,7 @@ Route::middleware(["auth", "verified"])
         );
 
 
-        Route::middleware("role:administrator,administrasi")->group(
+        Route::middleware("role:administrator,administrasi,owner")->group(
             function () {
                 // DASHBOARD
                 Route::get("/dashboard", DashboardController::class)->name("dashboard.index");
@@ -208,9 +208,9 @@ Route::middleware(["auth", "verified"])
                         Route::get("/", "index")->name("index");
                         Route::get("/edit/{id}", "edit")->name("edit");
                         Route::get("/create", "create")->name("create");
-                        Route::patch("/{id}", "update")->name("update");
-                        Route::post("/", "store")->name("store");
-                        Route::delete("/{id}", "destroy")->name("destroy");
+                        Route::patch("/{id}", "update")->name("update")->middleware("role.prohibitted:owner");;
+                        Route::post("/", "store")->name("store")->middleware("role.prohibitted:owner");;
+                        Route::delete("/{id}", "destroy")->name("destroy")->middleware("role.prohibitted:owner");;
                     }
                 );
 
@@ -224,11 +224,11 @@ Route::middleware(["auth", "verified"])
                     function () {
                         Route::get("/", "index")->name("index");
                         Route::get("/create", "create")->name("create");
-                        Route::post("/", "store")->name("store");
+                        Route::post("/", "store")->name("store")->middleware("role.prohibitted:owner");;
                         Route::get("/edit/{id}", "edit")->name("edit");
-                        Route::patch("/{id}", "update")->name("update");
+                        Route::patch("/{id}", "update")->name("update")->middleware("role.prohibitted:owner");;
                         Route::get("/download/{qrcode}", "downloadQrcode")->name("downloadQrcode");
-                        Route::post("/print", "printQrcode")->name("printQrcode");
+                        Route::post("/print", "printQrcode")->name("printQrcode")->middleware("role.prohibitted:owner");;
                     }
                 );
 
@@ -307,9 +307,9 @@ Route::middleware(["auth", "verified"])
                 Route::get("/", "index")->name("index");
                 Route::get("/create", "create")->name("create");
                 Route::get("/edit/{id}", "edit")->name("edit");
-                Route::post("/", "store")->name("store");
-                Route::patch("/{id}", "update")->name("update");
-                Route::delete("/{id}", "destroy")->name("destroy");
+                Route::post("/", "store")->name("store")->middleware("role.prohibitted:owner");;
+                Route::patch("/{id}", "update")->name("update")->middleware("role.prohibitted:owner");;
+                Route::delete("/{id}", "destroy")->name("destroy")->middleware("role.prohibitted:owner");;
             }
         );
     });

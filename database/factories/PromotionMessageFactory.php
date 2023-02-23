@@ -16,6 +16,8 @@ class PromotionMessageFactory extends Factory
         return [
             "name" => $this->faker->name(),
             "message" => $this->faker->text(),
+            "message_prize" => $this->faker->text(),
+            "prize" => "Iphone",
             "customer_segmentation_id" => $this->faker->numberBetween(1, 4),
             "discount" => $this->faker->numberBetween(1, 100),
         ];

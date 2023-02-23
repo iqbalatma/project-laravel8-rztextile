@@ -45,6 +45,7 @@ class CustomerController extends Controller
     {
         $stored = $service->storeNewData($request->validated());
 
+
         $redirect = redirect()
             ->route("customers.index");
 

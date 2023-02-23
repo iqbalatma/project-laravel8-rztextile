@@ -84,7 +84,7 @@ abstract class BaseRFMCalculation
 
     public function setRFMPointRange(): void
     {
-        $maxRFM = $this->datasetCustomer->max($this->rfmKey);
+        $maxRFM = $this->datasetCustomer->max($this->rfmKey) - $this->datasetCustomer->min($this->rfmKey);;
         $this->rfmPointRange =  $this->getRangePoint($maxRFM, 4);
     }
     public function getRFMPointRange(): array
