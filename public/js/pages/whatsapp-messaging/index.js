@@ -6,17 +6,21 @@ var __webpack_exports__ = {};
 $(document).ready(function () {
   $("#segmentation_id").on("change", function () {
     var segmentationId = $(this).val();
-    console.log("tes");
     $.ajax({
       method: "GET",
       url: "/ajax/promotion-messages/customer-segmentations/".concat(segmentationId)
     }).done(function (response) {
       var dataPromotionMessages = response.data;
-      console.log(dataPromotionMessages);
+      $("#promotion-message-id-blast").val(dataPromotionMessages.id);
       $(".message").html(dataPromotionMessages.message);
-      $(".message-input").val(dataPromotionMessages.message);
+      $("#message-input").val(dataPromotionMessages.message);
       $("#discount-promo").text("Promo Discount " + dataPromotionMessages.discount + "%");
       $("#blast-promotion-message-container").removeClass("d-none");
+      $("#prize").text("Prize " + dataPromotionMessages.prize);
+      $("#message-input-prize").val(dataPromotionMessages.message_prize);
+      $("#message-prize").html(dataPromotionMessages.message_prize);
+      console.log(dataPromotionMessages);
+
       // if (dataPromotionMessages.length > 0) {
       //     $("#blast-promotion-message-container").removeClass(
       //         "d-none"

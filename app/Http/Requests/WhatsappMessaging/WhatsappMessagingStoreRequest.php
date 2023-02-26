@@ -27,7 +27,9 @@ class WhatsappMessagingStoreRequest extends FormRequest
             "customer" => "",
             "promotion_message_id" => "required",
             "type" => "",
-            "segmentation_id" => "required_if:type,blast"
+            "segmentation_id" => "required_if:type,blast",
+            "type_gift" => "required_if:type,blast",
+            "message_prize" => ""
         ];
     }
 }

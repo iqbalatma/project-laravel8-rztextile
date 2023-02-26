@@ -16,6 +16,7 @@ class WhatsappMessagingController extends Controller
 
     public function store(WhatsappMessagingService $service, WhatsappMessagingStoreRequest $request)
     {
+        dd($request->validated());
         $sent = $service->sendMessage($request->validated());
 
         $redirect = redirect()

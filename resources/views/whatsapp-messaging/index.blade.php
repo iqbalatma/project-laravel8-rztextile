@@ -75,6 +75,7 @@
                 <form method="POST" action="{{ route('whatsapp.messaging.store') }}">
                     @csrf
                     <input type="hidden" name="type" value="{{ request()->input('type') }}">
+                    <input type="hidden" name="promotion_message_id" id="promotion-message-id-blast">
                     <div class="mb-3">
                         <label for="segmentation_id" class="form-label">Select Customer Segmentation</label>
                         <select class="form-select segmentation" id="segmentation_id" name="segmentation_id" aria-label="Default select example">
@@ -94,28 +95,52 @@
                         </select>
                     </div>
                     <div class="d-none" id="blast-promotion-message-container">
-                        {{-- <div class="mb-3">
-                            <label for="promotion" class="form-label">Promotion Message Name</label>
-                            <select class="form-select promotion" id="promotion-blast" name="promotion_message_id" aria-label="Default select example">
-                            </select>
-                        </div> --}}
-                        <p>
-                            <b id="discount-promo">
-                                Discount Promo
-                            </b>
-                        </p>
-                        <div class="mb-3">
-                            <label for="message" class="form-label">Message</label>
-                            <div class="card">
-                                <div class="card-body">
-                                    <input type="hidden" name="message" id="message-input" class="message-input">
-                                    <div id="message" class="message"></div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input class="form-check-input" type="radio" value="promotion" name="type_gift" id="type-gift2" checked>
+                                <label class="form-check-label" for="type-gift2">
+                                    Promotion
+                                </label>
+
+                                <p>
+                                    <b id="discount-promo">
+                                        Promo Discount
+                                    </b>
+                                </p>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Message</label>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <input type="hidden" name="message" id="message-input" class="message-input">
+                                            <div id="message" class="message"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-check-input" type="radio" value="prize" name="type_gift" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Prize
+                                </label>
+
+                                <p>
+                                    <b id="prize">
+                                        Prize
+                                    </b>
+                                </p>
+
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Message</label>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <input type="hidden" name="message_prize" id="message-input-prize" class="message-input-prize">
+                                            <div id="message-prize" class="message"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                     <button type="submit" class="btn btn-primary"><i class="fa-sharp fa-solid fa-paper-plane"></i> Send</button>
                 </form>
                 @endif

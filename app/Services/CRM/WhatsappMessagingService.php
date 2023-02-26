@@ -57,6 +57,7 @@ class WhatsappMessagingService extends BaseService
             // the data came from RFM Service
             $dataRFM = (new RFMService())->getRFM();
             $customerSegmentation = $this->custSegRepo->getDataById($requestedData["segmentation_id"]);
+
             if (isset($dataRFM["customers"][$customerSegmentation->key])) {
                 $customers = $dataRFM["customers"][$customerSegmentation->key];
                 $payload = $this->generatePayload($requestedData, $customers, $promotionMessage);
@@ -72,13 +73,21 @@ class WhatsappMessagingService extends BaseService
     public function generatePayload(array $requestedData, object|array $customers, object $promotionMessage): array
     {
         $message = TinyMCEToWhatsappService::translate($promotionMessage->message);
+        if($requestedData["type_gift"]=="prize"){
+            $message = TinyMCEToWhatsappService::translate($promotionMessage->message_prize);
+        }
         return collect($customers)->map(function ($item) use ($requestedData, $message, $promotionMessage) {
             $code = strtoupper(Str::random(8));
             $this->discRepo->addNewData(["code" => $code, "promotion_message_id" => $promotionMessage->id]);
             $phone = (isset($requestedData["type"]) && $requestedData["type"] == "blast") ? $item->customer->phone : $item->phone;
+
+            if($requestedData["type_gift"]!="prize"){
+                $message = $message . "\nMasukkan voucher *$code* untuk mendapatkan discount $promotionMessage->discount %</p>";
+            }
+
             return [
                 "phone"   => preg_replace('/[^0-9]/', '', $phone),
-                "message" => $message . "\nMasukkan voucher *$code* untuk mendapatkan discount $promotionMessage->discount %</p>"
+                "message" => $message
             ];
         })->toArray();
     }
