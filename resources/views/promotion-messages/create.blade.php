@@ -27,7 +27,17 @@
                 <div class="col-md-12">
                     <label for="message" class="form-label">Message</label>
                     {{-- <textarea class="form-control" id="message" name="message" rows="3"></textarea> --}}
-                    <x-forms.tinymce-editor message=""></x-forms.tinymce-editor>
+                    <x-forms.tinymce-editor message="" name="message"></x-forms.tinymce-editor>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="prize" class="form-label">Prize</label>
+                    <input type="number" class="form-control" id="prize" name="prize" placeholder="Enter prize of message promotion">
+                </div>
+
+                <div class="col-md-12">
+                    <label for="message_prize" class="form-label">Message Prize</label>
+                    <x-forms.tinymce-editor message="" name="message_prize"></x-forms.tinymce-editor>
                 </div>
                 <div class="col-12">
                     <a href="{{ route('promotion.messages.index') }}" class="btn btn-danger"><i class="fa-solid fa-square-xmark"></i> Cancel</a>

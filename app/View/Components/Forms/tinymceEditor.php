@@ -7,14 +7,16 @@ use Illuminate\View\Component;
 class tinymceEditor extends Component
 {
     public string $message;
+    public string $name;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $message = "")
+    public function __construct(string $message = "", string $name = "")
     {
         $this->message = $message;
+        $this->name = $name;
     }
 
     /**

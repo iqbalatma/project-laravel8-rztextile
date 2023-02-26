@@ -24,6 +24,8 @@
                         <th>Segmentation Key</th>
                         <th>Segmentation Name</th>
                         <th>Discount</th>
+                        <th>Prize</th>
+                        <th>Message Prize</th>
                         <th>Last Updated Time</th>
                         <th>Action</th>
                     </thead>
@@ -36,6 +38,8 @@
                             <td>{{ strtoupper($message->customer_segmentation->key) }}</td>
                             <td>{{ ucfirst($message->customer_segmentation->name) }}</td>
                             <td>{{ ucfirst($message->discount) }} %</td>
+                            <td>{{ $message->prize}}</td>
+                            <td>{!! $message->message_prize !!}</td>
                             <td>{{ $message->updated_at }}</td>
                             <td>
                                 <div class="d-grid gap-2 d-md-flex">
