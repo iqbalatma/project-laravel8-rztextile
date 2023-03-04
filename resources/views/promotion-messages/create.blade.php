@@ -32,7 +32,7 @@
 
                 <div class="col-md-12">
                     <label for="prize" class="form-label">Prize</label>
-                    <input type="number" class="form-control" id="prize" name="prize" placeholder="Enter prize of message promotion">
+                    <input type="text" class="form-control" id="prize" name="prize" placeholder="Enter prize of message promotion">
                 </div>
 
                 <div class="col-md-12">
