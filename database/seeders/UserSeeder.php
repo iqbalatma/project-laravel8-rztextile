@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Statics\Permissions;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
+use App\Statics\Permissions\UnitPermission;
 use App\Statics\Roles;
 use Carbon\Carbon;
 use Database\Factories\CustomerFactory;
@@ -431,6 +432,12 @@ class UserSeeder extends Seeder
         $role->givePermissionTo(RolePermission::EDIT);
         $role->givePermissionTo(RolePermission::UPDATE);
         $role->givePermissionTo(PermissionPermission::INDEX);
+        $role->givePermissionTo(UnitPermission::INDEX);
+        $role->givePermissionTo(UnitPermission::CREATE);
+        $role->givePermissionTo(UnitPermission::UPDATE);
+        $role->givePermissionTo(UnitPermission::STORE);
+        $role->givePermissionTo(UnitPermission::EDIT);
+        $role->givePermissionTo(UnitPermission::DESTROY);
         $user->assignRole(Roles::ADMINISTRATOR);
     }
 }

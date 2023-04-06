@@ -1,4 +1,4 @@
-<x-dashboard.layout title="{{ $title }}" description="{{ $description }}">
+<x-dashboard.layout>
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-scale-unbalanced-flip"></i>
@@ -40,6 +40,7 @@
                                         <a href="{{ route('units.edit', $unit->id) }}" class="btn btn-success">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
+
                                         <a class="btn btn-danger btn-delete">
                                             <i class="fa-solid fa-trash-can"></i>
                                         </a>
@@ -57,6 +58,6 @@
     </div>
 
     @section("custom-scripts")
-    <script src="{{ asset('js/units/index.js') }}"></script>
+    <script src="{{ asset('js/pages/units/index.js') }}"></script>
     @endsection
 </x-dashboard.layout>

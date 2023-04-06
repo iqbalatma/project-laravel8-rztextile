@@ -29,6 +29,7 @@ use App\Http\Controllers\DataMaster\PermissionController;
 use App\Repositories\RollRepository;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
+use App\Statics\Permissions\UnitPermission;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -116,6 +117,7 @@ Route::group([
 
 Route::middleware(["auth", "verified"])
     ->group(function () {
+        // ROLES
         Route::prefix("roles")->name("roles.")->controller(RoleController::class)->group(function () {
             Route::get("/", "index")->name("index")->middleware("permission:" . RolePermission::INDEX);
             Route::get("/create", "create")->name("create")->middleware("permission:" . RolePermission::CREATE);
@@ -124,8 +126,17 @@ Route::middleware(["auth", "verified"])
             Route::delete("/{id}", "destroy")->name("destroy")->middleware("permission:" . RolePermission::DESTROY);
             Route::put("/{id}", "update")->name("update")->middleware("permission:" . RolePermission::UPDATE);
         });
-        Route::prefix("permissions")->name("permissions.")->controller(PermissionController::class)->group(function () {
-            Route::get("/", "index")->name("index")->middleware("permission:" . PermissionPermission::INDEX);
+        // PERMISSIONS
+        Route::get("/permissions", PermissionController::class)->name("permissions.index")->middleware("permission:" . PermissionPermission::INDEX);
+
+        // UNITS
+        Route::prefix("units")->name("units.")->controller(UnitController::class)->group(function () {
+            Route::get("/", "index")->name("index")->middleware("permission:" . UnitPermission::INDEX);
+            Route::get("/edit/{id}", "edit")->name("edit")->middleware("permission:" . UnitPermission::EDIT);;;
+            Route::get("/create", "create")->name("create")->middleware("permission:" . UnitPermission::CREATE);;;
+            Route::patch("/{id}", "update")->name("update")->middleware("permission:" . UnitPermission::UPDATE);;
+            Route::post("/", "store")->name("store")->middleware("permission:" . UnitPermission::STORE);;
+            Route::delete("/{id}", "destroy")->name("destroy")->middleware("permission:" . UnitPermission::DESTROY);;
         });
 
 
@@ -211,22 +222,7 @@ Route::middleware(["auth", "verified"])
         Route::get("/discount-vouchers", DiscountVoucherController::class)->name("discount.vouchers.index");
         Route::get("/customer-segmentations", CustomerSegmentationController::class)->name("customer.segmentations.index");
 
-        // UNIT
-        Route::group(
-            [
-                "controller" => UnitController::class,
-                "prefix" => "/units",
-                "as" => "units."
-            ],
-            function () {
-                Route::get("/", "index")->name("index");
-                Route::get("/edit/{id}", "edit")->name("edit");
-                Route::get("/create", "create")->name("create");
-                Route::patch("/{id}", "update")->name("update")->middleware("role.prohibitted:owner");;
-                Route::post("/", "store")->name("store")->middleware("role.prohibitted:owner");;
-                Route::delete("/{id}", "destroy")->name("destroy")->middleware("role.prohibitted:owner");;
-            }
-        );
+
 
         // ROLL
         Route::group(

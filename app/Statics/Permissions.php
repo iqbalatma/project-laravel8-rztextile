@@ -5,6 +5,7 @@ namespace App\Statics;
 use App\Statics\Permissions\IssuedTokenPermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
+use App\Statics\Permissions\UnitPermission;
 
 class Permissions
 {
@@ -18,5 +19,14 @@ class Permissions
     ];
     public const PERMISSIONS = [
         ["name" => PermissionPermission::INDEX, "description" => "Permission to access permissions index"],
+    ];
+
+    public const UNITS = [
+        ["name" => UnitPermission::INDEX, "description" => "Permission to access unit index"],
+        ["name" => UnitPermission::CREATE, "description" => "Permission to access unit create"],
+        ["name" => UnitPermission::EDIT, "description" => "Permission to access unit edit"],
+        ["name" => UnitPermission::STORE, "description" => "Permission to access add new unit"],
+        ["name" => UnitPermission::UPDATE, "description" => "Permission to access update unit by id"],
+        ["name" => UnitPermission::DESTROY, "description" => "Permission to access delete unit by id"],
     ];
 }

@@ -35,10 +35,10 @@
                             <td>{{ $role->updated_at }}</td>
                             <td>
                                 <a class="btn btn-success" href="{{ route('roles.edit', $role->id) }}">
-                                    Edit
+                                    <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                                 <button type="button" class="btn btn-danger btn-delete" data-id="{{ $role->id }}">
-                                    Delete
+                                    <i class="fa-solid fa-trash-can"></i>
                                 </button>
                             </td>
                         </tr>

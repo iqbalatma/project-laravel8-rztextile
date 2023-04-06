@@ -16,7 +16,7 @@ class PermissionController extends Controller
      * @param PermissionService $service
      * @return Response
      */
-    public function index(PermissionService $service): Response
+    public function __invoke(PermissionService $service): Response
     {
         viewShare($service->getAllData());
         return response()->view("permissions.index");

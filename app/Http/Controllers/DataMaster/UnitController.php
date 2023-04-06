@@ -12,7 +12,6 @@ use Illuminate\Http\Response;
 
 class UnitController extends Controller
 {
-
     /**
      * Description : use to show all data unit
      *
@@ -20,7 +19,8 @@ class UnitController extends Controller
      */
     public function index(UnitService $service): Response
     {
-        return response()->view("units.index", $service->getAllData());
+        viewShare($service->getAllData());
+        return response()->view("units.index");
     }
 
     /**
@@ -30,7 +30,8 @@ class UnitController extends Controller
      */
     public function create(UnitService $service): Response
     {
-        return response()->view("units.create", $service->getCreateData());
+        viewShare($service->getCreateData());
+        return response()->view("units.create");
     }
 
 
@@ -41,16 +42,11 @@ class UnitController extends Controller
      */
     public function store(UnitService $service,  StoreUnitRequest $request): RedirectResponse
     {
-        $stored = $service->storeNewData($request->validated());
+        $response = $service->addNewData($request->validated());
 
-        $redirect = redirect()
-            ->route("units.index");
+        if ($this->isError($response, "units.create")) return $this->getErrorResponse();
 
-        $stored ?
-            $redirect->with("success", "Add new data unit successfully") :
-            $redirect->with("failed", "Add new data unit failed");
-
-        return $redirect;
+        return redirect()->route("units.index")->with("success", "Add new unit successfully");
     }
 
     /**
@@ -61,9 +57,7 @@ class UnitController extends Controller
     public function edit(UnitService $service, int $id): Response|RedirectResponse
     {
         $response = $service->getEditData($id);
-        if ($this->isError($response)) {
-            return $this->getErrorResponse();
-        }
+        if ($this->isError($response)) return $this->getErrorResponse();
         return response()->view("units.edit", $response);
     }
 
@@ -76,12 +70,9 @@ class UnitController extends Controller
      */
     public function update(UnitService $service, UpdateUnitRequest $request, int $id): RedirectResponse
     {
-        $response = $service->updateData($id, $request->validated());
-        if ($this->isError($response)) {
-            return $this->getErrorResponse();
-        }
-
-        return redirect()->route("units.index")->with("success", "Update data unit success fully !");
+        $response = $service->updateDataById($id, $request->validated());
+        if ($this->isError($response)) return $this->getErrorResponse();
+        return redirect()->route("units.index")->with("success", "Update data unit successfully !");
     }
 
 
@@ -93,10 +84,8 @@ class UnitController extends Controller
      */
     public function destroy(UnitService $service, int $id): RedirectResponse
     {
-        $response = $service->deleteData($id);
-        if ($this->isError($response)) {
-            return $this->getErrorResponse();
-        }
+        $response = $service->deleteDataById($id);
+        if ($this->isError($response)) return $this->getErrorResponse();
 
         return redirect()
             ->route("units.index")
