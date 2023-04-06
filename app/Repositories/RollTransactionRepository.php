@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\AppData;
 use App\Models\RollTransaction;
-use Iqbalatma\LaravelExtend\BaseRepository;
+use Iqbalatma\LaravelServiceRepo\BaseRepository;
 
 class RollTransactionRepository extends BaseRepository
 {

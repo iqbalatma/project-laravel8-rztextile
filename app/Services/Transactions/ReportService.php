@@ -4,7 +4,7 @@ namespace App\Services\Transactions;
 
 use App\AppData;
 use App\Repositories\InvoiceRepository;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class ReportService extends BaseService
 {

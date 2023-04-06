@@ -7,7 +7,7 @@ use App\Repositories\InvoiceRepository;
 use App\Repositories\PaymentRepository;
 use App\Repositories\RollRepository;
 use Carbon\Carbon;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class DashboardService extends BaseService
 {

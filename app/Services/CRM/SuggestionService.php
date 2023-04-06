@@ -4,7 +4,7 @@ namespace App\Services\CRM;
 
 use App\Repositories\SuggestionRepository;
 use Exception;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class SuggestionService extends BaseService
 {

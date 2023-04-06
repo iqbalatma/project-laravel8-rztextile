@@ -3,7 +3,7 @@
 namespace App\Services\DataMaster;
 
 use App\Repositories\RoleRepository;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class RoleService extends BaseService
 {

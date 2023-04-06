@@ -15,7 +15,6 @@ use App\Http\Controllers\Transactions\DashboardController;
 use App\Http\Controllers\Transactions\InvoiceController;
 use App\Http\Controllers\DataMaster\RoleController;
 use App\Http\Controllers\DataMaster\RollController;
-use App\Http\Controllers\DataMaster\RegistrationCredentialController;
 
 use App\Http\Controllers\Stock\SearchRollController;
 use App\Http\Controllers\Transactions\ShoppingController;
@@ -173,21 +172,21 @@ Route::middleware(["auth", "verified"])
 
 
                 // PROMOTION MESSAGE
-                Route::group(
-                    [
-                        "controller" => PromotionMessageController::class,
-                        "prefix" => "/promotion-messages",
-                        "as" => "promotion.messages."
-                    ],
-                    function () {
-                        Route::get("/", "index")->name("index");
-                        Route::get("/create", "create")->name("create");
-                        Route::post("/", "store")->name("store");
-                        Route::get("/{id}", "edit")->name("edit");
-                        Route::put("/", "update")->name("update");
-                        Route::delete("/{id}", "destroy")->name("destroy");
-                    }
-                );
+                // Route::group(
+                //     [
+                //         "controller" => PromotionMessageController::class,
+                //         "prefix" => "/promotion-messages",
+                //         "as" => "promotion.messages."
+                //     ],
+                //     function () {
+                //         Route::get("/", "index")->name("index");
+                //         Route::get("/create", "create")->name("create");
+                //         Route::post("/", "store")->name("store");
+                //         Route::get("/{id}", "edit")->name("edit");
+                //         Route::put("/", "update")->name("update");
+                //         Route::delete("/{id}", "destroy")->name("destroy");
+                //     }
+                // );
                 Route::get("/ajax/promotion-messages/{id}", [AJAXPromotionMessageController::class, "show"])->name("ajax.promotion.messages.show");
                 Route::get("/ajax/promotion-messages/customer-segmentations/{id}", [AJAXPromotionMessageController::class, "getByCustomerSegmentation"])->name("ajax.promotion.messages.customer.segmentations");
                 Route::get("/ajax/discount-vouchers/{code}", AJAXDiscountVoucherController::class)->name("ajax.discount.vouchers");
@@ -232,17 +231,17 @@ Route::middleware(["auth", "verified"])
                     }
                 );
 
-                Route::group(
-                    [
-                        "controller" => WhatsappMessagingController::class,
-                        "prefix" => "/whatsapp-messaging",
-                        "as" => "whatsapp.messaging."
-                    ],
-                    function () {
-                        Route::get("/", "index")->name("index");
-                        Route::post("/", "store")->name("store");
-                    }
-                );
+                // Route::group(
+                //     [
+                //         "controller" => WhatsappMessagingController::class,
+                //         "prefix" => "/whatsapp-messaging",
+                //         "as" => "whatsapp.messaging."
+                //     ],
+                //     function () {
+                //         Route::get("/", "index")->name("index");
+                //         Route::post("/", "store")->name("store");
+                //     }
+                // );
 
                 // Route::controller(ReportController::class)
                 //     ->name("reports.")

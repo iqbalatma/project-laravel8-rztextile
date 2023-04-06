@@ -4,7 +4,7 @@
 namespace App\Services\DataMaster;
 
 use App\Repositories\CustomerSegmentationRepository;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class CustomerSegmentationService extends BaseService
 {

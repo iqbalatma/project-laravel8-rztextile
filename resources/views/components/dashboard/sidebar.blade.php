@@ -72,18 +72,18 @@
                                 <span>Roles</span>
                             </a>
                         </li>
-                        <li class="submenu-item">
+                        {{-- <li class="submenu-item">
                             <a href="{{ route('discount.vouchers.index') }}" class="sidebar-link">
                                 <i class="fa-solid fa-user-tag"></i>
                                 <span>Discount Vouchers</span>
                             </a>
-                        </li>
-                        <li class="submenu-item">
+                        </li> --}}
+                        {{-- <li class="submenu-item">
                             <a href="{{ route('customer.segmentations.index') }}" class="sidebar-link">
                                 <i class="fa-solid fa-user-tag"></i>
                                 <span>Customer Segmentations</span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="submenu-item">
                             <a href=" {{ route('rolls.index') }}" class="sidebar-link">
                                 <i class="fa-solid fa-boxes-stacked"></i>
@@ -126,7 +126,7 @@
                 </li>
                 @endcanany
 
-
+                {{--
                 @canany(['isAdministrator', 'isAdmin'])
                 <li class="sidebar-title">Promotion</li>
                 <li class="sidebar-item">
@@ -153,7 +153,7 @@
                         <span>Promotion Message</span>
                     </a>
                 </li>
-                @endcanany
+                @endcanany --}}
             </ul>
         </div>
     </div>

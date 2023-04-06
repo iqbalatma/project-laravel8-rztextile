@@ -3,7 +3,7 @@
 namespace App\Services\AJAX;
 
 use App\Repositories\DiscountVoucherRepository;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class AjaxDiscountVoucherService extends BaseService
 {

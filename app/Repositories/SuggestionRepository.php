@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Suggestion;
-use Iqbalatma\LaravelExtend\BaseRepository;
+use Iqbalatma\LaravelServiceRepo\BaseRepository;
 
 class SuggestionRepository extends BaseRepository
 {

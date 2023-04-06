@@ -5,7 +5,7 @@ namespace App\Services\CRM;
 use App\Repositories\CustomerSegmentationRepository;
 use App\Repositories\PromotionMessageRepository;
 use Exception;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class PromotionMessageService extends BaseService
 {
