@@ -35,7 +35,6 @@
         <div class="sidebar-menu" id="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
-                @canany(['isAdministrator', 'isAdmin'])
                 <li class="sidebar-item">
                     <a href="{{ route('dashboard.index') }}" class="sidebar-link">
                         <i class="bi bi-grid-fill"></i>
@@ -92,7 +91,6 @@
                         </li>
                     </ul>
                 </li>
-                @endcanany
 
                 <li class="sidebar-title">Transaction</li>
                 <li class="sidebar-item">
@@ -117,14 +115,12 @@
                         <span>Search Roll</span>
                     </a>
                 </li>
-                @canany(['isAdministrator', 'isAdmin'])
                 <li class="sidebar-item">
                     <a href="{{ route('roll.transactions.create') }}" class="sidebar-link">
                         <i class="fa-solid fa-truck-ramp-box"></i>
                         <span>Restock & Deadstock</span>
                     </a>
                 </li>
-                @endcanany
 
                 {{--
                 @canany(['isAdministrator', 'isAdmin'])

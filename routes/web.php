@@ -151,8 +151,7 @@ Route::middleware(["auth", "verified"])
         );
 
 
-        Route::middleware("role:administrator,administrasi,owner")->group(
-            function () {
+
                 // DASHBOARD
                 Route::get("/dashboard", DashboardController::class)->name("dashboard.index");
                 Route::get("/ajax/dashboard/sales-summary", AJAXDashboardController::class)->name("ajax.dashboard.sales.summary");
@@ -252,8 +251,7 @@ Route::middleware(["auth", "verified"])
                 //                         Route::post("/download", "download")->name("download");
                 //                     }
                 //     );
-            }
-        );
+
 
 
 
