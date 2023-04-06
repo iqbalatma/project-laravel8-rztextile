@@ -454,6 +454,13 @@ class UserSeeder extends Seeder
         $role->givePermissionTo(CustomerPermission::UPDATE);
         $role->givePermissionTo(CustomerPermission::DESTROY);
         $role->givePermissionTo(RollPermission::SEARCH_INDEX);
+        $role->givePermissionTo(RollPermission::INDEX);
+        $role->givePermissionTo(RollPermission::CREATE);
+        $role->givePermissionTo(RollPermission::STORE);
+        $role->givePermissionTo(RollPermission::EDIT);
+        $role->givePermissionTo(RollPermission::UPDATE);
+        $role->givePermissionTo(RollPermission::DOWNLOAD_QRCODE);
+        $role->givePermissionTo(RollPermission::PRINT_QRCODE);
         $user->assignRole(Roles::ADMINISTRATOR);
     }
 }

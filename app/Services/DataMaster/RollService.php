@@ -72,12 +72,12 @@ class RollService extends BaseService
      * Description : use to add new data roll
      *
      * @param array $requestedData
-     * @return object of eloquent
+     * @return array
      */
-    public function storeNewData(array $requestedData): ?object
+    public function addNewData(array $requestedData): array
     {
-        $qrService = new QRCodeService();
         try {
+            $qrService = new QRCodeService();
             DB::beginTransaction();
             $qrcode = $qrService->getGeneratedQrCode();
             $qrcodeFileName = $qrService->storeNewQRCode($qrcode);
@@ -93,12 +93,20 @@ class RollService extends BaseService
             $this->rollTransRepo->addNewData($requestedData);
 
             DB::commit();
+
+            $response = [
+                "success" => true,
+            ];
         } catch (Exception $e) {
             DB::rollBack();
-            throw new InvalidActionException("Add new roll failed. Something went wrong !");
+
+            $response = [
+                "success" => false,
+                "message" => config('app.env') != 'production' ?  $e->getMessage() : 'Something went wrong'
+            ];
         }
 
-        return $roll;
+        return $response;
     }
 
     /**
@@ -134,7 +142,7 @@ class RollService extends BaseService
      * @param array $requestedData
      * @return array
      */
-    public function updateData(int $id, array $requestedData): array
+    public function updateDataById(int $id, array $requestedData): array
     {
         try {
             $this->checkData($id);

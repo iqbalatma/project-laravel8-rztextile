@@ -13,7 +13,6 @@ use App\Http\Controllers\CRM\SuggestionController;
 use App\Http\Controllers\DataMaster\CustomerController;
 use App\Http\Controllers\Transactions\DashboardController;
 use App\Http\Controllers\Transactions\InvoiceController;
-use App\Http\Controllers\DataMaster\RoleController;
 use App\Http\Controllers\DataMaster\RollController;
 
 use App\Http\Controllers\Stock\SearchRollController;
@@ -129,6 +128,7 @@ Route::middleware(["auth", "verified"])
             Route::delete("/{id}", "destroy")->name("destroy")->middleware("permission:" . RolePermission::DESTROY);
             Route::put("/{id}", "update")->name("update")->middleware("permission:" . RolePermission::UPDATE);
         });
+
         // PERMISSIONS
         Route::get("/permissions", PermissionController::class)->name("permissions.index")->middleware("permission:" . PermissionPermission::INDEX);
 
@@ -152,7 +152,6 @@ Route::middleware(["auth", "verified"])
             Route::put("/{id}", "changeStatusActive")->name("change.status.active")->middleware("permission:" . UserPermission::CHANGE_STATUS_ACTIVE);
         });
 
-
         // CUSTOMERS MANAGEMENT
         Route::prefix("customers")->name("customers.")->controller(CustomerController::class)->group(function () {
             Route::get("/", "index")->name("index")->middleware("permission:" . CustomerPermission::INDEX);
@@ -166,6 +165,24 @@ Route::middleware(["auth", "verified"])
         // ROLL SEARCH
         Route::get("/search-roll", SearchRollController::class)->name("search.roll.index")->middleware("permission:" . RollPermission::SEARCH_INDEX);
         Route::get("/ajax/search-roll/{id}", AJAXSearchRollController::class)->name("ajax.search.roll.show")->middleware("permission:" . RollPermission::SEARCH_INDEX);
+
+        // ROLL
+        Route::prefix("rolls")->name("rolls.")->controller(RollController::class)->group(function () {
+            Route::get("/", "index")->name("index")->middleware("permission:" . RollPermission::INDEX);
+            Route::get("/create", "create")->name("create")->middleware("permission:" . RollPermission::CREATE);
+            Route::post("/", "store")->name("store")->middleware("permission:" . RollPermission::STORE);
+            Route::get("/edit/{id}", "edit")->name("edit")->middleware("permission:" . RollPermission::EDIT);
+            Route::patch("/{id}", "update")->name("update")->middleware("role.prohibitted:owner")->middleware("permission:" . RollPermission::UPDATE);
+            Route::get("/download/{qrcode}", "downloadQrcode")->name("downloadQrcode")->middleware("permission:" . RollPermission::DOWNLOAD_QRCODE);
+            Route::post("/print", "printQrcode")->name("printQrcode")->middleware("permission:" . RollPermission::PRINT_QRCODE);
+        });
+
+
+        // ROLL TRANSACTION
+        Route::prefix("roll-transactions")->name("roll.transactions.")->controller(RollTransactionController::class)->group(function () {
+            Route::get("/create", "create")->name("create");
+            Route::post("/", "store")->name("store");
+        });
 
 
 
@@ -199,18 +216,7 @@ Route::middleware(["auth", "verified"])
         Route::get("/dashboard", DashboardController::class)->name("dashboard.index");
         Route::get("/ajax/dashboard/sales-summary", AJAXDashboardController::class)->name("ajax.dashboard.sales.summary");
 
-        // Roll Transaction
-        Route::group(
-            [
-                "controller" => RollTransactionController::class,
-                "prefix" => "/roll-transactions",
-                "as" => "roll.transactions."
-            ],
-            function () {
-                Route::get("/create", "create")->name("create");
-                Route::post("/", "store")->name("store");
-            }
-        );
+
 
 
         // PROMOTION MESSAGE
@@ -239,23 +245,7 @@ Route::middleware(["auth", "verified"])
 
 
 
-        // ROLL
-        Route::group(
-            [
-                "controller" => RollController::class,
-                "prefix" => "/rolls",
-                "as" => "rolls."
-            ],
-            function () {
-                Route::get("/", "index")->name("index");
-                Route::get("/create", "create")->name("create");
-                Route::post("/", "store")->name("store")->middleware("role.prohibitted:owner");
-                Route::get("/edit/{id}", "edit")->name("edit");
-                Route::patch("/{id}", "update")->name("update")->middleware("role.prohibitted:owner");
-                Route::get("/download/{qrcode}", "downloadQrcode")->name("downloadQrcode");
-                Route::post("/print", "printQrcode")->name("printQrcode")->middleware("role.prohibitted:owner");
-            }
-        );
+
 
         // Route::group(
         //     [
