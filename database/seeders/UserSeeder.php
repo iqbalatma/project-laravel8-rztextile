@@ -9,6 +9,7 @@ use App\Statics\Permissions;
 use App\Statics\Permissions\CustomerPermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
+use App\Statics\Permissions\RollPermission;
 use App\Statics\Permissions\UnitPermission;
 use App\Statics\Permissions\UserPermission;
 use App\Statics\Roles;
@@ -452,6 +453,7 @@ class UserSeeder extends Seeder
         $role->givePermissionTo(CustomerPermission::EDIT);
         $role->givePermissionTo(CustomerPermission::UPDATE);
         $role->givePermissionTo(CustomerPermission::DESTROY);
+        $role->givePermissionTo(RollPermission::SEARCH_INDEX);
         $user->assignRole(Roles::ADMINISTRATOR);
     }
 }

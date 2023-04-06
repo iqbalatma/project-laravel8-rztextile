@@ -30,6 +30,7 @@ use App\Repositories\RollRepository;
 use App\Statics\Permissions\CustomerPermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
+use App\Statics\Permissions\RollPermission;
 use App\Statics\Permissions\UnitPermission;
 use App\Statics\Permissions\UserPermission;
 use Illuminate\Support\Facades\Route;
@@ -162,31 +163,35 @@ Route::middleware(["auth", "verified"])
             Route::delete("/{id}", "destroy")->name("destroy")->middleware("permission:" . CustomerPermission::DESTROY);
         });
 
+        // ROLL SEARCH
+        Route::get("/search-roll", SearchRollController::class)->name("search.roll.index")->middleware("permission:" . RollPermission::SEARCH_INDEX);
+        Route::get("/ajax/search-roll/{id}", AJAXSearchRollController::class)->name("ajax.search.roll.show")->middleware("permission:" . RollPermission::SEARCH_INDEX);
 
 
 
-        Route::middleware("role:administrator")->group(
-            function () {
-                // USER MANAGEMENT CONTROLLER
+
+        // Route::middleware("role:administrator")->group(
+        //     function () {
+        // USER MANAGEMENT CONTROLLER
 
 
-                // // REGISTRATION CREDENTIAL
-                // Route::group(
-                //     [
-                //         "controller" => RegistrationCredentialController::class,
-                //         "prefix" => "/registration-credentials",
-                //         "as" => "registration.credentials."
-                //     ],
-                //     function () {
-                //         Route::get("/", "index")->name("index");
-                //         Route::get("/create", "create")->name("create");
-                //         Route::post("/", "store")->name("store");
-                //         Route::delete("/{id}", "destroy")->name("destroy");
-                //         Route::put("/{id}", "update")->name("update");
-                //     }
-                // );
-            }
-        );
+        // // REGISTRATION CREDENTIAL
+        // Route::group(
+        //     [
+        //         "controller" => RegistrationCredentialController::class,
+        //         "prefix" => "/registration-credentials",
+        //         "as" => "registration.credentials."
+        //     ],
+        //     function () {
+        //         Route::get("/", "index")->name("index");
+        //         Route::get("/create", "create")->name("create");
+        //         Route::post("/", "store")->name("store");
+        //         Route::delete("/{id}", "destroy")->name("destroy");
+        //         Route::put("/{id}", "update")->name("update");
+        //     }
+        // );
+        //     }
+        // );
 
 
 
@@ -278,8 +283,7 @@ Route::middleware(["auth", "verified"])
 
 
         // Route::get("/segmented-customers", SegmentedCustomerController::class)->name("segmendted.customers.index");
-        Route::get("/search-roll", SearchRollController::class)->name("search.roll.index");
-        Route::get("/ajax/search-roll/{id}", AJAXSearchRollController::class)->name("ajax.search.roll.show");
+
 
         Route::controller(ShoppingController::class)
             ->name("shopping.")

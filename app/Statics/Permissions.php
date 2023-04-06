@@ -6,6 +6,7 @@ use App\Statics\Permissions\CustomerPermission;
 use App\Statics\Permissions\IssuedTokenPermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
+use App\Statics\Permissions\RollPermission;
 use App\Statics\Permissions\UnitPermission;
 use App\Statics\Permissions\UserPermission;
 
@@ -46,5 +47,8 @@ class Permissions
         ["name" => CustomerPermission::STORE, "description" => "Permission to access add new customers"],
         ["name" => CustomerPermission::UPDATE, "description" => "Permission to access update customers by id"],
         ["name" => CustomerPermission::DESTROY, "description" => "Permission to access delete customers by id"],
+    ];
+    public const ROLLS = [
+        ["name" => RollPermission::SEARCH_INDEX, "description" => "Permission to access roll search index"],
     ];
 }
