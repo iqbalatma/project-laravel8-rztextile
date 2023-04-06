@@ -14,6 +14,7 @@
     "/js/rolls/index.js": "/js/rolls/index.js",
     "/js/pages/promotion-messages/index.js": "/js/pages/promotion-messages/index.js",
     "/js/pages/segmented-customers/index.js": "/js/pages/segmented-customers/index.js",
+    "/js/pages/roles/index.js": "/js/pages/roles/index.js",
     "/css/app.css": "/css/app.css",
     "/css/pages/segmented-customers.css": "/css/pages/segmented-customers.css"
 }

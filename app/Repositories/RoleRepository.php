@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Role;
-use Iqbalatma\LaravelExtend\BaseRepository;
+use Iqbalatma\LaravelServiceRepo\BaseRepository;
 
 class RoleRepository extends BaseRepository
 {

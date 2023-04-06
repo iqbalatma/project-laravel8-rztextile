@@ -4,7 +4,7 @@ namespace App\Services\CRM;
 
 use App\Repositories\InvoiceRepository;
 use Carbon\Carbon;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 use Iqbalatma\RFMCalculation\RFMCalculation;
 
 class RFMService extends BaseService

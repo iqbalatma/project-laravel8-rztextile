@@ -10,8 +10,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Iqbalatma\LaravelExtend\BaseService;
-
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class ForgotPasswordService extends BaseService
 {

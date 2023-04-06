@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\AppData;
 use App\Models\PromotionMessage;
 use Illuminate\Support\Facades\DB;
-use Iqbalatma\LaravelExtend\BaseRepository;
+use Iqbalatma\LaravelServiceRepo\BaseRepository;
 
 class PromotionMessageRepository extends BaseRepository
 {

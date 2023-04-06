@@ -6,7 +6,7 @@ use App\AppData;
 use App\Repositories\CustomerRepository;
 use Exception;
 use Illuminate\Support\Facades\DB;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class CustomerService extends BaseService
 {

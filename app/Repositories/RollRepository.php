@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\AppData;
 use App\Models\Roll;
 use Illuminate\Support\Facades\DB;
-use Iqbalatma\LaravelExtend\BaseRepository;
+use Iqbalatma\LaravelServiceRepo\BaseRepository;
 
 class RollRepository extends BaseRepository
 {

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ $title }}</title>
+    <title>{{ $title ?? "RZ Textile" }}</title>
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
     <link rel="stylesheet" href="{{ asset('mazer/assets/css/main/app.css') }}" />
@@ -30,8 +30,8 @@
                 <div class="page-title">
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>{{ $title }}</h3>
-                            <p class="text-subtitle text-muted">{{ $description }}</p>
+                            <h3>{{ $title ?? "RZ Textile" }}</h3>
+                            <p class="text-subtitle text-muted">{{ $description ?? ""}}</p>
                         </div>
                         {{-- <div class="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -58,6 +58,7 @@
     <script src="{{ asset('js/app-layout.js') }}"></script>
     <script src="{{ asset('mazer/assets/js/bootstrap.js') }}"></script>
     <script src="{{ asset('mazer/assets/js/app.js') }}"></script>
+    @stack('scripts')
     @yield("custom-scripts")
 </body>
 

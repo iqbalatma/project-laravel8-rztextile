@@ -41,5 +41,9 @@ mix.js("resources/js/app.js", "public/js")
         "resources/js/pages/segmented-customers/index.js",
         "public/js/pages/segmented-customers"
     )
+    .js(
+        "resources/js/pages/roles/index.js",
+        "public/js/pages/roles/index.js"
+    )
     .sass("resources/sass/app.scss", "public/css")
     .sass("resources/sass/pages/segmented-customers.scss", "public/css/pages");

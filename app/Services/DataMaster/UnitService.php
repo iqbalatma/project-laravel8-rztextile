@@ -4,7 +4,7 @@ namespace App\Services\DataMaster;
 
 use App\Repositories\UnitRepository;
 use Exception;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class UnitService extends BaseService
 {

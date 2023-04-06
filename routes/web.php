@@ -15,7 +15,6 @@ use App\Http\Controllers\Transactions\DashboardController;
 use App\Http\Controllers\Transactions\InvoiceController;
 use App\Http\Controllers\DataMaster\RoleController;
 use App\Http\Controllers\DataMaster\RollController;
-use App\Http\Controllers\DataMaster\RegistrationCredentialController;
 
 use App\Http\Controllers\Stock\SearchRollController;
 use App\Http\Controllers\Transactions\ShoppingController;
@@ -26,7 +25,10 @@ use App\Http\Controllers\DataMaster\UserManagementController;
 use App\Http\Controllers\CRM\WhatsappMessagingController;
 use App\Http\Controllers\DataMaster\CustomerSegmentationController;
 use App\Http\Controllers\DataMaster\DiscountVoucherController;
+use App\Http\Controllers\DataMaster\PermissionController;
 use App\Repositories\RollRepository;
+use App\Statics\Permissions\PermissionPermission;
+use App\Statics\Permissions\RolePermission;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -114,6 +116,20 @@ Route::group([
 
 Route::middleware(["auth", "verified"])
     ->group(function () {
+        Route::prefix("roles")->name("roles.")->controller(RoleController::class)->group(function () {
+            Route::get("/", "index")->name("index")->middleware("permission:" . RolePermission::INDEX);
+            Route::get("/create", "create")->name("create")->middleware("permission:" . RolePermission::CREATE);
+            Route::get("/edit/{id}", "edit")->name("edit")->middleware("permission:" . RolePermission::EDIT);
+            Route::post("/", "store")->name("store")->middleware("permission:" . RolePermission::STORE);
+            Route::delete("/{id}", "destroy")->name("destroy")->middleware("permission:" . RolePermission::DESTROY);
+            Route::put("/{id}", "update")->name("update")->middleware("permission:" . RolePermission::UPDATE);
+        });
+        Route::prefix("permissions")->name("permissions.")->controller(PermissionController::class)->group(function () {
+            Route::get("/", "index")->name("index")->middleware("permission:" . PermissionPermission::INDEX);
+        });
+
+
+
         Route::middleware("role:administrator")->group(
             function () {
                 // USER MANAGEMENT CONTROLLER
@@ -152,109 +168,106 @@ Route::middleware(["auth", "verified"])
         );
 
 
-        Route::middleware("role:administrator,administrasi,owner")->group(
+
+        // DASHBOARD
+        Route::get("/dashboard", DashboardController::class)->name("dashboard.index");
+        Route::get("/ajax/dashboard/sales-summary", AJAXDashboardController::class)->name("ajax.dashboard.sales.summary");
+
+        // Roll Transaction
+        Route::group(
+            [
+                "controller" => RollTransactionController::class,
+                "prefix" => "/roll-transactions",
+                "as" => "roll.transactions."
+            ],
             function () {
-                // DASHBOARD
-                Route::get("/dashboard", DashboardController::class)->name("dashboard.index");
-                Route::get("/ajax/dashboard/sales-summary", AJAXDashboardController::class)->name("ajax.dashboard.sales.summary");
-
-                // Roll Transaction
-                Route::group(
-                    [
-                        "controller" => RollTransactionController::class,
-                        "prefix" => "/roll-transactions",
-                        "as" => "roll.transactions."
-                    ],
-                    function () {
-                        Route::get("/create", "create")->name("create");
-                        Route::post("/", "store")->name("store");
-                    }
-                );
-
-
-                // PROMOTION MESSAGE
-                Route::group(
-                    [
-                        "controller" => PromotionMessageController::class,
-                        "prefix" => "/promotion-messages",
-                        "as" => "promotion.messages."
-                    ],
-                    function () {
-                        Route::get("/", "index")->name("index");
-                        Route::get("/create", "create")->name("create");
-                        Route::post("/", "store")->name("store");
-                        Route::get("/{id}", "edit")->name("edit");
-                        Route::put("/", "update")->name("update");
-                        Route::delete("/{id}", "destroy")->name("destroy");
-                    }
-                );
-                Route::get("/ajax/promotion-messages/{id}", [AJAXPromotionMessageController::class, "show"])->name("ajax.promotion.messages.show");
-                Route::get("/ajax/promotion-messages/customer-segmentations/{id}", [AJAXPromotionMessageController::class, "getByCustomerSegmentation"])->name("ajax.promotion.messages.customer.segmentations");
-                Route::get("/ajax/discount-vouchers/{code}", AJAXDiscountVoucherController::class)->name("ajax.discount.vouchers");
-
-                // ROLE CONTROLLER
-                Route::get("/roles", RoleController::class)->name("roles.index");
-                Route::get("/discount-vouchers", DiscountVoucherController::class)->name("discount.vouchers.index");
-                Route::get("/customer-segmentations", CustomerSegmentationController::class)->name("customer.segmentations.index");
-
-                // UNIT
-                Route::group(
-                    [
-                        "controller" => UnitController::class,
-                        "prefix" => "/units",
-                        "as" => "units."
-                    ],
-                    function () {
-                        Route::get("/", "index")->name("index");
-                        Route::get("/edit/{id}", "edit")->name("edit");
-                        Route::get("/create", "create")->name("create");
-                        Route::patch("/{id}", "update")->name("update")->middleware("role.prohibitted:owner");;
-                        Route::post("/", "store")->name("store")->middleware("role.prohibitted:owner");;
-                        Route::delete("/{id}", "destroy")->name("destroy")->middleware("role.prohibitted:owner");;
-                    }
-                );
-
-                // ROLL
-                Route::group(
-                    [
-                        "controller" => RollController::class,
-                        "prefix" => "/rolls",
-                        "as" => "rolls."
-                    ],
-                    function () {
-                        Route::get("/", "index")->name("index");
-                        Route::get("/create", "create")->name("create");
-                        Route::post("/", "store")->name("store")->middleware("role.prohibitted:owner");;
-                        Route::get("/edit/{id}", "edit")->name("edit");
-                        Route::patch("/{id}", "update")->name("update")->middleware("role.prohibitted:owner");;
-                        Route::get("/download/{qrcode}", "downloadQrcode")->name("downloadQrcode");
-                        Route::post("/print", "printQrcode")->name("printQrcode")->middleware("role.prohibitted:owner");;
-                    }
-                );
-
-                Route::group(
-                    [
-                        "controller" => WhatsappMessagingController::class,
-                        "prefix" => "/whatsapp-messaging",
-                        "as" => "whatsapp.messaging."
-                    ],
-                    function () {
-                        Route::get("/", "index")->name("index");
-                        Route::post("/", "store")->name("store");
-                    }
-                );
-
-                // Route::controller(ReportController::class)
-                //     ->name("reports.")
-                //     ->prefix("/reports")
-                //     ->group(
-                //         function () {
-                //                         Route::get("/", "index")->name("index");
-                //                         Route::post("/download", "download")->name("download");
-                //                     }
-                //     );
+                Route::get("/create", "create")->name("create");
+                Route::post("/", "store")->name("store");
             }
         );
+
+
+        // PROMOTION MESSAGE
+        // Route::group(
+        //     [
+        //         "controller" => PromotionMessageController::class,
+        //         "prefix" => "/promotion-messages",
+        //         "as" => "promotion.messages."
+        //     ],
+        //     function () {
+        //         Route::get("/", "index")->name("index");
+        //         Route::get("/create", "create")->name("create");
+        //         Route::post("/", "store")->name("store");
+        //         Route::get("/{id}", "edit")->name("edit");
+        //         Route::put("/", "update")->name("update");
+        //         Route::delete("/{id}", "destroy")->name("destroy");
+        //     }
+        // );
+        Route::get("/ajax/promotion-messages/{id}", [AJAXPromotionMessageController::class, "show"])->name("ajax.promotion.messages.show");
+        Route::get("/ajax/promotion-messages/customer-segmentations/{id}", [AJAXPromotionMessageController::class, "getByCustomerSegmentation"])->name("ajax.promotion.messages.customer.segmentations");
+        Route::get("/ajax/discount-vouchers/{code}", AJAXDiscountVoucherController::class)->name("ajax.discount.vouchers");
+
+        // ROLE CONTROLLER
+        Route::get("/discount-vouchers", DiscountVoucherController::class)->name("discount.vouchers.index");
+        Route::get("/customer-segmentations", CustomerSegmentationController::class)->name("customer.segmentations.index");
+
+        // UNIT
+        Route::group(
+            [
+                "controller" => UnitController::class,
+                "prefix" => "/units",
+                "as" => "units."
+            ],
+            function () {
+                Route::get("/", "index")->name("index");
+                Route::get("/edit/{id}", "edit")->name("edit");
+                Route::get("/create", "create")->name("create");
+                Route::patch("/{id}", "update")->name("update")->middleware("role.prohibitted:owner");;
+                Route::post("/", "store")->name("store")->middleware("role.prohibitted:owner");;
+                Route::delete("/{id}", "destroy")->name("destroy")->middleware("role.prohibitted:owner");;
+            }
+        );
+
+        // ROLL
+        Route::group(
+            [
+                "controller" => RollController::class,
+                "prefix" => "/rolls",
+                "as" => "rolls."
+            ],
+            function () {
+                Route::get("/", "index")->name("index");
+                Route::get("/create", "create")->name("create");
+                Route::post("/", "store")->name("store")->middleware("role.prohibitted:owner");;
+                Route::get("/edit/{id}", "edit")->name("edit");
+                Route::patch("/{id}", "update")->name("update")->middleware("role.prohibitted:owner");;
+                Route::get("/download/{qrcode}", "downloadQrcode")->name("downloadQrcode");
+                Route::post("/print", "printQrcode")->name("printQrcode")->middleware("role.prohibitted:owner");;
+            }
+        );
+
+        // Route::group(
+        //     [
+        //         "controller" => WhatsappMessagingController::class,
+        //         "prefix" => "/whatsapp-messaging",
+        //         "as" => "whatsapp.messaging."
+        //     ],
+        //     function () {
+        //         Route::get("/", "index")->name("index");
+        //         Route::post("/", "store")->name("store");
+        //     }
+        // );
+
+        // Route::controller(ReportController::class)
+        //     ->name("reports.")
+        //     ->prefix("/reports")
+        //     ->group(
+        //         function () {
+        //                         Route::get("/", "index")->name("index");
+        //                         Route::post("/download", "download")->name("download");
+        //                     }
+        //     );
+
 
 
 

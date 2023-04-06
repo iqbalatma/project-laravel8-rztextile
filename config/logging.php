@@ -50,7 +50,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single', 'sandtrail'],
             'ignore_exceptions' => false,
         ],
 
@@ -83,6 +83,15 @@ return [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
             ],
+        ],
+
+        "sandtrail" => [
+            "driver" => "custom",
+            "via" =>  Iqbalatma\SandTrailDriver\SandTrailLogger::class,
+            'level' => env('LOG_LEVEL', 'debug'),
+            "host" =>  env("SANDTRAIL_HOST", "http://localhost"),
+            "client_id" =>  env("SANDTRAIL_CLIENT_ID", ""),
+            "secret_key" =>  env("SANDTRAIL_SECRET_KEY", "")
         ],
 
         'stderr' => [

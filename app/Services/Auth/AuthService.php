@@ -3,7 +3,7 @@
 namespace App\Services\Auth;
 
 use Illuminate\Support\Facades\Auth;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class AuthService extends BaseService
 {

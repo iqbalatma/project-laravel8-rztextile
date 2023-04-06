@@ -38,12 +38,21 @@ class Controller extends BaseController
         });
     }
 
-    protected function isError(array $response): bool
+    protected function isError(array $response, string $redirectRoute = null, array $params = []): bool
     {
         if (!$response["success"]) {
-            $this->setErrorResponse(redirect()->back()->withErrors($response["message"])->withInput());
+            if ($redirectRoute) {
+                $this->setErrorResponse(
+                    redirect()->route($redirectRoute, $params)->withErrors(["errors" => $response["message"]])->withInput()
+                );
+            } else {
+                $this->setErrorResponse(
+                    redirect()->back()->withErrors(["errors" => $response["message"]])->withInput()
+                );
+            }
             return true;
         }
+
         return false;
     }
 

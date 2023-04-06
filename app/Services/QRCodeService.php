@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\AppData;
 use Illuminate\Support\Facades\Storage;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class QRCodeService extends BaseService

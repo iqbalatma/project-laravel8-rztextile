@@ -8,7 +8,7 @@ use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
 use Exception;
 use Illuminate\Support\Facades\Hash;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class UserManagementService extends BaseService
 {

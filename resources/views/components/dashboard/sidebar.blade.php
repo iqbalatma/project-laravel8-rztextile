@@ -35,7 +35,6 @@
         <div class="sidebar-menu" id="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
-                @canany(['isAdministrator', 'isAdmin'])
                 <li class="sidebar-item">
                     <a href="{{ route('dashboard.index') }}" class="sidebar-link">
                         <i class="bi bi-grid-fill"></i>
@@ -73,87 +72,90 @@
                             </a>
                         </li>
                         <li class="submenu-item">
+                            <a href="{{ route('permissions.index') }}" class="sidebar-link">
+                                <i class="fa-solid fa-user-tag"></i>
+                                <span>Permissions</span>
+                            </a>
+                        </li>
+                        {{-- <li class="submenu-item">
                             <a href="{{ route('discount.vouchers.index') }}" class="sidebar-link">
-                                <i class="fa-solid fa-user-tag"></i>
-                                <span>Discount Vouchers</span>
-                            </a>
-                        </li>
-                        <li class="submenu-item">
+                        <i class="fa-solid fa-user-tag"></i>
+                        <span>Discount Vouchers</span>
+                        </a>
+                </li> --}}
+                {{-- <li class="submenu-item">
                             <a href="{{ route('customer.segmentations.index') }}" class="sidebar-link">
-                                <i class="fa-solid fa-user-tag"></i>
-                                <span>Customer Segmentations</span>
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href=" {{ route('rolls.index') }}" class="sidebar-link">
-                                <i class="fa-solid fa-boxes-stacked"></i>
-                                <span>Rolls</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                @endcanany
-
-                <li class="sidebar-title">Transaction</li>
-                <li class="sidebar-item">
-                    <a href="{{ route('shopping.index') }}" class="sidebar-link">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        <span>Shopping</span>
+                <i class="fa-solid fa-user-tag"></i>
+                <span>Customer Segmentations</span>
+                </a>
+                </li> --}}
+                <li class="submenu-item">
+                    <a href=" {{ route('rolls.index') }}" class="sidebar-link">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <span>Rolls</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('report.invoices.index') }}" class="sidebar-link">
-                        <i class="fa-solid fa-file-invoice-dollar"></i>
-                        <span>Report</span>
-                    </a>
-                </li>
+            </ul>
+            </li>
+
+            <li class="sidebar-title">Transaction</li>
+            <li class="sidebar-item">
+                <a href="{{ route('shopping.index') }}" class="sidebar-link">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Shopping</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{{ route('report.invoices.index') }}" class="sidebar-link">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                    <span>Report</span>
+                </a>
+            </li>
 
 
 
-                <li class="sidebar-title">Stock</li>
-                <li class="sidebar-item">
-                    <a href="{{ route('search.roll.index') }}" class="sidebar-link">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <span>Search Roll</span>
-                    </a>
-                </li>
-                @canany(['isAdministrator', 'isAdmin'])
-                <li class="sidebar-item">
-                    <a href="{{ route('roll.transactions.create') }}" class="sidebar-link">
-                        <i class="fa-solid fa-truck-ramp-box"></i>
-                        <span>Restock & Deadstock</span>
-                    </a>
-                </li>
-                @endcanany
+            <li class="sidebar-title">Stock</li>
+            <li class="sidebar-item">
+                <a href="{{ route('search.roll.index') }}" class="sidebar-link">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Search Roll</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{{ route('roll.transactions.create') }}" class="sidebar-link">
+                    <i class="fa-solid fa-truck-ramp-box"></i>
+                    <span>Restock & Deadstock</span>
+                </a>
+            </li>
 
-
+            {{--
                 @canany(['isAdministrator', 'isAdmin'])
                 <li class="sidebar-title">Promotion</li>
                 <li class="sidebar-item">
                     <a href="{{ route('suggestions.index') }}" class="sidebar-link">
-                        <i class="fa-solid fa-headset"></i>
-                        <span>Customer Suggestions</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('segmendted.customers.index') }}" class="sidebar-link">
-                        <i class="fa-solid fa-users-line"></i>
-                        <span>Segmented Customer</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('whatsapp.messaging.index') }}" class="sidebar-link">
-                        <i class="fa-solid fa-comments"></i>
-                        <span>Whatsapp Messaging</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('promotion.messages.index') }}" class="sidebar-link">
-                        <i class="fa-solid fa-tags"></i>
-                        <span>Promotion Message</span>
-                    </a>
-                </li>
-                @endcanany
+            <i class="fa-solid fa-headset"></i>
+            <span>Customer Suggestions</span>
+            </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{{ route('segmendted.customers.index') }}" class="sidebar-link">
+                    <i class="fa-solid fa-users-line"></i>
+                    <span>Segmented Customer</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{{ route('whatsapp.messaging.index') }}" class="sidebar-link">
+                    <i class="fa-solid fa-comments"></i>
+                    <span>Whatsapp Messaging</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{{ route('promotion.messages.index') }}" class="sidebar-link">
+                    <i class="fa-solid fa-tags"></i>
+                    <span>Promotion Message</span>
+                </a>
+            </li>
+            @endcanany --}}
             </ul>
         </div>
     </div>

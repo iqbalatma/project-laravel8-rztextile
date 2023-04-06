@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Role;
+use App\Statics\Roles;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class RoleSeeder extends Seeder
 {
@@ -14,31 +16,11 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $data = [
-            [
-                "name" => "administrator",
-                "description" => "user that has all access"
-            ],
-            [
-                "name" => "administrasi",
-                "description" => "user that act as stock checking"
-            ],
-            [
-                "name" => "kasir",
-                "description" => "user that act as cashier"
-            ],
-            [
-                "name" => "customer",
-                "description" => "user that act as buyer items"
-            ],
-            [
-                "name" => "owner",
-                "description" => "user that act as owner of the company"
-            ],
-        ];
-
-        foreach ($data as $key => $item) {
-            Role::create($item);
+        Schema::disableForeignKeyConstraints();
+        Role::truncate();
+        Schema::enableForeignKeyConstraints();
+        foreach ((new \ReflectionClass(Roles::class))->getConstants() as $key => $value) {
+            Role::create(["name" => $value]);
         }
     }
 }
