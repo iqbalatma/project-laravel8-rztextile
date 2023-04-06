@@ -427,6 +427,8 @@ class UserSeeder extends Seeder
         $role->givePermissionTo(RolePermission::CREATE);
         $role->givePermissionTo(RolePermission::STORE);
         $role->givePermissionTo(RolePermission::DESTROY);
+        $role->givePermissionTo(RolePermission::EDIT);
+        $role->givePermissionTo(RolePermission::UPDATE);
         $user->assignRole(Roles::ADMINISTRATOR);
     }
 }

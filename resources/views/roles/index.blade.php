@@ -1,4 +1,4 @@
-<x-dashboard.layout title="{{ $title}}" description="{{ $description }}">
+<x-dashboard.layout>
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-user-tag"></i>
@@ -34,6 +34,9 @@
                             <td>{{ $role->description }}</td>
                             <td>{{ $role->updated_at }}</td>
                             <td>
+                                <a class="btn btn-success" href="{{ route('roles.edit', $role->id) }}">
+                                    Edit
+                                </a>
                                 <button type="button" class="btn btn-danger btn-delete" data-id="{{ $role->id }}">
                                     Delete
                                 </button>

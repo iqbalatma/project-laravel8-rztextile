@@ -117,8 +117,10 @@ Route::middleware(["auth", "verified"])
         Route::prefix("roles")->name("roles.")->controller(RoleController::class)->group(function () {
             Route::get("/", "index")->name("index")->middleware("permission:" . RolePermission::INDEX);
             Route::get("/create", "create")->name("create")->middleware("permission:" . RolePermission::CREATE);
+            Route::get("/edit/{id}", "edit")->name("edit")->middleware("permission:" . RolePermission::EDIT);
             Route::post("/", "store")->name("store")->middleware("permission:" . RolePermission::STORE);
             Route::delete("/{id}", "destroy")->name("destroy")->middleware("permission:" . RolePermission::DESTROY);
+            Route::put("/{id}", "update")->name("update")->middleware("permission:" . RolePermission::UPDATE);
         });
 
         Route::middleware("role:administrator")->group(
