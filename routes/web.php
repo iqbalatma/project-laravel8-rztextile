@@ -30,6 +30,7 @@ use App\Repositories\RollRepository;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
 use App\Statics\Permissions\UnitPermission;
+use App\Statics\Permissions\UserPermission;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -132,33 +133,27 @@ Route::middleware(["auth", "verified"])
         // UNITS
         Route::prefix("units")->name("units.")->controller(UnitController::class)->group(function () {
             Route::get("/", "index")->name("index")->middleware("permission:" . UnitPermission::INDEX);
-            Route::get("/edit/{id}", "edit")->name("edit")->middleware("permission:" . UnitPermission::EDIT);;;
-            Route::get("/create", "create")->name("create")->middleware("permission:" . UnitPermission::CREATE);;;
-            Route::patch("/{id}", "update")->name("update")->middleware("permission:" . UnitPermission::UPDATE);;
-            Route::post("/", "store")->name("store")->middleware("permission:" . UnitPermission::STORE);;
-            Route::delete("/{id}", "destroy")->name("destroy")->middleware("permission:" . UnitPermission::DESTROY);;
+            Route::get("/edit/{id}", "edit")->name("edit")->middleware("permission:" . UnitPermission::EDIT);
+            Route::get("/create", "create")->name("create")->middleware("permission:" . UnitPermission::CREATE);
+            Route::patch("/{id}", "update")->name("update")->middleware("permission:" . UnitPermission::UPDATE);
+            Route::post("/", "store")->name("store")->middleware("permission:" . UnitPermission::STORE);
+            Route::delete("/{id}", "destroy")->name("destroy")->middleware("permission:" . UnitPermission::DESTROY);
         });
 
+        Route::prefix("users")->name("users.")->controller(UserManagementController::class)->group(function () {
+            Route::get("/", "index")->name("index")->middleware("permission:" . UserPermission::INDEX);
+            Route::get("/create", "create")->name("create")->middleware("permission:" . UserPermission::CREATE);;
+            Route::post("/", "store")->name("store")->middleware("permission:" . UserPermission::STORE);;
+            Route::get("/edit/{id}", "edit")->name("edit")->middleware("permission:" . UserPermission::EDIT);;
+            Route::patch("/{id}", "update")->name("update")->middleware("permission:" . UserPermission::UPDATE);;
+            Route::put("/{id}", "changeStatusActive")->name("change.status.active")->middleware("permission:" . UserPermission::CHANGE_STATUS_ACTIVE);;
+        });
 
 
         Route::middleware("role:administrator")->group(
             function () {
                 // USER MANAGEMENT CONTROLLER
-                Route::group(
-                    [
-                        "controller" => UserManagementController::class,
-                        "prefix" => "/users",
-                        "as" => "users."
-                    ],
-                    function () {
-                        Route::get("/", "index")->name("index");
-                        Route::get("/create", "create")->name("create");
-                        Route::post("/", "store")->name("store")->middleware("role.prohibitted:owner");
-                        Route::get("/edit/{id}", "edit")->name("edit")->middleware("role.prohibitted:owner");;
-                        Route::patch("/{id}", "update")->name("update")->middleware("role.prohibitted:owner");;
-                        Route::put("/{id}", "changeStatusActive")->name("change.status.active")->middleware("role.prohibitted:owner");;
-                    }
-                );
+
 
                 // // REGISTRATION CREDENTIAL
                 // Route::group(

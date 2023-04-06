@@ -1,4 +1,4 @@
-<x-dashboard.layout title="{{ $title }}" description="{{ $description }}">
+<x-dashboard.layout>
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-users-gear"></i>
@@ -34,14 +34,6 @@
                 <div class="col-md-12">
                     <label for="address" class="form-label">Address</label>
                     <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter your address">{{old('address')}}</textarea>
-                </div>
-                <div class="col-md-12">
-                    <label for="role_id" class="form-label">Roles</label>
-                    <select class="form-select" aria-label="Default select example" name="role_id">
-                        @foreach ($roles as $role)
-                        <option value="{{ $role->id }}">{{ ucfirst($role->name) }}</option>
-                        @endforeach
-                    </select>
                 </div>
                 <div class="col-12">
                     <a href="{{ route('users.index') }}" class="btn btn-danger"><i class="fa-solid fa-square-xmark"></i> Cancel</a>

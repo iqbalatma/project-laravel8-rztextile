@@ -30,7 +30,6 @@ class UserStoreRequest extends BaseFormRequest
             "email" =>  [Rule::unique("users", "email")->whereNull("deleted_at"), "email", "required"],
             "phone" => "",
             "address" => "",
-            "role_id" => "required|numeric",
             "password" => "confirmed|required",
         ];
     }

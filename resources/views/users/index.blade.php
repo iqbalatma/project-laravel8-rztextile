@@ -1,4 +1,4 @@
-<x-dashboard.layout title="{{ $title }}" description="{{ $description }}">
+<x-dashboard.layout>
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-users-gear"></i>
@@ -27,7 +27,6 @@
                         <th>Email</th>
                         <th>Address</th>
                         <th>Phone Number</th>
-                        <th>Role</th>
                         <th>Status</th>
                         <th>Email Verified At</th>
                         <th>Last Updated Time</th>
@@ -42,19 +41,6 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->address }}</td>
                             <td>{{ $user->phone }}</td>
-                            <td>
-                                <span class="badge rounded-pill
-                                    @if ($user->role->id==1)
-                                    bg-danger
-                                    @elseif($user->role->id==2)
-                                    bg-warning
-                                    @elseif($user->role->id==3)
-                                    bg-success
-                                    @endif
-                                ">
-                                    {{ ucfirst($user->role->name) }}
-                                </span>
-                            </td>
                             <td>
                                 @if ($user->is_active)
                                 <span class="badge bg-success">Active</span>
@@ -79,7 +65,7 @@
                                         @csrf
                                         @method("PUT")
                                         @if ($user->is_active)
-                                        <button type="submit" class="btn btn-sm btn-warning btn-change-status">
+                                        <button type="submit" class="btn btn-sm btn-danger btn-change-status">
                                             <i class="fa-solid fa-x"></i>
                                         </button>
                                         @else

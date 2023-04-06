@@ -2,7 +2,6 @@
 
 namespace App\Services\DataMaster;
 
-use App\AppData;
 use App\Jobs\SendVerificationEmailJob;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
@@ -46,7 +45,6 @@ class UserManagementService extends BaseService
             "title"       => "User Management",
             "description" => "Form for add new data user",
             "cardTitle"   => "Add New User",
-            "roles"       => $this->roleRepo->getAllData()->except([AppData::ROLE_ID_CUSTOMER])
         ];
     }
 
@@ -83,14 +81,25 @@ class UserManagementService extends BaseService
      * Description : use to add new data user
      *
      * @param array $requestedDatata
-     * @return object of new eloquent instance
+     * @return array of new eloquent instance
      */
-    public function storeNewData(array $requestedData): object
+    public function addNewData(array $requestedData): array
     {
-        $requestedData["password"] = Hash::make($requestedData["password"]);
-        $user = $this->repository->addNewData($requestedData);
-        dispatch(new SendVerificationEmailJob($user));
-        return $user;
+        try {
+            $requestedData["password"] = Hash::make($requestedData["password"]);
+            $user = $this->repository->addNewData($requestedData);
+            dispatch(new SendVerificationEmailJob($user));
+
+            $response = [
+                "success" => true,
+            ];
+        } catch (Exception $e) {
+            $response = [
+                "success" => false,
+                "message" => config('app.env') != 'production' ?  $e->getMessage() : 'Something went wrong'
+            ];
+        }
+        return $response;
     }
 
 
@@ -113,7 +122,7 @@ class UserManagementService extends BaseService
         } catch (Exception $e) {
             $response = [
                 "success" => false,
-                "message" => $e->getMessage()
+                "message" => config('app.env') != 'production' ?  $e->getMessage() : 'Something went wrong'
             ];
         }
         return $response;
@@ -128,15 +137,14 @@ class UserManagementService extends BaseService
     {
         try {
             $this->checkData($id);
-            $user = $this->repository->changeStatusById($id);
             $response = [
                 "success" => true,
-                "data" => $user
+                "data" => $this->repository->changeStatusById($id)
             ];
         } catch (Exception $e) {
             $response = [
                 "success" => false,
-                "message" => $e->getMessage()
+                "message" => config('app.env') != 'production' ?  $e->getMessage() : 'Something went wrong'
             ];
         }
         return $response;

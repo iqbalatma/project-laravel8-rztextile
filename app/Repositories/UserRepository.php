@@ -17,9 +17,7 @@ class UserRepository extends BaseRepository
 
     public function getAllDataPaginated(array $columns = ["*"], int $perPage = AppData::DEFAULT_PERPAGE): ?object
     {
-        return $this->model->with("role")
-            ->select($columns)
-            ->where("role_id", "!=", AppData::ROLE_ID_CUSTOMER)
+        return $this->model->select($columns)
             ->where("id", "!=", Auth::user()->id)
             ->paginate($perPage);
     }
