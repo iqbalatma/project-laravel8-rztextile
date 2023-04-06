@@ -5,7 +5,11 @@
             {{ $cardTitle }}
         </div>
         <div class="card-body">
-
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <a href="{{ route('roles.create') }}" type="button" class="btn btn-primary">
+                    <i class="fa-solid fa-square-plus"></i>
+                    Add New Roles</a>
+            </div>
 
             @if ($roles->count()==0)
             <x-data-not-found></x-data-not-found>
@@ -16,6 +20,7 @@
                     <thead>
                         <th>No</th>
                         <th>Name</th>
+                        <th>Guard Name</th>
                         <th>Description</th>
                         <th>Last Updated Time</th>
                     </thead>
@@ -24,6 +29,7 @@
                         <tr>
                             <td>{{ $roles->firstItem()+$key }}</td>
                             <td>{{ ucwords($role->name) }}</td>
+                            <td>{{ ucwords($role->guard_name) }}</td>
                             <td>{{ $role->description }}</td>
                             <td>{{ $role->updated_at }}</td>
                         </tr>
