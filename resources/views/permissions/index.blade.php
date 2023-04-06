@@ -5,12 +5,6 @@
             {{ $cardTitle }}
         </div>
         <div class="card-body">
-            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <a href="{{ route('roles.create') }}" type="button" class="btn btn-primary">
-                    <i class="fa-solid fa-square-plus"></i>
-                    Add New Roles</a>
-            </div>
-
             @if ($permissions->count()==0)
             <x-data-not-found></x-data-not-found>
             @else
@@ -23,24 +17,15 @@
                         <th>Guard Name</th>
                         <th>Description</th>
                         <th>Last Updated Time</th>
-                        <th>Action</th>
                     </thead>
                     <tbody>
                         @foreach ($permissions as $key => $permission)
                         <tr>
                             <td>{{ $permissions->firstItem()+$key }}</td>
-                            <td>{{ ucwords($permission->name) }}</td>
+                            <td>{{ $permission->name}}</td>
                             <td>{{ ucwords($permission->guard_name) }}</td>
                             <td>{{ $permission->description }}</td>
                             <td>{{ $permission->updated_at }}</td>
-                            <td>
-                                {{-- <a class="btn btn-success" href="{{ route('permissionss.edit', $permissions->id) }}">
-                                Edit
-                                </a>
-                                <button type="button" class="btn btn-danger btn-delete" data-id="{{ $permissions->id }}">
-                                    Delete
-                                </button> --}}
-                            </td>
                         </tr>
                         @endforeach
                     </tbody>
