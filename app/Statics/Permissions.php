@@ -50,5 +50,12 @@ class Permissions
     ];
     public const ROLLS = [
         ["name" => RollPermission::SEARCH_INDEX, "description" => "Permission to access roll search index"],
+        ["name" => RollPermission::INDEX, "description" => "Permission to access roll index"],
+        ["name" => RollPermission::CREATE, "description" => "Permission to access roll create"],
+        ["name" => RollPermission::STORE, "description" => "Permission to access roll store"],
+        ["name" => RollPermission::EDIT, "description" => "Permission to access roll edit"],
+        ["name" => RollPermission::UPDATE, "description" => "Permission to access roll update"],
+        ["name" => RollPermission::DOWNLOAD_QRCODE, "description" => "Permission to access roll download qrcode"],
+        ["name" => RollPermission::PRINT_QRCODE, "description" => "Permission to access roll print qrcode"],
     ];
 }

@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Statics;
 
-class Tables {
+class Tables
+{
 
     public const USERS = "users";
 }

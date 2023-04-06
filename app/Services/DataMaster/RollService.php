@@ -72,33 +72,44 @@ class RollService extends BaseService
      * Description : use to add new data roll
      *
      * @param array $requestedData
-     * @return object of eloquent
+     * @return array
      */
-    public function storeNewData(array $requestedData): ?object
+    public function addNewData(array $requestedData): array
     {
-        $qrService = new QRCodeService();
         try {
-            DB::beginTransaction();
-            $qrcode = $qrService->getGeneratedQrCode();
-            $qrcodeFileName = $qrService->storeNewQRCode($qrcode);
+            $qrService = new QRCodeService();
+            try {
+                DB::beginTransaction();
+                $qrcode = $qrService->getGeneratedQrCode();
+                $qrcodeFileName = $qrService->storeNewQRCode($qrcode);
 
-            $requestedData["qrcode"] = $qrcode;
-            $requestedData["qrcode_image"] = $qrcodeFileName;
-            $requestedData["type"] = "restock";
-            $requestedData["user_id"] = Auth::id();
+                $requestedData["qrcode"] = $qrcode;
+                $requestedData["qrcode_image"] = $qrcodeFileName;
+                $requestedData["type"] = "restock";
+                $requestedData["user_id"] = Auth::id();
 
-            $roll = $this->repository->addNewData($requestedData);
-            $requestedData["roll_id"] = $roll->id;
+                $roll = $this->repository->addNewData($requestedData);
+                $requestedData["roll_id"] = $roll->id;
 
-            $this->rollTransRepo->addNewData($requestedData);
+                $this->rollTransRepo->addNewData($requestedData);
 
-            DB::commit();
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollBack();
+                throw new InvalidActionException("Add new roll failed. Something went wrong !");
+            }
+
+            $response = [
+                "success" => true,
+            ];
         } catch (Exception $e) {
-            DB::rollBack();
-            throw new InvalidActionException("Add new roll failed. Something went wrong !");
+            $response = [
+                "success" => false,
+                "message" => config('app.env') != 'production' ?  $e->getMessage() : 'Something went wrong'
+            ];
         }
 
-        return $roll;
+        return $response;
     }
 
     /**
@@ -134,7 +145,7 @@ class RollService extends BaseService
      * @param array $requestedData
      * @return array
      */
-    public function updateData(int $id, array $requestedData): array
+    public function updateDataById(int $id, array $requestedData): array
     {
         try {
             $this->checkData($id);

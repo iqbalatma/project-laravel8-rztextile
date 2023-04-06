@@ -26,7 +26,8 @@ class RollController extends Controller
      */
     public function index(RollService $service): Response
     {
-        return response()->view("rolls.index", $service->getAllData());
+        viewShare($service->getAllData());
+        return response()->view("rolls.index");
     }
 
 
@@ -38,7 +39,8 @@ class RollController extends Controller
      */
     public function create(RollService $service): Response
     {
-        return response()->view("rolls.create", $service->getCreateData());
+        view($service->getCreateData());
+        return response()->view("rolls.create");
     }
 
 
@@ -56,18 +58,23 @@ class RollController extends Controller
             return $this->getErrorResponse();
         }
 
-        return response()->view("rolls.edit", $response);
+        viewShare($response);
+        return response()->view("rolls.edit");
     }
 
 
+
     /**
-     * Description : use to update data roll
+     * Use to update data roll
      *
      * @param RollService $service
+     * @param UpdateRollRequest $request
+     * @param integer $id
+     * @return RedirectResponse
      */
     public function update(RollService $service, UpdateRollRequest $request, int $id): RedirectResponse
     {
-        $response = $service->updateData($id, $request->validated());
+        $response = $service->updateDataById($id, $request->validated());
 
         if ($this->isError($response)) {
             return $this->getErrorResponse();
@@ -86,16 +93,11 @@ class RollController extends Controller
      */
     public function store(RollService $service, StoreRollRequest $request): RedirectResponse
     {
-        $stored = $service->storeNewData($request->validated());
+        $response = $service->addNewData($request->validated());
 
-        $redirect = redirect()
-            ->route("rolls.index");
+        if ($this->isError($response)) return $this->getErrorResponse();
 
-        $stored ?
-            $redirect->with("success", "Add new data roll successfully") :
-            $redirect->with("failed", "Add new data roll failed");
-
-        return $redirect;
+        return redirect()->route("units.index")->with("success", "Add new roll successfully");
     }
 
     /**
@@ -112,7 +114,6 @@ class RollController extends Controller
 
     public function printQrcode(RollService $service, RollPrintRequest $request)
     {
-
         $data = [
             "copies" => $request->only("copies")["copies"]
         ];
