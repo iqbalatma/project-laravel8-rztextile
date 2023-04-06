@@ -2,32 +2,31 @@
 
 namespace App\Services\DataMaster;
 
-use App\AppData;
 use App\Repositories\CustomerRepository;
+use App\Statics\Tables;
 use Exception;
-use Illuminate\Support\Facades\DB;
 use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class CustomerService extends BaseService
 {
     protected $repository;
     private const SHOW_CUSTOMER_SELECT_COLUMN = [
-        "id",
-        "name",
-        "address",
-        "phone",
-        "role_id",
-        "id_number",
-        "updated_at"
+        Tables::USERS . ".id",
+        Tables::USERS . ".name",
+        Tables::USERS . ".address",
+        Tables::USERS . ".phone",
+        Tables::USERS . ".role_id",
+        Tables::USERS . ".id_number",
+        Tables::USERS . ".updated_at"
     ];
     private const ALL_CUSTOMER_SELECT_COLUMN = [
-        "users.id",
-        "users.name",
-        "users.address",
-        "users.phone",
-        "users.role_id",
-        "users.id_number",
-        "users.updated_at",
+        Tables::USERS . ".id",
+        Tables::USERS . ".name",
+        Tables::USERS . ".address",
+        Tables::USERS . ".phone",
+        Tables::USERS . ".role_id",
+        Tables::USERS . ".id_number",
+        Tables::USERS . ".updated_at",
     ];
 
     public function __construct()
@@ -49,7 +48,6 @@ class CustomerService extends BaseService
             "customers"      => $this->repository->getAllDataPaginatedWithSearch($search, self::ALL_CUSTOMER_SELECT_COLUMN)
         ];
 
-
         return $data;
     }
 
@@ -69,14 +67,25 @@ class CustomerService extends BaseService
     }
 
     /**
-     * Description : use to add new data
+     * Use to add new data customer
      *
      * @param array $requestedData
+     * @return array
      */
-    public function storeNewData(array $requestedData): ?object
+    public function addNewData(array $requestedData): array
     {
-        $requestedData["role_id"] = AppData::ROLE_ID_CUSTOMER;
-        return $this->repository->addNewData($requestedData);
+        try {
+            $this->repository->addNewData($requestedData);
+            $response = [
+                "success" => true,
+            ];
+        } catch (Exception $e) {
+            $response = [
+                "success" => false,
+                "message" => config('app.env') != 'production' ?  $e->getMessage() : 'Something went wrong'
+            ];
+        }
+        return $response;
     }
 
 
@@ -114,14 +123,13 @@ class CustomerService extends BaseService
      * @param array $requestedData
      * @return array
      */
-    public function updateData(int $id, array $requestedData): array
+    public function updateDataById(int $id, array $requestedData): array
     {
         try {
             $this->checkData($id);
-            $data = $this->repository->updateDataById($id, $requestedData, isReturnObject: false);
             $response = [
                 "success" => true,
-                "data" => $data,
+                "data" => $this->repository->updateDataById($id, $requestedData, isReturnObject: false),
             ];
         } catch (Exception $e) {
             $response = [
@@ -140,14 +148,13 @@ class CustomerService extends BaseService
      * @param int $id
      * @return array
      */
-    public function deleteData(int $id): array
+    public function deleteDataById(int $id): array
     {
         try {
             $this->checkData($id);
-            $data = $this->repository->deleteDataById($id);
             $response = [
                 "success" => true,
-                "data" => $data,
+                "data" => $this->repository->deleteDataById($id),
             ];
         } catch (Exception $e) {
             $response = [

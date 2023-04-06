@@ -27,6 +27,7 @@ use App\Http\Controllers\DataMaster\CustomerSegmentationController;
 use App\Http\Controllers\DataMaster\DiscountVoucherController;
 use App\Http\Controllers\DataMaster\PermissionController;
 use App\Repositories\RollRepository;
+use App\Statics\Permissions\CustomerPermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
 use App\Statics\Permissions\UnitPermission;
@@ -140,14 +141,28 @@ Route::middleware(["auth", "verified"])
             Route::delete("/{id}", "destroy")->name("destroy")->middleware("permission:" . UnitPermission::DESTROY);
         });
 
+        // USER MANAGEMENT
         Route::prefix("users")->name("users.")->controller(UserManagementController::class)->group(function () {
             Route::get("/", "index")->name("index")->middleware("permission:" . UserPermission::INDEX);
-            Route::get("/create", "create")->name("create")->middleware("permission:" . UserPermission::CREATE);;
-            Route::post("/", "store")->name("store")->middleware("permission:" . UserPermission::STORE);;
-            Route::get("/edit/{id}", "edit")->name("edit")->middleware("permission:" . UserPermission::EDIT);;
-            Route::patch("/{id}", "update")->name("update")->middleware("permission:" . UserPermission::UPDATE);;
-            Route::put("/{id}", "changeStatusActive")->name("change.status.active")->middleware("permission:" . UserPermission::CHANGE_STATUS_ACTIVE);;
+            Route::get("/create", "create")->name("create")->middleware("permission:" . UserPermission::CREATE);
+            Route::post("/", "store")->name("store")->middleware("permission:" . UserPermission::STORE);
+            Route::get("/edit/{id}", "edit")->name("edit")->middleware("permission:" . UserPermission::EDIT);
+            Route::patch("/{id}", "update")->name("update")->middleware("permission:" . UserPermission::UPDATE);
+            Route::put("/{id}", "changeStatusActive")->name("change.status.active")->middleware("permission:" . UserPermission::CHANGE_STATUS_ACTIVE);
         });
+
+
+        // CUSTOMERS MANAGEMENT
+        Route::prefix("customers")->name("customers.")->controller(CustomerController::class)->group(function () {
+            Route::get("/", "index")->name("index")->middleware("permission:" . CustomerPermission::INDEX);
+            Route::get("/create", "create")->name("create")->middleware("permission:" . CustomerPermission::CREATE);
+            Route::get("/edit/{id}", "edit")->name("edit")->middleware("permission:" . CustomerPermission::EDIT);
+            Route::post("/", "store")->name("store")->middleware("permission:" . CustomerPermission::STORE);
+            Route::patch("/{id}", "update")->name("update")->middleware("permission:" . CustomerPermission::UPDATE);
+            Route::delete("/{id}", "destroy")->name("destroy")->middleware("permission:" . CustomerPermission::DESTROY);
+        });
+
+
 
 
         Route::middleware("role:administrator")->group(
@@ -209,13 +224,13 @@ Route::middleware(["auth", "verified"])
         //         Route::delete("/{id}", "destroy")->name("destroy");
         //     }
         // );
-        Route::get("/ajax/promotion-messages/{id}", [AJAXPromotionMessageController::class, "show"])->name("ajax.promotion.messages.show");
-        Route::get("/ajax/promotion-messages/customer-segmentations/{id}", [AJAXPromotionMessageController::class, "getByCustomerSegmentation"])->name("ajax.promotion.messages.customer.segmentations");
-        Route::get("/ajax/discount-vouchers/{code}", AJAXDiscountVoucherController::class)->name("ajax.discount.vouchers");
+        // Route::get("/ajax/promotion-messages/{id}", [AJAXPromotionMessageController::class, "show"])->name("ajax.promotion.messages.show");
+        // Route::get("/ajax/promotion-messages/customer-segmentations/{id}", [AJAXPromotionMessageController::class, "getByCustomerSegmentation"])->name("ajax.promotion.messages.customer.segmentations");
+        // Route::get("/ajax/discount-vouchers/{code}", AJAXDiscountVoucherController::class)->name("ajax.discount.vouchers");
 
-        // ROLE CONTROLLER
-        Route::get("/discount-vouchers", DiscountVoucherController::class)->name("discount.vouchers.index");
-        Route::get("/customer-segmentations", CustomerSegmentationController::class)->name("customer.segmentations.index");
+        // // ROLE CONTROLLER
+        // Route::get("/discount-vouchers", DiscountVoucherController::class)->name("discount.vouchers.index");
+        // Route::get("/customer-segmentations", CustomerSegmentationController::class)->name("customer.segmentations.index");
 
 
 
@@ -229,11 +244,11 @@ Route::middleware(["auth", "verified"])
             function () {
                 Route::get("/", "index")->name("index");
                 Route::get("/create", "create")->name("create");
-                Route::post("/", "store")->name("store")->middleware("role.prohibitted:owner");;
+                Route::post("/", "store")->name("store")->middleware("role.prohibitted:owner");
                 Route::get("/edit/{id}", "edit")->name("edit");
-                Route::patch("/{id}", "update")->name("update")->middleware("role.prohibitted:owner");;
+                Route::patch("/{id}", "update")->name("update")->middleware("role.prohibitted:owner");
                 Route::get("/download/{qrcode}", "downloadQrcode")->name("downloadQrcode");
-                Route::post("/print", "printQrcode")->name("printQrcode")->middleware("role.prohibitted:owner");;
+                Route::post("/print", "printQrcode")->name("printQrcode")->middleware("role.prohibitted:owner");
             }
         );
 
@@ -262,7 +277,7 @@ Route::middleware(["auth", "verified"])
 
 
 
-        Route::get("/segmented-customers", SegmentedCustomerController::class)->name("segmendted.customers.index");
+        // Route::get("/segmented-customers", SegmentedCustomerController::class)->name("segmendted.customers.index");
         Route::get("/search-roll", SearchRollController::class)->name("search.roll.index");
         Route::get("/ajax/search-roll/{id}", AJAXSearchRollController::class)->name("ajax.search.roll.show");
 
@@ -301,19 +316,5 @@ Route::middleware(["auth", "verified"])
         //         }
         //     );
 
-        Route::group(
-            [
-                "controller" => CustomerController::class,
-                "prefix" => "/customers",
-                "as" => "customers."
-            ],
-            function () {
-                Route::get("/", "index")->name("index");
-                Route::get("/create", "create")->name("create");
-                Route::get("/edit/{id}", "edit")->name("edit");
-                Route::post("/", "store")->name("store")->middleware("role.prohibitted:owner");;
-                Route::patch("/{id}", "update")->name("update")->middleware("role.prohibitted:owner");;
-                Route::delete("/{id}", "destroy")->name("destroy")->middleware("role.prohibitted:owner");;
-            }
-        );
+
     });

@@ -2,6 +2,7 @@
 
 namespace App\Statics;
 
+use App\Statics\Permissions\CustomerPermission;
 use App\Statics\Permissions\IssuedTokenPermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
@@ -37,5 +38,13 @@ class Permissions
         ["name" => UserPermission::STORE, "description" => "Permission to access add new users"],
         ["name" => UserPermission::UPDATE, "description" => "Permission to access update users by id"],
         ["name" => UserPermission::CHANGE_STATUS_ACTIVE, "description" => "Permission to access delete users by id"],
+    ];
+    public const CUSTOMERS = [
+        ["name" => CustomerPermission::INDEX, "description" => "Permission to access customers index"],
+        ["name" => CustomerPermission::CREATE, "description" => "Permission to access customers create"],
+        ["name" => CustomerPermission::EDIT, "description" => "Permission to access customers edit"],
+        ["name" => CustomerPermission::STORE, "description" => "Permission to access add new customers"],
+        ["name" => CustomerPermission::UPDATE, "description" => "Permission to access update customers by id"],
+        ["name" => CustomerPermission::DESTROY, "description" => "Permission to access delete customers by id"],
     ];
 }

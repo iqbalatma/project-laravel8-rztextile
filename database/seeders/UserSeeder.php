@@ -6,6 +6,7 @@ use App\AppData;
 use App\Models\Role;
 use App\Models\User;
 use App\Statics\Permissions;
+use App\Statics\Permissions\CustomerPermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
 use App\Statics\Permissions\UnitPermission;
@@ -445,6 +446,12 @@ class UserSeeder extends Seeder
         $role->givePermissionTo(UserPermission::STORE);
         $role->givePermissionTo(UserPermission::EDIT);
         $role->givePermissionTo(UserPermission::CHANGE_STATUS_ACTIVE);
+        $role->givePermissionTo(CustomerPermission::INDEX);
+        $role->givePermissionTo(CustomerPermission::CREATE);
+        $role->givePermissionTo(CustomerPermission::STORE);
+        $role->givePermissionTo(CustomerPermission::EDIT);
+        $role->givePermissionTo(CustomerPermission::UPDATE);
+        $role->givePermissionTo(CustomerPermission::DESTROY);
         $user->assignRole(Roles::ADMINISTRATOR);
     }
 }
