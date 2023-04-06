@@ -72,7 +72,7 @@
                             </a>
                         </li>
                         <li class="submenu-item">
-                            <a href="{{ route('roles.index') }}" class="sidebar-link">
+                            <a href="{{ route('permissions.index') }}" class="sidebar-link">
                                 <i class="fa-solid fa-user-tag"></i>
                                 <span>Permissions</span>
                             </a>

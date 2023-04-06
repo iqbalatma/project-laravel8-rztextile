@@ -6,6 +6,7 @@ use App\AppData;
 use App\Models\Role;
 use App\Models\User;
 use App\Statics\Permissions;
+use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
 use App\Statics\Roles;
 use Carbon\Carbon;
@@ -429,6 +430,7 @@ class UserSeeder extends Seeder
         $role->givePermissionTo(RolePermission::DESTROY);
         $role->givePermissionTo(RolePermission::EDIT);
         $role->givePermissionTo(RolePermission::UPDATE);
+        $role->givePermissionTo(PermissionPermission::INDEX);
         $user->assignRole(Roles::ADMINISTRATOR);
     }
 }

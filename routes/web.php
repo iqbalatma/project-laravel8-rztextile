@@ -25,7 +25,9 @@ use App\Http\Controllers\DataMaster\UserManagementController;
 use App\Http\Controllers\CRM\WhatsappMessagingController;
 use App\Http\Controllers\DataMaster\CustomerSegmentationController;
 use App\Http\Controllers\DataMaster\DiscountVoucherController;
+use App\Http\Controllers\DataMaster\PermissionController;
 use App\Repositories\RollRepository;
+use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
 use Illuminate\Support\Facades\Route;
 
@@ -122,6 +124,11 @@ Route::middleware(["auth", "verified"])
             Route::delete("/{id}", "destroy")->name("destroy")->middleware("permission:" . RolePermission::DESTROY);
             Route::put("/{id}", "update")->name("update")->middleware("permission:" . RolePermission::UPDATE);
         });
+        Route::prefix("permissions")->name("permissions.")->controller(PermissionController::class)->group(function () {
+            Route::get("/", "index")->name("index")->middleware("permission:" . PermissionPermission::INDEX);
+        });
+
+
 
         Route::middleware("role:administrator")->group(
             function () {
