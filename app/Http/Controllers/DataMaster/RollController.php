@@ -7,8 +7,6 @@ use App\Http\Requests\Rolls\RollPrintRequest;
 use App\Http\Requests\Rolls\StoreRollRequest;
 use App\Http\Requests\Rolls\UpdateRollRequest;
 use App\Services\DataMaster\RollService;
-use App\Services\DataMaster\UnitService;
-use App\Services\Interfaces\DataMaster\IUnitService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
@@ -39,7 +37,7 @@ class RollController extends Controller
      */
     public function create(RollService $service): Response
     {
-        view($service->getCreateData());
+        viewShare($service->getCreateData());
         return response()->view("rolls.create");
     }
 
@@ -97,7 +95,7 @@ class RollController extends Controller
 
         if ($this->isError($response)) return $this->getErrorResponse();
 
-        return redirect()->route("units.index")->with("success", "Add new roll successfully");
+        return redirect()->route("roles.index")->with("success", "Add new roll successfully");
     }
 
     /**
