@@ -118,6 +118,7 @@ Route::middleware(["auth", "verified"])
             Route::get("/", "index")->name("index")->middleware("permission:" . RolePermission::INDEX);
             Route::get("/create", "create")->name("create")->middleware("permission:" . RolePermission::CREATE);
             Route::post("/", "store")->name("store")->middleware("permission:" . RolePermission::STORE);
+            Route::delete("/{id}", "destroy")->name("destroy")->middleware("permission:" . RolePermission::DESTROY);
         });
 
         Route::middleware("role:administrator")->group(

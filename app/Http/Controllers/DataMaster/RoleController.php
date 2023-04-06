@@ -48,4 +48,11 @@ class RoleController extends Controller
 
         return redirect()->route("roles.index")->with("success", "Add new role successfully");
     }
+
+    public function destroy(RoleService $service, int $id): RedirectResponse
+    {
+        $response = $service->deleteDataById($id);
+        if ($this->isError($response)) return $this->getErrorResponse();
+        return redirect()->route("roles.index")->with("success", "Delete role successfully");
+    }
 }

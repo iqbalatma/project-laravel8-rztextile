@@ -23,6 +23,7 @@
                         <th>Guard Name</th>
                         <th>Description</th>
                         <th>Last Updated Time</th>
+                        <th>Action</th>
                     </thead>
                     <tbody>
                         @foreach ($roles as $key => $role)
@@ -32,6 +33,11 @@
                             <td>{{ ucwords($role->guard_name) }}</td>
                             <td>{{ $role->description }}</td>
                             <td>{{ $role->updated_at }}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-delete" data-id="{{ $role->id }}">
+                                    Delete
+                                </button>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -40,4 +46,14 @@
             @endif
         </div>
     </div>
+
+
+    <form id="form-delete" action="{{ route('roles.destroy', ':id') }}" class="d-none" method="POST">
+        @csrf
+        @method("DELETE")
+    </form>
+
+    @push("scripts")
+    <script src="{{ asset('js/pages/roles/index.js') }}"></script>
+    @endpush
 </x-dashboard.layout>

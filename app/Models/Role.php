@@ -9,7 +9,7 @@ use Spatie\Permission\Models\Role as ModelsRole;
 
 class Role extends ModelsRole
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $fillable = ["name", "guard_name", "description"];
 }

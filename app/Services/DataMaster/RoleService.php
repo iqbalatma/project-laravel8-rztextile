@@ -66,4 +66,24 @@ class RoleService extends BaseService
         }
         return $response;
     }
+
+    public function deleteDataById(int $id): array
+    {
+        try {
+            $this->checkData($id);
+
+            $this->repository->deleteDataById($id);
+
+            $response = [
+                "success" => true,
+            ];
+        } catch (Exception $e) {
+            $response = [
+                "success" => false,
+                "message" => config('app.env') != 'production' ?  $e->getMessage() : 'Something went wrong'
+            ];
+        }
+
+        return $response;
+    }
 }
