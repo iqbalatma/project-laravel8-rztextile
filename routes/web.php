@@ -178,6 +178,14 @@ Route::middleware(["auth", "verified"])
         });
 
 
+        // ROLL TRANSACTION
+        Route::prefix("roll-transactions")->name("roll.transactions.")->controller(RollTransactionController::class)->group(function () {
+            Route::get("/create", "create")->name("create");
+            Route::post("/", "store")->name("store");
+        });
+
+
+
 
         // Route::middleware("role:administrator")->group(
         //     function () {
@@ -208,18 +216,7 @@ Route::middleware(["auth", "verified"])
         Route::get("/dashboard", DashboardController::class)->name("dashboard.index");
         Route::get("/ajax/dashboard/sales-summary", AJAXDashboardController::class)->name("ajax.dashboard.sales.summary");
 
-        // Roll Transaction
-        Route::group(
-            [
-                "controller" => RollTransactionController::class,
-                "prefix" => "/roll-transactions",
-                "as" => "roll.transactions."
-            ],
-            function () {
-                Route::get("/create", "create")->name("create");
-                Route::post("/", "store")->name("store");
-            }
-        );
+
 
 
         // PROMOTION MESSAGE
