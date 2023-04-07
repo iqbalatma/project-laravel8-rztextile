@@ -1,4 +1,4 @@
-<x-dashboard.layout title="{!! $title !!}" description="{{ $description }}">
+<x-dashboard.layout>
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-circle-xmark"></i>
@@ -39,7 +39,7 @@
         </div>
         <div class="card-footer">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <a href="{{ route('report.roll.transactions.index') }}" class="btn btn-danger"><i class="fa-solid fa-square-xmark"></i> Cancel</a>
+                <a href="{{ route('roll.transactions.index') }}" class="btn btn-danger"><i class="fa-solid fa-square-xmark"></i> Cancel</a>
                 <button type="submit" form="form" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save</button>
             </div>
         </div>

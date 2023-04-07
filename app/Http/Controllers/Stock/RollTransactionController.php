@@ -18,7 +18,8 @@ class RollTransactionController extends Controller
      */
     public function index(RollTransactionService $service): Response
     {
-        return response()->view("roll-transactions.index", $service->getAllData());
+        viewShare($service->getAllData());
+        return response()->view("roll-transactions.index");
     }
 
 
@@ -29,7 +30,8 @@ class RollTransactionController extends Controller
      */
     public function create(RollTransactionService $service): Response
     {
-        return response()->view("roll-transactions.create", $service->getCreateData());
+        viewShare($service->getCreateData());
+        return response()->view("roll-transactions.create");
     }
 
 
@@ -41,19 +43,14 @@ class RollTransactionController extends Controller
      */
     public function store(RollTransactionService $service, StoreRollTransactionRequest $request): RedirectResponse
     {
-        $stored = $service->addNewData($request->validated());
+        $response = $service->addNewData($request->validated());
 
-        $redirect = redirect()
-            ->route("roll.transactions.create");
+        if ($this->isError($response)) return $this->getErrorResponse();
 
         $message = $request->input("type") == "restock" ?
             "Restock" :
             "Deadstock";
 
-        $stored ?
-            $redirect->with("success", "$message roll successfully") :
-            $redirect->with("failed", "$message roll failed");
-
-        return $redirect;
+        return redirect()->back()->with("success", "$message roll successfully");
     }
 }

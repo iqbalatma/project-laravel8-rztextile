@@ -30,6 +30,7 @@ use App\Statics\Permissions\CustomerPermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
 use App\Statics\Permissions\RollPermission;
+use App\Statics\Permissions\RollTransactionPermission;
 use App\Statics\Permissions\UnitPermission;
 use App\Statics\Permissions\UserPermission;
 use Illuminate\Support\Facades\Route;
@@ -180,9 +181,12 @@ Route::middleware(["auth", "verified"])
 
         // ROLL TRANSACTION
         Route::prefix("roll-transactions")->name("roll.transactions.")->controller(RollTransactionController::class)->group(function () {
-            Route::get("/create", "create")->name("create");
-            Route::post("/", "store")->name("store");
+            Route::get("/", "index")->name("index")->middleware("permission:" . RollTransactionPermission::INDEX);
+            Route::get("/create", "create")->name("create")->middleware("permission:" . RollTransactionPermission::CREATE);
+            Route::post("/", "store")->name("store")->middleware("permission:" . RollTransactionPermission::STORE);
         });
+
+
 
 
 
@@ -297,7 +301,6 @@ Route::middleware(["auth", "verified"])
             }
         );
 
-        Route::get("/report/roll-trannsactions", [RollTransactionController::class, "index"])->name("report.roll.transactions.index");
         // Route::controller(PaymentController::class)
         //     ->name("payments.")
         //     ->prefix("/payments")

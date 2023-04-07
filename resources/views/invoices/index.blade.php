@@ -52,7 +52,7 @@
                         <a class="nav-link active" aria-current="page" href="{{ route('report.invoices.index') }}">Invoices</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{ route('report.roll.transactions.index') }}">Roll Transaction</a>
+                        <a class="nav-link" aria-current="page" href="{{ route('roll.transactions.index') }}">Roll Transaction</a>
                     </li>
                 </ul>
                 {{-- <li class="nav-item">

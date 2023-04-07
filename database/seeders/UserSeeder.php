@@ -10,6 +10,7 @@ use App\Statics\Permissions\CustomerPermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
 use App\Statics\Permissions\RollPermission;
+use App\Statics\Permissions\RollTransactionPermission;
 use App\Statics\Permissions\UnitPermission;
 use App\Statics\Permissions\UserPermission;
 use App\Statics\Roles;
@@ -461,6 +462,9 @@ class UserSeeder extends Seeder
         $role->givePermissionTo(RollPermission::UPDATE);
         $role->givePermissionTo(RollPermission::DOWNLOAD_QRCODE);
         $role->givePermissionTo(RollPermission::PRINT_QRCODE);
+        $role->givePermissionTo(RollTransactionPermission::STORE);
+        $role->givePermissionTo(RollTransactionPermission::CREATE);
+        $role->givePermissionTo(RollTransactionPermission::INDEX);
         $user->assignRole(Roles::ADMINISTRATOR);
     }
 }

@@ -7,6 +7,7 @@ use App\Statics\Permissions\IssuedTokenPermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
 use App\Statics\Permissions\RollPermission;
+use App\Statics\Permissions\RollTransactionPermission;
 use App\Statics\Permissions\UnitPermission;
 use App\Statics\Permissions\UserPermission;
 
@@ -57,5 +58,10 @@ class Permissions
         ["name" => RollPermission::UPDATE, "description" => "Permission to access roll update"],
         ["name" => RollPermission::DOWNLOAD_QRCODE, "description" => "Permission to access roll download qrcode"],
         ["name" => RollPermission::PRINT_QRCODE, "description" => "Permission to access roll print qrcode"],
+    ];
+    public const ROLLS_TRANSACTIONS = [
+        ["name" => RollTransactionPermission::INDEX, "description" => "Permission to access roll transaction index"],
+        ["name" => RollTransactionPermission::CREATE, "description" => "Permission to access roll transaction create"],
+        ["name" => RollTransactionPermission::STORE, "description" => "Permission to access roll transaction store"],
     ];
 }
