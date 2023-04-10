@@ -50,7 +50,7 @@
             <ul class="nav nav-tabs">
                 <ul class="nav nav-tabs mb-4">
                     <li class="nav-item">
-                        <a class="nav-link " aria-current="page" href="{{ route('report.invoices.index') }}">Invoices</a>
+                        <a class="nav-link " aria-current="page" href="{{ route('invoices.index') }}">Invoices</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ route('roll.transactions.index') }}">Roll Transaction</a>

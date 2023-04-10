@@ -27,6 +27,7 @@ use App\Http\Controllers\DataMaster\DiscountVoucherController;
 use App\Http\Controllers\DataMaster\PermissionController;
 use App\Repositories\RollRepository;
 use App\Statics\Permissions\CustomerPermission;
+use App\Statics\Permissions\InvoicePermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
 use App\Statics\Permissions\RollPermission;
@@ -186,9 +187,11 @@ Route::middleware(["auth", "verified"])
             Route::post("/", "store")->name("store")->middleware("permission:" . RollTransactionPermission::STORE);
         });
 
-
-
-
+        // INVOICE
+        Route::prefix("invoices")->name("invoices.")->controller(InvoiceController::class)->group(function () {
+            Route::get("/", "index")->name("index")->middleware("permission:" . InvoicePermission::INDEX);
+            Route::get("/{type}/{id}", "invoicPdf")->name("invoicPdf")->middleware("permission:" . InvoicePermission::PDF);
+        });
 
 
         // Route::middleware("role:administrator")->group(
@@ -289,17 +292,7 @@ Route::middleware(["auth", "verified"])
                 }
             );
 
-        Route::group(
-            [
-                "controller" => InvoiceController::class,
-                "prefix" => "/report/invoices",
-                "as" => "report.invoices."
-            ],
-            function () {
-                Route::get("/", "index")->name("index");
-                Route::get("/{type}/{id}", "invoicPdf")->name("invoicPdf");
-            }
-        );
+
 
         // Route::controller(PaymentController::class)
         //     ->name("payments.")

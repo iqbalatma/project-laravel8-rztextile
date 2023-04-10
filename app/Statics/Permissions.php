@@ -3,6 +3,7 @@
 namespace App\Statics;
 
 use App\Statics\Permissions\CustomerPermission;
+use App\Statics\Permissions\InvoicePermission;
 use App\Statics\Permissions\IssuedTokenPermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
@@ -63,5 +64,9 @@ class Permissions
         ["name" => RollTransactionPermission::INDEX, "description" => "Permission to access roll transaction index"],
         ["name" => RollTransactionPermission::CREATE, "description" => "Permission to access roll transaction create"],
         ["name" => RollTransactionPermission::STORE, "description" => "Permission to access roll transaction store"],
+    ];
+    public const INVOICES = [
+        ["name" => InvoicePermission::INDEX, "description" => "Permission to access invoice index"],
+        ["name" => InvoicePermission::PDF, "description" => "Permission to access invoice pdf"],
     ];
 }

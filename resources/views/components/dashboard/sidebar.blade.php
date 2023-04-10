@@ -106,7 +106,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="{{ route('report.invoices.index') }}" class="sidebar-link">
+                <a href="{{ route('invoices.index') }}" class="sidebar-link">
                     <i class="fa-solid fa-file-invoice-dollar"></i>
                     <span>Report</span>
                 </a>
