@@ -12,6 +12,7 @@ use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
 use App\Statics\Permissions\RollPermission;
 use App\Statics\Permissions\RollTransactionPermission;
+use App\Statics\Permissions\ShoppingPermission;
 use App\Statics\Permissions\UnitPermission;
 use App\Statics\Permissions\UserPermission;
 use App\Statics\Roles;
@@ -468,6 +469,8 @@ class UserSeeder extends Seeder
         $role->givePermissionTo(RollTransactionPermission::INDEX);
         $role->givePermissionTo(InvoicePermission::INDEX);
         $role->givePermissionTo(InvoicePermission::PDF);
+        $role->givePermissionTo(ShoppingPermission::INDEX);
+        $role->givePermissionTo(ShoppingPermission::PURCHASE);
         $user->assignRole(Roles::ADMINISTRATOR);
     }
 }

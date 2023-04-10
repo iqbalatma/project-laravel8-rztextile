@@ -9,6 +9,7 @@ use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
 use App\Statics\Permissions\RollPermission;
 use App\Statics\Permissions\RollTransactionPermission;
+use App\Statics\Permissions\ShoppingPermission;
 use App\Statics\Permissions\UnitPermission;
 use App\Statics\Permissions\UserPermission;
 
@@ -68,5 +69,9 @@ class Permissions
     public const INVOICES = [
         ["name" => InvoicePermission::INDEX, "description" => "Permission to access invoice index"],
         ["name" => InvoicePermission::PDF, "description" => "Permission to access invoice pdf"],
+    ];
+    public const SHOPPING = [
+        ["name" => ShoppingPermission::INDEX, "description" => "Permission to access shopping index"],
+        ["name" => ShoppingPermission::PURCHASE, "description" => "Permission to access shopping purchaseing"],
     ];
 }

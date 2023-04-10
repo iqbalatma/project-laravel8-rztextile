@@ -32,6 +32,7 @@ use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
 use App\Statics\Permissions\RollPermission;
 use App\Statics\Permissions\RollTransactionPermission;
+use App\Statics\Permissions\ShoppingPermission;
 use App\Statics\Permissions\UnitPermission;
 use App\Statics\Permissions\UserPermission;
 use Illuminate\Support\Facades\Route;
@@ -193,6 +194,12 @@ Route::middleware(["auth", "verified"])
             Route::get("/{type}/{id}", "invoicPdf")->name("invoicPdf")->middleware("permission:" . InvoicePermission::PDF);
         });
 
+        //SHOPPING
+        Route::prefix("/shopping")->name("shopping.")->controller(ShoppingController::class)->group(function () {
+            Route::get("/", "index")->name("index")->middleware("permission:" . ShoppingPermission::INDEX);
+            Route::post("/purchase", "purchase")->name("purchase")->middleware("permission:" . ShoppingPermission::PURCHASE);;
+        });
+
 
         // Route::middleware("role:administrator")->group(
         //     function () {
@@ -282,15 +289,7 @@ Route::middleware(["auth", "verified"])
         // Route::get("/segmented-customers", SegmentedCustomerController::class)->name("segmendted.customers.index");
 
 
-        Route::controller(ShoppingController::class)
-            ->name("shopping.")
-            ->prefix("/shopping")
-            ->group(
-                function () {
-                    Route::get("/", "index")->name("index");
-                    Route::post("/purchase", "purchase")->name("purchase");
-                }
-            );
+
 
 
 
