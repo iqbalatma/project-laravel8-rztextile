@@ -3,6 +3,7 @@
 namespace App\Statics;
 
 use App\Statics\Permissions\CustomerPermission;
+use App\Statics\Permissions\DashboardPermission;
 use App\Statics\Permissions\InvoicePermission;
 use App\Statics\Permissions\IssuedTokenPermission;
 use App\Statics\Permissions\PermissionPermission;
@@ -73,5 +74,8 @@ class Permissions
     public const SHOPPING = [
         ["name" => ShoppingPermission::INDEX, "description" => "Permission to access shopping index"],
         ["name" => ShoppingPermission::PURCHASE, "description" => "Permission to access shopping purchaseing"],
+    ];
+    public const DASHBOARD = [
+        ["name" => DashboardPermission::INDEX, "description" => "Permission to access dashboard index"],
     ];
 }

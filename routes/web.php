@@ -27,6 +27,7 @@ use App\Http\Controllers\DataMaster\DiscountVoucherController;
 use App\Http\Controllers\DataMaster\PermissionController;
 use App\Repositories\RollRepository;
 use App\Statics\Permissions\CustomerPermission;
+use App\Statics\Permissions\DashboardPermission;
 use App\Statics\Permissions\InvoicePermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
@@ -197,8 +198,12 @@ Route::middleware(["auth", "verified"])
         //SHOPPING
         Route::prefix("/shopping")->name("shopping.")->controller(ShoppingController::class)->group(function () {
             Route::get("/", "index")->name("index")->middleware("permission:" . ShoppingPermission::INDEX);
-            Route::post("/purchase", "purchase")->name("purchase")->middleware("permission:" . ShoppingPermission::PURCHASE);;
+            Route::post("/purchase", "purchase")->name("purchase")->middleware("permission:" . ShoppingPermission::PURCHASE);
         });
+
+        // DASHBOARD
+        Route::get("/dashboard", DashboardController::class)->name("dashboard.index")->middleware("permission:" . DashboardPermission::INDEX);
+        Route::get("/ajax/dashboard/sales-summary", AJAXDashboardController::class)->name("ajax.dashboard.sales.summary")->middleware("permission:" . DashboardPermission::INDEX);
 
 
         // Route::middleware("role:administrator")->group(
@@ -226,9 +231,7 @@ Route::middleware(["auth", "verified"])
 
 
 
-        // DASHBOARD
-        Route::get("/dashboard", DashboardController::class)->name("dashboard.index");
-        Route::get("/ajax/dashboard/sales-summary", AJAXDashboardController::class)->name("ajax.dashboard.sales.summary");
+
 
 
 

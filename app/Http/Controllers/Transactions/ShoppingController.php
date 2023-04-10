@@ -12,7 +12,8 @@ class ShoppingController extends Controller
 {
     public function index(ShoppingService $service): Response
     {
-        return response()->view("shopping.index", $service->getAllData());
+        viewShare($service->getAllData());
+        return response()->view("shopping.index");
     }
 
     public function purchase(ShoppingService $service, PurchaseRequest $request): JsonResponse

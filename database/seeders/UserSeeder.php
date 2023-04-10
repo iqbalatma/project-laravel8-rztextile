@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Statics\Permissions;
 use App\Statics\Permissions\CustomerPermission;
+use App\Statics\Permissions\DashboardPermission;
 use App\Statics\Permissions\InvoicePermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
@@ -471,6 +472,7 @@ class UserSeeder extends Seeder
         $role->givePermissionTo(InvoicePermission::PDF);
         $role->givePermissionTo(ShoppingPermission::INDEX);
         $role->givePermissionTo(ShoppingPermission::PURCHASE);
+        $role->givePermissionTo(DashboardPermission::INDEX);
         $user->assignRole(Roles::ADMINISTRATOR);
     }
 }
