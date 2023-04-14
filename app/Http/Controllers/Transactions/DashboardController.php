@@ -15,6 +15,7 @@ class DashboardController extends Controller
      */
     public function __invoke(DashboardService $service): Response
     {
-        return response()->view("dashboard.index", $service->getAllData());
+        viewShare($service->getAllData());
+        return response()->view("dashboard.index");
     }
 }
