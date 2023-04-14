@@ -23,6 +23,12 @@ class DashboardService extends BaseService
         $this->paymentRepo = new PaymentRepository();
         $this->custRepo = new CustomerRepository();
     }
+
+    /**
+     * To get all data for dashboard
+     *
+     * @return array
+     */
     public function getAllData(): array
     {
         return [
