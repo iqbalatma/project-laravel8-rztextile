@@ -34,7 +34,6 @@
         </div>
         <div class="sidebar-menu" id="sidebar-menu">
             <ul class="menu">
-
                 @canany([$dashboardPermissions::INDEX, $userPermissions::INDEX, $customerPermissions::INDEX, $unitPermissions::INDEX, $rolePermissions::INDEX, $permissionPermissions::INDEX, $rollPermissions::INDEX])
 
                 <li class="sidebar-title">Menu</li>
