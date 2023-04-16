@@ -24,7 +24,9 @@
                         <th>Name</th>
                         <th>Shortname</th>
                         <th>Last Updated Time</th>
+                        @canany([$unitPermissions::EDIT, $unitPermissions::DESTROY])
                         <th class="text-center">Action</th>
+                        @endcanany
                     </thead>
                     <tbody>
                         @foreach ($units as $key => $unit)
