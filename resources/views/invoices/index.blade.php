@@ -46,27 +46,6 @@
                     </div>
                 </div>
             </div>
-            <ul class="nav nav-tabs">
-                <ul class="nav nav-tabs mb-4">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ route('invoices.index') }}">Invoices</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{ route('roll.transactions.index') }}">Roll Transaction</a>
-                    </li>
-                </ul>
-                {{-- <li class="nav-item">
-                    <a class="nav-link @if (request()->input('type')=='all' || is_null(request()->input('type')) ) active @endif" aria-current="page" href="{{ route('invoices.index',['type'=>'all']) }}">All</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link @if (request()->input('type')=='not-paid-off') active @endif" href="{{ route('invoices.index',['type'=>'not-paid-off']) }}">Not Paid Off</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link @if (request()->input('type')=='paid-off') active @endif" href="{{ route('invoices.index',['type'=>'paid-off']) }}">Paid Off</a>
-                </li> --}}
-            </ul>
-
-
 
             @if (count($invoices) == 0)
             <x-data-not-found></x-data-not-found>

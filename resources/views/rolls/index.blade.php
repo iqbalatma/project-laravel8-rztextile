@@ -5,11 +5,16 @@
             {{ $cardTitle }}
         </div>
         <div class="card-body">
+
+            @can($rollPermissions::CREATE)
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                 <a href="{{ route('rolls.create') }}" type="button" class="btn btn-primary">
                     <i class="fa-solid fa-square-plus"></i>
-                    Add New Roll</a>
+                    Add New Roll
+                </a>
             </div>
+            @endcan
+
 
 
             {{-- Search and filter Form --}}
@@ -70,7 +75,9 @@
                         <th>Quantity Roll</th>
                         <th>Quantity Unit</th>
                         <th>Last Updated Time</th>
+                        @canany([$rollPermissions::EDIT, $rollPermissions::DOWNLOAD_QRCODE, $rollPermissions::PRINT_QRCODE])
                         <th class="text-center">Action</th>
+                        @endcanany
                     </thead>
                     <tbody>
                         @foreach ($rolls as $key => $roll)
@@ -82,22 +89,32 @@
                             <td>{{ $roll->quantity_roll . " rolls" }}</td>
                             <td>{{ $roll->quantity_unit . " " . ($roll->unit->name??"") }}</td>
                             <td>{{ $roll->updated_at??"-" }}</td>
+                            @canany([$rollPermissions::EDIT, $rollPermissions::DOWNLOAD_QRCODE, $rollPermissions::PRINT_QRCODE])
                             <td class="text-center">
                                 <div class="d-grid gap-2 d-md-block">
+                                    @can($rollPermissions::EDIT)
                                     <a href="{{ route('rolls.edit', $roll->id) }}" class="btn btn-success">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
+                                    @endcan
+
+                                    @can($rollPermissions::DOWNLOAD_QRCODE)
                                     @if (isset($roll->qrcode_image))
                                     <a href="{{ route('rolls.downloadQrcode', $roll->qrcode_image) }}" class="btn btn-primary">
                                         <i class="fa-solid fa-download"></i>
                                     </a>
                                     @endif
+                                    @endcan
+
+                                    @can($rollPermissions::PRINT_QRCODE)
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-warning btn-print-qrcode" data-bs-toggle="modal" data-name="{{ $roll->name }}" data-code="{{ $roll->code }}" data-qrcode="{{ $roll->qrcode }}" data-qrcode-image="{{ $roll->qrcode_image }}" data-id="{{ $roll->id }}" data-bs-target="#print-qrcode-modal">
                                         <i class="fa-solid fa-print"></i>
                                     </button>
+                                    @endcan
                                 </div>
                             </td>
+                            @endcanany
                         </tr>
                         @endforeach
                     </tbody>
