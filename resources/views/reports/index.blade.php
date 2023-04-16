@@ -10,17 +10,6 @@
                 <div class="col-6">
                     <div class="row g-3">
                         <div class="col-md-12">
-                            {{-- <label for="selectPeriod" class="form-label">Period</label>
-              <select id="selectPeriod" class="form-select">
-                <option selected disabled>Choose Period Below</option>
-                <option value="daily">Daily</option>
-                <option value="monthly">Monthly</option>
-                <option value="yearly">Yearly</option>
-                <option value="custom">Custom</option>
-                <option value="custom-monthly">Custom Monthly</option>
-                <option value="custom-yearly">Custom Yearly</option>
-              </select> --}}
-
                             <div class="row">
                                 <div class="mb-3 col-6">
                                     <label for="startDate" class="form-label">Start Date</label>
