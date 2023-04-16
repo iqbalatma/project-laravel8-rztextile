@@ -94,6 +94,7 @@
             </div>
             @endif
         </div>
+        @can($rollTransactionPermissions::CREATE)
         <div class="card-footer">
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                 <a href="{{ route('roll.transactions.create') }}" type="button" class="btn btn-sm btn-primary">
@@ -102,5 +103,6 @@
                 </a>
             </div>
         </div>
+        @endcan
     </div>
 </x-dashboard.layout>
