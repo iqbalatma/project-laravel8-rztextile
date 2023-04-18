@@ -16,6 +16,7 @@ use App\Statics\Permissions\RollTransactionPermission;
 use App\Statics\Permissions\ShoppingPermission;
 use App\Statics\Permissions\UnitPermission;
 use App\Statics\Permissions\UserPermission;
+use App\Statics\Permissions\UserProfilePermission;
 use App\Statics\Roles;
 use Carbon\Carbon;
 use Database\Factories\CustomerFactory;
@@ -473,6 +474,8 @@ class UserSeeder extends Seeder
         $role->givePermissionTo(ShoppingPermission::INDEX);
         $role->givePermissionTo(ShoppingPermission::PURCHASE);
         $role->givePermissionTo(DashboardPermission::INDEX);
+        $role->givePermissionTo(UserProfilePermission::EDIT);
+        $role->givePermissionTo(UserProfilePermission::UPDATE);
         $user->assignRole(Roles::ADMINISTRATOR);
     }
 }
