@@ -5,11 +5,14 @@
             {{ $title }}
         </div>
         <div class="card-body">
+            @can($customerPermissions::CREATE)
             <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4">
                 <a href="{{ route('customers.create') }}" type="button" class="btn btn-primary">
                     <i class="fa-solid fa-square-plus"></i>
                     Add New Customers</a>
             </div>
+            @endcan
+
             {{-- Form Filter and Search --}}
             <div class="row">
                 <div class="col-md-8">
@@ -48,7 +51,9 @@
                         <th>Address</th>
                         <th>Total Invoice</th>
                         <th>Last Updated Time</th>
+                        @canany([$customerPermissions::EDIT, $customerPermissions::DESTROY,])
                         <th class="text-center">Action</th>
+                        @endcanany
                     </thead>
                     <tbody>
                         @foreach ($customers as $key => $customer)
@@ -60,20 +65,28 @@
                             <td>{{ $customer->address ?? "-"}}</td>
                             <td>{{ $customer->total_invoices ?? "-" }}</td>
                             <td>{{ $customer->updated_at ?? "-" }}</td>
+                            @canany([$customerPermissions::EDIT, $customerPermissions::DESTROY,])
                             <td class="text-center">
                                 <form action="{{ route('customers.destroy', $customer->id) }}" method="POST">
                                     @csrf
                                     @method("DELETE")
                                     <div class="d-grid gap-2 d-md-flex">
+                                        @can($customerPermissions::EDIT)
                                         <a href="{{ route('customers.edit', $customer->id ) }}" class="btn btn-success">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
+                                        @endcan
+
+                                        @can($customerPermissions::DESTROY)
                                         <a class="btn btn-danger btn-delete">
                                             <i class="fa-solid fa-trash-can"></i>
                                         </a>
+                                        @endcan
                                     </div>
                                 </form>
                             </td>
+                            @endcanany
+
                         </tr>
                         @endforeach
                     </tbody>
