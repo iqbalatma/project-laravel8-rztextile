@@ -30,6 +30,7 @@
                         <th>Phone Number</th>
                         <th>Status</th>
                         <th>Email Verified At</th>
+                        <th>Roles</th>
                         <th>Last Updated Time</th>
                         @canany([$userPermissions::EDIT,$userPermissions::CHANGE_STATUS_ACTIVE])
                         <th>Action</th>
@@ -50,6 +51,11 @@
                                 @else
                                 <span class="badge bg-danger">Inactive</span>
                                 @endif
+                            </td>
+                            <td>
+                                @foreach($user->roles as $key => $role)
+                                <span class="badge bg-primary">{{ ucwords($role->name) }}</span>
+                                @endforeach
                             </td>
                             <td>
                                 @if (!$user->email_verified_at)

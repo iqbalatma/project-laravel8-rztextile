@@ -135,6 +135,7 @@ class UserManagementService extends BaseService
         return $response;
     }
 
+
     /**
      * Delete data user by id
      * @param int $id
@@ -157,6 +158,14 @@ class UserManagementService extends BaseService
         return $response;
     }
 
+
+    /**
+     * Use to set status active roles
+     *
+     * @param object|null $roles
+     * @param object|null $userRoles
+     * @return void
+     */
     private function setActiveRoles(object|null &$roles, object|null $userRoles)
     {
         $userRoles =  array_flip($userRoles->pluck("name")->toArray());
