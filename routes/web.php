@@ -53,10 +53,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return view("welcome");
+Route::prefix("email")->name("verification.")->controller(VerificationController::class)->group(function () {
+    Route::get("/verify", "show")->name("notice")->middleware("auth");
+    Route::get("/verify/{id}/{hash}", "verify")->name("verify");
+    Route::post("/resend", "resend")->name("resend")->middleware("auth");
 });
-
 
 
 Route::middleware("guest")
@@ -74,58 +75,33 @@ Route::middleware("guest")
             }
         );
 
-        // FORGOT PASSWORd
-        Route::group(
-            [
-                "controller" => ForgotPasswordController::class,
-                "prefix" => "/forgot-password",
-                "as" => "forgot.password."
-            ],
-            function () {
-                Route::get("/", "forgot")->name("forgot");
-                Route::get("/reset/{token}/{email}", "reset")->name("reset");
-                Route::post("/", "sendResetLink")->name("sendResetLink");
-                Route::post("/reset-password", "resetPassword")->name("resetPassword");
-            }
-        );
+        // FORGOT PASSWORD
+        Route::prefix("forgot-password")->name("forgot.password.")->controller(ForgotPasswordController::class)->group(function () {
+            Route::get("/", "forgot")->name("forgot");
+            Route::get("/reset/{token}/{email}", "reset")->name("reset");
+            Route::post("/", "sendResetLink")->name("sendResetLink");
+            Route::post("/reset-password", "resetPassword")->name("resetPassword");
+        });
 
         // AUTH
-        Route::group(
-            [
-                "controller" => AuthController::class,
-                "as" => "auth."
-            ],
-            function () {
-                Route::get("/login", "login")->name("login");
-                Route::post("/authenticate", "authenticate")->name("authenticate");
-                Route::post("/logout", "logout")->name("logout")->middleware("auth")->withoutMiddleware("guest");
-            }
-        );
+        Route::name("auth.")->controller(AuthController::class)->group(function () {
+            Route::get("/login", "login")->name("login");
+            Route::post("/authenticate", "authenticate")->name("authenticate");
+            Route::post("/logout", "logout")->name("logout")->middleware("auth")->withoutMiddleware("guest");
+        });
     });
 
 
-Route::group([
-    "controller" => VerificationController::class,
-    "prefix" => "/email",
-    "as" => "verification."
-], function () {
-    Route::get("/verify", "show")->name("notice")->middleware("auth");
-    Route::get("/verify/{id}/{hash}", "verify")->name("verify");
-    Route::post("/resend", "resend")->name("resend")->middleware("auth");
-});
-
-Route::group([
-    "controller" => SuggestionController::class,
-    "prefix" => "/suggestions",
-    "as" => "suggestions."
-], function () {
-    Route::get("/", "index")->name("index");
-    Route::post("/", "store")->name("store");
-});
 
 
 Route::middleware(["auth", "verified"])
     ->group(function () {
+        Route::get('/', DashboardController::class);
+
+        // DASHBOARD
+        Route::get("/dashboard", DashboardController::class)->name("dashboard.index")->middleware("permission:" . DashboardPermission::INDEX);
+        Route::get("/ajax/dashboard/sales-summary", AJAXDashboardController::class)->name("ajax.dashboard.sales.summary")->middleware("permission:" . DashboardPermission::INDEX);
+
         // ROLES
         Route::prefix("roles")->name("roles.")->controller(RoleController::class)->group(function () {
             Route::get("/", "index")->name("index")->middleware("permission:" . RolePermission::INDEX);
@@ -203,9 +179,6 @@ Route::middleware(["auth", "verified"])
             Route::post("/purchase", "purchase")->name("purchase")->middleware("permission:" . ShoppingPermission::PURCHASE);
         });
 
-        // DASHBOARD
-        Route::get("/dashboard", DashboardController::class)->name("dashboard.index")->middleware("permission:" . DashboardPermission::INDEX);
-        Route::get("/ajax/dashboard/sales-summary", AJAXDashboardController::class)->name("ajax.dashboard.sales.summary")->middleware("permission:" . DashboardPermission::INDEX);
 
         // USER PROFILE
         Route::prefix("user-profile")->name("user.profile.")->controller(UserProfileController::class)->group(function () {
@@ -268,9 +241,6 @@ Route::middleware(["auth", "verified"])
         // Route::get("/customer-segmentations", CustomerSegmentationController::class)->name("customer.segmentations.index");
 
 
-
-
-
         // Route::group(
         //     [
         //         "controller" => WhatsappMessagingController::class,
@@ -297,10 +267,6 @@ Route::middleware(["auth", "verified"])
 
 
         // Route::get("/segmented-customers", SegmentedCustomerController::class)->name("segmendted.customers.index");
-
-
-
-
 
 
         // Route::controller(PaymentController::class)
