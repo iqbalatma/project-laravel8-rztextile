@@ -20,6 +20,7 @@ class ShoppingController extends Controller
     {
         $stored = $service->purchase($request->validated());
 
+        return response()->json([$stored]);
         if ($stored) {
             return response()->json([
                 "status"  => JsonResponse::HTTP_OK,

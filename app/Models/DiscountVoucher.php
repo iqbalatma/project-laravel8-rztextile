@@ -9,13 +9,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DiscountVoucher extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = [
-        "code", "is_valid", "promotion_message_id"
-    ];
-
-
-    public function promotion_message()
-    {
-        return $this->belongsTo(PromotionMessage::class);
-    }
+    protected $fillable = ["code", "is_valid", "percentage"];
 }

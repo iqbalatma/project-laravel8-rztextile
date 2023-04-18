@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Statics\Permissions;
 use App\Statics\Permissions\CustomerPermission;
 use App\Statics\Permissions\DashboardPermission;
+use App\Statics\Permissions\DiscountVoucherPermission;
 use App\Statics\Permissions\InvoicePermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
@@ -476,6 +477,10 @@ class UserSeeder extends Seeder
         $role->givePermissionTo(DashboardPermission::INDEX);
         $role->givePermissionTo(UserProfilePermission::EDIT);
         $role->givePermissionTo(UserProfilePermission::UPDATE);
+        $role->givePermissionTo(DiscountVoucherPermission::INDEX);
+        $role->givePermissionTo(DiscountVoucherPermission::CREATE);
+        $role->givePermissionTo(DiscountVoucherPermission::STORE);
+        $role->givePermissionTo(DiscountVoucherPermission::CHANGE_VALIDATE_STATUS);
         $user->assignRole(Roles::ADMINISTRATOR);
     }
 }

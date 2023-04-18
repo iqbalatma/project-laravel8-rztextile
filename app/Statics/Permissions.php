@@ -4,8 +4,8 @@ namespace App\Statics;
 
 use App\Statics\Permissions\CustomerPermission;
 use App\Statics\Permissions\DashboardPermission;
+use App\Statics\Permissions\DiscountVoucherPermission;
 use App\Statics\Permissions\InvoicePermission;
-use App\Statics\Permissions\IssuedTokenPermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
 use App\Statics\Permissions\RollPermission;
@@ -82,5 +82,11 @@ class Permissions
     public const USER_PROFILES = [
         ["name" => UserProfilePermission::EDIT, "description" => "Permission to access user profile edit"],
         ["name" => UserProfilePermission::UPDATE, "description" => "Permission to access user profile update"],
+    ];
+    public const DISCOUNT_VOUCHERS = [
+        ["name" => DiscountVoucherPermission::INDEX, "description" => "Permission to access discount voucher index"],
+        ["name" => DiscountVoucherPermission::CREATE, "description" => "Permission to access discount voucher create"],
+        ["name" => DiscountVoucherPermission::STORE, "description" => "Permission to access add new discount voucher"],
+        ["name" => DiscountVoucherPermission::CHANGE_VALIDATE_STATUS, "description" => "Permission to access change validate status discount voucher by id"],
     ];
 }

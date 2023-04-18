@@ -1,11 +1,18 @@
-<x-dashboard.layout title="{{ $title}}" description="{{ $description }}">
+<x-dashboard.layout>
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-user-tag"></i>
             {{ $cardTitle }}
         </div>
         <div class="card-body">
-
+            @can($discountVoucherPermissions::CREATE)
+            {{-- Button Add New User --}}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <a href="{{ route('discount.vouchers.create') }}" type="button" class="btn btn-primary">
+                    <i class="fa-solid fa-square-plus"></i>
+                    Add New Discount Voucher</a>
+            </div>
+            @endcan
 
             @if ($discountVouchers->count()==0)
             <x-data-not-found></x-data-not-found>
@@ -19,13 +26,16 @@
                         <th>Discount</th>
                         <th>Status</th>
                         <th>Last Updated Time</th>
+                        @can($discountVoucherPermissions::CHANGE_VALIDATE_STATUS)
+                        <th>Action</th>
+                        @endcan
                     </thead>
                     <tbody>
                         @foreach ($discountVouchers as $key => $voucher)
                         <tr>
                             <td>{{ $discountVouchers->firstItem()+$key }}</td>
                             <td>{{ strtoupper($voucher->code) }}</td>
-                            <td>{{ $voucher->promotion_message->discount }} %</td>
+                            <td>{{ $voucher->percentage }} %</td>
                             <td>
                                 @if ($voucher->is_valid)
                                 <span class="badge rounded-pill bg-success">Valid</span>
@@ -34,6 +44,15 @@
                                 @endif
                             </td>
                             <td>{{ $voucher->updated_at }}</td>
+                            @can($discountVoucherPermissions::CHANGE_VALIDATE_STATUS)
+                            <td>
+                                @if($voucher->is_valid)
+                                <a href="{{ route('discount.vouchers.change.validate.status', ['id'=> $voucher->id, 'status' =>'invalidate']) }}" class="btn btn-danger">Invalidate</a>
+                                @else
+                                <a href="{{ route('discount.vouchers.change.validate.status', ['id'=> $voucher->id, 'status' =>'validate']) }}" class="btn btn-success">Validate</a>
+                                @endif
+                            </td>
+                            @endcan
                         </tr>
                         @endforeach
                     </tbody>

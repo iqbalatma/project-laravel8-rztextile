@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Statics\Permissions\CustomerPermission;
 use App\Statics\Permissions\DashboardPermission;
+use App\Statics\Permissions\DiscountVoucherPermission;
 use App\Statics\Permissions\InvoicePermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
@@ -50,6 +51,7 @@ class AppServiceProvider extends ServiceProvider
             "shoppingPermissions" => ShoppingPermission::class,
             "unitPermissions" => UnitPermission::class,
             "userPermissions" => UserPermission::class,
+            "discountVoucherPermissions" => DiscountVoucherPermission::class,
         ]);
     }
 }

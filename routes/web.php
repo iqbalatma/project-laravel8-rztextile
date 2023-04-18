@@ -27,9 +27,11 @@ use App\Http\Controllers\DataMaster\DiscountVoucherController;
 use App\Http\Controllers\DataMaster\PermissionController;
 use App\Http\Controllers\DataMaster\RoleController;
 use App\Http\Controllers\DataMaster\UserProfileController;
+use App\Http\Controllers\Transactions\PaymentController;
 use App\Repositories\RollRepository;
 use App\Statics\Permissions\CustomerPermission;
 use App\Statics\Permissions\DashboardPermission;
+use App\Statics\Permissions\DiscountVoucherPermission;
 use App\Statics\Permissions\InvoicePermission;
 use App\Statics\Permissions\PermissionPermission;
 use App\Statics\Permissions\RolePermission;
@@ -186,6 +188,25 @@ Route::middleware(["auth", "verified"])
             Route::patch("update", "update")->name("update")->middleware("permission:" . UserProfilePermission::UPDATE);
         });
 
+
+        // DISCOUNT VOUCHER
+        Route::prefix("/discount-vouchers")->name("discount.vouchers.")->controller(DiscountVoucherController::class)->group(function () {
+            Route::get("/", "index")->name("index")->middleware("permission:" . DiscountVoucherPermission::INDEX);
+            Route::get("/create", "create")->name("create")->middleware("permission:" . DiscountVoucherPermission::CREATE);
+            Route::post("/", "store")->name("store")->middleware("permission:" . DiscountVoucherPermission::STORE);
+            Route::get("/change-validate-status/{id}/{status}", "changeValidateStatus")->name("change.validate.status")->middleware("permission:" . DiscountVoucherPermission::CHANGE_VALIDATE_STATUS);
+        });
+
+
+        // PAYMENTS
+        // Route::prefix("/payments")->name("payments.")->controller(PaymentController::class)->group(function () {
+        //     Route::get("/", "index")->name("index");
+        //     Route::get("/create/{id}", "createByInvoiceId")->name("createByInvoiceId");
+        //     Route::get("/create", "create")->name("create");
+        //     Route::post("/", "store")->name("store");
+        // });
+
+
         // Route::middleware("role:administrator")->group(
         //     function () {
         // USER MANAGEMENT CONTROLLER
@@ -232,7 +253,6 @@ Route::middleware(["auth", "verified"])
         // Route::get("/ajax/discount-vouchers/{code}", AJAXDiscountVoucherController::class)->name("ajax.discount.vouchers");
 
         // // ROLE CONTROLLER
-        // Route::get("/discount-vouchers", DiscountVoucherController::class)->name("discount.vouchers.index");
         // Route::get("/customer-segmentations", CustomerSegmentationController::class)->name("customer.segmentations.index");
 
 
@@ -264,17 +284,7 @@ Route::middleware(["auth", "verified"])
         // Route::get("/segmented-customers", SegmentedCustomerController::class)->name("segmendted.customers.index");
 
 
-        // Route::controller(PaymentController::class)
-        //     ->name("payments.")
-        //     ->prefix("/payments")
-        //     ->group(
-        //         function () {
-        //             Route::get("/", "index")->name("index");
-        //             Route::get("/create/{id}", "createByInvoiceId")->name("createByInvoiceId");
-        //             Route::get("/create", "create")->name("create");
-        //             Route::post("/", "store")->name("store");
-        //         }
-        //     );
+
 
 
     });

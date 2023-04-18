@@ -16,8 +16,8 @@ class CreateDiscountVouchersTable extends Migration
         Schema::create('discount_vouchers', function (Blueprint $table) {
             $table->id();
             $table->string("code");
+            $table->integer("percentage")->default(0);
             $table->boolean("is_valid")->default(true);
-            $table->string("promotion_message_id");
             $table->timestamps();
             $table->softDeletes();
         });
