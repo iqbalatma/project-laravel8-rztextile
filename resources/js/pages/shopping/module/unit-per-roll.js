@@ -1,5 +1,7 @@
-import { alertQuantityNotEnough } from "../../../module/alert";
-import helper from "../../../module/helper";
+import { alertQuantityNotEnough } from '../../../utils/alert';
+import helper from '../../../utils/helper';
+
+
 const tempData = {
   value:null,
 

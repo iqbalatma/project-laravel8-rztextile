@@ -10,7 +10,7 @@ use App\Repositories\DiscountVoucherRepository;
 use App\Repositories\PromotionMessageRepository;
 use App\Services\Utils\TinyMCEToWhatsappService;
 use Illuminate\Support\Str;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class WhatsappMessagingService extends BaseService
 {

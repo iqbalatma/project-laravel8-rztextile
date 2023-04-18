@@ -1,4 +1,4 @@
-$(".btn-change-status").on("click", function (event) {
+$(".btn-delete").on("click", function (event) {
     event.preventDefault();
     const form = $(this).closest("form");
     Swal.fire({
@@ -8,13 +8,13 @@ $(".btn-change-status").on("click", function (event) {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, change the statis!",
+        confirmButtonText: "Yes, deactivate it!",
     }).then((result) => {
         if (result.isConfirmed) {
             form.trigger("submit");
             event.Swal.fire(
-                "Status Changed!",
-                "Change status active user successfully",
+                "Deleted!",
+                "Your file has been deleted.",
                 "success"
             );
         }

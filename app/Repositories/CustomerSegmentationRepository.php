@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\CustomerSegmentation;
-use Iqbalatma\LaravelExtend\BaseRepository;
+use Iqbalatma\LaravelServiceRepo\BaseRepository;
 
 class CustomerSegmentationRepository extends BaseRepository
 {

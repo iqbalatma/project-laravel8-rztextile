@@ -1,4 +1,4 @@
-<x-dashboard.layout title="{{ $title }}" description="{{ $description }}">
+<x-dashboard.layout>
     <div class="row">
         <div class="col-xl-3 col-md-6">
             <div class="card bg-primary text-white mb-4">
@@ -8,7 +8,7 @@
                     {{ $total_invoices }}
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="{{ route('report.invoices.index') }}">View Details</a>
+                    <a class="small text-white stretched-link" href="{{ route('invoices.index') }}">View Details</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                     {{ $total_capital }}
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="{{ route('report.invoices.index') }}">View Details</a>
+                    <a class="small text-white stretched-link" href="{{ route('invoices.index') }}">View Details</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                     {{ $total_profit }}
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="{{ route('report.invoices.index') }}">View Details</a>
+                    <a class="small text-white stretched-link" href="{{ route('invoices.index') }}">View Details</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -47,46 +47,8 @@
                     {{ $total_customer }} customers
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="{{ route('report.invoices.index') }}">View Details</a>
+                    <a class="small text-white stretched-link" href="{{ route('invoices.index') }}">View Details</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-chart-bar me-1"></i>
-                    Segmentation Customer
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Segmentation Name</th>
-                                <th scope="col">Total Customer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Most Valueable Customer</td>
-                                <td>{{ isset($dataRFM["customers"]["m"]) ? count($dataRFM["customers"]["mvc"]):0 }} customers</td>
-                            </tr>
-                            <tr>
-                                <td>Most Growable Customer</td>
-                                <td>{{ isset($dataRFM["customers"]["mgc"]) ?count($dataRFM["customers"]["mgc"]):0 }} customers</td>
-                            </tr>
-                            <tr>
-                                <td>Migration Customer</td>
-                                <td>{{ isset($dataRFM["customers"]["m"]) ? count($dataRFM["customers"]["m"]):0 }} customers</td>
-                            </tr>
-                            <tr>
-                                <td>Bellow Zero Customer</td>
-                                <td>{{ isset($dataRFM["customers"]["bz"]) ? count($dataRFM["customers"]["bz"]):0 }} customers</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>

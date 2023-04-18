@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasFactory, SoftDeletes;
+    use Notifiable, HasFactory, SoftDeletes, HasRoles;
     /**
      * The attributes that are mass assignable.
      *
@@ -24,7 +25,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'address',
         'phone',
-        'role_id',
         'is_active',
         'email_verified_at'
     ];
@@ -48,10 +48,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
+
 
     public function invoiceCustomer()
     {

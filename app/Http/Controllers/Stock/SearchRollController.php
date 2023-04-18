@@ -16,6 +16,7 @@ class SearchRollController extends Controller
      */
     public function __invoke(SearchRollService $service): Response
     {
-        return response()->view("search-roll.index", $service->getAllData());
+        viewShare($service->getAllData());
+        return response()->view("search-roll.index");
     }
 }

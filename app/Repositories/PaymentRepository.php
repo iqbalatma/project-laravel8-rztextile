@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\AppData;
 use App\Models\Payment;
 use Carbon\Carbon;
-use Iqbalatma\LaravelExtend\BaseRepository;
+use Iqbalatma\LaravelServiceRepo\BaseRepository;
 
 class PaymentRepository extends BaseRepository
 {

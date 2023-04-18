@@ -1,4 +1,4 @@
-<x-dashboard.layout title="{{ $title }}" description="{{ $description }}">
+<x-dashboard.layout>
     <div class="card mb-4">
         <div class="card-header">
             <i class="fa-solid fa-users-gear"></i>
@@ -10,7 +10,7 @@
                 @method("PATCH")
                 <div class="col-md-12">
                     <label for="id_number" class="form-label">ID Number</label>
-                    <input type="text" class="form-control" id="id_number" name="id_number" placeholder="Enter id number of new user" required value="{{ $user->id_number }}">
+                    <input type="number" class="form-control" id="id_number" name="id_number" placeholder="Enter id number of new user" required value="{{ $user->id_number }}">
                 </div>
                 <div class="col-md-12">
                     <label for="name" class="form-label">Name</label>
@@ -26,17 +26,7 @@
                 </div>
                 <div class="col-md-12">
                     <label for="address" class="form-label">Address</label>
-                    <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter your address">{{ $user->address }}"</textarea>
-                </div>
-                <div class="col-md-12">
-                    <label for="role_id" class="form-label">Role</label>
-                    <select class="form-select" aria-label="Default select example" name="role_id">
-                        @foreach ($roles as $role)
-                        <option value="{{ $role->id }}" @if ($role->id == $user->id)
-                            selected
-                            @endif>{{ ucfirst($role->name) }}</option>
-                        @endforeach
-                    </select>
+                    <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter your address">{{ $user->address }}</textarea>
                 </div>
                 <div class="col-md-12">
                     <label for="is_active" class="form-label">Status Active</label>
@@ -48,6 +38,15 @@
                             selected
                             @endif>Nonactive</option>
                     </select>
+                </div>
+                <div class="col-md-12">
+                    <label for="roles" class="form-label">Roles</label><br>
+                    @foreach ($roles as $key=> $role)
+                    <div class="form-check form-switch form-check-inline">
+                        <input name="roles[]" class="form-check-input" type="checkbox" id="roles-{{ $role->id }}" value="{{ $role->id }}" @if($role->is_active) checked @endif>
+                        <label class="form-check-label" for="roles-{{ $role->id }}">{{ ucwords($role->name) }}</label>
+                    </div>
+                    @endforeach
                 </div>
                 <div class="col-12">
                     <a href="{{ route('users.index') }}" class="btn btn-danger"><i class="fa-solid fa-square-xmark"></i> Cancel</a>

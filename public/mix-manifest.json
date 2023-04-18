@@ -8,12 +8,13 @@
     "/js/shopping/index.js": "/js/shopping/index.js",
     "/js/pages/user-managements/index.js": "/js/pages/user-managements/index.js",
     "/js/payments/create.js": "/js/payments/create.js",
-    "/js/units/index.js": "/js/units/index.js",
+    "/js/pages/units/index.js": "/js/pages/units/index.js",
     "/js/reports/index.js": "/js/reports/index.js",
     "/js/rolls/create.js": "/js/rolls/create.js",
     "/js/rolls/index.js": "/js/rolls/index.js",
     "/js/pages/promotion-messages/index.js": "/js/pages/promotion-messages/index.js",
     "/js/pages/segmented-customers/index.js": "/js/pages/segmented-customers/index.js",
+    "/js/pages/roles/index.js": "/js/pages/roles/index.js",
     "/css/app.css": "/css/app.css",
     "/css/pages/segmented-customers.css": "/css/pages/segmented-customers.css"
 }

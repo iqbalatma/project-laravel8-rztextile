@@ -5,7 +5,7 @@ namespace App\Services\DataMaster;
 use App\Repositories\RegistrationCredentialRepository;
 use App\Repositories\RoleRepository;
 use Illuminate\Support\Str;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class RegistrationCredentialService extends BaseService
 {

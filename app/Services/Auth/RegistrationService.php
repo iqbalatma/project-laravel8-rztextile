@@ -6,7 +6,7 @@ use App\Jobs\SendVerificationEmailJob;
 use App\Repositories\UserRepository;
 use App\Services\DataMaster\RegistrationCredentialService;
 use Illuminate\Support\Facades\Hash;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class RegistrationService extends BaseService
 {

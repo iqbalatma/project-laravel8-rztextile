@@ -1,8 +1,8 @@
 /******/ (() => { // webpackBootstrap
 var __webpack_exports__ = {};
-/*!*****************************************************!*\
-  !*** ./resources/js/application/customers/index.js ***!
-  \*****************************************************/
+/*!***********************************************!*\
+  !*** ./resources/js/pages/customers/index.js ***!
+  \***********************************************/
 $(document).ready(function () {
   $(".btn-delete").on("click", function () {
     var form = $(this).closest("form");

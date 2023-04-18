@@ -3,7 +3,7 @@
 namespace App\Services\Stock;
 
 use App\Repositories\RollRepository;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class SearchRollService extends BaseService
 {

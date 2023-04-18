@@ -9,7 +9,7 @@ use App\Repositories\RollTransactionRepository;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class RollTransactionService extends BaseService
 {
@@ -79,22 +79,38 @@ class RollTransactionService extends BaseService
         ];
     }
 
-    public function addNewData(array $requestedData)
+
+    /**
+     * Use to add new roll transaction
+     *
+     * @param array $requestedData
+     * @return array
+     */
+    public function addNewData(array $requestedData): array
     {
-        $requestedData["user_id"] = Auth::user()->id;
         try {
             DB::beginTransaction();
-            if ($requestedData["type"] == AppData::TRANSACTION_TYPE_RESTOCK) {
-                $rollTransaction = $this->restock($requestedData);
-            } else {
-                $rollTransaction = $this->deadstock($requestedData);
-            }
+
+            $requestedData["user_id"] = Auth::user()->id;
+            $requestedData["type"] == AppData::TRANSACTION_TYPE_RESTOCK ?
+                $this->restock($requestedData) :
+                $this->deadstock($requestedData);
+
+
+            $response = [
+                "success" => true,
+            ];
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-            return false;
+
+            $response = [
+                "success" => false,
+                "message" => config('app.env') != 'production' ?  $e->getMessage() : 'Something went wrong'
+            ];
         }
-        return $rollTransaction;
+
+        return $response;
     }
 
     /**

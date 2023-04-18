@@ -28,8 +28,8 @@ class UserUpdateRequest extends BaseFormRequest
             "name" => "required",
             "phone" => "",
             "address" => "",
-            "role_id" => "required|numeric",
-            "is_active" => "required|boolean"
+            "is_active" => "required|boolean",
+            "roles" => "required"
         ];
     }
 }

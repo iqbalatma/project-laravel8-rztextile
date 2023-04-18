@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Unit;
-use Iqbalatma\LaravelExtend\BaseRepository;
+use Iqbalatma\LaravelServiceRepo\BaseRepository;
 
 class UnitRepository extends BaseRepository
 {

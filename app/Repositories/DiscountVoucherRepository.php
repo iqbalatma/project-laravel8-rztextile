@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\DiscountVoucher;
-use Iqbalatma\LaravelExtend\BaseRepository;
+use Iqbalatma\LaravelServiceRepo\BaseRepository;
 
 class DiscountVoucherRepository extends BaseRepository
 {

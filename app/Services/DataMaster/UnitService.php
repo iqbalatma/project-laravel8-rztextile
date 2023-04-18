@@ -4,7 +4,7 @@ namespace App\Services\DataMaster;
 
 use App\Repositories\UnitRepository;
 use Exception;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class UnitService extends BaseService
 {
@@ -52,15 +52,15 @@ class UnitService extends BaseService
      */
     public function getEditData(int $id): array
     {
-        $response = [
-            "success"      => true,
-            "title"       => "Edit Unit",
-            "description" => "Form for edit data unit",
-            "cardTitle"   => "Edit Unit",
-        ];
         try {
             $this->checkData($id);
-            $response["unit"] = $this->getData();
+            $response = [
+                "success"      => true,
+                "title"       => "Edit Unit",
+                "description" => "Form for edit data unit",
+                "cardTitle"   => "Edit Unit",
+                "unit" => $this->getData()
+            ];
         } catch (Exception $e) {
             $response =  [
                 "success" => false,
@@ -78,7 +78,7 @@ class UnitService extends BaseService
      * @param array $requestedData
      * @return array for data response
      */
-    public function updateData(int $id, array $requestedData): array
+    public function updateDataById(int $id, array $requestedData): array
     {
         $response = [];
         try {
@@ -101,11 +101,22 @@ class UnitService extends BaseService
      * Use to add new data uni
      *
      * @param array $requestedData
-     * @return object
+     * @return array $response
      */
-    public function storeNewData(array $requestedData): object
+    public function addNewData(array $requestedData): array
     {
-        return $this->repository->addNewData($requestedData);
+        try {
+            $this->repository->addNewData($requestedData);
+            $response = [
+                "success" => true,
+            ];
+        } catch (Exception $e) {
+            $response = [
+                "success" => false,
+                "message" => config('app.env') != 'production' ?  $e->getMessage() : 'Something went wrong'
+            ];
+        }
+        return $response;
     }
 
 
@@ -115,7 +126,7 @@ class UnitService extends BaseService
      * @param int $id
      * @return array for data response
      */
-    public function deleteData(int $id): array
+    public function deleteDataById(int $id): array
     {
         try {
             $this->checkData($id);

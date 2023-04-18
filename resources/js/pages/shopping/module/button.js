@@ -1,23 +1,23 @@
-import { alertQuantityNotEnough } from "../../../module/alert";
-import helper from "../../../module/helper";
+import helper from '../../../utils/helper';
+import { alertQuantityNotEnough } from '../../../utils/alert';
 
   /**
    * Description : use to add behavior when button is click
-   * 
+   *
    * @param {object} context context for button element
    */
   function onClickButtomRemove(context){
     let row = $(context).closest("tr");
 
     let tbody = $(row).parent().find("tr");
-    
+
     let code = $(row).attr("class");
 
     let quantityRoll = parseInt($(row)
       .find(".quantity-roll")
       .text()
       .split(" ")[0])
-    
+
     let quantityUnit = $(row)
       .find(".quantity-unit")
       .text()
@@ -35,7 +35,7 @@ import helper from "../../../module/helper";
       .find(".available-quantity-unit")
       .text()
       .split(" ")[0]) + quantityUnit;
-    
+
 
 
     $(row)
@@ -86,12 +86,12 @@ import helper from "../../../module/helper";
       .find(".quantity-unit")
       .text()
       .split(" ");
-    
+
     let unitName = quantityUnit[1];
     quantityUnit = parseInt(quantityUnit[0]);
 
     let newQuantityUnit = quantityRoll * quantityUnitPerRoll;
-    
+
     let newSubTotal = helper.formatIntToRupiah(sellingPrice * newQuantityUnit);
 
     let availableRoll = parseInt($(row)
@@ -115,19 +115,19 @@ import helper from "../../../module/helper";
     $(row)
       .find(".sub-total")
       .text(newSubTotal);
-    
+
     $(row)
       .parent() //tbody
       .children(`.${code}`) //all row that has same code
       .find(".available-quantity-roll") //column for availability quantity roll
       .text(`${availableRoll} roll`) //set text on column
-    
+
     $(row)
       .parent() //tbody
       .children(`.${code}`) //all row that has same code
       .find(".available-quantity-unit") //column for availability quantity roll
       .text(`${availableUnit} ${unitName}`) //set text on column
-    
+
     if(quantityRoll==0){
       $(row).remove();
       if(tbody.length==1){
@@ -138,7 +138,7 @@ import helper from "../../../module/helper";
 
     /**
    * Description : use to add behavior when button is click
-   * 
+   *
    * @param {object} context context for button elemen
    */
   function onClickButtonPlus(context){
@@ -154,7 +154,7 @@ import helper from "../../../module/helper";
       .find(".quantity-roll")
       .text()
       .split(" ")[0]) + 1;
-    
+
     let quantityUnitPerRoll = parseInt($(row)
       .find(".quantity-unit-per-roll")
       .text()
@@ -164,7 +164,7 @@ import helper from "../../../module/helper";
       .find(".quantity-unit")
       .text()
       .split(" ");
-    
+
     let unitName = quantityUnit[1];
     quantityUnit = parseInt(quantityUnit[0]);
 
@@ -197,13 +197,13 @@ import helper from "../../../module/helper";
     $(row)
       .find(".sub-total")
       .text(newSubTotal);
-    
+
     $(row)
       .parent() //tbody
       .children(`.${code}`) //all row that has same code
       .find(".available-quantity-roll") //column for availability quantity roll
       .text(`${availableRoll} roll`) //set text on column
-    
+
     $(row)
       .parent() //tbody
       .children(`.${code}`) //all row that has same code
@@ -214,7 +214,7 @@ import helper from "../../../module/helper";
 const button =  {
   /**
    * Description : use to show button summary payment
-   * 
+   *
    */
   showButtonSummaryPayment(){
     $("#btn-summary-payment").removeClass("d-none");
@@ -226,7 +226,7 @@ const button =  {
 
   /**
    * Description : use to add button plus on column action
-   * 
+   *
    * @returns html element for button plus
    */
   getButtonPlusElement(){
@@ -243,7 +243,7 @@ const button =  {
 
   /**
    * Description : use to get button minus element
-   * 
+   *
    * @returns html elemen of button minus
    */
   getButtonMinusElement(){
@@ -260,7 +260,7 @@ const button =  {
 
   /**
    * Description : use to get html element for remove button
-   * 
+   *
    * @returns html element
    */
   getButtonRemoveElement(){

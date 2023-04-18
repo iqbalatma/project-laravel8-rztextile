@@ -4,7 +4,7 @@ namespace App\Services\CRM;
 
 use App\AppData;
 use App\Repositories\PromotionMessageRepository;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class SegmentedCustomerService extends BaseService
 {

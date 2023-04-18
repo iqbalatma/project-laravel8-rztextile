@@ -3,7 +3,7 @@
 namespace App\Services\AJAX;
 
 use App\Repositories\RollRepository;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class AjaxSearchRollService extends BaseService
 {

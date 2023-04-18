@@ -34,125 +34,138 @@
         </div>
         <div class="sidebar-menu" id="sidebar-menu">
             <ul class="menu">
+                @canany([$dashboardPermissions::INDEX, $userPermissions::INDEX, $customerPermissions::INDEX, $unitPermissions::INDEX, $rolePermissions::INDEX, $permissionPermissions::INDEX, $rollPermissions::INDEX])
+
                 <li class="sidebar-title">Menu</li>
-                @canany(['isAdministrator', 'isAdmin'])
+
+                @can($dashboardPermissions::INDEX)
                 <li class="sidebar-item">
                     <a href="{{ route('dashboard.index') }}" class="sidebar-link">
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
+                @endcan
+
+                @canany([$userPermissions::INDEX, $customerPermissions::INDEX, $unitPermissions::INDEX, $rolePermissions::INDEX, $permissionPermissions::INDEX, $rollPermissions::INDEX])
+
                 <li class="sidebar-item has-sub">
                     <a href="#" class="sidebar-link">
                         <i class="fa-solid fa-database"></i>
                         <span>Data Master</span>
                     </a>
                     <ul class="submenu">
+                        @can($userPermissions::INDEX)
                         <li class="submenu-item">
                             <a href="{{ route('users.index') }}" class="sidebar-link">
                                 <i class="fa-solid fa-users-gear"></i>
                                 <span>User Management</span>
                             </a>
                         </li>
+                        @endcan
+
+                        @can($customerPermissions::INDEX)
                         <li class="submenu-item">
                             <a href="{{ route('customers.index') }}" class="sidebar-link">
                                 <i class="fa-solid fa-users-between-lines"></i>
                                 <span>Customer</span>
                             </a>
                         </li>
+                        @endcan
+
+                        @can($unitPermissions::INDEX)
                         <li class="submenu-item">
                             <a href="{{ route('units.index') }}" class="sidebar-link">
                                 <i class="fa-solid fa-scale-unbalanced-flip"></i>
                                 <span>Unit</span>
                             </a>
                         </li>
+                        @endcan
+
+                        @can($rolePermissions::INDEX)
                         <li class="submenu-item">
                             <a href="{{ route('roles.index') }}" class="sidebar-link">
                                 <i class="fa-solid fa-user-tag"></i>
                                 <span>Roles</span>
                             </a>
                         </li>
+                        @endcan
+
+                        @can($permissionPermissions::INDEX)
                         <li class="submenu-item">
-                            <a href="{{ route('discount.vouchers.index') }}" class="sidebar-link">
+                            <a href="{{ route('permissions.index') }}" class="sidebar-link">
                                 <i class="fa-solid fa-user-tag"></i>
-                                <span>Discount Vouchers</span>
+                                <span>Permissions</span>
                             </a>
                         </li>
-                        <li class="submenu-item">
-                            <a href="{{ route('customer.segmentations.index') }}" class="sidebar-link">
-                                <i class="fa-solid fa-user-tag"></i>
-                                <span>Customer Segmentations</span>
-                            </a>
-                        </li>
+                        @endcan
+
+                        @can($rollPermissions::INDEX)
                         <li class="submenu-item">
                             <a href=" {{ route('rolls.index') }}" class="sidebar-link">
                                 <i class="fa-solid fa-boxes-stacked"></i>
                                 <span>Rolls</span>
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </li>
                 @endcanany
+                @endcanany
 
+
+                @canany([$shoppingPermissions::INDEX, $invoicePermissions::INDEX, $rollTransactionPermissions::INDEX])
                 <li class="sidebar-title">Transaction</li>
+                @can($shoppingPermissions::INDEX)
                 <li class="sidebar-item">
                     <a href="{{ route('shopping.index') }}" class="sidebar-link">
                         <i class="fa-solid fa-cart-shopping"></i>
                         <span>Shopping</span>
                     </a>
                 </li>
+                @endcan
+
+                @can($invoicePermissions::INDEX)
                 <li class="sidebar-item">
-                    <a href="{{ route('report.invoices.index') }}" class="sidebar-link">
+                    <a href="{{ route('invoices.index') }}" class="sidebar-link">
                         <i class="fa-solid fa-file-invoice-dollar"></i>
                         <span>Report</span>
                     </a>
                 </li>
+                @endcan
+
+                @can($rollTransactionPermissions::INDEX)
+                <li class="sidebar-item">
+                    <a href="{{ route('roll.transactions.index') }}" class="sidebar-link">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        <span>Roll Transactions</span>
+                    </a>
+                </li>
+                @endcan
+                @endcanany
 
 
 
+                @canany([$rollPermissions::SEARCH_INDEX, $rollTransactionPermissions::CREATE])
                 <li class="sidebar-title">Stock</li>
+                @can($rollPermissions::SEARCH_INDEX)
                 <li class="sidebar-item">
                     <a href="{{ route('search.roll.index') }}" class="sidebar-link">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <span>Search Roll</span>
                     </a>
                 </li>
-                @canany(['isAdministrator', 'isAdmin'])
+                @endcan
+
+                @can($rollTransactionPermissions::CREATE)
                 <li class="sidebar-item">
                     <a href="{{ route('roll.transactions.create') }}" class="sidebar-link">
                         <i class="fa-solid fa-truck-ramp-box"></i>
                         <span>Restock & Deadstock</span>
                     </a>
                 </li>
-                @endcanany
+                @endcan
 
-
-                @canany(['isAdministrator', 'isAdmin'])
-                <li class="sidebar-title">Promotion</li>
-                <li class="sidebar-item">
-                    <a href="{{ route('suggestions.index') }}" class="sidebar-link">
-                        <i class="fa-solid fa-headset"></i>
-                        <span>Customer Suggestions</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('segmendted.customers.index') }}" class="sidebar-link">
-                        <i class="fa-solid fa-users-line"></i>
-                        <span>Segmented Customer</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('whatsapp.messaging.index') }}" class="sidebar-link">
-                        <i class="fa-solid fa-comments"></i>
-                        <span>Whatsapp Messaging</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('promotion.messages.index') }}" class="sidebar-link">
-                        <i class="fa-solid fa-tags"></i>
-                        <span>Promotion Message</span>
-                    </a>
-                </li>
                 @endcanany
             </ul>
         </div>

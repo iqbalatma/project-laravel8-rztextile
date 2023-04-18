@@ -13,7 +13,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class ShoppingService extends BaseService
 {

@@ -4,7 +4,7 @@ namespace App\Services\DataMaster;
 
 use App\Repositories\DiscountVoucherRepository;
 use App\Repositories\RoleRepository;
-use Iqbalatma\LaravelExtend\BaseService;
+use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class DiscountVoucherService extends BaseService
 {

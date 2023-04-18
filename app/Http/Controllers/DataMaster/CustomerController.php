@@ -20,7 +20,8 @@ class CustomerController extends Controller
      */
     public function index(CustomerService $service): Response
     {
-        return response()->view("customers.index", $service->getAllData());
+        viewShare($service->getAllData());
+        return response()->view("customers.index");
     }
 
     /**
@@ -31,7 +32,8 @@ class CustomerController extends Controller
      */
     public function create(CustomerService $service): Response
     {
-        return response()->view("customers.create", $service->getCreateData());
+        viewShare($service->getCreateData());
+        return response()->view("customers.create");
     }
 
     /**
@@ -43,17 +45,11 @@ class CustomerController extends Controller
      */
     public function store(CustomerService $service, StoreCustomerRequest $request): RedirectResponse
     {
-        $stored = $service->storeNewData($request->validated());
+        $response = $service->addNewData($request->validated());
 
+        if ($this->isError($response)) return $this->getErrorResponse();
 
-        $redirect = redirect()
-            ->route("customers.index");
-
-        $stored ?
-            $redirect->with("success", "Add new data customer successfully") :
-            $redirect->with("failed", "Add new data customer failed");
-
-        return $redirect;
+        return redirect()->route("customers.index")->with("success", "Add new data customer successfully");
     }
 
     /**
@@ -84,7 +80,7 @@ class CustomerController extends Controller
      */
     public function update(CustomerService $service, UpdateCustomerRequest $request, int $id): RedirectResponse
     {
-        $response = $service->updateData($id, $request->validated());
+        $response = $service->updateDataById($id, $request->validated());
 
         if ($this->isError($response)) {
             return $this->getErrorResponse();
@@ -104,7 +100,7 @@ class CustomerController extends Controller
      */
     public function destroy(CustomerService $service, int $id): RedirectResponse
     {
-        $response = $service->deleteData($id);
+        $response = $service->deleteDataById($id);
 
         if ($this->isError($response)) {
             return $this->getErrorResponse();

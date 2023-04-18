@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\DataMaster;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Users\StoreUserRequest;
 use App\Http\Requests\Users\UserStoreRequest;
 use App\Http\Requests\Users\UserUpdateRequest;
 use App\Services\DataMaster\UserManagementService;
@@ -16,12 +15,13 @@ class UserManagementController extends Controller
     /**
      * Description : use to show user management index view
      *
-     * @param UserManagementServcie $service dependency injection
+     * @param UserManagementService $service dependency injection
      * @return Response
      */
     public function index(UserManagementService $service): Response
     {
-        return response()->view("users.index", $service->getAllData());
+        viewShare($service->getAllData());
+        return response()->view("users.index");
     }
 
 
@@ -33,7 +33,8 @@ class UserManagementController extends Controller
      */
     public function create(UserManagementService $service): Response
     {
-        return response()->view("users.create", $service->getCreateData());
+        viewShare($service->getCreateData());
+        return response()->view("users.create");
     }
 
 
@@ -41,21 +42,16 @@ class UserManagementController extends Controller
      * Description : use to add new data user
      *
      * @param UserManagementService $service dependency injection
-     * @param StoreUserRequest $request dependency injection
+     * @param UserStoreRequest $request dependency injection
      * @return RedirectResponse
      */
     public function store(UserManagementService $service, UserStoreRequest $request): RedirectResponse
     {
-        $stored = $service->storeNewData($request->validated());
+        $response = $service->addNewData($request->validated());
 
-        $redirect = redirect()
-            ->route("users.index");
+        if ($this->isError($response)) return $this->getErrorResponse();
 
-        $stored ?
-            $redirect->with("success", "Add new data user successfully") :
-            $redirect->with("failed", "Add new data user failed");
-
-        return $redirect;
+        return redirect()->route("users.index")->with("success", "Add new data user successfully");
     }
 
 
@@ -64,16 +60,15 @@ class UserManagementController extends Controller
      *
      * @param UserManagementService $service dependency injection
      * @param int $id of user
-     * @return Response
+     * @return RedirectResponse|Response
      */
-    public function edit(UserManagementService $service, int $id)
+    public function edit(UserManagementService $service, int $id): RedirectResponse|Response
     {
         $response = $service->getEditData($id);
-        if ($this->isError($response)) {
-            return $this->getErrorResponse();
-        }
+        if ($this->isError($response)) return $this->getErrorResponse();
 
-        return response()->view("users.edit", $service->getEditData($id));
+        viewShare($service->getEditData($id));
+        return response()->view("users.edit");
     }
 
 
@@ -88,13 +83,9 @@ class UserManagementController extends Controller
     public function update(UserManagementService $service, UserUpdateRequest $request, int $id): RedirectResponse
     {
         $response = $service->updateData($id, $request->validated());
+        if ($this->isError($response)) return $this->getErrorResponse();
 
-        if ($this->isError($response)) {
-            return $this->getErrorResponse();
-        }
-        return redirect()
-            ->route("users.index")
-            ->with("success", "Update data user successfully");
+        return redirect()->route("users.index")->with("success", "Update data user successfully");
     }
 
     /**
