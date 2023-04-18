@@ -1,72 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/js/module/alert.js":
-/*!**************************************!*\
-  !*** ./resources/js/module/alert.js ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "alertQuantityNotEnough": () => (/* binding */ alertQuantityNotEnough)
-/* harmony export */ });
-function alertQuantityNotEnough() {
-  return Swal.fire({
-    icon: 'error',
-    title: 'Action cannot be done !',
-    text: 'Item availability is not enough!'
-  });
-}
-
-
-/***/ }),
-
-/***/ "./resources/js/module/helper.js":
-/*!***************************************!*\
-  !*** ./resources/js/module/helper.js ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  formatIntToRupiah: function formatIntToRupiah(number) {
-    return "Rp " + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ",00";
-  },
-  formatRupiahToInt: function formatRupiahToInt(rupiah) {
-    var rupiahInt = rupiah.split(" ");
-    rupiahInt = rupiahInt[1];
-    rupiahInt = rupiahInt.replaceAll(".", "");
-    rupiahInt = rupiahInt.split(" ")[0];
-    rupiahInt = parseInt(rupiahInt);
-    return rupiahInt;
-  },
-  preventEnter: function preventEnter(context, event) {
-    if (event.key == "Enter") {
-      event.preventDefault();
-      $(context).blur();
-    }
-  },
-  prenvetNonNumeric: function prenvetNonNumeric(event) {
-    if (event.which < 48 || event.which > 57) {
-      event.preventDefault();
-    }
-  },
-  preventTab: function preventTab(context, event) {
-    if (event.which == 9) {
-      event.preventDefault();
-      $(context).next().focus();
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./resources/js/pages/shopping/module/button.js":
 /*!******************************************************!*\
   !*** ./resources/js/pages/shopping/module/button.js ***!
@@ -78,14 +12,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _module_alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../module/alert */ "./resources/js/module/alert.js");
-/* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../module/helper */ "./resources/js/module/helper.js");
+/* harmony import */ var _utils_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utils/helper */ "./resources/js/utils/helper.js");
+/* harmony import */ var _utils_alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils/alert */ "./resources/js/utils/alert.js");
 
 
 
 /**
  * Description : use to add behavior when button is click
- * 
+ *
  * @param {object} context context for button element
  */
 function onClickButtomRemove(context) {
@@ -123,13 +57,13 @@ function onClickButtonMinus(context) {
   var tbody = $(row).parent().find("tr");
   var code = $(row).attr("class");
   var quantityRoll = parseInt($(row).find(".quantity-roll").text().split(" ")[0]) - 1;
-  var sellingPrice = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($(row).find(".selling-price").text());
+  var sellingPrice = _utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatRupiahToInt($(row).find(".selling-price").text());
   var quantityUnitPerRoll = parseInt($(row).find(".quantity-unit-per-roll").text().split(" ")[0]);
   var quantityUnit = $(row).find(".quantity-unit").text().split(" ");
   var unitName = quantityUnit[1];
   quantityUnit = parseInt(quantityUnit[0]);
   var newQuantityUnit = quantityRoll * quantityUnitPerRoll;
-  var newSubTotal = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(sellingPrice * newQuantityUnit);
+  var newSubTotal = _utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(sellingPrice * newQuantityUnit);
   var availableRoll = parseInt($(row).find(".available-quantity-roll").text().split(" ")[0]) + 1;
   var availableUnit = parseInt($(row).find(".available-quantity-unit").text().split(" ")[0]) + 1 * quantityUnitPerRoll;
   $(row).find(".quantity-roll").text("".concat(quantityRoll, " roll"));
@@ -155,24 +89,24 @@ function onClickButtonMinus(context) {
 
 /**
 * Description : use to add behavior when button is click
-* 
+*
 * @param {object} context context for button elemen
 */
 function onClickButtonPlus(context) {
   var row = $(context).closest("tr");
   var code = $(row).attr("class");
-  var sellingPrice = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($(row).find(".selling-price").text());
+  var sellingPrice = _utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatRupiahToInt($(row).find(".selling-price").text());
   var quantityRoll = parseInt($(row).find(".quantity-roll").text().split(" ")[0]) + 1;
   var quantityUnitPerRoll = parseInt($(row).find(".quantity-unit-per-roll").text().split(" ")[0]);
   var quantityUnit = $(row).find(".quantity-unit").text().split(" ");
   var unitName = quantityUnit[1];
   quantityUnit = parseInt(quantityUnit[0]);
   var newQuantityUnit = quantityRoll * quantityUnitPerRoll;
-  var newSubTotal = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(sellingPrice * newQuantityUnit);
+  var newSubTotal = _utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(sellingPrice * newQuantityUnit);
   var availableRoll = parseInt($(row).find(".available-quantity-roll").text().split(" ")[0]) - 1;
   var availableUnit = parseInt($(row).find(".available-quantity-unit").text().split(" ")[0]) - 1 * quantityUnitPerRoll;
   if (availableRoll < 0 || availableUnit < 0) {
-    return (0,_module_alert__WEBPACK_IMPORTED_MODULE_0__.alertQuantityNotEnough)();
+    return (0,_utils_alert__WEBPACK_IMPORTED_MODULE_1__.alertQuantityNotEnough)();
   }
   $(row).find(".quantity-roll").text("".concat(quantityRoll, " roll"));
   $(row).find(".quantity-unit").text("".concat(newQuantityUnit, " ").concat(unitName));
@@ -191,7 +125,7 @@ function onClickButtonPlus(context) {
 var button = {
   /**
    * Description : use to show button summary payment
-   * 
+   *
    */
   showButtonSummaryPayment: function showButtonSummaryPayment() {
     $("#btn-summary-payment").removeClass("d-none");
@@ -201,7 +135,7 @@ var button = {
   },
   /**
    * Description : use to add button plus on column action
-   * 
+   *
    * @returns html element for button plus
    */
   getButtonPlusElement: function getButtonPlusElement() {
@@ -217,7 +151,7 @@ var button = {
   },
   /**
    * Description : use to get button minus element
-   * 
+   *
    * @returns html elemen of button minus
    */
   getButtonMinusElement: function getButtonMinusElement() {
@@ -233,7 +167,7 @@ var button = {
   },
   /**
    * Description : use to get html element for remove button
-   * 
+   *
    * @returns html element
    */
   getButtonRemoveElement: function getButtonRemoveElement() {
@@ -265,7 +199,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../module/helper */ "./resources/js/module/helper.js");
+/* harmony import */ var _utils_helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils/helper */ "./resources/js/utils/helper.js");
 
 
 function purchase(dataSet) {
@@ -285,7 +219,7 @@ function purchase(dataSet) {
       var title = "Purchasing successfully!";
       if (parseInt(dataSet.total_bill) < parseInt(dataSet.paid_amount)) {
         var change = parseInt(dataSet.paid_amount) - parseInt(dataSet.total_bill);
-        change = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(change);
+        change = _utils_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(change);
         title = "Purchasing successfully! Change " + change;
       }
       sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire({
@@ -308,12 +242,12 @@ function purchase(dataSet) {
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   onClickConfirm: function onClickConfirm() {
-    var totalBill = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($("#total-bill").val());
+    var totalBill = _utils_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($("#total-bill").val());
     var finalBill = totalBill;
     var isHaveVoucher = $("#is-have-voucher").is(":checked");
     var voucherId = null;
     if (isHaveVoucher) {
-      finalBill = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($("#final-bill").val());
+      finalBill = _utils_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($("#final-bill").val());
       voucherId = $("#voucher_id").val();
     }
     var dataSet = {
@@ -342,7 +276,7 @@ function purchase(dataSet) {
       var roll_id = $(this).find("td").eq(0).text();
       var quantity_roll = parseInt($(this).find("td").eq(3).text());
       var quantity_unit = parseInt($(this).find("td").eq(5).text());
-      var sub_total = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($(this).find("td").eq(7).text());
+      var sub_total = _utils_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($(this).find("td").eq(7).text());
       var roll = {
         roll_id: roll_id,
         quantity_roll: quantity_roll,
@@ -368,8 +302,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _module_alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../module/alert */ "./resources/js/module/alert.js");
-/* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../module/helper */ "./resources/js/module/helper.js");
+/* harmony import */ var _utils_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utils/helper */ "./resources/js/utils/helper.js");
+/* harmony import */ var _utils_alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils/alert */ "./resources/js/utils/alert.js");
 
 
 var tempData = {
@@ -390,7 +324,7 @@ function onBlurQuantityRoll(context, unitName) {
   var quantityRoll = parseInt($(row).find(".quantity-roll").text());
   var quantityUnit = parseInt($(row).find(".quantity-unit").text());
   var unitPerRoll = parseInt($(row).find(".quantity-unit-per-roll").text());
-  var sellingPrice = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($(row).find(".selling-price").text());
+  var sellingPrice = _utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatRupiahToInt($(row).find(".selling-price").text());
   var availableQuantityRoll = parseInt($(row).find(".available-quantity-roll").text());
   var availableQuantityUnit = parseInt($(row).find(".available-quantity-unit").text());
   var newQuantityUnit = quantityRoll * unitPerRoll;
@@ -402,22 +336,22 @@ function onBlurQuantityRoll(context, unitName) {
   if (newAvailableQuantityUnit < 0 || newAvailableQuantityRoll < 0) {
     $(context).text("".concat(tempData.getValue(), " roll"));
     if (tempData.getValue() != quantityRoll) {
-      return (0,_module_alert__WEBPACK_IMPORTED_MODULE_0__.alertQuantityNotEnough)();
+      return (0,_utils_alert__WEBPACK_IMPORTED_MODULE_1__.alertQuantityNotEnough)();
     }
     return false;
   }
   $(row).find(".quantity-roll").text("".concat(quantityRoll, " roll"));
-  $(row).find(".sub-total").text("".concat(_module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(newSubTotal)));
+  $(row).find(".sub-total").text("".concat(_utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(newSubTotal)));
   $(row).find(".available-quantity-unit").text("".concat(newAvailableQuantityUnit, " ").concat(unitName));
   $(row).find(".available-quantity-roll").text("".concat(newAvailableQuantityRoll, " roll"));
   $(row).find(".quantity-unit").text("".concat(newQuantityUnit, " ").concat(unitName));
 }
 function onKeyPressQuantityRoll(context, event) {
-  _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].preventEnter(context, event);
-  _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].prenvetNonNumeric(event);
+  _utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].preventEnter(context, event);
+  _utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].prenvetNonNumeric(event);
 }
 function onKeyDownQuantityRoll(context, event) {
-  _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].preventTab(context, event);
+  _utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].preventTab(context, event);
 }
 function onFocusQuantityRoll(context) {
   $(context).text("".concat(parseInt($(context).text())));
@@ -462,27 +396,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../module/helper */ "./resources/js/module/helper.js");
+/* harmony import */ var _utils_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utils/helper */ "./resources/js/utils/helper.js");
 
 function onClickSellingPrice(context) {
-  $(context).text(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatRupiahToInt($(context).text()));
+  $(context).text(_utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatRupiahToInt($(context).text()));
 }
 function onKeyPressSellingPrice(context, event) {
-  _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].preventEnter(context, event);
-  _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].prenvetNonNumeric(event);
+  _utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].preventEnter(context, event);
+  _utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].prenvetNonNumeric(event);
 }
 function onBlurSellingPrice(context) {
   var row = $(context).closest("tr");
   var sellingPrice = $(row).find(".selling-price").text();
   var quantityUnit = parseInt($(row).find(".quantity-unit").text());
   var newSubTotal = sellingPrice * quantityUnit;
-  $(row).find(".sub-total").text(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(newSubTotal));
-  $(row).find(".selling-price").text(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(sellingPrice));
+  $(row).find(".sub-total").text(_utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(newSubTotal));
+  $(row).find(".selling-price").text(_utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(sellingPrice));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   getSellingPriceElement: function getSellingPriceElement(sellingPrice) {
     return $("<td>", {
-      text: _module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(sellingPrice),
+      text: _utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(sellingPrice),
       "class": "text-nowrap selling-price",
       attr: {
         contenteditable: true
@@ -513,8 +447,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _module_alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../module/alert */ "./resources/js/module/alert.js");
-/* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../module/helper */ "./resources/js/module/helper.js");
+/* harmony import */ var _utils_alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utils/alert */ "./resources/js/utils/alert.js");
+/* harmony import */ var _utils_helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils/helper */ "./resources/js/utils/helper.js");
 
 
 var tempData = {
@@ -535,7 +469,7 @@ function onBlurUnitPerRoll(context, unitName) {
   var quantityRoll = parseInt($(row).find(".quantity-roll").text());
   var quantityUnit = parseInt($(row).find(".quantity-unit").text());
   var unitPerRoll = parseInt($(context).text());
-  var sellingPrice = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($(row).find(".selling-price").text());
+  var sellingPrice = _utils_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($(row).find(".selling-price").text());
   var availableQuantityUnit = parseInt($(row).find(".available-quantity-unit").text());
   var newQuantityUnit = quantityRoll * unitPerRoll;
   var newSubTotal = sellingPrice * newQuantityUnit;
@@ -544,21 +478,21 @@ function onBlurUnitPerRoll(context, unitName) {
   if (newAvailableQuantityUnit < 0) {
     $(context).text("".concat(tempData.getValue(), " ").concat(unitName));
     if (tempData.getValue() != unitPerRoll) {
-      return (0,_module_alert__WEBPACK_IMPORTED_MODULE_0__.alertQuantityNotEnough)();
+      return (0,_utils_alert__WEBPACK_IMPORTED_MODULE_0__.alertQuantityNotEnough)();
     }
     return false;
   }
   $(row).find(".quantity-unit").text("".concat(newQuantityUnit, " ").concat(unitName));
   $(row).find(".available-quantity-unit").text("".concat(newAvailableQuantityUnit, " ").concat(unitName));
-  $(row).find(".sub-total").text("".concat(_module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(newSubTotal)));
+  $(row).find(".sub-total").text("".concat(_utils_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(newSubTotal)));
   $(context).text("".concat(unitPerRoll, " ").concat(unitName));
 }
 function onKeyPressUnitPerRoll(context, event) {
-  _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].preventEnter(context, event);
-  _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].prenvetNonNumeric(event);
+  _utils_helper__WEBPACK_IMPORTED_MODULE_1__["default"].preventEnter(context, event);
+  _utils_helper__WEBPACK_IMPORTED_MODULE_1__["default"].prenvetNonNumeric(event);
 }
 function onKeyDownUnitPerRoll(context, event) {
-  _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].preventTab(context, event);
+  _utils_helper__WEBPACK_IMPORTED_MODULE_1__["default"].preventTab(context, event);
 }
 function onFocusUnitPerRoll(context) {
   $(context).text("".concat(parseInt($(context).text())));
@@ -587,6 +521,125 @@ function onFocusUnitPerRoll(context) {
         onKeyDownUnitPerRoll(this, event);
       }
     });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/utils/alert.js":
+/*!*************************************!*\
+  !*** ./resources/js/utils/alert.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "alertConfirm": () => (/* binding */ alertConfirm),
+/* harmony export */   "alertError": () => (/* binding */ alertError),
+/* harmony export */   "alertQuantityNotEnough": () => (/* binding */ alertQuantityNotEnough),
+/* harmony export */   "alertSuccess": () => (/* binding */ alertSuccess)
+/* harmony export */ });
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+function alertError(message, newConfig) {
+  var config = {
+    icon: 'error',
+    title: 'Oops...',
+    text: message
+  };
+  if (newConfig != undefined) {
+    config = _objectSpread(_objectSpread({}, config), newConfig);
+  }
+  sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire(config);
+}
+function alertSuccess(message, newConfig) {
+  var config = {
+    icon: 'success',
+    title: 'Success',
+    text: message
+  };
+  if (newConfig != undefined) {
+    config = _objectSpread(_objectSpread({}, config), newConfig);
+  }
+  sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire(config);
+}
+function alertConfirm(successCallback, newConfig) {
+  var config = {
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  };
+  if (newConfig != undefined) {
+    config = _objectSpread(_objectSpread({}, config), newConfig);
+  }
+  sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire(config).then(function (result) {
+    if (result.isConfirmed && typeof successCallback == "function") {
+      successCallback();
+    }
+  });
+}
+function alertQuantityNotEnough() {
+  return sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire({
+    icon: 'error',
+    title: 'Action cannot be done !',
+    text: 'Item availability is not enough!'
+  });
+}
+
+
+/***/ }),
+
+/***/ "./resources/js/utils/helper.js":
+/*!**************************************!*\
+  !*** ./resources/js/utils/helper.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  formatIntToRupiah: function formatIntToRupiah(number) {
+    return "Rp " + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ",00";
+  },
+  formatRupiahToInt: function formatRupiahToInt(rupiah) {
+    var rupiahInt = rupiah.split(" ");
+    rupiahInt = rupiahInt[1];
+    rupiahInt = rupiahInt.replaceAll(".", "");
+    rupiahInt = rupiahInt.split(" ")[0];
+    rupiahInt = parseInt(rupiahInt);
+    return rupiahInt;
+  },
+  preventEnter: function preventEnter(context, event) {
+    if (event.key == "Enter") {
+      event.preventDefault();
+      $(context).blur();
+    }
+  },
+  prenvetNonNumeric: function prenvetNonNumeric(event) {
+    if (event.which < 48 || event.which > 57) {
+      event.preventDefault();
+    }
+  },
+  preventTab: function preventTab(context, event) {
+    if (event.which == 9) {
+      event.preventDefault();
+      $(context).next().focus();
+    }
   }
 });
 
@@ -4636,12 +4689,12 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../module/helper */ "./resources/js/module/helper.js");
-/* harmony import */ var _module_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/button */ "./resources/js/pages/shopping/module/button.js");
-/* harmony import */ var _module_confirm_shopping__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/confirm-shopping */ "./resources/js/pages/shopping/module/confirm-shopping.js");
-/* harmony import */ var _module_quantity_roll__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/quantity-roll */ "./resources/js/pages/shopping/module/quantity-roll.js");
-/* harmony import */ var _module_selling_price__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/selling-price */ "./resources/js/pages/shopping/module/selling-price.js");
-/* harmony import */ var _module_unit_per_roll__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./module/unit-per-roll */ "./resources/js/pages/shopping/module/unit-per-roll.js");
+/* harmony import */ var _module_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/button */ "./resources/js/pages/shopping/module/button.js");
+/* harmony import */ var _module_confirm_shopping__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/confirm-shopping */ "./resources/js/pages/shopping/module/confirm-shopping.js");
+/* harmony import */ var _module_quantity_roll__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/quantity-roll */ "./resources/js/pages/shopping/module/quantity-roll.js");
+/* harmony import */ var _module_selling_price__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/selling-price */ "./resources/js/pages/shopping/module/selling-price.js");
+/* harmony import */ var _module_unit_per_roll__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/unit-per-roll */ "./resources/js/pages/shopping/module/unit-per-roll.js");
+/* harmony import */ var _utils_helper__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/helper */ "./resources/js/utils/helper.js");
 
 
 
@@ -4772,7 +4825,7 @@ $(document).ready(function () {
    * @param {object} dataSet
    */
   function setSelectedOptionToTableRow(dataSet) {
-    _module_button__WEBPACK_IMPORTED_MODULE_2__["default"].showButtonSummaryPayment();
+    _module_button__WEBPACK_IMPORTED_MODULE_1__["default"].showButtonSummaryPayment();
     var table = $("#table-product");
     var tbody = $(table).find("tbody");
     var totalUnitOnTable = getCurrentTotalUnitOnTable(dataSet.code);
@@ -4783,22 +4836,22 @@ $(document).ready(function () {
     tr.append($("<td>".concat(dataSet.id, "</td>")));
     tr.append($("<td>".concat(dataSet.code, "</td>")));
     tr.append($("<td>".concat(dataSet.name, "</td>")));
-    tr.append(_module_quantity_roll__WEBPACK_IMPORTED_MODULE_4__["default"].getQuantityRollElement(dataSet.unit.name));
-    tr.append(_module_unit_per_roll__WEBPACK_IMPORTED_MODULE_6__["default"].getUnitPerRollElement(dataSet.unit.name));
+    tr.append(_module_quantity_roll__WEBPACK_IMPORTED_MODULE_3__["default"].getQuantityRollElement(dataSet.unit.name));
+    tr.append(_module_unit_per_roll__WEBPACK_IMPORTED_MODULE_5__["default"].getUnitPerRollElement(dataSet.unit.name));
     tr.append($("<td>", {
       text: "1 ".concat(dataSet.unit.name),
       "class": "text-nowrap quantity-unit"
     }));
-    tr.append(_module_selling_price__WEBPACK_IMPORTED_MODULE_5__["default"].getSellingPriceElement(parseInt(dataSet.selling_price)));
+    tr.append(_module_selling_price__WEBPACK_IMPORTED_MODULE_4__["default"].getSellingPriceElement(parseInt(dataSet.selling_price)));
     tr.append($("<td>", {
-      text: _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(parseInt(dataSet.selling_price)),
+      text: _utils_helper__WEBPACK_IMPORTED_MODULE_6__["default"].formatIntToRupiah(parseInt(dataSet.selling_price)),
       "class": "text-nowrap sub-total"
     }));
     tr.append($("<td>", {
       "class": "text-nowrap action-roll"
     }).append($("<div>", {
       "class": "d-grid gap-2 d-md-block"
-    }).append(_module_button__WEBPACK_IMPORTED_MODULE_2__["default"].getButtonPlusElement()).append(_module_button__WEBPACK_IMPORTED_MODULE_2__["default"].getButtonMinusElement()).append(_module_button__WEBPACK_IMPORTED_MODULE_2__["default"].getButtonRemoveElement())));
+    }).append(_module_button__WEBPACK_IMPORTED_MODULE_1__["default"].getButtonPlusElement()).append(_module_button__WEBPACK_IMPORTED_MODULE_1__["default"].getButtonMinusElement()).append(_module_button__WEBPACK_IMPORTED_MODULE_1__["default"].getButtonRemoveElement())));
     tr.append($("<td>", {
       text: "".concat(dataSet.quantity_roll, " rolls"),
       "class": "text-nowrap available-quantity-roll"
@@ -4818,10 +4871,10 @@ $(document).ready(function () {
     $("#table-product").clone().appendTo($(summaryPaymentContainer)).attr("id", "table-summary-product").find(".action-roll, .action-roll-header").remove();
     var totalBill = 0;
     $("#table-summary-product").find(".sub-total").each(function () {
-      var subTotal = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($(this).text());
+      var subTotal = _utils_helper__WEBPACK_IMPORTED_MODULE_6__["default"].formatRupiahToInt($(this).text());
       totalBill += subTotal;
     });
-    $("#total-bill").val(_module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(totalBill));
+    $("#total-bill").val(_utils_helper__WEBPACK_IMPORTED_MODULE_6__["default"].formatIntToRupiah(totalBill));
   });
   $("#is-with-customer").on("change", function () {
     if (this.checked) {
@@ -4853,11 +4906,11 @@ $(document).ready(function () {
       console.log(response.data.promotion_message.discount);
       $("#voucher").removeClass("is-invalid");
       $("#discount").val(response.data.promotion_message.discount + " %");
-      var totalBill = _module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatRupiahToInt($("#total-bill").val());
+      var totalBill = _utils_helper__WEBPACK_IMPORTED_MODULE_6__["default"].formatRupiahToInt($("#total-bill").val());
       $("#voucher_id").val(response.data.id);
       var finalBill = parseFloat(totalBill) - parseFloat(response.data.promotion_message.discount) / 100 * parseFloat(totalBill);
       $("#discount_amount").val(parseFloat(response.data.promotion_message.discount) / 100 * parseFloat(totalBill));
-      $("#final-bill").val(_module_helper__WEBPACK_IMPORTED_MODULE_1__["default"].formatIntToRupiah(Math.ceil(finalBill)));
+      $("#final-bill").val(_utils_helper__WEBPACK_IMPORTED_MODULE_6__["default"].formatIntToRupiah(Math.ceil(finalBill)));
     }).fail(function (response) {
       if (response.status == 404) {
         $("#voucher").addClass("is-invalid");
@@ -4888,7 +4941,7 @@ $(document).ready(function () {
         }
       });
     }
-    _module_confirm_shopping__WEBPACK_IMPORTED_MODULE_3__["default"].onClickConfirm();
+    _module_confirm_shopping__WEBPACK_IMPORTED_MODULE_2__["default"].onClickConfirm();
   });
   $("#btn-check-custom-date").on("change", function () {
     if (this.checked) {

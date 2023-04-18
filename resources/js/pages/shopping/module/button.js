@@ -1,4 +1,4 @@
-import helper from "../../../module/helper";
+import helper from '../../../utils/helper';
 import { alertQuantityNotEnough } from '../../../utils/alert';
 
   /**

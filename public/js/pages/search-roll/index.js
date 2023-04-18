@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/js/module/helper.js":
-/*!***************************************!*\
-  !*** ./resources/js/module/helper.js ***!
-  \***************************************/
+/***/ "./resources/js/utils/helper.js":
+/*!**************************************!*\
+  !*** ./resources/js/utils/helper.js ***!
+  \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -108,7 +108,7 @@ var __webpack_exports__ = {};
   !*** ./resources/js/pages/search-roll/index.js ***!
   \*************************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../module/helper */ "./resources/js/module/helper.js");
+/* harmony import */ var _utils_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/helper */ "./resources/js/utils/helper.js");
 
 $(document).ready(function () {
   /**
@@ -171,8 +171,8 @@ $(document).ready(function () {
           $("#roll-quantity-unit").text(data.quantity_unit);
         }
         $("#roll-qrcode").text(data.qrcode);
-        $("#roll-basic-price").text(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(data.basic_price));
-        $("#roll-selling-price").text(_module_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(data.selling_price));
+        $("#roll-basic-price").text(_utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(data.basic_price));
+        $("#roll-selling-price").text(_utils_helper__WEBPACK_IMPORTED_MODULE_0__["default"].formatIntToRupiah(data.selling_price));
         $("#roll-last-update").text(data.updated_at);
         return Swal.fire({
           title: "Roll found !",
