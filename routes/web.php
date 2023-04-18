@@ -211,11 +211,6 @@ Route::middleware(["auth", "verified"])
 
 
 
-
-
-
-
-
         // PROMOTION MESSAGE
         // Route::group(
         //     [
