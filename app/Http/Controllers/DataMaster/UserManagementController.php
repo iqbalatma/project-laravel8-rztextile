@@ -60,9 +60,9 @@ class UserManagementController extends Controller
      *
      * @param UserManagementService $service dependency injection
      * @param int $id of user
-     * @return Response
+     * @return RedirectResponse|Response
      */
-    public function edit(UserManagementService $service, int $id)
+    public function edit(UserManagementService $service, int $id): RedirectResponse|Response
     {
         $response = $service->getEditData($id);
         if ($this->isError($response)) return $this->getErrorResponse();
@@ -83,13 +83,9 @@ class UserManagementController extends Controller
     public function update(UserManagementService $service, UserUpdateRequest $request, int $id): RedirectResponse
     {
         $response = $service->updateData($id, $request->validated());
+        if ($this->isError($response)) return $this->getErrorResponse();
 
-        if ($this->isError($response)) {
-            return $this->getErrorResponse();
-        }
-        return redirect()
-            ->route("users.index")
-            ->with("success", "Update data user successfully");
+        return redirect()->route("users.index")->with("success", "Update data user successfully");
     }
 
     /**

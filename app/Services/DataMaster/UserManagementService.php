@@ -60,18 +60,20 @@ class UserManagementService extends BaseService
     {
         try {
             $this->checkData($id);
+            $roles = $this->roleRepo->getAllData();
+            $this->setActiveRoles($roles, $this->getData()->roles);
             $response =  [
                 "success" => true,
                 "title"       => "User Management",
                 "description" => "Form for edit data user",
                 "cardTitle"   => "Edit User",
-                "roles"       => $this->roleRepo->getAllData(),
-                "user"        => $this->getData()
+                "roles"       => $roles,
+                "user"        => $this->getData(),
             ];
         } catch (Exception $e) {
             $response = [
                 "success" => false,
-                "message" => $e->getMessage()
+                "message" => config('app.env') != 'production' ?  $e->getMessage() : 'Something went wrong'
             ];
         }
         return $response;
@@ -115,11 +117,14 @@ class UserManagementService extends BaseService
     public function updateData(int $id, array $requestedData): array
     {
         try {
+            $requestedRoles = $requestedData["roles"];
+            unset($requestedData["roles"]);
             $this->checkData($id);
-            $data = $this->repository->updateDataById($id, $requestedData, isReturnObject: false);
+            $user = $this->repository->updateDataById($id, $requestedData);
+            $user->syncRoles($requestedRoles);
             $response =  [
                 "success" => true,
-                "data" => $data
+                "user" => $user
             ];
         } catch (Exception $e) {
             $response = [
@@ -150,5 +155,16 @@ class UserManagementService extends BaseService
             ];
         }
         return $response;
+    }
+
+    private function setActiveRoles(object|null &$roles, object|null $userRoles)
+    {
+        $userRoles =  array_flip($userRoles->pluck("name")->toArray());
+
+        $roles = collect($roles)->map(function ($item) use ($userRoles) {
+            $item["is_active"] = isset($userRoles[$item["name"]]);
+
+            return $item;
+        });
     }
 }
