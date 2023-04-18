@@ -1,10 +1,76 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/js/application/shopping/module/button.js":
-/*!************************************************************!*\
-  !*** ./resources/js/application/shopping/module/button.js ***!
-  \************************************************************/
+/***/ "./resources/js/module/alert.js":
+/*!**************************************!*\
+  !*** ./resources/js/module/alert.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "alertQuantityNotEnough": () => (/* binding */ alertQuantityNotEnough)
+/* harmony export */ });
+function alertQuantityNotEnough() {
+  return Swal.fire({
+    icon: 'error',
+    title: 'Action cannot be done !',
+    text: 'Item availability is not enough!'
+  });
+}
+
+
+/***/ }),
+
+/***/ "./resources/js/module/helper.js":
+/*!***************************************!*\
+  !*** ./resources/js/module/helper.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  formatIntToRupiah: function formatIntToRupiah(number) {
+    return "Rp " + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ",00";
+  },
+  formatRupiahToInt: function formatRupiahToInt(rupiah) {
+    var rupiahInt = rupiah.split(" ");
+    rupiahInt = rupiahInt[1];
+    rupiahInt = rupiahInt.replaceAll(".", "");
+    rupiahInt = rupiahInt.split(" ")[0];
+    rupiahInt = parseInt(rupiahInt);
+    return rupiahInt;
+  },
+  preventEnter: function preventEnter(context, event) {
+    if (event.key == "Enter") {
+      event.preventDefault();
+      $(context).blur();
+    }
+  },
+  prenvetNonNumeric: function prenvetNonNumeric(event) {
+    if (event.which < 48 || event.which > 57) {
+      event.preventDefault();
+    }
+  },
+  preventTab: function preventTab(context, event) {
+    if (event.which == 9) {
+      event.preventDefault();
+      $(context).next().focus();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/pages/shopping/module/button.js":
+/*!******************************************************!*\
+  !*** ./resources/js/pages/shopping/module/button.js ***!
+  \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -186,10 +252,10 @@ var button = {
 
 /***/ }),
 
-/***/ "./resources/js/application/shopping/module/confirm-shopping.js":
-/*!**********************************************************************!*\
-  !*** ./resources/js/application/shopping/module/confirm-shopping.js ***!
-  \**********************************************************************/
+/***/ "./resources/js/pages/shopping/module/confirm-shopping.js":
+/*!****************************************************************!*\
+  !*** ./resources/js/pages/shopping/module/confirm-shopping.js ***!
+  \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -291,10 +357,10 @@ function purchase(dataSet) {
 
 /***/ }),
 
-/***/ "./resources/js/application/shopping/module/quantity-roll.js":
-/*!*******************************************************************!*\
-  !*** ./resources/js/application/shopping/module/quantity-roll.js ***!
-  \*******************************************************************/
+/***/ "./resources/js/pages/shopping/module/quantity-roll.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/pages/shopping/module/quantity-roll.js ***!
+  \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -385,10 +451,10 @@ function onFocusQuantityRoll(context) {
 
 /***/ }),
 
-/***/ "./resources/js/application/shopping/module/selling-price.js":
-/*!*******************************************************************!*\
-  !*** ./resources/js/application/shopping/module/selling-price.js ***!
-  \*******************************************************************/
+/***/ "./resources/js/pages/shopping/module/selling-price.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/pages/shopping/module/selling-price.js ***!
+  \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -436,10 +502,10 @@ function onBlurSellingPrice(context) {
 
 /***/ }),
 
-/***/ "./resources/js/application/shopping/module/unit-per-roll.js":
-/*!*******************************************************************!*\
-  !*** ./resources/js/application/shopping/module/unit-per-roll.js ***!
-  \*******************************************************************/
+/***/ "./resources/js/pages/shopping/module/unit-per-roll.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/pages/shopping/module/unit-per-roll.js ***!
+  \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -521,72 +587,6 @@ function onFocusUnitPerRoll(context) {
         onKeyDownUnitPerRoll(this, event);
       }
     });
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/module/alert.js":
-/*!**************************************!*\
-  !*** ./resources/js/module/alert.js ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "alertQuantityNotEnough": () => (/* binding */ alertQuantityNotEnough)
-/* harmony export */ });
-function alertQuantityNotEnough() {
-  return Swal.fire({
-    icon: 'error',
-    title: 'Action cannot be done !',
-    text: 'Item availability is not enough!'
-  });
-}
-
-
-/***/ }),
-
-/***/ "./resources/js/module/helper.js":
-/*!***************************************!*\
-  !*** ./resources/js/module/helper.js ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  formatIntToRupiah: function formatIntToRupiah(number) {
-    return "Rp " + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ",00";
-  },
-  formatRupiahToInt: function formatRupiahToInt(rupiah) {
-    var rupiahInt = rupiah.split(" ");
-    rupiahInt = rupiahInt[1];
-    rupiahInt = rupiahInt.replaceAll(".", "");
-    rupiahInt = rupiahInt.split(" ")[0];
-    rupiahInt = parseInt(rupiahInt);
-    return rupiahInt;
-  },
-  preventEnter: function preventEnter(context, event) {
-    if (event.key == "Enter") {
-      event.preventDefault();
-      $(context).blur();
-    }
-  },
-  prenvetNonNumeric: function prenvetNonNumeric(event) {
-    if (event.which < 48 || event.which > 57) {
-      event.preventDefault();
-    }
-  },
-  preventTab: function preventTab(context, event) {
-    if (event.which == 9) {
-      event.preventDefault();
-      $(context).next().focus();
-    }
   }
 });
 
@@ -4630,18 +4630,18 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!****************************************************!*\
-  !*** ./resources/js/application/shopping/index.js ***!
-  \****************************************************/
+/*!**********************************************!*\
+  !*** ./resources/js/pages/shopping/index.js ***!
+  \**********************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _module_helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../module/helper */ "./resources/js/module/helper.js");
-/* harmony import */ var _module_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/button */ "./resources/js/application/shopping/module/button.js");
-/* harmony import */ var _module_confirm_shopping__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/confirm-shopping */ "./resources/js/application/shopping/module/confirm-shopping.js");
-/* harmony import */ var _module_quantity_roll__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/quantity-roll */ "./resources/js/application/shopping/module/quantity-roll.js");
-/* harmony import */ var _module_selling_price__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/selling-price */ "./resources/js/application/shopping/module/selling-price.js");
-/* harmony import */ var _module_unit_per_roll__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./module/unit-per-roll */ "./resources/js/application/shopping/module/unit-per-roll.js");
+/* harmony import */ var _module_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/button */ "./resources/js/pages/shopping/module/button.js");
+/* harmony import */ var _module_confirm_shopping__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/confirm-shopping */ "./resources/js/pages/shopping/module/confirm-shopping.js");
+/* harmony import */ var _module_quantity_roll__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/quantity-roll */ "./resources/js/pages/shopping/module/quantity-roll.js");
+/* harmony import */ var _module_selling_price__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/selling-price */ "./resources/js/pages/shopping/module/selling-price.js");
+/* harmony import */ var _module_unit_per_roll__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./module/unit-per-roll */ "./resources/js/pages/shopping/module/unit-per-roll.js");
 
 
 

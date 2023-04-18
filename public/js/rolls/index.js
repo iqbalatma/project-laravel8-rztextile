@@ -1,8 +1,8 @@
 /******/ (() => { // webpackBootstrap
 var __webpack_exports__ = {};
-/*!*************************************************!*\
-  !*** ./resources/js/application/rolls/index.js ***!
-  \*************************************************/
+/*!*******************************************!*\
+  !*** ./resources/js/pages/rolls/index.js ***!
+  \*******************************************/
 $(document).ready(function () {
   $(".btn-print-qrcode").on("click", function () {
     var id = $(this).data("id");

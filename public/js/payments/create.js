@@ -1,8 +1,8 @@
 /******/ (() => { // webpackBootstrap
 var __webpack_exports__ = {};
-/*!*****************************************************!*\
-  !*** ./resources/js/application/payments/create.js ***!
-  \*****************************************************/
+/*!***********************************************!*\
+  !*** ./resources/js/pages/payments/create.js ***!
+  \***********************************************/
 $(document).ready(function () {
   console.log("TES");
   $("#invoice").on("change", function () {

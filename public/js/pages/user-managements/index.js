@@ -3,7 +3,7 @@ var __webpack_exports__ = {};
 /*!******************************************************!*\
   !*** ./resources/js/pages/user-managements/index.js ***!
   \******************************************************/
-$(".btn-change-status").on("click", function (event) {
+$(".btn-delete").on("click", function (event) {
   event.preventDefault();
   var form = $(this).closest("form");
   Swal.fire({
@@ -13,11 +13,11 @@ $(".btn-change-status").on("click", function (event) {
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, change the statis!"
+    confirmButtonText: "Yes, deactivate it!"
   }).then(function (result) {
     if (result.isConfirmed) {
       form.trigger("submit");
-      event.Swal.fire("Status Changed!", "Change status active user successfully", "success");
+      event.Swal.fire("Deleted!", "Your file has been deleted.", "success");
     }
   });
 });

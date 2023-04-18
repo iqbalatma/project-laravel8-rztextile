@@ -1,8 +1,8 @@
 /******/ (() => { // webpackBootstrap
 var __webpack_exports__ = {};
-/*!*****************************************************!*\
-  !*** ./resources/js/application/dashboard/index.js ***!
-  \*****************************************************/
+/*!***********************************************!*\
+  !*** ./resources/js/pages/dashboard/index.js ***!
+  \***********************************************/
 $(document).ready(function () {
   var ctx = $("#salesChart").get(0).getContext("2d");
   var salesChartOption = {
