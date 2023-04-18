@@ -28,6 +28,7 @@ class UpdateUserProfileRequest extends FormRequest
             "name" => "required",
             "phone" => "",
             "address" => "",
+            "password" => "confirmed"
         ];
     }
 }

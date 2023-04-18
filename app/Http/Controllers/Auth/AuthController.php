@@ -34,9 +34,6 @@ class AuthController extends Controller
     public function authenticate(AuthService $service, AuthenticateRequest $request): RedirectResponse
     {
         if ($service->authenticate($request->validated())) {
-            if (Auth::user()->role->id == 3) {
-                return redirect()->intended(route("shopping.index"));
-            }
             return redirect()->intended(route("dashboard.index"));
         }
 

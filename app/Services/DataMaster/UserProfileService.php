@@ -5,6 +5,7 @@ namespace App\Services\DataMaster;
 use App\Repositories\UserRepository;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Iqbalatma\LaravelServiceRepo\BaseService;
 
 class UserProfileService extends BaseService
@@ -43,6 +44,10 @@ class UserProfileService extends BaseService
         try {
             $this->checkData(Auth::id());
             $user = $this->getData();
+
+            if (isset($requestedData["password"])) {
+                $requestedData["password"] = Hash::make($requestedData["password"]);
+            }
             $user->fill($requestedData);
             $user->save();
 
