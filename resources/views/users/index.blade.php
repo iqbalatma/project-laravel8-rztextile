@@ -15,8 +15,6 @@
             @endcan
 
 
-
-
             @if ($users->count()==0)
             <x-data-not-found></x-data-not-found>
             @else

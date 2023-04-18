@@ -45,6 +45,7 @@ class UserManagementService extends BaseService
             "title"       => "User Management",
             "description" => "Form for add new data user",
             "cardTitle"   => "Add New User",
+            "roles" => $this->roleRepo->getAllData()
         ];
     }
 
@@ -88,6 +89,7 @@ class UserManagementService extends BaseService
         try {
             $requestedData["password"] = Hash::make($requestedData["password"]);
             $user = $this->repository->addNewData($requestedData);
+            $user->assignRole($requestedData["roles"]);
             dispatch(new SendVerificationEmailJob($user));
 
             $response = [

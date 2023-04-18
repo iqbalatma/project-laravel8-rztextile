@@ -31,6 +31,7 @@ class UserStoreRequest extends BaseFormRequest
             "phone" => "",
             "address" => "",
             "password" => "confirmed|required",
+            "roles" => "required"
         ];
     }
 }
