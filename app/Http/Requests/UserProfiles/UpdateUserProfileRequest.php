@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Users;
+namespace App\Http\Requests\UserProfiles;
 
-use App\Http\Requests\BaseFormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 
-class UserStoreRequest extends BaseFormRequest
+class UpdateUserProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,11 +26,9 @@ class UserStoreRequest extends BaseFormRequest
         return [
             "id_number" => "numeric",
             "name" => "required",
-            "email" =>  [Rule::unique("users", "email")->whereNull("deleted_at"), "email", "required"],
             "phone" => "",
             "address" => "",
-            "password" => "confirmed|required",
-            "roles" => "required"
+            "password" => "confirmed"
         ];
     }
 }

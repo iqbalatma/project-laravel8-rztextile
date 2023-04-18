@@ -26,6 +26,7 @@ use App\Http\Controllers\DataMaster\CustomerSegmentationController;
 use App\Http\Controllers\DataMaster\DiscountVoucherController;
 use App\Http\Controllers\DataMaster\PermissionController;
 use App\Http\Controllers\DataMaster\RoleController;
+use App\Http\Controllers\DataMaster\UserProfileController;
 use App\Repositories\RollRepository;
 use App\Statics\Permissions\CustomerPermission;
 use App\Statics\Permissions\DashboardPermission;
@@ -37,6 +38,7 @@ use App\Statics\Permissions\RollTransactionPermission;
 use App\Statics\Permissions\ShoppingPermission;
 use App\Statics\Permissions\UnitPermission;
 use App\Statics\Permissions\UserPermission;
+use App\Statics\Permissions\UserProfilePermission;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -182,7 +184,6 @@ Route::middleware(["auth", "verified"])
             Route::post("/print", "printQrcode")->name("printQrcode")->middleware("permission:" . RollPermission::PRINT_QRCODE);
         });
 
-
         // ROLL TRANSACTION
         Route::prefix("roll-transactions")->name("roll.transactions.")->controller(RollTransactionController::class)->group(function () {
             Route::get("/", "index")->name("index")->middleware("permission:" . RollTransactionPermission::INDEX);
@@ -206,6 +207,11 @@ Route::middleware(["auth", "verified"])
         Route::get("/dashboard", DashboardController::class)->name("dashboard.index")->middleware("permission:" . DashboardPermission::INDEX);
         Route::get("/ajax/dashboard/sales-summary", AJAXDashboardController::class)->name("ajax.dashboard.sales.summary")->middleware("permission:" . DashboardPermission::INDEX);
 
+        // USER PROFILE
+        Route::prefix("user-profile")->name("user.profile.")->controller(UserProfileController::class)->group(function () {
+            Route::get("edit", "edit")->name("edit")->middleware("permission:" . UserProfilePermission::EDIT);
+            Route::patch("update", "update")->name("update")->middleware("permission:" . UserProfilePermission::UPDATE);
+        });
 
         // Route::middleware("role:administrator")->group(
         //     function () {

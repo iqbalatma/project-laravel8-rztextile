@@ -29,7 +29,6 @@ function alertSuccess(message, newConfig){
     Swal.fire(config)
 }
 
-
 function alertConfirm(successCallback, newConfig){
     let config = {
         title: 'Are you sure?',
@@ -52,4 +51,13 @@ function alertConfirm(successCallback, newConfig){
     })
 }
 
-export {alertError, alertSuccess, alertConfirm}
+function alertQuantityNotEnough(){
+    return Swal.fire({
+        icon: 'error',
+        title: 'Action cannot be done !',
+        text: 'Item availability is not enough!',
+    })
+}
+
+
+export {alertError, alertSuccess, alertConfirm, alertQuantityNotEnough}

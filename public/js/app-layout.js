@@ -1,8 +1,8 @@
 /******/ (() => { // webpackBootstrap
 var __webpack_exports__ = {};
-/*!************************************************!*\
-  !*** ./resources/js/application/app-layout.js ***!
-  \************************************************/
+/*!************************************!*\
+  !*** ./resources/js/app-layout.js ***!
+  \************************************/
 $(document).ready(function () {
   var sidebarMenu = $("#sidebar-menu a");
   var currentUrl = location.href.split("?")[0];

@@ -12,6 +12,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "alertConfirm": () => (/* binding */ alertConfirm),
 /* harmony export */   "alertError": () => (/* binding */ alertError),
+/* harmony export */   "alertQuantityNotEnough": () => (/* binding */ alertQuantityNotEnough),
 /* harmony export */   "alertSuccess": () => (/* binding */ alertSuccess)
 /* harmony export */ });
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
@@ -62,6 +63,13 @@ function alertConfirm(successCallback, newConfig) {
     if (result.isConfirmed && typeof successCallback == "function") {
       successCallback();
     }
+  });
+}
+function alertQuantityNotEnough() {
+  return sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire({
+    icon: 'error',
+    title: 'Action cannot be done !',
+    text: 'Item availability is not enough!'
   });
 }
 

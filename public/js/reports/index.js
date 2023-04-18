@@ -427,9 +427,9 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!***************************************************!*\
-  !*** ./resources/js/application/reports/index.js ***!
-  \***************************************************/
+/*!*********************************************!*\
+  !*** ./resources/js/pages/reports/index.js ***!
+  \*********************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_yearpicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../module/yearpicker */ "./resources/js/module/yearpicker.js");
 /* harmony import */ var _module_yearpicker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_module_yearpicker__WEBPACK_IMPORTED_MODULE_0__);

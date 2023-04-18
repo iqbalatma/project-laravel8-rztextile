@@ -13,6 +13,7 @@ use App\Statics\Permissions\RollTransactionPermission;
 use App\Statics\Permissions\ShoppingPermission;
 use App\Statics\Permissions\UnitPermission;
 use App\Statics\Permissions\UserPermission;
+use App\Statics\Permissions\UserProfilePermission;
 
 class Permissions
 {
@@ -77,5 +78,9 @@ class Permissions
     ];
     public const DASHBOARD = [
         ["name" => DashboardPermission::INDEX, "description" => "Permission to access dashboard index"],
+    ];
+    public const USER_PROFILES = [
+        ["name" => UserProfilePermission::EDIT, "description" => "Permission to access user profile edit"],
+        ["name" => UserProfilePermission::UPDATE, "description" => "Permission to access user profile update"],
     ];
 }
