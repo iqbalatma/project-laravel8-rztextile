@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Facades\View;
 
+use App\Exceptions\DumpException;
+
+function ddapi($data)
+{
+    throw new DumpException($data);
+}
 function viewShare(array $data): void
 {
     foreach ($data as $key => $value) {

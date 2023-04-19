@@ -4,6 +4,7 @@ use App\Http\Controllers\AJAX\DashboardController as AJAXDashboardController;
 use App\Http\Controllers\AJAX\DiscountVoucherController as AJAXDiscountVoucherController;
 use App\Http\Controllers\AJAX\PromotionMessageController as AJAXPromotionMessageController;
 use App\Http\Controllers\AJAX\SearchRollController as AJAXSearchRollController;
+use App\Http\Controllers\AJAX\ShoppingController as AJAXShoppingController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
@@ -176,10 +177,8 @@ Route::middleware(["auth", "verified"])
         });
 
         //SHOPPING
-        Route::prefix("/shopping")->name("shopping.")->controller(ShoppingController::class)->group(function () {
-            Route::get("/", "index")->name("index")->middleware("permission:" . ShoppingPermission::INDEX);
-            Route::post("/purchase", "purchase")->name("purchase")->middleware("permission:" . ShoppingPermission::PURCHASE);
-        });
+        Route::get("shopping", ShoppingController::class)->name("shopping.index")->middleware("permission:" . ShoppingPermission::INDEX);
+        Route::post("ajax/shopping/purchase", AJAXShoppingController::class)->name("shopping.purchase")->middleware("permission:" . ShoppingPermission::PURCHASE);
 
 
         // USER PROFILE
