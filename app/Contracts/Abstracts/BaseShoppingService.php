@@ -64,12 +64,11 @@ abstract class BaseShoppingService extends BaseService
      */
     protected function addNewPayment(array $requestedData): Payment
     {
-        $invoiceId = $this->getInvoice()->id;
         $dataPayment = [
             "code"         => $this->paymentService->getGeneratedPaymentCode(),
             "paid_amount"  => $requestedData["paid_amount"],
             "payment_type" => $requestedData["payment_type"],
-            "invoice_id"   => $invoiceId,
+            "invoice_id"   => $this->getInvoice()->id,
             "user_id"      => Auth::user()->id,
         ];
         if ($requestedData["paid_amount"] >= $requestedData["total_bill"]) {
@@ -103,18 +102,20 @@ abstract class BaseShoppingService extends BaseService
         ];
 
         // use to custom date
-        if ($requestedData["custom_date"]) {
+        if (isset($requestedData["custom_date"])) {
             $dataInvoice["created_at"] = $requestedData["custom_date"];
             $dataInvoice["updated_at"] = $requestedData["custom_date"];
         }
 
+        // use to se paid amount and bill left calculation
         if ($requestedData["paid_amount"] >= $requestedData["final_bill"]) {
             $dataInvoice["total_paid_amount"] = $requestedData["final_bill"];
             $dataInvoice["bill_left"] = 0;
             $dataInvoice["is_paid_off"] = true;
         }
 
-        $this->setInvoice($this->invoiceRepo->addNewData($dataInvoice));
+        $invoice = $this->invoiceRepo->addNewData($dataInvoice);
+        $this->setInvoice($invoice);
     }
 
 
@@ -126,36 +127,30 @@ abstract class BaseShoppingService extends BaseService
      */
     protected function addNewRollTransaction(): void
     {
-        $dataTransaction = $this->getRequestedRolls();
         $rolls = $this->getDataRolls();
-        $invoiceId = $this->getInvoice()->id;
-        $now = Carbon::now();
-
-        foreach ($dataTransaction as $key => $item) {
-            $dataTransaction[$key]["type"] = "sold";
-            $dataTransaction[$key]["user_id"] = Auth::user()->id;
-            $dataTransaction[$key]["invoice_id"] = $invoiceId;
-
-            $dataTransaction[$key]["capital"] = 0;
-            $dataTransaction[$key]["created_at"] = $now;
-            $dataTransaction[$key]["updated_at"] = $now;
-            foreach ($rolls as $subItem) {
-                if ($subItem->id == $item["roll_id"]) {
-                    $dataTransaction[$key]["capital"] = $subItem->basic_price * $item["quantity_unit"];
-                }
+        $rollTransaction =  collect($this->getRequestedRolls())->map(function ($item) use ($rolls) {
+            $roll = $rolls->where("id", $item["roll_id"])->first();
+            if ($roll) {
+                $item["capital"] = $roll->basic_price * $item["quantity_unit"];
+                $item["type"] = "sold";
+                $item["user_id"] = Auth::user()->id;
+                $item["invoice_id"] = $this->getInvoice()->id;
+                $item["profit"] = $item["sub_total"] - $item["capital"];
+                $item["created_at"] = Carbon::now();
+                $item["updated_at"] = Carbon::now();
+                unset($item["sub_total"]);
+                return $item;
             }
-            $dataTransaction[$key]["profit"] = $dataTransaction[$key]["sub_total"] - $dataTransaction[$key]["capital"];
-            unset($dataTransaction[$key]["sub_total"]);
-        }
+        });
 
-        RollTransaction::insert($dataTransaction);
+        RollTransaction::insert($rollTransaction->toArray());
     }
 
     /** number
      *
      * @return string of generated invoice code
      */
-    protected function getGeneratedInvoiceCode(): string
+    private function getGeneratedInvoiceCode(): string
     {
         $now = Carbon::now();
         $month = $now->month;
@@ -180,16 +175,13 @@ abstract class BaseShoppingService extends BaseService
      * @param array $requestedRolls from client
      * @return int $totalCapital
      */
-    public function getTotalCapital(array $requestedRolls): int
+    private function getTotalCapital(array $requestedRolls): int
     {
         $totalCapital = 0;
         $rolls = $this->getDataRolls();
         foreach ($requestedRolls as $roll) {
-            foreach ($rolls as $item) {
-                if ($roll["roll_id"] == $item->id) {
-                    $totalCapital += $item->basic_price * $roll["quantity_unit"];
-                }
-            }
+            $foundRoll = $rolls->where("id", $roll["roll_id"])->first();
+            $totalCapital = $foundRoll->basic_price * $roll["quantity_unit"];
         }
 
         return $totalCapital;

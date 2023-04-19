@@ -19,21 +19,19 @@ class ShoppingController extends Controller
      */
     public function __invoke(AjaxShoppingService $service, PurchaseRequest $request): JsonResponse
     {
-        $stored = $service->purchase($request->validated());
+        $response = $service->purchase($request->validated());
 
-        if ($stored) {
-            return response()->json([
-                "status"  => JsonResponse::HTTP_OK,
-                "message" => "Purchasing successfully",
-                "error"   => false,
-                "data"    => $stored
-            ]);
-        } else {
-            return response()->json([
-                "status"  => JsonResponse::HTTP_NOT_ACCEPTABLE,
-                "message" => "Something went wrong",
-                "error"   => true,
-            ]);
-        }
+        if ($this->isError($response))  return response()->json([
+            "status"  => JsonResponse::HTTP_NOT_ACCEPTABLE,
+            "message" => $response["message"],
+            "error"   => true,
+        ]);
+
+        return response()->json([
+            "status"  => JsonResponse::HTTP_OK,
+            "message" => "Purchasing successfully",
+            "error"   => false,
+            "data"    => $response["invoice"]
+        ]);
     }
 }

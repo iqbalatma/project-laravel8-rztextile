@@ -29,8 +29,6 @@ class AjaxShoppingService extends BaseShoppingService
             array_column($this->getRequestedRolls(), 'roll_id')
         ));
 
-        ddapi($this->getDataRolls());
-
         try {
             DB::beginTransaction();
 
@@ -50,6 +48,7 @@ class AjaxShoppingService extends BaseShoppingService
             DB::commit();
             $response = [
                 "success" => true,
+                "invoice" => $this->getInvoice()
             ];
         } catch (Exception $e) {
             DB::rollBack();
