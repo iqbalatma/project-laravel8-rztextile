@@ -10,7 +10,7 @@ function purchase(dataSet) {
     });
 
     $.ajax({
-        url: "/shopping/purchase",
+        url: "/ajax/shopping/purchase",
         context: document.body,
         data: dataSet,
         method: "POST",
@@ -34,7 +34,7 @@ function purchase(dataSet) {
                     title: title,
                 }).then((result) => {
                     window.open(
-                        "report/invoices/stream/" + response.data.id,
+                        "/invoices/stream/" + response.data.id,
                         "_blank"
                     );
                     window.location.href = `/shopping`;

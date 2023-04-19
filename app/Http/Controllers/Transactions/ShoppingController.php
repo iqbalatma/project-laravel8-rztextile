@@ -10,30 +10,15 @@ use Illuminate\Http\Response;
 
 class ShoppingController extends Controller
 {
-    public function index(ShoppingService $service): Response
+    /**
+     * Use to show index shopping
+     *
+     * @param ShoppingService $service
+     * @return Response
+     */
+    public function __invoke(ShoppingService $service): Response
     {
         viewShare($service->getAllData());
         return response()->view("shopping.index");
-    }
-
-    public function purchase(ShoppingService $service, PurchaseRequest $request): JsonResponse
-    {
-        $stored = $service->purchase($request->validated());
-
-        return response()->json([$stored]);
-        if ($stored) {
-            return response()->json([
-                "status"  => JsonResponse::HTTP_OK,
-                "message" => "Purchasing successfully",
-                "error"   => false,
-                "data"    => $stored
-            ]);
-        } else {
-            return response()->json([
-                "status"  => JsonResponse::HTTP_NOT_ACCEPTABLE,
-                "message" => "Something went wrong",
-                "error"   => true,
-            ]);
-        }
     }
 }

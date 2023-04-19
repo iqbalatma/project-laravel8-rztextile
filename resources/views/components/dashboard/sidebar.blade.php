@@ -108,6 +108,15 @@
                             </a>
                         </li>
                         @endcan
+
+                        @can($discountVoucherPermissions::INDEX)
+                        <li class="submenu-item">
+                            <a href=" {{ route('discount.vouchers.index') }}" class="sidebar-link">
+                                <i class="fa-solid fa-percent"></i>
+                                <span>Discount Voucher</span>
+                            </a>
+                        </li>
+                        @endcan
                     </ul>
                 </li>
                 @endcanany

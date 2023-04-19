@@ -15,11 +15,9 @@ class DiscountVoucherRepository extends BaseRepository
 
     public function getValidDataByCode(string $code, array $columns = ["*"]): ?object
     {
-        return $this->model
-            ->with("promotion_message")
-            ->select($columns)->where([
-                "code"     => $code,
-                "is_valid" => true
-            ])->first();
+        return $this->model->with("promotion_message")->select($columns)->where([
+            "code"     => $code,
+            "is_valid" => true
+        ])->first();
     }
 }
